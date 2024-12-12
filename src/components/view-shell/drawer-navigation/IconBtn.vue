@@ -27,8 +27,8 @@ export default {
   position: fixed;
   top: 5px;
   left: 10px;
-  z-index: 15;
   cursor: pointer;
+  user-select: none;
 }
 
 #iconBtn {

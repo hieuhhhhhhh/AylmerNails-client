@@ -1,7 +1,7 @@
 <template>
   <div id="app-container">
-    <Header />
     <DrawerNav />
+    <Header />
     <div id="main-content">
       <div><router-link to="/">Home</router-link></div>
       <div><router-link to="/about">About</router-link></div>

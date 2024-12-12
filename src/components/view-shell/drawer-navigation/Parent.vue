@@ -1,7 +1,9 @@
 <template>
   <div>
-    <IconBtn @click="toggleDrawer" />
+    <div id="drawerLayout" v-if="drawerOpen" @click.stop="toggleDrawer" />
+
     <Drawer v-if="drawerOpen" />
+    <IconBtn @click.stop="toggleDrawer" />
   </div>
 </template>
 
@@ -24,3 +26,12 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+#drawerLayout {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+</style>

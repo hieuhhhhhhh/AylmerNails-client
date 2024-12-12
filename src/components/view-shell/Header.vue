@@ -1,5 +1,7 @@
 <template>
-  <div id="title">Aylmer Nails & Spa</div>
+  <div id="main">
+    <div id="title">Aylmer Nails & Spa</div>
+  </div>
 </template>
 <script>
 export default {
@@ -8,14 +10,16 @@ export default {
 </script>
 
 <style scoped>
-#title {
-  text-align: center;
-  align-content: center;
+#main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   box-shadow: 0 0 5px var(--shadow-color);
-  font-size: 25px;
-  height: 60px;
   background: var(--middleground);
+  height: 60px;
+}
+#title {
+  font-size: 25px;
   padding-inline: 60px;
-  z-index: 5;
 }
 </style>
