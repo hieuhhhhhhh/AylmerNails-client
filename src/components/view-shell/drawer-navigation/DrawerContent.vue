@@ -8,7 +8,11 @@
 
 <style scoped>
 #DrawerContent {
-  padding-inline: 10px;
+  margin-inline: 10px;
   box-sizing: border-box;
+}
+#DrawerContent a {
+  text-decoration: none;
+  color: inherit;
 }
 </style>

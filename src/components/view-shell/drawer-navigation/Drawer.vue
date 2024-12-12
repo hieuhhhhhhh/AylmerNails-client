@@ -1,6 +1,6 @@
 <template>
   <div id="Drawer" :class="{ open: isOpen }">
-    <DrawerContent />
+    <DrawerContent @click="closeDrawer" />
   </div>
 </template>
 
@@ -16,6 +16,12 @@ export default {
       required: true,
     },
   },
+  methods: {
+    closeDrawer() {
+      // Emit the event to update the drawerOpen state in the parent
+      this.$emit("update:drawerOpen", false); // Pass 'false' to close the drawer
+    },
+  },
 };
 </script>
 
@@ -28,9 +34,8 @@ export default {
   max-width: 75vw;
   height: 100%;
   background: var(--middleground);
-  box-shadow: 0 0 5px var(--shadow-color);
   padding-top: 60px;
-  transition: left 0.2s ease-in-out; /* add transition effect */
+  transition: left 0.15s ease-in-out; /* add transition effect */
 }
 
 #Drawer.open {

@@ -1,9 +1,9 @@
 <template>
   <div>
-    <div id="drawerLayout" v-show="drawerOpen" @click.stop="toggleDrawer" />
+    <div id="drawerLayout" v-show="drawerOpen" @click="toggleDrawer" />
     <!-- Pass the drawerOpen as a prop to the Drawer component -->
     <Drawer :isOpen="drawerOpen" @update:drawerOpen="updateDrawerState" />
-    <IconBtn @click.stop="toggleDrawer" />
+    <IconBtn @click="toggleDrawer" />
   </div>
 </template>
 
