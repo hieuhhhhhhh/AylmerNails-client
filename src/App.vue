@@ -14,3 +14,4 @@ export default {
   },
 };
 </script>
+<style src="./GlobalStyle.css"></style>
