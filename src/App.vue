@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="App">
     <DrawerNav />
     <Header />
     <div id="content">
@@ -26,7 +26,7 @@ export default {
 <style src="./global.css"></style>
 
 <style scoped>
-#app {
+#App {
   display: flex;
   flex-direction: column;
   min-height: 100vh;

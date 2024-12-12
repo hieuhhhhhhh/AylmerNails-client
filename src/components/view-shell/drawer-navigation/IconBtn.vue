@@ -1,6 +1,6 @@
 <template>
-  <div id="main">
-    <div id="iconBtn">
+  <div id="IconBtn">
+    <div id="icon">
       <FontAwesomeIcon :icon="menuIcon" />
     </div>
   </div>
@@ -23,7 +23,7 @@ export default {
 </script>
 
 <style scoped>
-#main {
+#IconBtn {
   position: fixed;
   top: 5px;
   left: 10px;
@@ -31,7 +31,7 @@ export default {
   user-select: none;
 }
 
-#iconBtn {
+#icon {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -42,10 +42,10 @@ export default {
   border-radius: 50%;
   transition: all 0.5s ease-out; /* Smooth transition */
 }
-#iconBtn:hover {
+#icon:hover {
   background: rgb(22, 22, 22);
 }
-#iconBtn:active {
+#icon:active {
   background: black;
 }
 </style>

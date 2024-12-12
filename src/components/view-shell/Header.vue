@@ -1,5 +1,5 @@
 <template>
-  <div id="main">
+  <div id="Header">
     <div id="title">Aylmer Nails & Spa</div>
   </div>
 </template>
@@ -10,7 +10,7 @@ export default {
 </script>
 
 <style scoped>
-#main {
+#Header {
   display: flex;
   justify-content: center;
   align-items: center;

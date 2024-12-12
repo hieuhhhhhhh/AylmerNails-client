@@ -1,5 +1,5 @@
 <template>
-  <div id="main" :class="{ open: isOpen }">
+  <div id="Drawer" :class="{ open: isOpen }">
     <DrawerContent />
   </div>
 </template>
@@ -20,7 +20,7 @@ export default {
 </script>
 
 <style scoped>
-#main {
+#Drawer {
   position: fixed;
   top: 0;
   left: -300px; /* initial position */
@@ -33,7 +33,7 @@ export default {
   transition: left 0.2s ease-in-out; /* add transition effect */
 }
 
-#main.open {
+#Drawer.open {
   left: 0; /* new position when open */
 }
 </style>
