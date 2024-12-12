@@ -36,11 +36,11 @@ export default {
   align-items: center;
   justify-content: center;
   font-size: 30px; /* Increase this value to make the icon larger */
-  /* background: rgba(251, 64, 64, 0.5); */
+  /* background: rgba(251, 64, 64, 0.5); red notification color*/
   height: 50px;
   aspect-ratio: 1;
   border-radius: 50%;
-  transition: all 0.5s ease; /* Smooth transition */
+  transition: all 0.5s ease-out; /* Smooth transition */
 }
 #iconBtn:hover {
   background: rgb(22, 22, 22);

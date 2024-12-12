@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div id="drawerLayout" v-if="drawerOpen" @click.stop="toggleDrawer" />
+    <div id="drawerLayout" v-show="drawerOpen" @click.stop="toggleDrawer" />
 
-    <Drawer v-if="drawerOpen" />
+    <Drawer v-show="drawerOpen" />
     <IconBtn @click.stop="toggleDrawer" />
   </div>
 </template>
