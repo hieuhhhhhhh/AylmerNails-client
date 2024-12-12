@@ -12,8 +12,9 @@ export default {
   text-align: center;
   align-content: center;
   box-shadow: 0 0 5px var(--shadow-color);
-  font-size: 30px;
-  height: 50px;
+  font-size: 25px;
+  height: 60px;
   background: var(--middleground);
+  padding-inline: 60px;
 }
 </style>
