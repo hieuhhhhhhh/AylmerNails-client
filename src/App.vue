@@ -11,6 +11,9 @@
 <script>
 export default {
   name: "App",
+  created() {
+    document.title = "Aylmer Nails & Spa";
+  },
 };
 </script>
-<style src="./GlobalStyle.css"></style>
+<style src="./global.css"></style>
