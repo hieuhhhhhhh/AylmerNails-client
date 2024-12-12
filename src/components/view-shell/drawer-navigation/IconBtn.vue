@@ -43,9 +43,9 @@ export default {
   transition: all 0.5s ease-out; /* Smooth transition */
 }
 #icon:hover {
-  background: rgb(22, 22, 22);
+  background: var(--hover);
 }
 #icon:active {
-  background: black;
+  background: var(--active);
 }
 </style>

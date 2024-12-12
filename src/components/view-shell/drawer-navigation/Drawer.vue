@@ -35,7 +35,7 @@ export default {
   height: 100%;
   background: var(--middleground);
   padding-top: 60px;
-  transition: left 0.15s ease-in-out; /* add transition effect */
+  transition: left 0.15s ease-out; /* add transition effect */
 }
 
 #Drawer.open {

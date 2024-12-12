@@ -4,6 +4,8 @@
   --foreground: #333;
   --xtrans-gray: rgba(150, 150, 150, 0.1);
   --shadow-color: rgba(0, 0, 0, 0.2);
+  --hover: rgb(217, 217, 217);
+  --active: rgb(157, 157, 157);
 }
 
 @media (prefers-color-scheme: dark) {
@@ -12,6 +14,8 @@
     --middleground: #2f2f2f;
     --foreground: rgb(230, 230, 230);
     --shadow-color: rgba(0, 0, 0, 0.4);
+    --hover: rgb(22, 22, 22);
+    --active: black;
   }
 }
 

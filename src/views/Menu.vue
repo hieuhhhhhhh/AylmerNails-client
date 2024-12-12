@@ -1,9 +1,9 @@
 <template>
-  <h1>Hello from Home!</h1>
+  <h1>Welcome to Menu!</h1>
 </template>
 
 <script>
 export default {
-  name: "Home-",
+  name: "Menu-",
 };
 </script>

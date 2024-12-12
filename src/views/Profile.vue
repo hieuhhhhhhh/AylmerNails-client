@@ -1,9 +1,9 @@
 <template>
-  <h1>Hello from Contact!</h1>
+  <h1>Welcome to Profile!</h1>
 </template>
 
 <script>
 export default {
-  name: "Contact-",
+  name: "Profile-",
 };
 </script>

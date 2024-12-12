@@ -1,18 +1,34 @@
 <template>
   <div id="DrawerContent">
-    <div><router-link to="/">Home</router-link></div>
-    <div><router-link to="/about">About</router-link></div>
-    <div><router-link to="/contact">Contact</router-link></div>
+    <div><router-link to="/">Menu</router-link></div>
+    <div><router-link to="/booknow">Book Now</router-link></div>
+    <div><router-link to="/profile">My Appointments</router-link></div>
   </div>
 </template>
 
 <style scoped>
 #DrawerContent {
-  margin-inline: 10px;
+  display: flex;
+  flex-direction: column;
+  /* margin-inline: 20px; */
   box-sizing: border-box;
+  text-align: center;
 }
 #DrawerContent a {
+  padding: 10px;
+  padding-inline: 5px;
+  border-bottom: 1px solid var(--xtrans-gray);
   text-decoration: none;
   color: inherit;
+  font-size: 20px;
+  display: block;
+  /* border-radius: 10px; */
+  transition: all 0.5s ease-out; /* Smooth transition */
+}
+#DrawerContent a:hover {
+  background: var(--hover);
+}
+#DrawerContent a:active {
+  background: var(--active);
 }
 </style>
