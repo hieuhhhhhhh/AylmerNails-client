@@ -1,17 +1,16 @@
 <template>
-  <div>
-    <h1>Welcome to the About page</h1>
+  <div id="app">
+    <div><router-link to="/">Home</router-link></div>
+    <div><router-link to="/about">About</router-link></div>
+    <div><router-link to="/contact">Contact</router-link></div>
+
+    <router-view />
   </div>
-  <hello-server />
 </template>
 
 <script>
-import helloServer from "./templates/helloServer.vue";
 export default {
-  components: { helloServer },
-  created() {
-    document.title = "About Us - My Vue App";
-  },
+  name: "App",
 };
 </script>
 <style src="./GlobalStyle.css"></style>
