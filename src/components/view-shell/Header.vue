@@ -16,5 +16,6 @@ export default {
   height: 60px;
   background: var(--middleground);
   padding-inline: 60px;
+  z-index: 5;
 }
 </style>

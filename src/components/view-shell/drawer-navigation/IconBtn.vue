@@ -27,6 +27,8 @@ export default {
   position: fixed;
   top: 5px;
   left: 10px;
+  z-index: 15;
+  cursor: pointer;
 }
 
 #iconBtn {
@@ -38,5 +40,12 @@ export default {
   height: 50px;
   aspect-ratio: 1;
   border-radius: 50%;
+  transition: all 0.5s ease; /* Smooth transition */
+}
+#iconBtn:hover {
+  background: rgb(22, 22, 22);
+}
+#iconBtn:active {
+  background: black;
 }
 </style>
