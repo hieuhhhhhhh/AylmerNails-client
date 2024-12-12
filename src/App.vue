@@ -1,12 +1,8 @@
 <template>
-  <div id="app-container">
+  <div id="app">
     <DrawerNav />
     <Header />
-    <div id="main-content">
-      <div><router-link to="/">Home</router-link></div>
-      <div><router-link to="/about">About</router-link></div>
-      <div><router-link to="/contact">Contact</router-link></div>
-
+    <div id="content">
       <router-view />
     </div>
     <Footer />
@@ -30,13 +26,13 @@ export default {
 <style src="./global.css"></style>
 
 <style scoped>
-#app-container {
+#app {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
-#main-content {
+#content {
   flex-grow: 1;
 }
 </style>

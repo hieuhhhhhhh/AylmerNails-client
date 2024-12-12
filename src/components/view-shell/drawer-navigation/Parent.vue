@@ -1,8 +1,8 @@
 <template>
   <div>
     <div id="drawerLayout" v-show="drawerOpen" @click.stop="toggleDrawer" />
-
-    <Drawer v-show="drawerOpen" />
+    <!-- Pass the drawerOpen as a prop to the Drawer component -->
+    <Drawer :isOpen="drawerOpen" @update:drawerOpen="updateDrawerState" />
     <IconBtn @click.stop="toggleDrawer" />
   </div>
 </template>
@@ -22,6 +22,9 @@ export default {
   methods: {
     toggleDrawer() {
       this.drawerOpen = !this.drawerOpen; // Toggle the Drawer state
+    },
+    updateDrawerState(newState) {
+      this.drawerOpen = newState; // Update the drawerOpen state
     },
   },
 };
