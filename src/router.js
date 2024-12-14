@@ -3,22 +3,25 @@ import { createRouter, createWebHistory } from "vue-router";
 import Menu from "./views/Menu.vue";
 import BookNow from "./views/BookNow.vue";
 import Profile from "./views/Profile.vue";
+import NotFound from "./views/NotFound.vue"; // Import the NotFound component
 
 const routes = [
   {
     path: "/",
-    name: "menu",
     component: Menu,
   },
   {
     path: "/booknow",
-    name: "booknow",
     component: BookNow,
   },
   {
     path: "/profile",
-    name: "profile",
     component: Profile,
+  },
+  // Add the wildcard route for handling 404 errors
+  {
+    path: "/:pathMatch(.*)*", // This matches any undefined route
+    component: NotFound,
   },
 ];
 
