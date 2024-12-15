@@ -11,7 +11,10 @@ export default {
     };
   },
   mounted() {
-    fetch("http://127.0.0.1:5000/api/service1")
+    const baseURL = process.env.VUE_APP_BASE_URL;
+    console.log("baseURL: ", baseURL);
+
+    fetch(`${baseURL}/api/service1`)
       .then((response) => response.json())
       .then((data) => {
         this.msg = data.message;

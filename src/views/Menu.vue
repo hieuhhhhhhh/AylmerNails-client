@@ -12,7 +12,11 @@ export default {
     };
   },
   mounted() {
-    fetch("http://127.0.0.1:5000/api")
+    const baseURL = process.env.VUE_APP_BASE_URL;
+    console.log("baseURL: ", baseURL);
+    console.log("baseURL: ", process.env.VUE_APP_TEST);
+
+    fetch(`${baseURL}/api`)
       .then((response) => response.json())
       .then((data) => {
         this.msg = data.message;
