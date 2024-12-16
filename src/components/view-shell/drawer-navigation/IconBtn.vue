@@ -29,6 +29,7 @@ export default {
   left: 10px;
   cursor: pointer;
   user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 #icon {
@@ -36,7 +37,7 @@ export default {
   align-items: center;
   justify-content: center;
   font-size: 30px; /* Increase this value to make the icon larger */
-  /* background: rgba(251, 64, 64, 0.5); red notification color*/
+  background: var(--middleground);
   height: 50px;
   aspect-ratio: 1;
   border-radius: 50%;

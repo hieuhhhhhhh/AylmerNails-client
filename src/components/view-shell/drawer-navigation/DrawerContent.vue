@@ -13,9 +13,11 @@
   /* margin-inline: 20px; */
   box-sizing: border-box;
   text-align: center;
+  -webkit-tap-highlight-color: transparent;
 }
+
 #DrawerContent a {
-  padding: 10px;
+  padding: 15px;
   padding-inline: 5px;
   border-bottom: 1px solid var(--xtrans-gray);
   text-decoration: none;
