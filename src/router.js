@@ -3,7 +3,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import Menu from "./views/Menu.vue";
 import BookNow from "./views/BookNow.vue";
 import Profile from "./views/Profile.vue";
-import NotFound from "./views/NotFound.vue"; // Import the NotFound component
+import NotFound from "./views/NotFound.vue";
+import MySql from "./views/MySql.vue";
 
 const routes = [
   {
@@ -18,7 +19,11 @@ const routes = [
     path: "/profile",
     component: Profile,
   },
-  // Add the wildcard route for handling 404 errors
+  {
+    path: "/mysql",
+    component: MySql,
+  },
+  // wildcard route for 404 - not found
   {
     path: "/:pathMatch(.*)*", // This matches any undefined route
     component: NotFound,
