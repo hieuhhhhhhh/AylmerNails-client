@@ -19,16 +19,22 @@
 }
 
 #DrawerContent a {
-  padding: 15px;
+  padding: 12px;
   padding-inline: 5px;
   border-bottom: 1px solid var(--xtrans-gray);
   text-decoration: none;
   color: inherit;
-  font-size: 20px;
+  font-size: 17px;
   display: block;
-  /* border-radius: 10px; */
   transition: all 0.5s ease-out; /* Smooth transition */
 }
+@media (orientation: portrait) {
+  #DrawerContent a {
+    padding: 16px;
+    font-size: 20px;
+  }
+}
+
 #DrawerContent a:hover {
   background: var(--hover);
 }

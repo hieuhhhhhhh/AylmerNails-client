@@ -15,7 +15,7 @@ export default {
     console.log("baseURL: ", baseURL);
     console.log("baseURL: ", process.env.VUE_APP_TEST);
 
-    fetch(`${baseURL}/mysql`)
+    fetch(`${baseURL}/api/authentication/mysql`)
       .then((response) => response.json())
       .then((data) => {
         this.msg = data;

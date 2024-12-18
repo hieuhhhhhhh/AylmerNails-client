@@ -25,11 +25,17 @@ export default {
 <style scoped>
 #IconBtn {
   position: fixed;
-  top: 5px;
-  left: 10px;
+  top: 7px;
+  left: 7px;
   cursor: pointer;
   user-select: none;
   -webkit-tap-highlight-color: transparent;
+}
+@media (orientation: portrait) {
+  #IconBtn {
+    top: 9px;
+    left: 9px;
+  }
 }
 
 #icon {
