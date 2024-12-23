@@ -2,17 +2,7 @@
   <div id="app">
     <h1>Welcome to Log In!</h1>
     <form @submit.prevent="onSubmit">
-      <div>
-        <label for="phone">Phone Number:</label>
-        <input
-          type="tel"
-          id="phone"
-          v-model="phone"
-          @input="onPhoneInput"
-          placeholder="Enter your phone number"
-          required
-        />
-      </div>
+      <PhoneNumInput v-model:phone="phone" />
 
       <div>
         <label for="password">Password:</label>
@@ -24,7 +14,6 @@
           required
         />
       </div>
-      <ApiContinueSession />
       <ApiSubmit ref="ApiSubmit" :phone="phone" :password="password" />
 
       <button type="submit">Log In</button>
@@ -33,12 +22,11 @@
 </template>
 
 <script>
-import ApiContinueSession from "./helpers/api_callers/ApiContinueSession.vue";
-import ApiSubmit from "./helpers/api_callers/ApiSubmit.vue";
-import formatPhone from "./helpers/format_phone";
+import ApiSubmit from "./helpers/ApiSubmit.vue";
+import PhoneNumInput from "./comps/PhoneNumInput.vue";
 
 export default {
-  components: { ApiSubmit, ApiContinueSession },
+  components: { ApiSubmit, PhoneNumInput },
   data() {
     return {
       phone: "",
@@ -49,9 +37,6 @@ export default {
     onSubmit() {
       // Call printToConsole method of ApiSubmit component via ref
       this.$refs.ApiSubmit.submitCredentials();
-    },
-    onPhoneInput() {
-      this.phone = formatPhone(this.phone);
     },
   },
 };

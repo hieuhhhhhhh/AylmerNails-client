@@ -11,11 +11,11 @@ export default {
       msg: "",
     };
   },
-  mounted() {
+  created() {
+    // fetch app path from env
     const baseURL = process.env.VUE_APP_BASE_URL;
-    console.log("baseURL: ", baseURL);
-    console.log("baseURL: ", process.env.VUE_APP_TEST);
 
+    // connect server
     fetch(`${baseURL}/api`)
       .then((response) => response.json())
       .then((data) => {

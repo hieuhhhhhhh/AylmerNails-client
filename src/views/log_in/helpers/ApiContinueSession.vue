@@ -25,12 +25,13 @@ export default {
           }
         );
 
-        // read status and process response
+        // read status and process reponse
         const data = await res.json();
-        console.log(data);
 
         if (res.ok) {
-          alert("token works!");
+          console.log("Current user ID: ", data.user_id);
+        } else {
+          console.log("Api failed, msg from server: ", data.message);
         }
       } catch (e) {
         console.error("Unexpected Error: ", e);
