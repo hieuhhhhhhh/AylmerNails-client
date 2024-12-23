@@ -24,8 +24,8 @@
           required
         />
       </div>
-
-      <ApiCaller ref="ApiCaller" :phone="phone" :password="password" />
+      <ApiContinueSession />
+      <ApiSubmit ref="ApiSubmit" :phone="phone" :password="password" />
 
       <button type="submit">Log In</button>
     </form>
@@ -33,11 +33,12 @@
 </template>
 
 <script>
-import ApiCaller from "./ApiCaller.vue";
+import ApiContinueSession from "./helpers/api_callers/ApiContinueSession.vue";
+import ApiSubmit from "./helpers/api_callers/ApiSubmit.vue";
 import formatPhone from "./helpers/format_phone";
 
 export default {
-  components: { ApiCaller },
+  components: { ApiSubmit, ApiContinueSession },
   data() {
     return {
       phone: "",
@@ -46,8 +47,8 @@ export default {
   },
   methods: {
     onSubmit() {
-      // Call printToConsole method of ApiCaller component via ref
-      this.$refs.ApiCaller.submitCredentials();
+      // Call printToConsole method of ApiSubmit component via ref
+      this.$refs.ApiSubmit.submitCredentials();
     },
     onPhoneInput() {
       this.phone = formatPhone(this.phone);
