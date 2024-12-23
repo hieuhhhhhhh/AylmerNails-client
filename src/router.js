@@ -6,6 +6,7 @@ import Profile from "./views/Profile.vue";
 import NotFound from "./views/NotFound.vue";
 import MySql from "./views/MySql.vue";
 import SignUp from "./views/SignUp.vue";
+import LogIn from "./views/LogIn.vue";
 
 const routes = [
   {
@@ -27,6 +28,10 @@ const routes = [
   {
     path: "/signup",
     component: SignUp,
+  },
+  {
+    path: "/login",
+    component: LogIn,
   },
   // wildcard route for 404 - not found
   {
