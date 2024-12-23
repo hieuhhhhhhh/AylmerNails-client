@@ -34,7 +34,7 @@ export default {
         if (res.ok) {
           console.log("Session continued.");
         } else {
-          console.log("Failed to use token: ", data.message);
+          console.log("Failed to use token, message: ", data.message);
         }
       } catch (e) {
         console.error("Unexpected Error: ", e);

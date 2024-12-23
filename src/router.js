@@ -4,7 +4,6 @@ import Menu from "./views/Menu.vue";
 import BookNow from "./views/BookNow.vue";
 import Profile from "./views/Profile.vue";
 import NotFound from "./views/NotFound.vue";
-import MySql from "./views/MySql.vue";
 import SignUp from "./views/SignUp.vue";
 import LogIn from "./views/log_in/LogIn.vue";
 
@@ -20,10 +19,6 @@ const routes = [
   {
     path: "/profile",
     component: Profile,
-  },
-  {
-    path: "/mysql",
-    component: MySql,
   },
   {
     path: "/signup",
