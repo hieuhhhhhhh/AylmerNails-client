@@ -53,8 +53,7 @@ export default {
 
         // read status and process reponse
         if (res.ok) {
-          const data = await res.json();
-          this.msg = data;
+          this.$router.push("./");
         } else {
           const data = await res.json();
           this.msg = data.message;
