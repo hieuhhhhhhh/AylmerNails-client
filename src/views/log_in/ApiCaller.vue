@@ -1,17 +1,52 @@
 <template>
-  <div>
-    <!-- Empty div, only for handling the data -->
+  <div v-if="msg" class="error">
+    <p>{{ msg }}</p>
   </div>
 </template>
 
 <script>
 export default {
+  data() {
+    return {
+      msg: "",
+    };
+  },
   props: ["phone", "password"],
   methods: {
-    printToConsole() {
-      // Print phone and password to the console
-      console.log("Phone Number:", this.phone);
-      console.log("Password:", this.password);
+    async submitCredentials() {
+      try {
+        // reformat phone number
+        const formatted = "+1" + this.phone.replace(/\D/g, "");
+
+        // get app path
+        const baseURL = process.env.VUE_APP_BASE_URL;
+
+        // start requesting server
+        const res = await fetch(
+          `${baseURL}/api/authentication/request_log_in`,
+          {
+            method: "POST",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              phone_num: formatted,
+              password: this.password,
+            }),
+          }
+        );
+
+        // read status and process reponse
+        if (res.ok) {
+          this.$router.push("./");
+        } else {
+          const data = await res.json();
+          this.msg = data.message;
+        }
+      } catch (e) {
+        console.error("Unexpected Error: ", e);
+      }
     },
   },
 };

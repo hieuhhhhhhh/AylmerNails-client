@@ -25,7 +25,6 @@
         />
       </div>
 
-      <!-- Add ref to access ApiCaller methods -->
       <ApiCaller ref="ApiCaller" :phone="phone" :password="password" />
 
       <button type="submit">Log In</button>
@@ -48,7 +47,7 @@ export default {
   methods: {
     onSubmit() {
       // Call printToConsole method of ApiCaller component via ref
-      this.$refs.ApiCaller.printToConsole();
+      this.$refs.ApiCaller.submitCredentials();
     },
     onPhoneInput() {
       this.phone = formatPhone(this.phone);
