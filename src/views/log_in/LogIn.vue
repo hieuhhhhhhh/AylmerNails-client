@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import ApiSubmit from "./helpers/ApiSubmit.vue";
+import ApiSubmit from "./apis/ApiSubmit.vue";
 import PhoneNumInput from "./comps/PhoneNumInput.vue";
 
 export default {

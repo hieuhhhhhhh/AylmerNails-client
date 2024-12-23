@@ -29,9 +29,9 @@ export default {
         const data = await res.json();
 
         if (res.ok) {
-          console.log("Current user ID: ", data.user_id);
+          console.log("Session continued.");
         } else {
-          console.log("Api failed, msg from server: ", data.message);
+          console.log("Failed to use token: ", data.message);
         }
       } catch (e) {
         console.error("Unexpected Error: ", e);
