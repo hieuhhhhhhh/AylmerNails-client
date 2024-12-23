@@ -6,7 +6,7 @@ import Profile from "./views/Profile.vue";
 import NotFound from "./views/NotFound.vue";
 import MySql from "./views/MySql.vue";
 import SignUp from "./views/SignUp.vue";
-import LogIn from "./views/LogIn.vue";
+import LogIn from "./views/log_in/LogIn.vue";
 
 const routes = [
   {
