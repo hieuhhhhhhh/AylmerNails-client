@@ -1,3 +1,5 @@
+// a helper, an api caller to pass phone num and password from parent to the api
+
 <template>
   <div v-if="msg" class="error">
     <p>{{ msg }}</p>

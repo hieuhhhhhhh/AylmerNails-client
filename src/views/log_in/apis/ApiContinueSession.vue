@@ -1,3 +1,6 @@
+// an api caller where it send the server its cookies to continue a session
+// the server will read the TOKEN cookie and allow if it is valid
+
 <template>
   <div></div>
 </template>

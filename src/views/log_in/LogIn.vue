@@ -1,3 +1,4 @@
+// a log in window allow user to input phone num and password with a submit button
 <template>
   <div id="app">
     <h1>Welcome to Log In!</h1>
