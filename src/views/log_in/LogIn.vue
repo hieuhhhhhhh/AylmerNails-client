@@ -25,9 +25,8 @@
         />
       </div>
 
-      <div v-if="msg" class="error">
-        <p>{{ msg }}</p>
-      </div>
+      <!-- Add ref to access ApiCaller methods -->
+      <ApiCaller ref="ApiCaller" :phone="phone" :password="password" />
 
       <button type="submit">Log In</button>
     </form>
@@ -35,34 +34,21 @@
 </template>
 
 <script>
+import ApiCaller from "./ApiCaller.vue";
 import formatPhone from "./helpers/format_phone";
-import submitCredentials from "./helpers/submit_credentials";
 
 export default {
+  components: { ApiCaller },
   data() {
     return {
       phone: "",
       password: "",
-      msg: "",
     };
   },
   methods: {
-    async onSubmit() {
-      try {
-        const res = await submitCredentials(this.phone, this.password);
-
-        // read status and process reponse
-        if (res.ok) {
-          this.$router.push("./");
-        } else {
-          const data = await res.json();
-          this.msg = data.message;
-        }
-
-        // unexpected exception
-      } catch (e) {
-        console.error("Unexpected Error: ", e);
-      }
+    onSubmit() {
+      // Call printToConsole method of ApiCaller component via ref
+      this.$refs.ApiCaller.printToConsole();
     },
     onPhoneInput() {
       this.phone = formatPhone(this.phone);
