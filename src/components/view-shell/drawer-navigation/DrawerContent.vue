@@ -3,8 +3,8 @@
     <div><router-link to="/">Menu</router-link></div>
     <div><router-link to="/booknow">Book Now</router-link></div>
     <div><router-link to="/profile">My Appointments</router-link></div>
-    <div><router-link to="/mysql">MySQL</router-link></div>
     <div><router-link to="/signup">Sign Up</router-link></div>
+    <div><router-link to="/login">Log In</router-link></div>
   </div>
 </template>
 

@@ -4,8 +4,8 @@ import Menu from "./views/Menu.vue";
 import BookNow from "./views/BookNow.vue";
 import Profile from "./views/Profile.vue";
 import NotFound from "./views/NotFound.vue";
-import MySql from "./views/MySql.vue";
 import SignUp from "./views/SignUp.vue";
+import LogIn from "./views/log_in/LogIn.vue";
 
 const routes = [
   {
@@ -21,12 +21,12 @@ const routes = [
     component: Profile,
   },
   {
-    path: "/mysql",
-    component: MySql,
-  },
-  {
     path: "/signup",
     component: SignUp,
+  },
+  {
+    path: "/login",
+    component: LogIn,
   },
   // wildcard route for 404 - not found
   {
