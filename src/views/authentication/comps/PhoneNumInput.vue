@@ -4,7 +4,6 @@
     <input
       type="tel"
       id="phone"
-      v-model="phone"
       @input="setPhone"
       placeholder="Enter your phone number"
       required
@@ -14,11 +13,6 @@
 
 <script>
 export default {
-  data() {
-    return {
-      phone: "",
-    };
-  },
   methods: {
     setPhone(event) {
       // Get the raw phone number input value
@@ -38,9 +32,8 @@ export default {
         )} ${rawPhone.slice(6, 10)}`;
       }
 
-      // Emit the formatted phone number back to the parent component
-      this.phone = formatted;
-      this.$emit("update:phone", this.phone);
+      // Send the phone number to parent component
+      this.$emit("update:phone", formatted);
     },
   },
 };
