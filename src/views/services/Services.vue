@@ -23,12 +23,12 @@ export default {
         });
 
         // read status and process reponse
-        const data = await res.json();
+        const json = await res.json();
 
         if (res.ok) {
           console.log("Sussesful");
         } else {
-          console.log("Failed to fetch all services, message: ", data.message);
+          console.log("Failed to fetch all services, message: ", json.message);
         }
       } catch (e) {
         console.error("Unexpected Error: ", e);

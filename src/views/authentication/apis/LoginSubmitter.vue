@@ -23,6 +23,7 @@ export default {
         // get app path
         const baseURL = process.env.VUE_APP_BASE_URL;
 
+        console.log("formatted", formatted);
         // start requesting server
         const res = await fetch(
           `${baseURL}/api/authentication/request_log_in`,
