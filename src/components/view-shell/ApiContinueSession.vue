@@ -8,10 +8,10 @@
 <script>
 export default {
   async created() {
-    await this.submitCredentials();
+    await this.requestContinueSession();
   },
   methods: {
-    async submitCredentials() {
+    async requestContinueSession() {
       try {
         // get app path
         const baseURL = process.env.VUE_APP_BASE_URL;

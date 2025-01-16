@@ -16,7 +16,7 @@ export default {
   methods: {
     setPassword(event) {
       // Send the parent to parent component
-      this.$emit("update:password", event.target.value);
+      this.$emit("update:value", event.target.value);
     },
   },
 };

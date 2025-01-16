@@ -40,7 +40,7 @@ export default {
 
       // Send the phone number to parent component
       this.phone = formatted;
-      this.$emit("update:phone", formatted);
+      this.$emit("update:value", this.phone);
     },
   },
 };
