@@ -1,21 +1,21 @@
-// a log in window allow user to input phone num and password with a submit button
+// a log in page allow user to input phone num and password with a submit button
+
 <template>
   <div id="app">
     <h1>Welcome to Log In!</h1>
     <form @submit.prevent="onSubmit">
+      <!-- prompt user phone number -->
       <PhoneNumInput v-model:phone="phone" />
 
-      <div>
-        <label for="password">Password:</label>
-        <input
-          type="password"
-          id="password"
-          v-model="password"
-          placeholder="Enter your password"
-          required
-        />
-      </div>
-      <ApiSubmit ref="ApiSubmit" :phone="phone" :password="password" />
+      <!-- prompt user password -->
+      <PasswordInput v-model:password="password" />
+
+      <!-- take phone num an password and call api -->
+      <LoginSubmitter
+        ref="LoginSubmitter"
+        :phone="phone"
+        :password="password"
+      />
 
       <button type="submit">Log In</button>
     </form>
@@ -23,11 +23,12 @@
 </template>
 
 <script>
-import ApiSubmit from "./apis/ApiSubmit.vue";
+import LoginSubmitter from "./apis/LoginSubmitter.vue";
 import PhoneNumInput from "./comps/PhoneNumInput.vue";
+import PasswordInput from "./comps/PasswordInput.vue";
 
 export default {
-  components: { ApiSubmit, PhoneNumInput },
+  components: { LoginSubmitter, PhoneNumInput, PasswordInput },
   data() {
     return {
       phone: "",
@@ -36,8 +37,8 @@ export default {
   },
   methods: {
     onSubmit() {
-      // Call printToConsole method of ApiSubmit component via ref
-      this.$refs.ApiSubmit.submitCredentials();
+      // Call printToConsole method of LoginSubmitter component via ref
+      this.$refs.LoginSubmitter.submitCredentials();
     },
   },
 };

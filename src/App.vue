@@ -14,7 +14,7 @@
 import Header from "./components/view-shell/Header.vue";
 import Footer from "./components/view-shell/Footer.vue";
 import DrawerNav from "./components/view-shell/drawer-navigation/Parent.vue";
-import ApiContinueSession from "./views/log_in/apis/ApiContinueSession.vue";
+import ApiContinueSession from "./components/view-shell/ApiContinueSession.vue";
 
 export default {
   components: { Header, Footer, DrawerNav, ApiContinueSession },

@@ -38,9 +38,8 @@ export default {
         )} ${rawPhone.slice(6, 10)}`;
       }
 
-      // Emit the formatted phone number back to the parent component
+      // update state
       this.phone = formatted;
-      this.$emit("update:phone", this.phone);
     },
   },
 };

@@ -1,4 +1,4 @@
-// a helper, an api caller to pass phone num and password from parent to the api
+// to pass phone num and password from parent to the login api
 
 <template>
   <div v-if="msg" class="error">
