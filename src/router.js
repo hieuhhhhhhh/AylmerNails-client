@@ -4,8 +4,9 @@ import Menu from "./views/Menu.vue";
 import BookNow from "./views/BookNow.vue";
 import Profile from "./views/Profile.vue";
 import NotFound from "./views/NotFound.vue";
-import SignUp from "./views/SignUp.vue";
-import LogIn from "./views/log_in/LogIn.vue";
+import SignUp from "./views/authentication/SignUp.vue";
+import LogIn from "./views/authentication/LogIn.vue";
+import RefreshSession from "./views/authentication/RefreshSession.vue";
 
 const routes = [
   {
@@ -23,6 +24,10 @@ const routes = [
   {
     path: "/signup",
     component: SignUp,
+  },
+  {
+    path: "/refresh_session",
+    component: RefreshSession,
   },
   {
     path: "/login",
