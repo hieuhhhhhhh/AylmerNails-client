@@ -4,7 +4,7 @@
     <input
       type="tel"
       id="phone"
-      v-model="phone"
+      :value="phone"
       @input="setPhone"
       placeholder="Enter your phone number"
       required
@@ -35,7 +35,7 @@ export default {
         formatted = `${rawPhone.slice(0, 3)} ${rawPhone.slice(
           3,
           6
-        )} ${rawPhone.slice(6, 10)}`;
+        )} ${rawPhone.slice(6)}`;
       }
 
       // Send the phone number to parent component

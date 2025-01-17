@@ -1,39 +1,19 @@
 <template>
-  <div></div>
+  <div>{{ categories }}</div>
 </template>
 
 <script>
+import fetchCategorizedServices from "./apis/fetchCategorizedServices";
+
 export default {
-  async created() {
-    await this.fetchAllServices();
+  name: "Services-",
+  data() {
+    return {
+      categories: [],
+    };
   },
-  methods: {
-    async fetchAllServices() {
-      try {
-        // get app path
-        const baseURL = process.env.VUE_APP_BASE_URL;
-
-        // start requesting server
-        const res = await fetch(`${baseURL}/api/services/get_all_services`, {
-          method: "GET",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-
-        // read status and process reponse
-        const json = await res.json();
-
-        if (res.ok) {
-          console.log("Sussesful");
-        } else {
-          console.log("Failed to fetch all services, message: ", json.message);
-        }
-      } catch (e) {
-        console.error("Unexpected Error: ", e);
-      }
-    },
+  async created() {
+    this.categories = await fetchCategorizedServices();
   },
 };
 </script>
