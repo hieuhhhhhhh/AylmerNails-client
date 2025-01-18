@@ -16,7 +16,6 @@
   /* margin-inline: 20px; */
   box-sizing: border-box;
   text-align: center;
-  -webkit-tap-highlight-color: transparent;
 }
 
 #DrawerContent a {

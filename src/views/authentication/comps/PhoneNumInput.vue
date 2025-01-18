@@ -5,7 +5,7 @@
       type="tel"
       id="phone"
       :value="phone"
-      @input="setPhone"
+      @input="onPhoneInput"
       placeholder="Enter your phone number"
       required
     />
@@ -14,13 +14,12 @@
 
 <script>
 export default {
-  data() {
-    return {
-      phone: "",
-    };
+  props: {
+    phone: String,
+    setPhone: Function,
   },
   methods: {
-    setPhone(event) {
+    onPhoneInput(event) {
       // Get the raw phone number input value
       let rawPhone = event.target.value.replace(/\D/g, ""); // Remove non-digit characters
 
@@ -39,8 +38,7 @@ export default {
       }
 
       // Send the phone number to parent component
-      this.phone = formatted;
-      this.$emit("update:value", this.phone);
+      this.setPhone(formatted);
     },
   },
 };

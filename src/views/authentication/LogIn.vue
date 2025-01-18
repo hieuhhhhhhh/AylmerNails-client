@@ -5,10 +5,24 @@
     <h1>Welcome to Log In!</h1>
     <form @submit.prevent="onSubmit">
       <!-- prompt user phone number -->
-      <PhoneNumInput v-model:value="phone" />
+      <PhoneNumInput
+        :phone="phone"
+        :setPhone="
+          (input) => {
+            this.phone = input;
+          }
+        "
+      />
 
       <!-- prompt user password -->
-      <PasswordInput v-model:value="password" />
+      <PasswordInput
+        :password="password"
+        :setPassword="
+          (input) => {
+            this.password = input;
+          }
+        "
+      />
 
       <!-- take phone num an password and call api -->
       <LoginSubmitter

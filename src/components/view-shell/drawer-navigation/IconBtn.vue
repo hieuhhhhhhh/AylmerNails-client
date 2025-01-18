@@ -29,7 +29,6 @@ export default {
   left: 7px;
   cursor: pointer;
   user-select: none;
-  -webkit-tap-highlight-color: transparent;
 }
 @media (orientation: portrait) {
   #IconBtn {

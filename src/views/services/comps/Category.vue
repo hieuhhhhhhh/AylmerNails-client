@@ -23,23 +23,41 @@ export default {
 <style scoped>
 #category {
   box-shadow: 0 0 5px var(--shadow-color);
-  width: 290px;
-  max-width: 80vw;
+  width: 375px;
+  max-width: 90vw;
   border-radius: 5px;
   margin: 5px;
-  padding: 5px;
-  padding-inline: 12px;
   background-color: var(--background-i2);
+  box-sizing: border-box;
 }
 #title {
   padding: 10px;
   text-align: center;
   font-weight: bold;
-  font-size: 20px;
+  font-size: 23px;
+  box-sizing: border-box;
 }
 #service {
   padding: 8px;
-  font-size: 15px;
+  padding-inline: 15px;
+  font-size: 17px;
   border-top: 1px solid var(--xtrans-gray);
+  box-sizing: border-box;
+  cursor: pointer;
+}
+#service:hover {
+  background: var(--hover);
+}
+#service:active {
+  background: var(--active);
+}
+/* phone view */
+@media (orientation: portrait) {
+  #service {
+    padding: 13px;
+  }
+  #title {
+    padding: 15px;
+  }
 }
 </style>

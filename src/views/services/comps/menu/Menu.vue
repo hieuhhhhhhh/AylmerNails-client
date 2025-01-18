@@ -39,16 +39,25 @@ export default {
   width: fit-content;
   box-shadow: 0 0 5px var(--shadow-color);
 }
-#title {
-  font-size: 22px;
-  font-weight: bold;
-}
+
 .options {
   border-top: 1px solid var(--xtrans-gray);
-  font-size: 17px;
-
+  font-size: 18px;
+  transition: all 0.5s ease-out; /* Smooth transition */
   padding: 8px;
   padding-inline: 15px;
   cursor: pointer;
+}
+.options:hover {
+  background: var(--hover);
+}
+.options:active {
+  background: var(--active);
+}
+/* phone view */
+@media (orientation: portrait) {
+  .options {
+    padding: 16px;
+  }
 }
 </style>

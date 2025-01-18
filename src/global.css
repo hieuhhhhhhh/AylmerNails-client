@@ -8,6 +8,8 @@
   --shadow-color: rgba(0, 0, 0, 0.2);
   --hover: rgb(217, 217, 217);
   --active: rgb(157, 157, 157);
+  -webkit-tap-highlight-color: transparent;
+
 }
 
 @media (prefers-color-scheme: dark) {
@@ -18,8 +20,8 @@
 
     --foreground: rgb(230, 230, 230);
     --shadow-color: rgba(0, 0, 0, 0.4);
-    --hover: rgb(22, 22, 22);
-    --active: black;
+    --hover: rgb(27, 27, 27);
+    --active: rgb(21, 21, 21);
   }
 }
 

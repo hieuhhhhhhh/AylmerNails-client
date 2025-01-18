@@ -4,7 +4,7 @@
     <input
       type="password"
       id="password"
-      @input="setPassword"
+      @input="onInput"
       placeholder="Enter your password"
       required
     />
@@ -13,10 +13,14 @@
 
 <script>
 export default {
+  props: {
+    password: String,
+    setPassword: Function,
+  },
   methods: {
-    setPassword(event) {
+    onInput(event) {
       // Send the parent to parent component
-      this.$emit("update:value", event.target.value);
+      this.setPassword(event.target.value);
     },
   },
 };

@@ -1,5 +1,5 @@
 <template>
-  <div id="cateContainer">
+  <div id="services">
     <Category
       v-for="(category, index) in categories"
       :key="index"
@@ -30,16 +30,7 @@ export default {
 
 <style scoped>
 #services {
-  background-color: var(--background-i1);
-  padding: 10px;
-  width: 900px;
-  max-width: 100vw;
-  margin-inline: auto;
-  flex-grow: 1;
-}
-#cateContainer {
   margin: auto;
-  padding: 5px;
   width: fit-content;
 }
 </style>

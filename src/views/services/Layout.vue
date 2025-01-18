@@ -1,18 +1,18 @@
 <template>
-  <div id="services">
+  <div id="layout">
     <Menu
       :options="[
         {
-          text: 'All services',
+          text: 'Services',
           path: '/services/all',
         },
         {
-          text: 'New service',
-          path: '/services/add_service',
+          text: 'New Category',
+          path: '/services/add_category',
         },
         {
-          text: 'New category',
-          path: '/services/add_category',
+          text: 'New Service',
+          path: '/services/add_service',
         },
       ]"
       :getTitle="getTitle"
@@ -42,13 +42,13 @@ export default {
     getTitle(path) {
       switch (path) {
         case "/services/all":
-          return "All Services";
+          return "Services";
 
         case "/services/add_service":
-          return "New service";
+          return "New Service";
 
         case "/services/add_category":
-          return "New category";
+          return "New Category";
 
         default:
           return "Services";
@@ -59,17 +59,13 @@ export default {
 </script>
 
 <style scoped>
-#services {
+#layout {
   background-color: var(--background-i1);
   padding: 10px;
   width: 900px;
   max-width: 100vw;
   margin-inline: auto;
   flex-grow: 1;
-}
-#cateContainer {
-  margin: auto;
-  padding: 5px;
-  width: fit-content;
+  box-sizing: border-box;
 }
 </style>

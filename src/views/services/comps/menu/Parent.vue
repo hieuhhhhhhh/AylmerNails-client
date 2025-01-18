@@ -74,7 +74,6 @@ export default {
 #parent:focus,
 #parent:hover {
   border-radius: 5px;
-
   background-color: var(--background-i2);
   width: fit-content;
   box-shadow: 0 0 5px var(--shadow-color);
