@@ -1,6 +1,6 @@
 :root {
   --background-i0: rgb(230, 230, 230);
-  --background-i1: rgb(240, 240, 240);
+  --background-i1: rgb(245, 245, 245);
   --background-i2: white;
 
   --foreground: #333;
@@ -14,10 +14,10 @@
   :root {
     --background-i0: #1a1a1a;
     --background-i1: #242424;
-    --background-i2: #2f2f2f;
+    --background-i2: #2b2b2b;
 
     --foreground: rgb(230, 230, 230);
-    --shadow-color: rgba(0, 0, 0, 0.6);
+    --shadow-color: rgba(0, 0, 0, 0.4);
     --hover: rgb(22, 22, 22);
     --active: black;
   }

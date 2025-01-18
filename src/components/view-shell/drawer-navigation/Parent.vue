@@ -1,5 +1,5 @@
 <template>
-  <div id="main">
+  <div id="parent">
     <div id="layout" v-show="drawerOpen" @click="toggleDrawer" />
     <Drawer :isOpen="drawerOpen" @update:drawerOpen="updateDrawerState" />
     <IconBtn @click="toggleDrawer" />
@@ -30,7 +30,7 @@ export default {
 </script>
 
 <style scoped>
-#main {
+#parent {
   z-index: 15;
 }
 #layout {

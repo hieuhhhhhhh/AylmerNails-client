@@ -1,5 +1,5 @@
 <template>
-  <div id="main">
+  <div id="category">
     <div id="title">{{ category.category_name ?? "Others" }}</div>
     <div
       id="service"
@@ -24,7 +24,7 @@ export default {
 </script>
 
 <style scoped>
-#main {
+#category {
   box-shadow: 0 0 5px var(--shadow-color);
   width: 290px;
   max-width: 80vw;

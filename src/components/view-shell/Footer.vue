@@ -14,6 +14,6 @@ export default {
   box-shadow: 0 0 5px var(--shadow-color);
   font-size: 20px;
   height: 50px;
-  background: var(--background-i1);
+  background: var(--background-i2);
 }
 </style>
