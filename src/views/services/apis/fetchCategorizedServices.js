@@ -46,7 +46,7 @@ function refactorServices(raw) {
 
   // re-group services based on their category_id
   services.forEach((service) => {
-    const { category_id, category_name } = service;
+    const { category_id, category_name, service_id, service_name } = service;
 
     // if key not found in map create new key.
     if (!categories.has(category_id)) {
@@ -58,7 +58,7 @@ function refactorServices(raw) {
     }
 
     // add the service to the matching category_id
-    categories.get(category_id).services.push(service);
+    categories.get(category_id).services.push({ service_id, service_name });
   });
 
   // sort the map based on the length of prop 'services'

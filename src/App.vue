@@ -1,5 +1,5 @@
 <template>
-  <div id="App">
+  <div id="app">
     <DrawerNav />
     <Header />
     <ApiContinueSession />
@@ -18,7 +18,6 @@ import ApiContinueSession from "./components/view-shell/ApiContinueSession.vue";
 
 export default {
   components: { Header, Footer, DrawerNav, ApiContinueSession },
-  name: "App",
   created() {
     document.title = "Aylmer Nails & Spa";
   },
@@ -28,13 +27,15 @@ export default {
 <style src="./global.css"></style>
 
 <style scoped>
-#App {
+#app {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
 }
 
 #content {
+  display: flex;
+  flex-direction: column;
   flex-grow: 1;
 }
 </style>

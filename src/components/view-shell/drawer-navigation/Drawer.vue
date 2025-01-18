@@ -33,7 +33,7 @@ export default {
   width: 300px;
   max-width: 75vw;
   height: 100%;
-  background: var(--middleground);
+  background: var(--background-i1);
   padding-top: 60px;
   transition: left 0.15s ease-out; /* add transition effect */
 }
