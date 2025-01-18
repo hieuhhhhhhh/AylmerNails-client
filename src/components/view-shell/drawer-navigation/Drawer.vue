@@ -11,10 +11,7 @@ export default {
   components: { DrawerContent },
   name: "Drawer-",
   props: {
-    isOpen: {
-      type: Boolean,
-      required: true,
-    },
+    isOpen: Boolean,
   },
   methods: {
     closeDrawer() {

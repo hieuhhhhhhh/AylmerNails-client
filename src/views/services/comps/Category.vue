@@ -15,10 +15,7 @@
 export default {
   name: "Category-",
   props: {
-    category: {
-      type: Object,
-      required: true,
-    },
+    category: Object,
   },
 };
 </script>
@@ -30,18 +27,18 @@ export default {
   max-width: 80vw;
   border-radius: 5px;
   margin: 5px;
-  padding: 0;
-  padding-inline: 10px;
+  padding: 5px;
+  padding-inline: 12px;
   background-color: var(--background-i2);
 }
 #title {
-  padding: 15px;
+  padding: 10px;
   text-align: center;
   font-weight: bold;
   font-size: 20px;
 }
 #service {
-  padding: 10px;
+  padding: 8px;
   font-size: 15px;
   border-top: 1px solid var(--xtrans-gray);
 }

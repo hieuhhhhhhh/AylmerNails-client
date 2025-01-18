@@ -1,26 +1,21 @@
 <template>
-  <div id="services">
-    <MenuBtn />
-    <div id="cateContainer">
-      <Category
-        v-for="(category, index) in categories"
-        :key="index"
-        :category="category"
-      />
-    </div>
+  <div id="cateContainer">
+    <Category
+      v-for="(category, index) in categories"
+      :key="index"
+      :category="category"
+    />
   </div>
 </template>
 
 <script>
 import fetchCategorizedServices from "./apis/fetchCategorizedServices";
 import Category from "./comps/Category.vue";
-import MenuBtn from "./comps/MenuBtn.vue";
 
 export default {
   name: "Services-",
   components: {
     Category,
-    MenuBtn,
   },
   data() {
     return {

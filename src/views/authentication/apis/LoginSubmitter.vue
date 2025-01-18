@@ -13,7 +13,10 @@ export default {
       msg: "",
     };
   },
-  props: ["phone", "password"],
+  props: {
+    phone: String,
+    password: String,
+  },
   methods: {
     async submitCredentials() {
       try {

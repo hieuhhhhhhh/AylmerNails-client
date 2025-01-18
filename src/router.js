@@ -6,7 +6,9 @@ import Profile from "./views/Profile.vue";
 import NotFound from "./views/NotFound.vue";
 import SignUp from "./views/authentication/SignUp.vue";
 import LogIn from "./views/authentication/LogIn.vue";
+import ServicesLayout from "./views/services/Layout.vue";
 import Services from "./views/services/Services.vue";
+
 import AddService from "./views/services/AddService.vue";
 
 const routes = [
@@ -32,8 +34,12 @@ const routes = [
   },
   {
     path: "/services",
-    component: Services,
+    component: ServicesLayout,
     children: [
+      {
+        path: "all",
+        component: Services,
+      },
       {
         path: "add_service",
         component: AddService,
