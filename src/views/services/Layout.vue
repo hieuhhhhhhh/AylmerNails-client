@@ -12,7 +12,7 @@
         },
         {
           text: 'New category',
-          path: '/services/add_service',
+          path: '/services/add_category',
         },
       ]"
       :getTitle="getTitle"
@@ -42,13 +42,13 @@ export default {
     getTitle(path) {
       switch (path) {
         case "/services/all":
-          return "Services // All";
+          return "All Services";
 
         case "/services/add_service":
-          return "Services // Add New Service";
+          return "New service";
 
         case "/services/add_category":
-          return "Services // Add New Category";
+          return "New category";
 
         default:
           return "Services";

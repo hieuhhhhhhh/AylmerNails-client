@@ -10,6 +10,7 @@ import ServicesLayout from "./views/services/Layout.vue";
 import Services from "./views/services/Services.vue";
 
 import AddService from "./views/services/AddService.vue";
+import AddCategory from "./views/services/AddCategory.vue";
 
 const routes = [
   {
@@ -35,6 +36,7 @@ const routes = [
   {
     path: "/services",
     component: ServicesLayout,
+    redirect: "/services/all",
     children: [
       {
         path: "all",
@@ -43,6 +45,10 @@ const routes = [
       {
         path: "add_service",
         component: AddService,
+      },
+      {
+        path: "add_category",
+        component: AddCategory,
       },
     ],
   },

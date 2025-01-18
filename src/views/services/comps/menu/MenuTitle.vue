@@ -29,7 +29,6 @@ export default {
 #title {
   padding: 8px;
   padding-inline: 15px;
-  cursor: pointer;
   font-size: 22px;
   font-weight: bold;
   border-radius: 5px;

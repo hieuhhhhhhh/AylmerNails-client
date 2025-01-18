@@ -6,14 +6,16 @@
     @blur="handleBlur"
     tabindex="0"
   >
-    <MenuTitle :title="getTitle()" />
+    <MenuTitle :title="title" :style="{ cursor: 'pointer' }" />
     <Menu
       v-if="menuOpen"
-      :title="getTitle()"
+      :title="title"
       :options="options"
       :onOptionSelected="
         (option) => {
           $refs.parent.blur();
+
+          // navigate to the new child route
           this.$router.push(option.path);
         }
       "
@@ -38,6 +40,7 @@ export default {
   },
   data() {
     return {
+      title: "",
       menuOpen: false,
     };
   },
@@ -48,6 +51,17 @@ export default {
     handleBlur() {
       this.menuOpen = false;
     },
+    setTitle() {
+      this.title = this.getTitle(this.$route.path);
+    },
+  },
+  created() {
+    // set title on component creation
+    this.setTitle();
+  },
+  watch: {
+    // Watch for route changes and update the title
+    $route: "setTitle",
   },
 };
 </script>
