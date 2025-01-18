@@ -1,6 +1,6 @@
 <template>
   <div id="services">
-    <div id="title">Services</div>
+    <MenuBtn />
     <div id="cateContainer">
       <Category
         v-for="(category, index) in categories"
@@ -14,11 +14,13 @@
 <script>
 import fetchCategorizedServices from "./apis/fetchCategorizedServices";
 import Category from "./comps/Category.vue";
+import MenuBtn from "./comps/MenuBtn.vue";
 
 export default {
   name: "Services-",
   components: {
     Category,
+    MenuBtn,
   },
   data() {
     return {
@@ -39,21 +41,6 @@ export default {
   max-width: 100vw;
   margin-inline: auto;
   flex-grow: 1;
-}
-#title {
-  margin: 0;
-  padding: 5px;
-  padding-inline: 15px;
-  cursor: pointer;
-  font-size: 22px;
-  font-weight: bold;
-  border-radius: 5px;
-}
-#title:hover,
-title:active {
-  background-color: var(--background-i2);
-  width: fit-content;
-  box-shadow: 0 0 5px var(--shadow-color);
 }
 #cateContainer {
   margin: auto;
