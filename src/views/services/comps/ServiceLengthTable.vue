@@ -3,6 +3,11 @@
     <table border="1">
       <thead>
         <tr>
+          <td colspan="2" id="title">
+            {{ formatDate(serviceLength.effective_from) }} ~
+          </td>
+        </tr>
+        <tr>
           <th>Employee</th>
           <th>Service Length (minutes)</th>
         </tr>
@@ -19,14 +24,20 @@
 </template>
 
 <script>
+import unixToReadable from "@/lib/unixToReadable";
 export default {
   props: {
     serviceLength: Object,
   },
   data() {
     return {
-      rows: [{ name: "Default", length: this.serviceLength.length }],
+      rows: [],
     };
+  },
+  methods: {
+    formatDate(unixTime) {
+      return unixToReadable(unixTime);
+    },
   },
   created() {
     const defaultLength = this.serviceLength.length;
@@ -36,6 +47,10 @@ export default {
         length: defaultLength + e.length_offset,
       });
     });
+
+    const defaultName =
+      this.serviceLength.variations.length > 0 ? "Others" : "All";
+    this.rows.push({ name: defaultName, length: this.serviceLength.length });
   },
 };
 </script>
@@ -50,5 +65,10 @@ th,
 td {
   padding: 10px;
   text-align: left;
+}
+
+#title {
+  font-size: 14px;
+  text-align: right;
 }
 </style>
