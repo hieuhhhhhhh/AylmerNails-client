@@ -42,7 +42,7 @@ export default {
   align-items: center;
   justify-content: center;
   font-size: 30px; /* Increase this value to make the icon larger */
-  background: var(--background-i1);
+  background: var(--background-i2);
   height: 50px;
   aspect-ratio: 1;
   border-radius: 50%;
@@ -50,8 +50,5 @@ export default {
 }
 #icon:hover {
   background: var(--hover);
-}
-#icon:active {
-  background: var(--active);
 }
 </style>

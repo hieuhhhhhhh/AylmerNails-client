@@ -1,3 +1,5 @@
+import getTodayUnixTime from "@/lib/getTodayUnixTime";
+
 export default async function fetchCategorizedServices() {
   try {
     // get app path
@@ -5,7 +7,7 @@ export default async function fetchCategorizedServices() {
 
     // start requesting server
     const res = await fetch(
-      `${baseURL}/api/services/get_many_services/${Date.now()}`,
+      `${baseURL}/api/services/get_many_services/${getTodayUnixTime()}`,
       {
         method: "GET",
         credentials: "include",
