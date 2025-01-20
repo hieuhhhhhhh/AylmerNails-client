@@ -4,13 +4,16 @@ export default async function fetchCategorizedServices() {
     const baseURL = process.env.VUE_APP_BASE_URL;
 
     // start requesting server
-    const res = await fetch(`${baseURL}/api/services/get_all_services`, {
-      method: "GET",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const res = await fetch(
+      `${baseURL}/api/services/get_many_services/${Date.now()}`,
+      {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     // read status and process response
     if (res.ok) {

@@ -19,6 +19,11 @@
           this.$router.push(option.path);
         }
       "
+      :onCloseMenu="
+        () => {
+          $refs.parent.blur();
+        }
+      "
     />
   </div>
 </template>

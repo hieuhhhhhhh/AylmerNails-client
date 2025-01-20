@@ -1,6 +1,6 @@
 <template>
   <div id="menu">
-    <MenuTitle :title="title" />
+    <MenuTitle :title="title" @click="onCloseMenu()" />
     <div
       class="options"
       v-for="(option, index) in options"
@@ -20,6 +20,7 @@ export default {
     options: Array,
     title: String,
     onOptionSelected: Function,
+    onCloseMenu: Function,
   },
   name: "Menu-",
   components: {
