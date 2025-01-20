@@ -31,7 +31,7 @@ export default {
         if (res.ok) {
           console.log("Sussesful");
         } else {
-          this.$router.push("./login");
+          this.$router.push("/login");
           console.log("Failed, message: ", data.message);
         }
       } catch (e) {

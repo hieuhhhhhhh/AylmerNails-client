@@ -24,7 +24,7 @@ export default async function refreshSession() {
       if (data && data.token) {
         console.log("Session continued.");
       } else {
-        this.$router.push("./login");
+        this.$router.push("/login");
         console.log("Failed to use token, message: ", data.message);
       }
     } else {

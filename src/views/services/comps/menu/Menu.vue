@@ -1,6 +1,6 @@
 <template>
   <div id="menu">
-    <MenuTitle :title="title" @click="onCloseMenu()" />
+    <MenuTitle :title="title" @click="onCloseMenu" />
     <div
       class="options"
       v-for="(option, index) in options"

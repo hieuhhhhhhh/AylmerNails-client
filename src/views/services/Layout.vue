@@ -39,7 +39,9 @@ export default {
     this.categories = await fetchCategorizedServices();
   },
   methods: {
-    getTitle(path) {
+    getTitle() {
+      const path = this.$route.path;
+
       switch (path) {
         case "/services/all":
           return "Services";
@@ -50,8 +52,13 @@ export default {
         case "/services/add_category":
           return "New Category";
 
-        default:
+        default: {
+          if (path.includes("/services/details")) {
+            const service_id = this.$route.params.id;
+            return `Service Details (ID: ${service_id})`;
+          }
           return "Services";
+        }
       }
     },
   },

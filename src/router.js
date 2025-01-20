@@ -11,6 +11,7 @@ import Services from "./views/services/Services.vue";
 
 import AddService from "./views/services/AddService.vue";
 import AddCategory from "./views/services/AddCategory.vue";
+import ServiceDetails from "./views/services/ServiceDetails.vue";
 
 const routes = [
   {
@@ -49,6 +50,10 @@ const routes = [
       {
         path: "add_category",
         component: AddCategory,
+      },
+      {
+        path: "details/:id",
+        component: ServiceDetails,
       },
     ],
   },

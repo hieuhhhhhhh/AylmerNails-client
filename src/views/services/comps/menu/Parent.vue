@@ -57,7 +57,7 @@ export default {
       this.menuOpen = false;
     },
     setTitle() {
-      this.title = this.getTitle(this.$route.path);
+      this.title = this.getTitle();
     },
   },
   created() {

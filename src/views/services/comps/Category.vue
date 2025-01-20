@@ -5,6 +5,7 @@
       id="service"
       v-for="(service, index) in category.services"
       :key="index"
+      @click="openServiceDetails(service.service_id)"
     >
       {{ service.service_name }}
     </div>
@@ -16,6 +17,11 @@ export default {
   name: "Category-",
   props: {
     category: Object,
+  },
+  methods: {
+    openServiceDetails(service_id) {
+      this.$router.push(`/services/details/${service_id}`);
+    },
   },
 };
 </script>
