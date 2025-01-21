@@ -45,5 +45,32 @@ body {
 }
 .blueBtn:active{
   background-color: rgb(32, 86, 156);
+}
 
+.greenBtn {
+  color: white;
+  background-color: rgb(57, 184, 95);
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 15px;
+  padding: 8px;
+  border: 1px rgba(0, 0, 0, 0.4) solid;
+  transition: background-color 0.05s ease-in-out;
+}
+.greenBtn:active{
+  background-color: rgb(36, 117, 88)
+}
+
+.redBtn {
+  color: white;
+  background-color: rgb(206, 69, 69);
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 15px;
+  padding: 8px;
+  border: 1px rgba(0, 0, 0, 0.4) solid;
+  transition: background-color 0.05s ease-in-out;
+}
+.redBtn:active{
+  background-color: rgb(134, 46, 46);
 }

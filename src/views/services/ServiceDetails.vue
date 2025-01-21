@@ -1,29 +1,5 @@
 <template>
-  <table>
-    <tbody>
-      <tr>
-        <th>Name:</th>
-        <td class="highlight">{{ details.name }}</td>
-      </tr>
-      <tr>
-        <th>Description:</th>
-        <td>{{ details.description }}</td>
-      </tr>
-      <tr>
-        <th>Available Until:</th>
-        <td>
-          <NA v-if="!details.last_date?.formatDate() && isFetched" />
-        </td>
-      </tr>
-      <tr>
-        <th>Category:</th>
-        <td><NA v-if="!details.cate_name && isFetched" /></td>
-      </tr>
-    </tbody>
-  </table>
-  <button class="blueBtn">
-    <FontAwesomeIcon :icon="editIcon" /> Edit Service Details
-  </button>
+  <ServiceInfo :isFetched="isFetched" :serviceInfo="serviceInfo" />
 
   <th>Current Length Setting:</th>
 
@@ -41,67 +17,53 @@
     :key="index"
     :serviceLength="serviceLength"
   />
-
-  <button
-    class="blueBtn"
-    @click="
-      () => {
-        setModalOpen(true);
-      }
-    "
-  >
-    <FontAwesomeIcon :icon="plusIcon" /> Add New Length Setting
-  </button>
-  <Modal :modalOpen="modalOpen" :setModalOpen="setModalOpen">
-    <AddServiceLength />
-  </Modal>
+  <AddServiceLength />
 </template>
 
 <script>
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faPenToSquare } from "@fortawesome/free-solid-svg-icons"; // Proper import for icons
-import { faPlus } from "@fortawesome/free-solid-svg-icons"; // Proper import for icons
-
 import fetchServiceDetails from "./apis/fetchServiceDetails";
 import ServiceLengthTable from "./comps/ServiceLengthTable.vue";
 import unixToReadable from "@/lib/unixToReadable";
 import getTodayUnixTime from "@/lib/getTodayUnixTime";
 import NA from "@/components/NotAvailable.vue";
 import AddServiceLength from "./comps/AddServiceLength.vue";
-import Modal from "@/components/wrappers/Modal.vue";
+import ServiceInfo from "./comps/ServiceInfo.vue";
 
 export default {
   components: {
     ServiceLengthTable,
     NA,
-    FontAwesomeIcon,
     AddServiceLength,
-    Modal,
+    ServiceInfo,
   },
   data() {
     return {
-      editIcon: faPenToSquare,
-      plusIcon: faPlus,
       service_id: null,
       details: {},
+      serviceInfo: {},
       futureLengths: [],
       currentLength: {},
       isFetched: false,
-      modalOpen: false,
+      isAddingLength: false,
     };
   },
   methods: {
     formatDate(unixTime) {
       return unixToReadable(unixTime);
     },
-    setModalOpen(bool) {
-      this.modalOpen = bool;
-    },
   },
   async created() {
     this.service_id = this.$route.params.id;
     this.details = await fetchServiceDetails(this.service_id);
     console.log(this.details);
+    // fetch info
+    this.serviceInfo = {
+      service_id: this.details.service_id,
+      name: this.details.name,
+      description: this.details.description,
+      last_date: this.details.last_date,
+    };
+
     // fetch lengths
     this.lengths = this.details.lengths;
     console.log(this.lengths[0]);
@@ -123,12 +85,8 @@ export default {
 };
 </script>
 
+
 <style scoped>
-.highlight {
-  font-size: 20px;
-  padding-top: 5px;
-  padding-bottom: 5px;
-}
 th,
 td {
   padding: 10px;
