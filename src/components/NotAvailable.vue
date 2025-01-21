@@ -5,6 +5,5 @@
 <style scoped>
 #na {
   color: gray;
-  font-style: italic;
 }
 </style>

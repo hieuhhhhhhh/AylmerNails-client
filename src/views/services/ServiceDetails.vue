@@ -12,23 +12,29 @@
       <tr>
         <th>Available Until:</th>
         <td>
-          <NA v-if="!details.last_date?.formatDate()" />
+          <NA v-if="!details.last_date?.formatDate() && isFetched" />
         </td>
       </tr>
       <tr>
         <th>Category:</th>
-        <td><NA v-if="!details.cate_name" /></td>
+        <td><NA v-if="!details.cate_name && isFetched" /></td>
       </tr>
     </tbody>
   </table>
+  <button class="blueBtn">
+    <FontAwesomeIcon :icon="editIcon" /> Edit Service Details
+  </button>
+
   <th>Current Length Setting:</th>
+
   <ServiceLengthTable
     v-if="currentLength && Object.keys(currentLength).length"
     :serviceLength="currentLength"
   />
-
+  <td v-else-if="isFetched"><NA /></td>
+  <br />
   <th>Future Length Settings:</th>
-  <td v-if="!futureLengths.length > 0"><NA /></td>
+  <td v-if="!futureLengths.length > 0 && isFetched"><NA /></td>
 
   <ServiceLengthTable
     v-for="(serviceLength, index) in futureLengths"
@@ -36,10 +42,16 @@
     :serviceLength="serviceLength"
   />
 
-  <button>Add New Length Setting</button>
+  <button class="blueBtn">
+    <FontAwesomeIcon :icon="plusIcon" /> Add New Length Setting
+  </button>
 </template>
 
 <script>
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons"; // Proper import for icons
+import { faPlus } from "@fortawesome/free-solid-svg-icons"; // Proper import for icons
+
 import fetchServiceDetails from "./apis/fetchServiceDetails";
 import ServiceLengthTable from "./comps/ServiceLengthTable.vue";
 import unixToReadable from "@/lib/unixToReadable";
@@ -47,13 +59,16 @@ import getTodayUnixTime from "@/lib/getTodayUnixTime";
 import NA from "@/components/NotAvailable.vue";
 
 export default {
-  components: { ServiceLengthTable, NA },
+  components: { ServiceLengthTable, NA, FontAwesomeIcon },
   data() {
     return {
+      editIcon: faPenToSquare,
+      plusIcon: faPlus,
       service_id: null,
       details: {},
       futureLengths: [],
       currentLength: {},
+      isFetched: false,
     };
   },
   methods: {
@@ -79,6 +94,9 @@ export default {
         break;
       }
     }
+
+    // set isFetched
+    this.isFetched = true;
   },
 };
 </script>

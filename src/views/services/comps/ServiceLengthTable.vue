@@ -8,7 +8,9 @@
               <span id="date"
                 >{{ formatDate(serviceLength.effective_from) }} ~</span
               >
-              <FontAwesomeIcon id="edit" :icon="editIcon" />
+              <button class="blueBtn" id="edit">
+                <FontAwesomeIcon :icon="editIcon" /> Edit
+              </button>
             </div>
           </td>
         </tr>
@@ -88,7 +90,8 @@ td {
   /* color: gray; */
 }
 #edit {
-  font-size: 24px;
   cursor: pointer;
+  font-size: 12px;
+  padding: 5px;
 }
 </style>
