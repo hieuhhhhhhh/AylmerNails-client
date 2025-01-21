@@ -3,8 +3,13 @@
     <table border="1">
       <thead>
         <tr>
-          <td colspan="2" id="title">
-            {{ formatDate(serviceLength.effective_from) }} ~
+          <td colspan="2">
+            <div id="title">
+              <span id="date"
+                >{{ formatDate(serviceLength.effective_from) }} ~</span
+              >
+              <FontAwesomeIcon id="edit" :icon="editIcon" />
+            </div>
           </td>
         </tr>
         <tr>
@@ -24,14 +29,20 @@
 </template>
 
 <script>
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons"; // Proper import for icons
 import unixToReadable from "@/lib/unixToReadable";
 export default {
   props: {
     serviceLength: Object,
   },
+  components: {
+    FontAwesomeIcon,
+  },
   data() {
     return {
       rows: [],
+      editIcon: faPenToSquare,
     };
   },
   methods: {
@@ -55,7 +66,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 table {
   border-collapse: collapse;
   max-width: 100vw;
@@ -68,7 +79,16 @@ td {
 }
 
 #title {
-  font-size: 14px;
-  text-align: right;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+#date {
+  color: rgb(160, 130, 40);
+  /* color: gray; */
+}
+#edit {
+  font-size: 24px;
+  cursor: pointer;
 }
 </style>
