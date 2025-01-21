@@ -42,9 +42,19 @@
     :serviceLength="serviceLength"
   />
 
-  <button class="blueBtn">
+  <button
+    class="blueBtn"
+    @click="
+      () => {
+        setModalOpen(true);
+      }
+    "
+  >
     <FontAwesomeIcon :icon="plusIcon" /> Add New Length Setting
   </button>
+  <Modal :modalOpen="modalOpen" :setModalOpen="setModalOpen">
+    <AddServiceLength />
+  </Modal>
 </template>
 
 <script>
@@ -57,9 +67,17 @@ import ServiceLengthTable from "./comps/ServiceLengthTable.vue";
 import unixToReadable from "@/lib/unixToReadable";
 import getTodayUnixTime from "@/lib/getTodayUnixTime";
 import NA from "@/components/NotAvailable.vue";
+import AddServiceLength from "./comps/AddServiceLength.vue";
+import Modal from "@/components/wrappers/Modal.vue";
 
 export default {
-  components: { ServiceLengthTable, NA, FontAwesomeIcon },
+  components: {
+    ServiceLengthTable,
+    NA,
+    FontAwesomeIcon,
+    AddServiceLength,
+    Modal,
+  },
   data() {
     return {
       editIcon: faPenToSquare,
@@ -69,11 +87,15 @@ export default {
       futureLengths: [],
       currentLength: {},
       isFetched: false,
+      modalOpen: false,
     };
   },
   methods: {
     formatDate(unixTime) {
       return unixToReadable(unixTime);
+    },
+    setModalOpen(bool) {
+      this.modalOpen = bool;
     },
   },
   async created() {
