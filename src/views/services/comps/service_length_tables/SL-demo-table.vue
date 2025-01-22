@@ -53,6 +53,11 @@ export default {
     },
   },
   created() {
+    this.rows.push({
+      name: "ALL",
+      length: this.serviceLength.length,
+    });
+
     const defaultLength = this.serviceLength.length;
     this.serviceLength.variations.forEach((e) => {
       this.rows.push({
@@ -60,10 +65,6 @@ export default {
         length: defaultLength + e.length_offset,
       });
     });
-
-    const defaultName =
-      this.serviceLength.variations.length > 0 ? "Others" : "All";
-    this.rows.push({ name: defaultName, length: this.serviceLength.length });
   },
 };
 </script>

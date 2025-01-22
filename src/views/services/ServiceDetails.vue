@@ -22,7 +22,7 @@
 
 <script>
 import fetchServiceDetails from "./apis/fetchServiceDetails";
-import ServiceLengthTable from "./comps/ServiceLengthTable.vue";
+import ServiceLengthTable from "./comps/service_length_tables/SL-demo-table.vue";
 import unixToReadable from "@/lib/unixToReadable";
 import getTodayUnixTime from "@/lib/getTodayUnixTime";
 import NA from "@/components/NotAvailable.vue";

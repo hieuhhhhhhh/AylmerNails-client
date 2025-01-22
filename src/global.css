@@ -74,3 +74,17 @@ body {
 .redBtn:active{
   background-color: rgb(134, 46, 46);
 }
+
+.orangeBtn {
+  color: white;
+  background-color: rgb(206, 142, 69);
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 15px;
+  padding: 8px;
+  border: 1px rgba(0, 0, 0, 0.4) solid;
+  transition: background-color 0.05s ease-in-out;
+}
+.orangeBtn:active{
+  background-color: rgb(138, 95, 47);
+}

@@ -18,7 +18,18 @@ export default async function fetchEmployees() {
     // read status and process response
     if (res.ok) {
       // refactor data and return result
-      return json.all_employees;
+      const raw = json.all_employees;
+      const employees = [];
+      raw.forEach((e) => {
+        // unpack properties and create new employee
+        const [employee_id, alias, first_date, last_date] = e;
+        const employee = { employee_id, alias, first_date, last_date };
+
+        employees.push(employee);
+      });
+
+      // return result
+      return employees;
     } else {
       console.log("Failed to fetch employee list, message: ", json.message);
     }
