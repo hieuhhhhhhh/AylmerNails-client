@@ -84,13 +84,14 @@ export default {
     setDate(value) {
       this.date = value;
     },
-    onSubmit() {
-      submitNewServiceLength(
+    async onSubmit() {
+      await submitNewServiceLength(
         this.serviceId,
         this.date,
         this.variations,
         this.defaultLength
       );
+      this.$router.go(0);
     },
   },
 };

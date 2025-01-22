@@ -1,33 +1,32 @@
 <template>
-  <div>
-    <table border="1">
-      <thead>
-        <tr>
-          <td colspan="2">
-            <div id="title">
-              <span id="date"
-                >{{ formatDate(serviceLength.effective_from) }} ~</span
-              >
-              <button class="blueBtn" id="edit">
-                <FontAwesomeIcon :icon="editIcon" /> Edit
-              </button>
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <th>Employee</th>
-          <th>Service Length (minutes)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(row, index) in rows" :key="index">
-          <td>{{ row.name }}</td>
-          <td>{{ row.length / 60 }}</td>
-          <!-- Correct use of parseSeconds -->
-        </tr>
-      </tbody>
-    </table>
-  </div>
+  <table border="1">
+    <thead>
+      <tr>
+        <td colspan="2">
+          <div id="title">
+            <span id="date"
+              >{{ formatDate(serviceLength.effective_from) }} ~</span
+            >
+            <button class="blueBtn" id="edit">
+              <FontAwesomeIcon :icon="editIcon" /> Edit
+            </button>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <th>Employee</th>
+        <th>Service Length (minutes)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="(row, index) in rows" :key="index">
+        <td>{{ row.name }}</td>
+        <td>{{ row.length / 60 }}</td>
+        <!-- Correct use of parseSeconds -->
+      </tr>
+    </tbody>
+  </table>
+  <br />
 </template>
 
 <script>
@@ -88,7 +87,7 @@ td {
 }
 #date {
   color: rgb(160, 130, 40);
-  /* color: gray; */
+  font-size: 14px;
 }
 #edit {
   cursor: pointer;
