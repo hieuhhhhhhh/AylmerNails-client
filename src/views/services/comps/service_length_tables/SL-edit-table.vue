@@ -33,9 +33,16 @@
 
         <tr v-for="(variation, index) in variations" :key="index">
           <td>
+            <button
+              class="redBtn"
+              id="smallBtn"
+              @click="removeVariation(index)"
+            >
+              <FontAwesomeIcon :icon="removeIcon" /></button
+            >&nbsp;
             <select
               :value="variation.employee_id"
-              @change="handleChange"
+              @change="onSelectEmployee(index, $event)"
               required
             >
               <option
@@ -72,6 +79,7 @@
 <script>
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons"; // Proper import for icons
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons"; // Proper import for icons
 
 import fetchEmployees from "../../apis/fetchEmployees";
 export default {
@@ -94,6 +102,7 @@ export default {
     return {
       // icons
       plusIcon: faPlus,
+      removeIcon: faTrashCan,
 
       // states
       seEmployeeID: null,
@@ -113,7 +122,7 @@ export default {
         this.editVariation(index, "length", value);
       }
     },
-    onInputEmployeeId(index, event) {
+    onSelectEmployee(index, event) {
       this.editVariation(index, "employee_id", event.target.value);
     },
   },
