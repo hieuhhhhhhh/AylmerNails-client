@@ -33,7 +33,11 @@
 
         <tr v-for="(variation, index) in variations" :key="index">
           <td>
-            <select :value="seEmployeeID" @change="handleChange">
+            <select
+              :value="variation.employee_id"
+              @change="handleChange"
+              required
+            >
               <option
                 v-for="emp in employees"
                 :key="emp.employee_id"
@@ -47,16 +51,16 @@
             <input
               type="number"
               :value="variation.length"
+              @input="onInputLength(index, $event)"
               required
               min="1"
-              @input="onInputLength(index, $event)"
             />
           </td>
         </tr>
         <tr>
           <td colspan="2">
             <button class="orangeBtn" id="smallBtn" @click="addVariation">
-              Add a Variation
+              <FontAwesomeIcon :icon="plusIcon" /> Add a Variation
             </button>
           </td>
         </tr>
@@ -66,6 +70,9 @@
 </template>
 
 <script>
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons"; // Proper import for icons
+
 import fetchEmployees from "../../apis/fetchEmployees";
 export default {
   props: {
@@ -80,8 +87,15 @@ export default {
     setDefaultLength: Function,
     setDate: Function,
   },
+  components: {
+    FontAwesomeIcon,
+  },
   data() {
     return {
+      // icons
+      plusIcon: faPlus,
+
+      // states
       seEmployeeID: null,
       employees: [],
     };

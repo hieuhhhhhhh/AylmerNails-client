@@ -1,27 +1,29 @@
 <template>
-  <div v-if="isAddingLength">
-    <SLEditTable
-      :variations="variations"
-      :addVariation="addVariation"
-      :removeVariation="removeVariation"
-      :editVariation="editVariation"
-      :setDefaultLength="setDefaultLength"
-      :defaultLength="defaultLength"
-      :date="date"
-      :setDate="setDate"
-    />
-  </div>
-  <button v-if="!isAddingLength" class="blueBtn" @click="openLengthInput">
-    <FontAwesomeIcon :icon="plusIcon" /> Add New Length Setting
-  </button>
-  <div v-else id="duo">
-    <button class="redBtn" @click="closeLengthInput">
-      <FontAwesomeIcon :icon="cancelIcon" /> Cancel
+  <form @submit.prevent="onSubmit">
+    <div v-if="isAddingLength">
+      <SLEditTable
+        :variations="variations"
+        :addVariation="addVariation"
+        :removeVariation="removeVariation"
+        :editVariation="editVariation"
+        :setDefaultLength="setDefaultLength"
+        :defaultLength="defaultLength"
+        :date="date"
+        :setDate="setDate"
+      />
+    </div>
+    <button v-if="!isAddingLength" class="blueBtn" @click="openLengthInput">
+      <FontAwesomeIcon :icon="plusIcon" /> Add New Length Setting
     </button>
-    <button class="greenBtn" @click="closeLengthInput">
-      <FontAwesomeIcon :icon="saveIcon" /> Add
-    </button>
-  </div>
+    <div v-else id="duo">
+      <button class="redBtn" @click="closeLengthInput">
+        <FontAwesomeIcon :icon="cancelIcon" /> Cancel
+      </button>
+      <button class="greenBtn" type="submit">
+        <FontAwesomeIcon :icon="saveIcon" /> Add
+      </button>
+    </div>
+  </form>
 </template>
 
 <script>
@@ -38,10 +40,15 @@ export default {
   },
   data() {
     return {
-      isAddingLength: false,
+      // icons
       plusIcon: faPlus,
       cancelIcon: faCancel,
       saveIcon: faCheck,
+
+      // status
+      isAddingLength: false,
+
+      // states
       date: null,
       variations: [],
       defaultLength: null,
@@ -58,6 +65,7 @@ export default {
       this.date = null;
     },
     addVariation() {
+      // add an empty variation to the array
       this.variations.push({ employee_id: null, length: null });
     },
     removeVariation(index) {
@@ -72,6 +80,7 @@ export default {
     setDate(value) {
       this.date = value;
     },
+    onSubmit() {},
   },
 };
 </script>
