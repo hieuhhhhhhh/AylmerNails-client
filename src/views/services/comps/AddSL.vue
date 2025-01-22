@@ -93,7 +93,7 @@ export default {
         this.variations,
         this.defaultLength
       );
-      this.$router.go(0);
+      this.$router.push("/services/refresh");
     },
   },
 };

@@ -8,7 +8,7 @@ import SignUp from "./views/authentication/SignUp.vue";
 import LogIn from "./views/authentication/LogIn.vue";
 import ServicesLayout from "./views/services/Layout.vue";
 import Services from "./views/services/Services.vue";
-
+import Refresh from "./components/Refresh.vue";
 import AddService from "./views/services/AddService.vue";
 import AddCategory from "./views/services/AddCategory.vue";
 import ServiceDetails from "./views/services/ServiceDetails.vue";
@@ -42,6 +42,10 @@ const routes = [
       {
         path: "all",
         component: Services,
+      },
+      {
+        path: "refresh",
+        component: Refresh,
       },
       {
         path: "add_service",

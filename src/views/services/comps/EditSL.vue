@@ -81,7 +81,7 @@ export default {
         this.variations,
         this.defaultLength
       );
-      this.$router.push(`/services/details/${this.serviceId}`);
+      this.$router.push("/services/refresh");
     },
   },
   created() {
