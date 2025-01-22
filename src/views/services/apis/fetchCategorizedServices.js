@@ -16,18 +16,17 @@ export default async function fetchCategorizedServices() {
         },
       }
     );
+    // fetch json
+    const json = await res.json();
 
     // read status and process response
     if (res.ok) {
-      // fetch services
-      const json = await res.json();
-
       // refactor services to categories and return result
       const categories = refactorServices(json.all_services);
 
       return categories;
     } else {
-      console.log("Failed to fetch all services, message: ", res.statusText);
+      console.log("Failed to fetch employee list, message: ", json.message);
     }
   } catch (e) {
     console.error("Unexpected Error: ", e);
