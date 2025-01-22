@@ -1,5 +1,6 @@
 <template>
   <ServiceInfo :isFetched="isFetched" :serviceInfo="serviceInfo" />
+  <br /><br />
 
   <th>Current Length Setting:</th>
 
@@ -8,7 +9,8 @@
     :serviceLength="currentLength"
   />
   <td v-else-if="isFetched"><NA /></td>
-  <br />
+  <br /><br />
+
   <th>Future Length Settings:</th>
   <td v-if="!futureLengths.length > 0 && isFetched"><NA /></td>
 
@@ -17,7 +19,7 @@
     :key="index"
     :serviceLength="serviceLength"
   />
-  <AddServiceLength />
+  <AddServiceLength :serviceId="service_id" />
 </template>
 
 <script>

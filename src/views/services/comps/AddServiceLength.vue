@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="onSubmit">
+  <form @submit.prevent="onSubmit" id="asl">
     <div v-if="isAddingLength">
       <SLEditTable
         :variations="variations"
@@ -32,12 +32,16 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons"; // Proper import for
 import { faCancel } from "@fortawesome/free-solid-svg-icons"; // Proper import for icons
 import { faCheck } from "@fortawesome/free-solid-svg-icons"; // Proper import for icons
 import SLEditTable from "./service_length_tables/SL-edit-table.vue";
-
+import submitNewServiceLength from "../apis/submitSL";
 export default {
+  props: {
+    serviceId: String,
+  },
   components: {
     FontAwesomeIcon,
     SLEditTable,
   },
+
   data() {
     return {
       // icons
@@ -80,12 +84,24 @@ export default {
     setDate(value) {
       this.date = value;
     },
-    onSubmit() {},
+    onSubmit() {
+      submitNewServiceLength(
+        this.serviceId,
+        this.date,
+        this.variations,
+        this.defaultLength
+      );
+    },
   },
 };
 </script>
 
 <style scoped>
+#asl {
+  width: fit-content;
+  padding: 7px;
+  background-color: var(--background-i2);
+}
 #duo {
   display: flex;
   gap: 15px;

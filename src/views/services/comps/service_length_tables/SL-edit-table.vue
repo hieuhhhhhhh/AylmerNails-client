@@ -5,10 +5,14 @@
         <tr>
           <td colspan="2">
             <div id="title">
-              <span v-if="date" id="date">{{ date }}</span>
-              <button v-if="setDate" class="orangeBtn" id="smallBtn">
-                Select Date
-              </button>
+              <input
+                type="date"
+                v-if="setDate"
+                id="datePicker"
+                :value="date"
+                @change="onSelectDate"
+                required
+              />
             </div>
           </td>
         </tr>
@@ -67,7 +71,7 @@
         <tr>
           <td colspan="2">
             <button class="orangeBtn" id="smallBtn" @click="addVariation">
-              <FontAwesomeIcon :icon="plusIcon" /> Add a Variation
+              <FontAwesomeIcon :icon="plusIcon" /> More Variation
             </button>
           </td>
         </tr>
@@ -85,8 +89,8 @@ import fetchEmployees from "../../apis/fetchEmployees";
 export default {
   props: {
     variations: Object,
-    defaultLength: Number,
-    date: Number,
+    defaultLength: String,
+    date: String,
 
     addVariation: Function,
     removeVariation: Function,
@@ -125,6 +129,9 @@ export default {
     onSelectEmployee(index, event) {
       this.editVariation(index, "employee_id", event.target.value);
     },
+    onSelectDate(event) {
+      this.setDate(event.target.value);
+    },
   },
   async created() {
     this.employees = await fetchEmployees();
@@ -153,5 +160,10 @@ td {
   cursor: pointer;
   font-size: 12px;
   padding: 5px;
+}
+#datePicker {
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 5px;
 }
 </style>

@@ -40,7 +40,7 @@
   </table>
 
   <button v-if="!isEditing" class="greenBtn">
-    <FontAwesomeIcon :icon="plusIcon" /> Save New Service
+    <FontAwesomeIcon :icon="saveIcon" /> Save New Service
   </button>
 </template>
 

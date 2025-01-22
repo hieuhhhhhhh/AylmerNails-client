@@ -1,37 +1,39 @@
 <template>
-  <table>
-    <tbody>
-      <tr>
-        <th>Name:</th>
-        <td class="highlight">{{ serviceInfo.name }}</td>
-      </tr>
-      <tr>
-        <th>Description:</th>
-        <td>{{ serviceInfo.description }}</td>
-      </tr>
-      <tr>
-        <th>Available Until:</th>
-        <td>
-          <NA v-if="!serviceInfo.last_date?.formatDate() && isFetched" />
-        </td>
-      </tr>
-      <tr>
-        <th>Category:</th>
-        <td><NA v-if="!serviceInfo.cate_name && isFetched" /></td>
-      </tr>
-    </tbody>
-  </table>
+  <div id="ServiceInfo">
+    <table>
+      <tbody>
+        <tr>
+          <th>Name:</th>
+          <td class="highlight">{{ serviceInfo.name }}</td>
+        </tr>
+        <tr>
+          <th>Description:</th>
+          <td>{{ serviceInfo.description }}</td>
+        </tr>
+        <tr>
+          <th>Available Until:</th>
+          <td>
+            <NA v-if="!serviceInfo.last_date?.formatDate() && isFetched" />
+          </td>
+        </tr>
+        <tr>
+          <th>Category:</th>
+          <td><NA v-if="!serviceInfo.cate_name && isFetched" /></td>
+        </tr>
+      </tbody>
+    </table>
 
-  <button v-if="!isEditing" class="blueBtn" @click="openEditForm">
-    <FontAwesomeIcon :icon="plusIcon" /> Edit Service Details
-  </button>
-  <div v-else id="duo">
-    <button class="redBtn" @click="closeEditFrom">
-      <FontAwesomeIcon :icon="cancelIcon" /> Cancel
+    <button v-if="!isEditing" class="blueBtn" @click="openEditForm">
+      <FontAwesomeIcon :icon="editIcon" /> Edit Service Details
     </button>
-    <button class="greenBtn" @click="closeEditFrom">
-      <FontAwesomeIcon :icon="saveIcon" /> Save Changes
-    </button>
+    <div v-else id="duo">
+      <button class="redBtn" @click="closeEditFrom">
+        <FontAwesomeIcon :icon="cancelIcon" /> Cancel
+      </button>
+      <button class="greenBtn" @click="closeEditFrom">
+        <FontAwesomeIcon :icon="saveIcon" /> Save Changes
+      </button>
+    </div>
   </div>
 </template>
 
@@ -76,6 +78,11 @@ export default {
 </script>
 
 <style scoped>
+#ServiceInfo {
+  background-color: var(--background-i2);
+  width: fit-content;
+  padding: 7px;
+}
 .highlight {
   font-size: 20px;
   padding-top: 5px;
