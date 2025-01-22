@@ -16,7 +16,7 @@
       <FontAwesomeIcon :icon="plusIcon" /> Add New Length Setting
     </button>
     <div v-else id="duo">
-      <button class="redBtn" @click="closeLengthInput">
+      <button class="redBtn" @click.prevent="closeLengthInput">
         <FontAwesomeIcon :icon="cancelIcon" /> Cancel
       </button>
       <button class="greenBtn" type="submit">
@@ -33,6 +33,8 @@ import { faCancel } from "@fortawesome/free-solid-svg-icons"; // Proper import f
 import { faCheck } from "@fortawesome/free-solid-svg-icons"; // Proper import for icons
 import SLEditTable from "./service_length_tables/SL-edit-table.vue";
 import submitNewServiceLength from "../apis/submitSL";
+import dateToUnixTime from "@/lib/parseDate";
+
 export default {
   props: {
     serviceId: String,
@@ -87,7 +89,7 @@ export default {
     async onSubmit() {
       await submitNewServiceLength(
         this.serviceId,
-        this.date,
+        dateToUnixTime(this.date),
         this.variations,
         this.defaultLength
       );

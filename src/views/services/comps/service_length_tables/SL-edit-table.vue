@@ -1,91 +1,87 @@
 <template>
-  <div>
-    <table border="1">
-      <thead>
-        <tr>
-          <td colspan="2">
-            <div id="title">
-              <input
-                type="date"
-                v-if="setDate"
-                id="datePicker"
-                :value="date"
-                @change="onSelectDate"
-                required
-              />
-            </div>
-          </td>
-        </tr>
-        <tr>
-          <th>Employee</th>
-          <th>Service Length (minutes)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>ALL</td>
-          <td>
+  <table border="1">
+    <thead>
+      <tr>
+        <td colspan="2">
+          <div id="title">
             <input
-              type="number"
-              :value="defaultLength"
-              @input="onInputDefaultLength"
+              type="date"
+              v-if="setDate"
+              id="datePicker"
+              :value="date"
+              @change="onSelectDate"
               required
-              min="1"
             />
-          </td>
-        </tr>
+            <span id="date" v-else>{{ formatDate(date) }} ~</span>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <th>Employee</th>
+        <th>Service Length (minutes)</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>ALL</td>
+        <td>
+          <input
+            type="number"
+            :value="defaultLength"
+            @input="onInputDefaultLength"
+            required
+            min="1"
+          />
+        </td>
+      </tr>
 
-        <tr v-for="(variation, index) in variations" :key="index">
-          <td>
-            <button
-              class="redBtn"
-              id="smallBtn"
-              @click="removeVariation(index)"
+      <tr v-for="(variation, index) in variations" :key="index">
+        <td>
+          <button class="redBtn" id="smallBtn" @click="removeVariation(index)">
+            <FontAwesomeIcon :icon="removeIcon" /></button
+          >&nbsp;
+          <select
+            :value="variation.employee_id"
+            @change="onSelectEmployee(index, $event)"
+            required
+          >
+            <option
+              v-for="emp in employees"
+              :key="emp.employee_id"
+              :value="emp.employee_id"
             >
-              <FontAwesomeIcon :icon="removeIcon" /></button
-            >&nbsp;
-            <select
-              :value="variation.employee_id"
-              @change="onSelectEmployee(index, $event)"
-              required
-            >
-              <option
-                v-for="emp in employees"
-                :key="emp.employee_id"
-                :value="emp.employee_id"
-              >
-                {{ emp.alias }}
-              </option>
-            </select>
-          </td>
-          <td>
-            <input
-              type="number"
-              :value="variation.length"
-              @input="onInputLength(index, $event)"
-              required
-              min="1"
-            />
-          </td>
-        </tr>
-        <tr>
-          <td colspan="2">
-            <button class="orangeBtn" id="smallBtn" @click="addVariation">
-              <FontAwesomeIcon :icon="plusIcon" /> More Variation
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+              {{ emp.alias }}
+            </option>
+          </select>
+        </td>
+        <td>
+          <input
+            type="number"
+            :value="variation.length"
+            @input="onInputLength(index, $event)"
+            required
+            min="1"
+          />
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <button class="orangeBtn" id="smallBtn" @click="addVariation">
+            <FontAwesomeIcon :icon="plusIcon" /> More Variation
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </template>
 
 <script>
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons"; // Proper import for icons
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons"; // Proper import for icons
-
 import fetchEmployees from "../../apis/fetchEmployees";
+import unixToReadable from "@/lib/unixToReadable";
+
 export default {
   props: {
     variations: Object,
@@ -114,6 +110,9 @@ export default {
     };
   },
   methods: {
+    formatDate(unixTime) {
+      return unixToReadable(unixTime);
+    },
     onInputDefaultLength(event) {
       const value = event.target.value;
       if (value > 0) {
@@ -151,10 +150,9 @@ td {
   padding: 10px;
   text-align: left;
 }
-
 #date {
   color: rgb(160, 130, 40);
-  /* color: gray; */
+  font-size: 14px;
 }
 #smallBtn {
   cursor: pointer;

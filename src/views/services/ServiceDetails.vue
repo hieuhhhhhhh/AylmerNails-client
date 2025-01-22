@@ -2,22 +2,24 @@
   <ServiceInfo :isFetched="isFetched" :serviceInfo="serviceInfo" />
   <br />
 
-  <th>Current Length Setting:</th>
+  <th>Current Length Setting</th>
 
   <ServiceLengthTable
     v-if="currentLength && Object.keys(currentLength).length"
     :serviceLength="currentLength"
+    :serviceId="service_id"
   />
   <td v-else-if="isFetched"><NA /></td>
   <br />
 
-  <th>Future Length Settings:</th>
+  <th>Future Length Settings</th>
   <td v-if="!futureLengths.length > 0 && isFetched"><NA /></td>
 
   <ServiceLengthTable
     v-for="(serviceLength, index) in futureLengths"
     :key="index"
     :serviceLength="serviceLength"
+    :serviceId="service_id"
   />
   <AddServiceLength :serviceId="service_id" />
 </template>
@@ -28,7 +30,7 @@ import ServiceLengthTable from "./comps/service_length_tables/SL-demo-table.vue"
 import unixToReadable from "@/lib/unixToReadable";
 import getTodayUnixTime from "@/lib/getTodayUnixTime";
 import NA from "@/components/NotAvailable.vue";
-import AddServiceLength from "./comps/AddServiceLength.vue";
+import AddServiceLength from "./comps/AddSL.vue";
 import ServiceInfo from "./comps/ServiceInfo.vue";
 
 export default {
@@ -92,6 +94,9 @@ export default {
 th,
 td {
   padding: 10px;
+  border-top: 3px var(--xtrans-gray) solid;
+  font-size: 19px;
+  display: flex;
   text-align: left;
 }
 </style>

@@ -1,5 +1,3 @@
-import dateToUnixTime from "@/lib/dateToUnixTime";
-
 export default async function submitNewServiceLength(
   serviceId,
   date,
@@ -7,7 +5,6 @@ export default async function submitNewServiceLength(
   defaultLength
 ) {
   try {
-    const unixDate = dateToUnixTime(date);
     const lengthInSec = defaultLength * 60;
     const SLVs = [];
     variations.forEach((variation) => {
@@ -29,7 +26,7 @@ export default async function submitNewServiceLength(
       },
       body: JSON.stringify({
         service_id: serviceId,
-        effective_from: unixDate,
+        effective_from: date,
         length: lengthInSec,
         SLVs: SLVs,
       }),
