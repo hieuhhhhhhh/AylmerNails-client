@@ -1,8 +1,5 @@
 <template>
-  <div id="note">
-    *Service's add-ons are not editable, the only way to change them is to
-    recreate the whole service
-  </div>
+  <div id="note">*Service's add-ons are not editable</div>
   <div v-for="(AOS, index) in AOSs" :key="index">
     <div id="title">
       <b>Question {{ index }} </b>: {{ AOS.prompt }}
