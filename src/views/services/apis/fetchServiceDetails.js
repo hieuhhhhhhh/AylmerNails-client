@@ -67,6 +67,19 @@ function getServiceDetails(json) {
     lengths.push(sl);
   }
 
+  //fetch AOSs
+  let AOSs = {};
+  const table = json.service_AOSs;
+  table.forEach((row) => {
+    const [option_id, name, length_offset, AOS_id, prompt] = row;
+    if (!AOSs[AOS_id]) {
+      // init an AOS
+      AOSs[AOS_id] = { AOS_id, prompt, options: [] };
+    }
+    // group all options by their AOS_id
+    AOSs[AOS_id].options.push({ option_id, name, length_offset });
+  });
+
   // merge all data
   let details = {};
   details.service_id = service_id;
@@ -76,6 +89,7 @@ function getServiceDetails(json) {
   details.cate_id = cate_id;
   details.cate_name = cate_name;
   details.lengths = lengths;
+  details.AOSs = AOSs;
 
   // return results
   return details;

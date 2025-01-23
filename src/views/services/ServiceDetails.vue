@@ -1,6 +1,9 @@
 <template>
   <ServiceInfo :isFetched="isFetched" :serviceInfo="serviceInfo" />
   <br />
+  <th>Add-ons</th>
+
+  <ServiceAOSs :AOSs="AOSs" />
 
   <th>Current Length Setting</th>
 
@@ -32,6 +35,7 @@ import getTodayUnixTime from "@/lib/getTodayUnixTime";
 import NA from "@/components/NotAvailable.vue";
 import AddServiceLength from "./comps/AddSL.vue";
 import ServiceInfo from "./comps/ServiceInfo.vue";
+import ServiceAOSs from "./comps/ServiceAOSs.vue";
 
 export default {
   components: {
@@ -39,11 +43,13 @@ export default {
     NA,
     AddServiceLength,
     ServiceInfo,
+    ServiceAOSs,
   },
   data() {
     return {
       service_id: null,
       details: {},
+      AOSs: {},
       serviceInfo: {},
       futureLengths: [],
       currentLength: {},
@@ -67,6 +73,9 @@ export default {
       description: this.details.description,
       last_date: this.details.last_date,
     };
+
+    // fetch AOSs
+    this.AOSs = this.details.AOSs;
 
     // fetch lengths
     this.lengths = this.details.lengths;
