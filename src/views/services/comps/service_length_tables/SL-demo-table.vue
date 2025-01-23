@@ -46,7 +46,7 @@ import EditSL from "../EditSL.vue";
 export default {
   props: {
     serviceLength: Object,
-    serviceId: Number,
+    serviceId: String,
   },
   components: {
     FontAwesomeIcon,

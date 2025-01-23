@@ -1,5 +1,9 @@
 <template>
-  <ServiceInfo :isFetched="isFetched" :serviceInfo="serviceInfo" />
+  <ServiceInfo
+    :isFetched="isFetched"
+    :serviceInfo="serviceInfo"
+    :serviceId="service_id"
+  />
   <br />
   <th>Add-ons</th>
 

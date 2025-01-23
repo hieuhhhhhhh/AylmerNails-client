@@ -13,7 +13,10 @@
         <tr>
           <th>Available Until:</th>
           <td>
-            <NA v-if="!serviceInfo.last_date?.formatDate() && isFetched" />
+            <div v-if="serviceInfo.last_date && isFetched">
+              {{ formatDate(serviceInfo.last_date) }}
+            </div>
+            <NA v-else />
           </td>
         </tr>
         <tr>
@@ -27,7 +30,16 @@
       <FontAwesomeIcon :icon="editIcon" /> Edit Service Details
     </button>
   </div>
-  <div v-else><EditServiceInfo /></div>
+  <div v-else>
+    <EditServiceInfo
+      :serviceId="serviceId"
+      :onClose="closeEditFrom"
+      :iName="serviceInfo.name"
+      :iDescription="serviceInfo.description"
+      :iCategoryId="serviceInfo.cate_id"
+      :iDate="serviceInfo.last_date"
+    />
+  </div>
 </template>
 
 <script>
@@ -44,6 +56,7 @@ export default {
   props: {
     serviceInfo: Object,
     isFetched: Boolean,
+    serviceId: String,
   },
   components: {
     NA,
