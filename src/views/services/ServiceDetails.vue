@@ -35,7 +35,6 @@
 import fetchServiceDetails from "./apis/fetchServiceDetails";
 import ServiceLengthTable from "./comps/service_length_tables/SL-demo-table.vue";
 import unixToReadable from "@/lib/unixToReadable";
-import getTodayUnixTime from "@/lib/getTodayUnixTime";
 import NA from "@/components/NotAvailable.vue";
 import AddServiceLength from "./comps/AddSL.vue";
 import ServiceInfo from "./comps/ServiceInfo.vue";
@@ -83,18 +82,11 @@ export default {
 
     // fetch lengths
     this.lengths = this.details.lengths;
-    console.log(this.lengths[0]);
+    console.log("first index:", this.lengths[0].effective_from);
 
-    for (let i = 0; i < this.lengths.length; i++) {
-      const effective_from = this.lengths[i].effective_from;
-      const today = getTodayUnixTime();
-      if (effective_from <= today) {
-        this.currentLength = this.lengths[i];
-      } else {
-        this.futureLengths = this.lengths.slice(i);
-        break;
-      }
-    }
+    this.currentLength = this.lengths[0];
+
+    this.futureLengths = this.lengths.slice(1);
 
     // set isFetched
     this.isFetched = true;

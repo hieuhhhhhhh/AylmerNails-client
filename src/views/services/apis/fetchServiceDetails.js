@@ -1,3 +1,5 @@
+import getTodayUnixTime from "@/lib/getTodayUnixTime";
+
 export default async function fetchServiceDetails(service_id) {
   try {
     // get app path
@@ -41,13 +43,13 @@ function getServiceDetails(json) {
   let lengths = [];
 
   for (let i = 0; i < tables.length; i += 2) {
-    let sl = {}; // sl = service's length
+    const raw = tables[i][0];
+    const [effective_from, length] = raw;
 
-    const raw_length = tables[i][0];
-    const [effective_from, length] = raw_length;
-
-    sl.effective_from = effective_from;
-    sl.length = length;
+    if (effective_from <= getTodayUnixTime()) {
+      console.log("hey");
+      lengths = [];
+    }
 
     const raw_variations = tables[i + 1];
     let variations = [];
@@ -61,8 +63,7 @@ function getServiceDetails(json) {
 
       variations.push(variation);
     });
-
-    sl.variations = variations;
+    const sl = { effective_from, length, variations };
 
     lengths.push(sl);
   }

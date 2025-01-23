@@ -8,5 +8,7 @@ export default function dateToUnixTime(date) {
   // Convert the date to Unix timestamp (seconds)
   const unixTimestamp = torontoDateTime.toSeconds();
 
+  console.log("date to unix: ", unixTimestamp);
+
   return unixTimestamp;
 }

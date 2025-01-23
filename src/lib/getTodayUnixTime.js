@@ -9,5 +9,6 @@ export default function getTodayUnixTime() {
   const startOfToday = DateTime.now().setZone(timezone).startOf("day");
 
   // Return the Unix timestamp
+  console.log("get to day", startOfToday.toUnixInteger());
   return startOfToday.toUnixInteger();
 }
