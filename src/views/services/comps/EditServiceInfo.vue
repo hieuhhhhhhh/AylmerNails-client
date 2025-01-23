@@ -1,6 +1,10 @@
 <template>
-  <form id="ServiceInfo" @submit.prevent="onSubmit">
+  <form id="esi" @submit.prevent="onSubmit">
     <table>
+      <colgroup>
+        <col style="width: auto" />
+        <col style="width: 70%" />
+      </colgroup>
       <tbody>
         <tr>
           <th>Name:</th>
@@ -11,8 +15,10 @@
         <tr>
           <th>Description:</th>
           <td>
-            <input
+            <textarea
+              id="description"
               type="text"
+              rows="3"
               :value="description"
               @input="setDescription"
               required
@@ -129,15 +135,16 @@ export default {
     if (this.iCategoryId) {
       this.categoryId = this.iCategoryId;
     }
-    this.date = parseUT(this.iDate);
+    if (this.iDate) {
+      this.date = parseUT(this.iDate);
+    }
   },
 };
 </script>
 
 <style scoped>
-#ServiceInfo {
+#esi {
   background-color: var(--background-i2);
-  width: fit-content;
   padding: 7px;
 }
 .highlight {
@@ -145,7 +152,10 @@ export default {
   padding-top: 5px;
   padding-bottom: 5px;
 }
-
+table {
+  border-collapse: collapse;
+  width: 100%; /* Table takes full width of the screen */
+}
 th,
 td {
   padding: 10px;
@@ -159,5 +169,8 @@ td {
 #date {
   font-size: 15px;
   padding: 5px;
+}
+#description {
+  width: 100%;
 }
 </style>

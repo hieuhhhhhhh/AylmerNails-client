@@ -8,7 +8,7 @@
         </tr>
         <tr>
           <th>Description:</th>
-          <td>{{ serviceInfo.description }}</td>
+          <td id="description">{{ serviceInfo.description }}</td>
         </tr>
         <tr>
           <th>Available Until:</th>
@@ -87,8 +87,6 @@ export default {
 
 <style scoped>
 #ServiceInfo {
-  background-color: var(--background-i2);
-  width: fit-content;
   padding: 7px;
 }
 .highlight {
@@ -106,5 +104,9 @@ td {
 #duo {
   display: flex;
   gap: 15px;
+}
+#description {
+  white-space: pre-wrap;
+  font-size: 14px;
 }
 </style>

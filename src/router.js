@@ -12,6 +12,7 @@ import Refresh from "./components/Refresh.vue";
 import AddService from "./views/services/AddService.vue";
 import AddCategory from "./views/services/AddCategory.vue";
 import ServiceDetails from "./views/services/ServiceDetails.vue";
+import Draft from "./templates/Draft.vue";
 
 const routes = [
   {
@@ -33,6 +34,10 @@ const routes = [
   {
     path: "/login",
     component: LogIn,
+  },
+  {
+    path: "/draft",
+    component: Draft,
   },
   {
     path: "/services",
