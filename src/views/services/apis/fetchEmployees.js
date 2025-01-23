@@ -1,16 +1,21 @@
+import getTodayUnixTime from "@/lib/getTodayUnixTime";
+
 export default async function fetchEmployees() {
   try {
     // get app path
     const baseURL = process.env.VUE_APP_BASE_URL;
 
     // start requesting server
-    const res = await fetch(`${baseURL}/api/employees/get_all_employees`, {
-      method: "GET",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const res = await fetch(
+      `${baseURL}/api/employees/get_employees/${getTodayUnixTime()}`,
+      {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
 
     // fetch json
     const json = await res.json();

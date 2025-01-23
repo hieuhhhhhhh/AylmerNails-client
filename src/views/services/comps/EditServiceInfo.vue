@@ -1,33 +1,31 @@
 <template>
-  <div id="ServiceInfo" v-if="!isEditing">
+  <div id="ServiceInfo">
     <table>
       <tbody>
         <tr>
           <th>Name:</th>
-          <td class="highlight">{{ serviceInfo.name }}</td>
         </tr>
         <tr>
           <th>Description:</th>
-          <td>{{ serviceInfo.description }}</td>
         </tr>
         <tr>
           <th>Available Until:</th>
-          <td>
-            <NA v-if="!serviceInfo.last_date?.formatDate() && isFetched" />
-          </td>
         </tr>
         <tr>
           <th>Category:</th>
-          <td><NA v-if="!serviceInfo.cate_name && isFetched" /></td>
         </tr>
       </tbody>
     </table>
 
-    <button class="blueBtn" @click="openEditForm">
-      <FontAwesomeIcon :icon="editIcon" /> Edit Service Details
-    </button>
+    <div id="duo">
+      <button class="redBtn" @click.prevent="onClose">
+        <FontAwesomeIcon :icon="cancelIcon" /> Cancel
+      </button>
+      <button class="greenBtn">
+        <FontAwesomeIcon :icon="saveIcon" /> Save Changes
+      </button>
+    </div>
   </div>
-  <div v-else><EditServiceInfo /></div>
 </template>
 
 <script>
@@ -37,23 +35,17 @@ import { faCancel } from "@fortawesome/free-solid-svg-icons"; // Proper import f
 import { faCheck } from "@fortawesome/free-solid-svg-icons"; // Proper import for icons
 
 import unixToReadable from "@/lib/unixToReadable";
-import NA from "@/components/NotAvailable.vue";
-import EditServiceInfo from "./EditServiceInfo.vue";
 
 export default {
   props: {
-    serviceInfo: Object,
-    isFetched: Boolean,
+    onClose: Function,
   },
   components: {
-    NA,
     FontAwesomeIcon,
-    EditServiceInfo,
   },
   data() {
     return {
       editIcon: faPenToSquare,
-      isEditing: false,
       cancelIcon: faCancel,
       saveIcon: faCheck,
     };
@@ -61,12 +53,6 @@ export default {
   methods: {
     formatDate(unixTime) {
       return unixToReadable(unixTime);
-    },
-    openEditForm() {
-      this.isEditing = true;
-    },
-    closeEditFrom() {
-      this.isEditing = false;
     },
   },
 };

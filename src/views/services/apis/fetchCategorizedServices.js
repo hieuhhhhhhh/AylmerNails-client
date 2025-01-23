@@ -7,7 +7,7 @@ export default async function fetchCategorizedServices() {
 
     // start requesting server
     const res = await fetch(
-      `${baseURL}/api/services/get_many_services/${getTodayUnixTime()}`,
+      `${baseURL}/api/services/get_services/${getTodayUnixTime()}`,
       {
         method: "GET",
         credentials: "include",

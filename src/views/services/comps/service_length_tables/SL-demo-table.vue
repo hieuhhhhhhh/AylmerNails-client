@@ -23,7 +23,6 @@
         <tr v-for="(row, index) in rows" :key="index">
           <td>{{ row.name }}</td>
           <td>{{ row.length / 60 }}</td>
-          <!-- Correct use of parseSeconds -->
         </tr>
       </tbody>
     </table>

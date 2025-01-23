@@ -1,5 +1,10 @@
 <template>
   <div id="note">*Service's add-ons are not editable</div>
+  <div id="note">
+    *You can type in a negative value to 'Length Increase' to indicate a
+    decrement
+  </div>
+
   <div v-for="(AOS, index) in AOSs" :key="index">
     <div id="title">
       <b>Question {{ index }} </b>: {{ AOS.prompt }}
@@ -8,7 +13,7 @@
       <thead>
         <tr>
           <th>Option</th>
-          <th>Length Offset (minutes)</th>
+          <th>Length Increase (minutes) <br /></th>
         </tr>
       </thead>
       <tbody>
