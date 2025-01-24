@@ -8,14 +8,14 @@
       <tbody>
         <tr>
           <th>Name:</th>
-          <td>
+          <td id="flexBox">
             <input type="text" :value="name" @input="setName" required />
           </td>
         </tr>
 
         <tr>
           <th>Category:</th>
-          <td>
+          <td id="flexBox">
             <select :value="categoryId" @change="setCategory" required>
               <option
                 v-for="cate in categories"
@@ -34,13 +34,13 @@
             Default Length:<br />
             (minutes)
           </th>
-          <td>
+          <td id="flexBox">
             <input type="number" required :min="1" />
           </td>
         </tr>
         <tr>
           <th>Description:</th>
-          <td>
+          <td id="flexBox">
             <textarea
               id="description"
               type="text"
@@ -150,13 +150,17 @@ export default {
 </script>
 
 <style scoped>
-table {
-  width: 100%;
+input,
+textarea {
+  flex: 1;
 }
 th,
 td {
   padding: 10px;
   text-align: left;
+}
+#flexBox {
+  display: flex;
 }
 #addOn {
   padding: 10px;
@@ -168,9 +172,7 @@ td {
   display: flex;
   gap: 15px;
 }
-#description {
-  width: 100%;
-}
+
 #check {
   transform: scale(1.5);
   margin: 5px;

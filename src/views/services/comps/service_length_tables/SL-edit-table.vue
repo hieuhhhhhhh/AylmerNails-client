@@ -24,7 +24,7 @@
     <tbody>
       <tr>
         <td>ALL</td>
-        <td>
+        <td id="flexBox">
           <input
             type="number"
             :value="defaultLength"
@@ -54,7 +54,7 @@
             </option>
           </select>
         </td>
-        <td>
+        <td id="flexBox">
           <input
             type="number"
             :value="variation.length"
@@ -142,13 +142,19 @@ export default {
 <style scoped>
 table {
   border-collapse: collapse;
-  max-width: 100vw;
+}
+input {
+  width: 100%;
 }
 
 th,
 td {
   padding: 10px;
   text-align: left;
+}
+
+#flexBox {
+  display: flex;
 }
 #date {
   color: rgb(160, 130, 40);

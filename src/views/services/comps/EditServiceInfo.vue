@@ -8,13 +8,19 @@
       <tbody>
         <tr>
           <th>Name:</th>
-          <td>
-            <input type="text" :value="name" @input="setName" required />
+          <td id="flexBox">
+            <input
+              id="textInput"
+              type="text"
+              :value="name"
+              @input="setName"
+              required
+            />
           </td>
         </tr>
         <tr>
           <th>Description:</th>
-          <td>
+          <td id="flexBox">
             <textarea
               id="description"
               type="text"
@@ -33,7 +39,7 @@
         </tr>
         <tr>
           <th>Category:</th>
-          <td>
+          <td id="flexBox">
             <select :value="categoryId" @change="setCategory" required>
               <option
                 v-for="cate in categories"
@@ -143,25 +149,21 @@ export default {
 </script>
 
 <style scoped>
-#esi {
-  background-color: var(--background-i2);
-  padding: 7px;
-}
-.highlight {
-  font-size: 20px;
-  padding-top: 5px;
-  padding-bottom: 5px;
+#textInput,
+textarea {
+  width: 100%;
 }
 table {
   border-collapse: collapse;
-  width: 100%; /* Table takes full width of the screen */
 }
 th,
 td {
   padding: 10px;
   text-align: left;
 }
-
+#flexBox {
+  display: flex;
+}
 #duo {
   display: flex;
   gap: 15px;
@@ -172,5 +174,9 @@ td {
 }
 #description {
   width: 100%;
+}
+#esi {
+  background-color: var(--background-i2);
+  padding: 7px;
 }
 </style>
