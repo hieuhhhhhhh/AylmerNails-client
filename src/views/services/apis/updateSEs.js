@@ -26,10 +26,7 @@ export default async function updateServiceEmployees(serviceId, employeeIds) {
       // fetch json
       const json = await res.json();
 
-      console.log(
-        "Failed to update service information, message: ",
-        json.message
-      );
+      console.log("Failed to update members, message: ", json.message);
     }
   } catch (e) {
     console.error("Unexpected Error: ", e);

@@ -5,12 +5,16 @@
     :serviceId="service_id"
   />
   <br />
-  <th>Add-ons</th>
 
+  <th>Members</th>
+  <EmployeeChecker :serviceId="service_id" />
+  <br />
+
+  <th>Add-ons</th>
   <ServiceAOSs :AOSs="AOSs" />
+  <br />
 
   <th>Current Length Setting</th>
-
   <ServiceLengthTable
     v-if="currentLength && Object.keys(currentLength).length"
     :serviceLength="currentLength"
@@ -29,10 +33,6 @@
     :serviceId="service_id"
   />
   <AddServiceLength :serviceId="service_id" />
-  <br />
-
-  <th>Members</th>
-  <EmployeeChecker :serviceId="service_id" />
 </template>
 
 <script>
@@ -43,7 +43,7 @@ import ServiceLengthTable from "./comps/service_length_tables/SL-demo-table.vue"
 import NA from "@/components/NotAvailable.vue";
 import AddServiceLength from "./comps/AddSL.vue";
 import ServiceInfo from "./comps/ServiceInfo.vue";
-import ServiceAOSs from "./comps/ServiceAOSs.vue";
+import ServiceAOSs from "./comps/AOSs/AOSs-demo.vue";
 import EmployeeChecker from "./comps/EmployeeChecker.vue";
 
 export default {

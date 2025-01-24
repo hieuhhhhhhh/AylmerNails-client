@@ -76,7 +76,7 @@ export default {
 };
 </script>
 <style scoped>
-input {
+#check {
   transform: scale(1.5);
   margin: 5px;
 }
