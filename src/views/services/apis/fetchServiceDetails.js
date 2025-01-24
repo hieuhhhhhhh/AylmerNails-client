@@ -63,9 +63,9 @@ function getServiceDetails(json) {
 
       variations.push(variation);
     });
-    const sl = { effective_from, length, variations };
+    const l = { effective_from, length, variations };
 
-    lengths.push(sl);
+    lengths.push(l);
   }
 
   //fetch AOSs

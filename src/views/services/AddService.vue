@@ -1,10 +1,14 @@
 <template>
   <table>
+    <colgroup>
+      <col style="width: auto" />
+      <col style="width: 80%" />
+    </colgroup>
     <tbody>
       <tr>
         <th>Name:</th>
         <td>
-          <input type="text" required />
+          <input type="text" :value="name" @input="setName" required />
         </td>
       </tr>
 
@@ -27,7 +31,14 @@
       <tr>
         <th>Description:</th>
         <td>
-          <input type="text" required />
+          <textarea
+            id="description"
+            type="text"
+            rows="3"
+            :value="description"
+            @input="setDescription"
+            required
+          />
         </td>
       </tr>
       <tr>
@@ -38,6 +49,7 @@
       </tr>
     </tbody>
   </table>
+  <th>Add-ons:</th>
 
   <button v-if="!isEditing" class="greenBtn">
     <FontAwesomeIcon :icon="saveIcon" /> Save New Service
@@ -60,6 +72,15 @@ export default {
     return {
       saveIcon: faCheck,
       employees: [],
+
+      // states
+      name: "",
+      description: "",
+      date: null,
+      categoryId: "null",
+
+      // resources
+      categories: [],
     };
   },
   methods: {},

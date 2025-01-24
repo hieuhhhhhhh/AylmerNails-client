@@ -29,16 +29,22 @@
     :serviceId="service_id"
   />
   <AddServiceLength :serviceId="service_id" />
+  <br />
+
+  <th>Members</th>
+  <EmployeeChecker :serviceId="service_id" />
 </template>
 
 <script>
 import fetchServiceDetails from "./apis/fetchServiceDetails";
-import ServiceLengthTable from "./comps/service_length_tables/SL-demo-table.vue";
 import unixToReadable from "@/lib/unixToReadable";
+
+import ServiceLengthTable from "./comps/service_length_tables/SL-demo-table.vue";
 import NA from "@/components/NotAvailable.vue";
 import AddServiceLength from "./comps/AddSL.vue";
 import ServiceInfo from "./comps/ServiceInfo.vue";
 import ServiceAOSs from "./comps/ServiceAOSs.vue";
+import EmployeeChecker from "./comps/EmployeeChecker.vue";
 
 export default {
   components: {
@@ -47,6 +53,7 @@ export default {
     AddServiceLength,
     ServiceInfo,
     ServiceAOSs,
+    EmployeeChecker,
   },
   data() {
     return {

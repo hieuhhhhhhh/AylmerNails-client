@@ -65,10 +65,13 @@ export default {
   },
   data() {
     return {
+      //icon
       editIcon: faPenToSquare,
-      isEditing: false,
       cancelIcon: faCancel,
       saveIcon: faCheck,
+
+      // status
+      isEditing: false,
     };
   },
   methods: {
