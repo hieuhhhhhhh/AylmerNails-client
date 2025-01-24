@@ -11,7 +11,9 @@
   <br />
 
   <th>Additional Options</th>
+  <NA v-if="!AOSs.length && isFetched" />
   <ServiceAOSs :AOSs="AOSs" />
+  <br />
   <br />
 
   <th>Current Length Setting</th>
@@ -24,7 +26,7 @@
   <br />
 
   <th>Future Length Settings</th>
-  <td v-if="!futureLengths.length > 0 && isFetched"><NA /></td>
+  <NA v-if="!futureLengths.length > 0 && isFetched" />
 
   <ServiceLengthTable
     v-for="(serviceLength, index) in futureLengths"
@@ -59,7 +61,7 @@ export default {
     return {
       service_id: null,
       details: {},
-      AOSs: {},
+      AOSs: [],
       serviceInfo: {},
       futureLengths: [],
       currentLength: {},
@@ -86,6 +88,7 @@ export default {
 
     // fetch AOSs
     this.AOSs = this.details.AOSs;
+    console.log("AOSs: ", this.AOSs);
 
     // fetch lengths
     this.lengths = this.details.lengths;

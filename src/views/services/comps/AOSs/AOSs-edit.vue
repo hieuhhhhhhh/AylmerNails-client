@@ -8,7 +8,13 @@
       >
         <FontAwesomeIcon :icon="removeIcon" /></button
       >&nbsp; <b>Question {{ parentIndex + 1 }} </b>:
-      <input id="prompt" type="text" :value="AOS.prompt" required />
+      <input
+        id="prompt"
+        type="text"
+        :value="AOS.prompt"
+        @input="onInputQuestion(parentIndex, $event.target.value)"
+        required
+      />
     </div>
     <table border="1">
       <thead>
@@ -44,7 +50,6 @@
               :value="option.length_offset / 60"
               @input="onInputLength(parentIndex, index, $event)"
               required
-              min="1"
             />
           </td>
         </tr>
@@ -86,6 +91,7 @@ export default {
     addOption: Function,
     addQuestion: Function,
     removeQuestion: Function,
+    onInputQuestion: Function,
   },
   components: {
     FontAwesomeIcon,

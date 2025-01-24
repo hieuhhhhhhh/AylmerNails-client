@@ -27,7 +27,6 @@
               rows="3"
               :value="description"
               @input="setDescription"
-              required
             />
           </td>
         </tr>
@@ -123,6 +122,7 @@ export default {
       if (this.categoryId == "null") {
         this.categoryId = null;
       }
+
       await updateServiceInfo(
         this.serviceId,
         this.name,

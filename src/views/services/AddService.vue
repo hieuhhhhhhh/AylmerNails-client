@@ -9,14 +9,14 @@
         <tr>
           <th>Name:</th>
           <td id="flexBox">
-            <input type="text" :value="name" @input="setName" required />
+            <input type="text" v-model="name" required />
           </td>
         </tr>
 
         <tr>
           <th>Category:</th>
           <td id="flexBox">
-            <select :value="categoryId" @change="setCategory" required>
+            <select v-model="categoryId" required>
               <option
                 v-for="cate in categories"
                 :key="cate.cate_id"
@@ -35,7 +35,7 @@
             (minutes)
           </th>
           <td id="flexBox">
-            <input type="number" required :min="1" />
+            <input type="number" v-model="length" required :min="1" />
           </td>
         </tr>
         <tr>
@@ -45,9 +45,7 @@
               id="description"
               type="text"
               rows="3"
-              :value="description"
-              @input="setDescription"
-              required
+              v-model="description"
             />
           </td>
         </tr>
@@ -77,6 +75,7 @@
         :addOption="addOption"
         :addQuestion="addQuestion"
         :removeQuestion="removeQuestion"
+        :onInputQuestion="onInputQuestion"
       />
       <button class="greenBtn">
         <FontAwesomeIcon :icon="saveIcon" /> <b>Confirm New Service</b>
@@ -89,11 +88,11 @@
 // comps
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons"; // Proper import for icons
+import AOSsEdit from "./comps/AOSs/AOSs-edit.vue";
 // lib
 import fetchEmployees from "./apis/fetchEmployees";
 import fetchCategories from "./apis/fetchCategories";
-import AOSsEdit from "./comps/AOSs/AOSs-edit.vue";
-
+import addService from "./apis/addService";
 export default {
   props: {
     serviceInfo: Object,
@@ -110,7 +109,7 @@ export default {
       // states
       name: "",
       description: "",
-      date: null,
+      length: null,
       categoryId: "null",
       AOSs: [],
       checkedEmp: [],
@@ -129,17 +128,41 @@ export default {
       }
     },
     addOption(parentIndex) {
-      this.AOSs[parentIndex].options.push({ name: null, length_offset: null });
+      this.AOSs[parentIndex].options.push({ name: null, length_offset: 0 });
     },
     addQuestion() {
       const AOS = {};
       AOS.propmpt = null;
       AOS.options = [];
-      AOS.options.push({ name: null, length_offset: null });
+      AOS.options.push({ name: null, length_offset: 0 });
       this.AOSs.push(AOS);
     },
     removeQuestion(parentIndex) {
       this.AOSs.splice(parentIndex, 1);
+    },
+    onInputQuestion(parentIndex, value) {
+      this.AOSs[parentIndex].prompt = value;
+    },
+
+    // submit api
+    async onSubmit() {
+      if (this.categoryId == "null") {
+        this.categoryId = null;
+      }
+
+      const service_id = await addService(
+        this.name,
+        this.categoryId,
+        this.description,
+        this.length * 60,
+        this.AOSs,
+        this.checkedEmp
+      );
+
+      // navigate to that new service
+      if (service_id) {
+        this.$router.push(`/services/details/${service_id}`);
+      }
     },
   },
   async created() {

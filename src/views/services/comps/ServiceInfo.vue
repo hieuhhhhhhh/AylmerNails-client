@@ -8,7 +8,10 @@
         </tr>
         <tr>
           <th>Description:</th>
-          <td id="description">{{ serviceInfo.description }}</td>
+          <td>
+            <div id="description">{{ serviceInfo.description }}</div>
+            <NA v-if="!serviceInfo.description && isFetched" />
+          </td>
         </tr>
         <tr>
           <th>Available Until:</th>

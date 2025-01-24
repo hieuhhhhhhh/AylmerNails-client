@@ -80,6 +80,8 @@ function getServiceDetails(json) {
     // group all options by their AOS_id
     AOSs[AOS_id].options.push({ option_id, name, length_offset });
   });
+  // convert to array
+  AOSs = Object.values(AOSs);
 
   // merge all data
   let details = {};

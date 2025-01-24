@@ -1,9 +1,11 @@
 <template>
-  <div id="note">*Service's additional options are not editable</div>
+  <div v-if="AOSs.length" id="note">
+    *Service's additional options are not editable
+  </div>
 
   <div v-for="(AOS, index) in AOSs" :key="index">
     <div id="title">
-      <b>Question {{ index }} </b>: {{ AOS.prompt }}
+      <b>Question {{ index + 1 }} </b>: {{ AOS.prompt }}
     </div>
     <table border="1">
       <thead>
@@ -20,7 +22,6 @@
         </tr>
       </tbody>
     </table>
-    <br />
   </div>
 </template>
 <script>
