@@ -1,7 +1,13 @@
 <template>
   <div v-for="(AOS, parentIndex) in AOSs" :key="parentIndex">
     <div id="title">
-      <b>Question {{ parentIndex }} </b>:
+      <button
+        class="redBtn"
+        id="smallBtn"
+        @click.prevent="removeQuestion(parentIndex)"
+      >
+        <FontAwesomeIcon :icon="removeIcon" /></button
+      >&nbsp; <b>Question {{ parentIndex + 1 }} </b>:
       <input id="prompt" type="text" :value="AOS.prompt" required />
     </div>
     <table border="1">
@@ -14,12 +20,23 @@
       <tbody>
         <tr v-for="(option, index) in AOS.options" :key="index">
           <td>
-            <input
-              type="text"
-              :value="option.name"
-              @input="onInputOption(parentIndex, index, $event)"
-              required
-            />
+            <div id="flexBox">
+              <button
+                class="redBtn"
+                id="smallBtn"
+                v-if="index > 0"
+                @click.prevent="removeOption(parentIndex, index)"
+              >
+                <FontAwesomeIcon :icon="removeIcon" /></button
+              >&nbsp;
+              <input
+                id="nameInput"
+                type="text"
+                :value="option.name"
+                @input="onInputOption(parentIndex, index, $event)"
+                required
+              />
+            </div>
           </td>
           <td>
             <input
@@ -31,6 +48,17 @@
             />
           </td>
         </tr>
+        <tr>
+          <td colspan="2">
+            <button
+              class="orangeBtn"
+              id="smallBtn"
+              @click.prevent="addOption(parentIndex)"
+            >
+              <FontAwesomeIcon :icon="plusIcon" /> More Option
+            </button>
+          </td>
+        </tr>
       </tbody>
     </table>
     <div id="note">
@@ -38,12 +66,36 @@
     </div>
     <br />
   </div>
+  <div>
+    <button class="orangeBtn" @click.prevent="addQuestion">
+      <FontAwesomeIcon :icon="plusIcon" /> Start New Question
+    </button>
+  </div>
+  <br />
 </template>
 <script>
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
+
 export default {
   props: {
     AOSs: Object,
     editAOS: Function,
+    removeOption: Function,
+    addOption: Function,
+    addQuestion: Function,
+    removeQuestion: Function,
+  },
+  components: {
+    FontAwesomeIcon,
+  },
+  data() {
+    return {
+      // icons
+      plusIcon: faPlus,
+      removeIcon: faTrashCan,
+    };
   },
   methods: {
     onInputLength(parentIndex, index, event) {
@@ -62,6 +114,12 @@ export default {
 </script>
 
 <style scoped>
+#flexBox {
+  display: flex;
+}
+#nameInput {
+  flex: 1;
+}
 #prompt {
   flex: 1;
   margin-left: 10px;
@@ -76,9 +134,13 @@ export default {
   display: flex;
   width: 100%;
 }
+#smallBtn {
+  cursor: pointer;
+  font-size: 12px;
+  padding: 5px;
+}
 table {
-  border-collapse: collapse;
-  max-width: 100vw;
+  border-collapse: collapse; /* or separate */
 }
 input {
   width: 100%;

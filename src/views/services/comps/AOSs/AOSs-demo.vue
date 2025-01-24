@@ -1,5 +1,5 @@
 <template>
-  <div id="note">*Service's add-ons are not editable</div>
+  <div id="note">*Service's additional options are not editable</div>
 
   <div v-for="(AOS, index) in AOSs" :key="index">
     <div id="title">

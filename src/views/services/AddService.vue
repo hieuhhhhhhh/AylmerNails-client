@@ -69,10 +69,17 @@
     </table>
     <br />
     <div id="addOn">
-      <b>Add-ons:</b>
-      <AOSsEdit :AOSs="AOSs" :editAOS="editAOS" />
+      <b>Additional Options:</b>
+      <AOSsEdit
+        :AOSs="AOSs"
+        :editAOS="editAOS"
+        :removeOption="removeOption"
+        :addOption="addOption"
+        :addQuestion="addQuestion"
+        :removeQuestion="removeQuestion"
+      />
       <button class="greenBtn">
-        <FontAwesomeIcon :icon="saveIcon" /> Add New Service
+        <FontAwesomeIcon :icon="saveIcon" /> <b>Confirm New Service</b>
       </button>
     </div>
   </form>
@@ -81,7 +88,7 @@
 <script>
 // comps
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons"; // Proper import for icons
+import { faCheck } from "@fortawesome/free-solid-svg-icons"; // Proper import for icons
 // lib
 import fetchEmployees from "./apis/fetchEmployees";
 import fetchCategories from "./apis/fetchCategories";
@@ -98,8 +105,8 @@ export default {
   },
   data() {
     return {
-      saveIcon: faPlus,
-
+      // icons
+      saveIcon: faCheck,
       // states
       name: "",
       description: "",
@@ -107,7 +114,6 @@ export default {
       categoryId: "null",
       AOSs: [],
       checkedEmp: [],
-
       // resources
       categories: [],
       employees: [],
@@ -117,15 +123,28 @@ export default {
     editAOS(parentIndex, index, prop, value) {
       this.AOSs[parentIndex].options[index][prop] = value;
     },
+    removeOption(parentIndex, index) {
+      if (index > 0) {
+        this.AOSs[parentIndex].options.splice(index, 1);
+      }
+    },
+    addOption(parentIndex) {
+      this.AOSs[parentIndex].options.push({ name: null, length_offset: null });
+    },
+    addQuestion() {
+      const AOS = {};
+      AOS.propmpt = null;
+      AOS.options = [];
+      AOS.options.push({ name: null, length_offset: null });
+      this.AOSs.push(AOS);
+    },
+    removeQuestion(parentIndex) {
+      this.AOSs.splice(parentIndex, 1);
+    },
   },
   async created() {
     this.employees = await fetchEmployees();
     this.categories = await fetchCategories();
-    const AOS = {};
-    AOS.propmpt = null;
-    AOS.options = [];
-    AOS.options.push({ name: null, length_offset: null });
-    this.AOSs.push(AOS);
   },
 };
 </script>

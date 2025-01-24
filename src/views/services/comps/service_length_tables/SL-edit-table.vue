@@ -66,7 +66,7 @@
       </tr>
       <tr>
         <td colspan="2">
-          <button class="orangeBtn" id="smallBtn" @click="addVariation">
+          <button class="orangeBtn" id="smallBtn" @click.prevent="addVariation">
             <FontAwesomeIcon :icon="plusIcon" /> More Variation
           </button>
         </td>

@@ -10,7 +10,7 @@
   <EmployeeChecker :serviceId="service_id" />
   <br />
 
-  <th>Add-ons</th>
+  <th>Additional Options</th>
   <ServiceAOSs :AOSs="AOSs" />
   <br />
 
