@@ -29,12 +29,14 @@ export default async function updateServiceInfo(
     const json = await res.json();
 
     // read status and process response
-    if (!res.ok) {
-      console.log(
-        "Failed to update service information, message: ",
-        json.message
-      );
+    if (res.ok) {
+      return true;
     }
+
+    console.log(
+      "Failed to update service information, message: ",
+      json.message
+    );
   } catch (e) {
     console.error("Unexpected Error: ", e);
   }
