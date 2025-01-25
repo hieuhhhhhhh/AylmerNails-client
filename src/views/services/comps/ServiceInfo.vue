@@ -50,9 +50,9 @@
 
 <script>
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faPenToSquare } from "@fortawesome/free-solid-svg-icons"; // Proper import for icons
-import { faCancel } from "@fortawesome/free-solid-svg-icons"; // Proper import for icons
-import { faCheck } from "@fortawesome/free-solid-svg-icons"; // Proper import for icons
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { faCancel } from "@fortawesome/free-solid-svg-icons";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
 import unixToReadable from "@/lib/unixToReadable";
 import NA from "@/components/NotAvailable.vue";

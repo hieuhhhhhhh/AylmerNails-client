@@ -37,7 +37,11 @@ export default async function fetchCategorizedServices() {
 function refactorServices(rawServices, rawCategories) {
   // a map of categories where category_id is key
   const categories = {};
-  categories[null] = { cate_id: null, cate_name: "Others", services: [] };
+  categories[null] = {
+    cate_id: null,
+    cate_name: "Unclassified",
+    services: [],
+  };
 
   rawCategories.forEach((raw) => {
     const [cate_id, cate_name] = raw;

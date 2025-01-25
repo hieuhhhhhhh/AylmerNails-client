@@ -67,9 +67,9 @@
 
 <script>
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faPenToSquare } from "@fortawesome/free-solid-svg-icons"; // Proper import for icons
-import { faCancel } from "@fortawesome/free-solid-svg-icons"; // Proper import for icons
-import { faCheck } from "@fortawesome/free-solid-svg-icons"; // Proper import for icons
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { faCancel } from "@fortawesome/free-solid-svg-icons";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
 import parseUT from "@/lib/parseUT";
 import parseDate from "@/lib/parseDate";
@@ -123,7 +123,7 @@ export default {
         this.categoryId = null;
       }
 
-      await updateServiceInfo(
+      const res = await updateServiceInfo(
         this.serviceId,
         this.name,
         this.description,
@@ -131,7 +131,9 @@ export default {
         parseDate(this.date)
       );
 
-      this.$router.push("/services/refresh");
+      if (res) {
+        this.$router.push("/services/refresh");
+      }
     },
   },
   async created() {

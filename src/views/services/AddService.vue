@@ -87,7 +87,7 @@
 <script>
 // comps
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faCheck } from "@fortawesome/free-solid-svg-icons"; // Proper import for icons
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import AOSsEdit from "./comps/AOSs/AOSs-edit.vue";
 // lib
 import fetchEmployees from "./apis/fetchEmployees";
@@ -166,6 +166,8 @@ export default {
     },
   },
   async created() {
+    this.categoryId = this.$route.params.cate_id;
+
     this.employees = await fetchEmployees();
     this.categories = await fetchCategories();
   },

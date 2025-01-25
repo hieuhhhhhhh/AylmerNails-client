@@ -22,12 +22,14 @@ export default async function updateServiceEmployees(serviceId, employeeIds) {
     );
 
     // read status and process response
-    if (!res.ok) {
-      // fetch json
-      const json = await res.json();
-
-      console.log("Failed to update members, message: ", json.message);
+    if (res.ok) {
+      return true;
     }
+
+    // fetch json
+    const json = await res.json();
+
+    console.log("Failed to update members, message: ", json.message);
   } catch (e) {
     console.error("Unexpected Error: ", e);
   }

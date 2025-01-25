@@ -28,9 +28,9 @@
 
 <script>
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons"; // Proper import for icons
-import { faCancel } from "@fortawesome/free-solid-svg-icons"; // Proper import for icons
-import { faCheck } from "@fortawesome/free-solid-svg-icons"; // Proper import for icons
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faCancel } from "@fortawesome/free-solid-svg-icons";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import SLEditTable from "./service_length_tables/SL-edit-table.vue";
 import submitNewServiceLength from "../apis/submitSL";
 import dateToUnixTime from "@/lib/parseDate";
@@ -87,13 +87,15 @@ export default {
       this.date = value;
     },
     async onSubmit() {
-      await submitNewServiceLength(
+      const res = await submitNewServiceLength(
         this.serviceId,
         dateToUnixTime(this.date),
         this.variations,
         this.defaultLength
       );
-      this.$router.push("/services/refresh");
+      if (res) {
+        this.$router.push("/services/refresh");
+      }
     },
   },
 };

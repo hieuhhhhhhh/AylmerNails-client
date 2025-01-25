@@ -7,7 +7,7 @@
 
 <script>
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faCaretDown } from "@fortawesome/free-solid-svg-icons"; // Proper import for icons
+import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 
 export default {
   components: {

@@ -8,7 +8,7 @@
 
 <script>
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons"; // Proper import for icons
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 export default {
   components: {

@@ -11,7 +11,7 @@
 
 <script>
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faClose } from "@fortawesome/free-solid-svg-icons"; // Proper import for icons
+import { faClose } from "@fortawesome/free-solid-svg-icons";
 
 export default {
   name: "Modal-",

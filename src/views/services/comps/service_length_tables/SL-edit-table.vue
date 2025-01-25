@@ -77,8 +77,8 @@
 
 <script>
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons"; // Proper import for icons
-import { faTrashCan } from "@fortawesome/free-solid-svg-icons"; // Proper import for icons
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import fetchEmployees from "../../apis/fetchEmployees";
 import unixToReadable from "@/lib/unixToReadable";
 

@@ -25,7 +25,7 @@
 <script>
 // comps
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faCheck } from "@fortawesome/free-solid-svg-icons"; // Proper import for icons
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
 // lib
 import addCategory from "./apis/addCategory";
 
@@ -43,8 +43,10 @@ export default {
   },
   methods: {
     async onSubmit() {
-      await addCategory(this.name);
-      this.$router.push("/services");
+      const res = await addCategory(this.name);
+      if (res) {
+        this.$router.push("/services");
+      }
     },
   },
 };

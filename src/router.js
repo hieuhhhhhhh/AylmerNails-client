@@ -53,7 +53,7 @@ const routes = [
         component: Refresh,
       },
       {
-        path: "add_service",
+        path: "add_service/:cate_id?",
         component: AddService,
       },
       {

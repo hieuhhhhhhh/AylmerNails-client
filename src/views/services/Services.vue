@@ -31,8 +31,9 @@ export default {
 
 <style scoped>
 #services {
-  margin: auto;
-  width: fit-content;
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
 }
 </style>

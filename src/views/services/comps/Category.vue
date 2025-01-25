@@ -1,6 +1,6 @@
 <template>
   <div id="category">
-    <div id="title">{{ category.cate_name ?? "Others" }}</div>
+    <div id="title">{{ category.cate_name }}</div>
     <div
       id="service"
       v-for="(service, index) in category.services"
@@ -9,13 +9,22 @@
     >
       {{ service.service_name }}
     </div>
+    <button class="orangeBtn"><FontAwesomeIcon :icon="plusIcon" /></button>
   </div>
 </template>
 
 <script>
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+
 export default {
   name: "Category-",
-
+  components: {
+    FontAwesomeIcon,
+  },
+  data() {
+    return { plusIcon: faPlus };
+  },
   props: {
     category: Object,
   },
@@ -30,10 +39,9 @@ export default {
 <style scoped>
 #category {
   box-shadow: 0 0 5px var(--shadow-color);
-  width: 375px;
   max-width: 90vw;
+  width: 350px;
   border-radius: 5px;
-  margin: 5px;
   background-color: var(--background-i2);
   box-sizing: border-box;
   height: fit-content;

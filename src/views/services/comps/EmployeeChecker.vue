@@ -61,8 +61,10 @@ export default {
       this.isEditing = false;
     },
     async onSubmit() {
-      await updateSEs(this.serviceId, this.checked);
-      this.$router.push("/services/refresh");
+      const res = await updateSEs(this.serviceId, this.checked);
+      if (res) {
+        this.$router.push("/services/refresh");
+      }
     },
   },
   async created() {

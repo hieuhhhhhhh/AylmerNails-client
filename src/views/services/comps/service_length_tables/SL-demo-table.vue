@@ -40,7 +40,7 @@
 
 <script>
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faPenToSquare } from "@fortawesome/free-solid-svg-icons"; // Proper import for icons
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import unixToReadable from "@/lib/unixToReadable";
 import EditSL from "../EditSL.vue";
 export default {
