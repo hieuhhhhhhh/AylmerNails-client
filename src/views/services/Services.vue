@@ -24,6 +24,7 @@ export default {
   },
   async created() {
     this.categories = await fetchCategorizedServices();
+    console.log("categories: ", this.categories);
   },
 };
 </script>
@@ -32,5 +33,6 @@ export default {
 #services {
   margin: auto;
   width: fit-content;
+  display: flex;
 }
 </style>

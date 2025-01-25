@@ -1,6 +1,6 @@
 <template>
   <div id="category">
-    <div id="title">{{ category.category_name ?? "Others" }}</div>
+    <div id="title">{{ category.cate_name ?? "Others" }}</div>
     <div
       id="service"
       v-for="(service, index) in category.services"
@@ -15,6 +15,7 @@
 <script>
 export default {
   name: "Category-",
+
   props: {
     category: Object,
   },
@@ -35,6 +36,7 @@ export default {
   margin: 5px;
   background-color: var(--background-i2);
   box-sizing: border-box;
+  height: fit-content;
 }
 #title {
   padding: 10px;
@@ -57,6 +59,7 @@ export default {
 #service:active {
   background: var(--active);
 }
+
 /* phone view */
 @media (orientation: portrait) {
   #service {

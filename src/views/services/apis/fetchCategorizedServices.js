@@ -22,7 +22,7 @@ export default async function fetchCategorizedServices() {
     // read status and process response
     if (res.ok) {
       // refactor services to categories and return result
-      const categories = refactorServices(json.all_services);
+      const categories = refactorServices(json.services, json.categories);
 
       return categories;
     } else {
@@ -34,39 +34,26 @@ export default async function fetchCategorizedServices() {
 }
 
 // re-group services by category_ids, then sort the group by number of services
-function refactorServices(raw) {
-  // parse array to js object
-  const services = raw.map(
-    ([service_id, service_name, category_id, category_name]) => ({
-      service_id,
-      service_name,
-      category_id,
-      category_name,
-    })
-  );
-
+function refactorServices(rawServices, rawCategories) {
   // a map of categories where category_id is key
-  const categories = new Map();
+  const categories = {};
+  categories[null] = { cate_id: null, cate_name: "Others", services: [] };
+
+  rawCategories.forEach((raw) => {
+    const [cate_id, cate_name] = raw;
+    categories[cate_id] = { cate_id, cate_name, services: [] };
+  });
 
   // re-group services based on their category_id
-  services.forEach((service) => {
-    const { category_id, category_name, service_id, service_name } = service;
-
-    // if key not found in map create new key.
-    if (!categories.has(category_id)) {
-      categories.set(category_id, {
-        category_id,
-        category_name,
-        services: [], // array of services that has same category_id
-      });
-    }
+  rawServices.forEach((raw) => {
+    const [service_id, service_name, last_date, cate_id] = raw;
 
     // add the service to the matching category_id
-    categories.get(category_id).services.push({ service_id, service_name });
+    categories[cate_id].services.push({ service_id, service_name, last_date });
   });
 
   // sort the map based on the length of prop 'services'
-  const sorted = Array.from(categories.values()).sort(
+  const sorted = Object.values(categories).sort(
     (a, b) => b.services.length - a.services.length
   );
 

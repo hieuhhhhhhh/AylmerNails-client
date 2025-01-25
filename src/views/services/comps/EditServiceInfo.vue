@@ -153,9 +153,6 @@ export default {
 textarea {
   width: 100%;
 }
-table {
-  border-collapse: collapse;
-}
 th,
 td {
   padding: 10px;

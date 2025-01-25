@@ -38,7 +38,6 @@ export default {
 table {
   border-collapse: collapse;
   width: 100%;
-  background-color: aqua;
 }
 
 td {

@@ -175,7 +175,7 @@ export default {
 <style scoped>
 input,
 textarea {
-  flex: 1;
+  width: 100%;
 }
 th,
 td {
