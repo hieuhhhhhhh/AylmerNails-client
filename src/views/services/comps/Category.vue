@@ -9,7 +9,11 @@
     >
       {{ service.service_name }}
     </div>
-    <button class="orangeBtn"><FontAwesomeIcon :icon="plusIcon" /></button>
+    <div id="flexBox">
+      <button class="blueBtn" id="plus" @click="addService(category.cate_id)">
+        <FontAwesomeIcon :icon="plusIcon" />
+      </button>
+    </div>
   </div>
 </template>
 
@@ -32,11 +36,25 @@ export default {
     openServiceDetails(service_id) {
       this.$router.push(`/services/details/${service_id}`);
     },
+    addService(cate_id) {
+      this.$router.push(`/services/add_service/${cate_id}`);
+    },
   },
 };
 </script>
 
 <style scoped>
+#plus {
+  aspect-ratio: 1;
+  width: 30px;
+  padding: 0;
+  border-radius: 20px;
+  margin: 5px;
+}
+#flexBox {
+  display: flex;
+  justify-content: center;
+}
 #category {
   box-shadow: 0 0 5px var(--shadow-color);
   max-width: 90vw;

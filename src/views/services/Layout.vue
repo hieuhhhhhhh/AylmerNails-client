@@ -46,13 +46,14 @@ export default {
         case "/services/all":
           return "Services";
 
-        case "/services/add_service":
-          return "New Service";
-
         case "/services/add_category":
           return "New Category";
 
         default: {
+          if (path.includes("/services/add_service")) {
+            return `New Service`;
+          }
+
           if (path.includes("/services/details")) {
             const service_id = this.$route.params.id;
             return `Service Details (ID: ${service_id})`;
