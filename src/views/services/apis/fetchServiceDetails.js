@@ -94,6 +94,8 @@ function getServiceDetails(json) {
   details.lengths = lengths;
   details.AOSs = AOSs;
 
+  console.log("detaills: ", details);
+
   // return results
   return details;
 }

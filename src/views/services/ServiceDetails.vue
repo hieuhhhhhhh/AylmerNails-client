@@ -84,6 +84,8 @@ export default {
       name: this.details.name,
       description: this.details.description,
       last_date: this.details.last_date,
+      cate_name: this.details.cate_name,
+      cate_id: this.details.cate_id,
     };
 
     // fetch AOSs

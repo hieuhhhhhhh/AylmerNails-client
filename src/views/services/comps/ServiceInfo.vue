@@ -24,7 +24,10 @@
         </tr>
         <tr>
           <th>Category:</th>
-          <td><NA v-if="!serviceInfo.cate_name && isFetched" /></td>
+          <td>
+            {{ serviceInfo.cate_name
+            }}<NA v-if="!serviceInfo.cate_id && isFetched" />
+          </td>
         </tr>
       </tbody>
     </table>

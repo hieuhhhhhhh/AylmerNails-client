@@ -99,7 +99,7 @@ export default {
       name: "",
       description: "",
       date: null,
-      categoryId: "null",
+      categoryId: null,
 
       // resources
       categories: [],
@@ -140,7 +140,10 @@ export default {
     this.description = this.iDescription;
     if (this.iCategoryId) {
       this.categoryId = this.iCategoryId;
+    } else {
+      this.categoryId = "null";
     }
+
     if (this.iDate) {
       this.date = parseUT(this.iDate);
     }
