@@ -11,10 +11,7 @@ export default {
   components: { DrawerContent },
   name: "Drawer-",
   props: {
-    isOpen: {
-      type: Boolean,
-      required: true,
-    },
+    isOpen: Boolean,
   },
   methods: {
     closeDrawer() {
@@ -33,7 +30,7 @@ export default {
   width: 300px;
   max-width: 75vw;
   height: 100%;
-  background: var(--middleground);
+  background: var(--background-i2);
   padding-top: 60px;
   transition: left 0.15s ease-out; /* add transition effect */
 }

@@ -1,22 +1,43 @@
 <template>
-  <div id="app">
-    <h1>{{ message }}</h1>
-  </div>
+  <div></div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      message: "",
-    };
+  async created() {
+    await this.apiRequest();
   },
-  mounted() {
-    fetch("http://127.0.0.1:5000/")
-      .then((response) => response.json())
-      .then((data) => {
-        this.message = data.message;
-      });
+  methods: {
+    async apiRequest() {
+      try {
+        // get app path
+        const baseURL = process.env.VUE_APP_BASE_URL;
+
+        // start requesting server
+        const res = await fetch(
+          `${baseURL}/api/authentication/request_continue_session`,
+          {
+            method: "GET",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+
+        // read status and process reponse
+        const data = await res.json();
+
+        if (res.ok) {
+          console.log("Sussesful");
+        } else {
+          this.$router.push("/login");
+          console.log("Failed, message: ", data.message);
+        }
+      } catch (e) {
+        console.error("Unexpected Error: ", e);
+      }
+    },
   },
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div id="Header">
+  <div id="header">
     <div id="title">Aylmer Nails & Spa</div>
   </div>
 </template>
@@ -10,13 +10,14 @@ export default {
 </script>
 
 <style scoped>
-#Header {
+#header {
   display: flex;
   justify-content: center;
   align-items: center;
   box-shadow: 0 0 5px var(--shadow-color);
-  background: var(--middleground);
+  background: var(--background-i2);
   padding: 17px;
+  z-index: 10;
 }
 #title {
   font-size: 26px;

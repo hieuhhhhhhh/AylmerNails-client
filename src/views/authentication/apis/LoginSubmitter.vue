@@ -1,4 +1,4 @@
-// a helper, an api caller to pass phone num and password from parent to the api
+// to pass phone num and password from parent to the login api
 
 <template>
   <div v-if="msg" class="error">
@@ -13,7 +13,10 @@ export default {
       msg: "",
     };
   },
-  props: ["phone", "password"],
+  props: {
+    phone: String,
+    password: String,
+  },
   methods: {
     async submitCredentials() {
       try {
@@ -23,6 +26,7 @@ export default {
         // get app path
         const baseURL = process.env.VUE_APP_BASE_URL;
 
+        console.log("formatted", formatted);
         // start requesting server
         const res = await fetch(
           `${baseURL}/api/authentication/request_log_in`,
@@ -41,7 +45,7 @@ export default {
 
         // read status and process reponse
         if (res.ok) {
-          this.$router.push("./");
+          this.$router.push("/");
         } else {
           const data = await res.json();
           this.msg = data.message;

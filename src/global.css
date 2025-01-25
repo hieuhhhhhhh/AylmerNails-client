@@ -1,28 +1,92 @@
 :root {
-  --background: rgb(240, 240, 240);
-  --middleground: white;
+  --background-i0: rgb(230, 230, 230);
+  --background-i1: rgb(245, 245, 245);
+  --background-i2: white;
+
   --foreground: #333;
   --xtrans-gray: rgba(150, 150, 150, 0.1);
   --shadow-color: rgba(0, 0, 0, 0.2);
   --hover: rgb(217, 217, 217);
   --active: rgb(157, 157, 157);
+  -webkit-tap-highlight-color: transparent;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #242424;
-    --middleground: #2f2f2f;
+    --background-i0: #1a1a1a;
+    --background-i1: #242424;
+    --background-i2: #2b2b2b;
+
     --foreground: rgb(230, 230, 230);
     --shadow-color: rgba(0, 0, 0, 0.4);
-    --hover: rgb(22, 22, 22);
-    --active: black;
+    --hover: rgb(27, 27, 27);
+    --active: rgb(21, 21, 21);
   }
 }
-
+input,select {
+  padding: 3px;
+  box-sizing: border-box;
+}
 body {
   margin: 0;
-  background-color: var(--background);
+  background-color: var(--background-i0);
   color: var(--foreground);
   display: flex; /* This ensures flex behavior for child elements */
   flex-direction: column; /* Align content in a column */
+}
+
+.blueBtn {
+  color: white;
+  background-color: rgb(77, 135, 251);
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 15px;
+  padding: 8px;
+  border: 1px rgba(0, 0, 0, 0.4) solid;
+  transition: background-color 0.05s ease-in-out;
+}
+.blueBtn:active{
+  background-color: rgb(32, 86, 156);
+}
+
+.greenBtn {
+  color: white;
+  background-color: rgb(57, 184, 95);
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 15px;
+  padding: 8px;
+  border: 1px rgba(0, 0, 0, 0.4) solid;
+  transition: background-color 0.05s ease-in-out;
+}
+.greenBtn:active{
+  background-color: rgb(36, 117, 88)
+}
+
+.redBtn {
+  color: white;
+  background-color: rgb(206, 69, 69);
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 15px;
+  padding: 8px;
+  border: 1px rgba(0, 0, 0, 0.4) solid;
+  transition: background-color 0.05s ease-in-out;
+}
+.redBtn:active{
+  background-color: rgb(134, 46, 46);
+}
+
+.orangeBtn {
+  color: white;
+  background-color: rgb(206, 142, 69);
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 15px;
+  padding: 8px;
+  border: 1px rgba(0, 0, 0, 0.4) solid;
+  transition: background-color 0.05s ease-in-out;
+}
+.orangeBtn:active{
+  background-color: rgb(138, 95, 47);
 }

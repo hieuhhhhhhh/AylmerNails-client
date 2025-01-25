@@ -1,0 +1,89 @@
+<template>
+  <form @submit.prevent="onSubmit">
+    <div v-for="employee in employees" :key="employee.employee_id">
+      <input
+        id="check"
+        type="checkbox"
+        :value="employee.employee_id"
+        :disabled="!isEditing"
+        v-model="checked"
+      />
+      <label>{{ employee.alias }}</label>
+    </div>
+
+    <button v-if="!isEditing" class="blueBtn" @click="openEditMode">
+      <FontAwesomeIcon :icon="editIcon" /> Edit Members
+    </button>
+    <div v-else id="duo">
+      <button class="redBtn" @click.prevent="closeEditMode">
+        <FontAwesomeIcon :icon="cancelIcon" /> Cancel
+      </button>
+      <button class="greenBtn">
+        <FontAwesomeIcon :icon="saveIcon" /> Save Changes
+      </button>
+    </div>
+  </form>
+</template>
+
+<script>
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { faCancel } from "@fortawesome/free-solid-svg-icons";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
+
+import fetchServiceEmployees from "../apis/fetchSEs";
+import updateSEs from "../apis/updateSEs";
+export default {
+  props: {
+    serviceId: String,
+  },
+  components: {
+    FontAwesomeIcon,
+  },
+  data() {
+    return {
+      // icon
+      editIcon: faPenToSquare,
+      cancelIcon: faCancel,
+      saveIcon: faCheck,
+      // status
+      isEditing: false,
+      // states
+      employees: [],
+      checked: [],
+    };
+  },
+  methods: {
+    openEditMode() {
+      this.isEditing = true;
+    },
+    closeEditMode() {
+      this.isEditing = false;
+    },
+    async onSubmit() {
+      const res = await updateSEs(this.serviceId, this.checked);
+      if (res) {
+        this.$router.push("/services/refresh");
+      }
+    },
+  },
+  async created() {
+    this.employees = await fetchServiceEmployees(this.serviceId);
+    this.employees.forEach((employee) => {
+      if (employee.service_id) {
+        this.checked.push(employee.employee_id);
+      }
+    });
+  },
+};
+</script>
+<style scoped>
+#check {
+  transform: scale(1.5);
+  margin: 5px;
+}
+#duo {
+  display: flex;
+  gap: 15px;
+}
+</style>

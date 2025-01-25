@@ -1,7 +1,6 @@
 <template>
-  <div>
-    <div id="drawerLayout" v-show="drawerOpen" @click="toggleDrawer" />
-    <!-- Pass the drawerOpen as a prop to the Drawer component -->
+  <div id="parent">
+    <div id="layout" v-show="drawerOpen" @click="toggleDrawer" />
     <Drawer :isOpen="drawerOpen" @update:drawerOpen="updateDrawerState" />
     <IconBtn @click="toggleDrawer" />
   </div>
@@ -31,7 +30,10 @@ export default {
 </script>
 
 <style scoped>
-#drawerLayout {
+#parent {
+  z-index: 15;
+}
+#layout {
   position: fixed;
   height: 100%;
   width: 100%;

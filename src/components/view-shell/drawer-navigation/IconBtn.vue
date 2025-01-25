@@ -8,7 +8,7 @@
 
 <script>
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons"; // Proper import for icons
+import { faBars } from "@fortawesome/free-solid-svg-icons";
 
 export default {
   components: {
@@ -29,7 +29,6 @@ export default {
   left: 7px;
   cursor: pointer;
   user-select: none;
-  -webkit-tap-highlight-color: transparent;
 }
 @media (orientation: portrait) {
   #IconBtn {
@@ -43,7 +42,7 @@ export default {
   align-items: center;
   justify-content: center;
   font-size: 30px; /* Increase this value to make the icon larger */
-  background: var(--middleground);
+  background: var(--background-i2);
   height: 50px;
   aspect-ratio: 1;
   border-radius: 50%;
@@ -51,8 +50,5 @@ export default {
 }
 #icon:hover {
   background: var(--hover);
-}
-#icon:active {
-  background: var(--active);
 }
 </style>
