@@ -50,10 +50,15 @@ function refactorServices(rawServices, rawCategories) {
 
   // re-group services based on their category_id
   rawServices.forEach((raw) => {
-    const [service_id, service_name, last_date, cate_id] = raw;
+    const [service_id, service_name, last_date, is_active, cate_id] = raw;
 
     // add the service to the matching category_id
-    categories[cate_id].services.push({ service_id, service_name, last_date });
+    categories[cate_id].services.push({
+      service_id,
+      service_name,
+      last_date,
+      is_active,
+    });
   });
 
   // sort the map based on the length of prop 'services'

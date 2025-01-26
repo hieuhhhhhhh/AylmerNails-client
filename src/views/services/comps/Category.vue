@@ -3,12 +3,17 @@
     <div id="title">{{ category.cate_name }}</div>
     <div
       id="service"
+      :class="{ faded: !service.is_active }"
       v-for="(service, index) in category.services"
       :key="index"
       @click="openServiceDetails(service.service_id)"
     >
       {{ service.service_name }}
+      <span v-if="!service.is_active">
+        ended on {{ formatDate(service.last_date) }}
+      </span>
     </div>
+
     <div id="flexBox">
       <button class="blueBtn" id="plus" @click="addService(category.cate_id)">
         <FontAwesomeIcon :icon="plusIcon" />
@@ -31,6 +36,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faPlus, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 // lib
 import removeCategory from "../apis/removeCategory";
+import unixTimeToDate from "@/lib/parseUT";
 
 export default {
   name: "Category-",
@@ -55,6 +61,9 @@ export default {
       if (res) {
         this.$router.push("/services/refresh");
       }
+    },
+    formatDate(unixTime) {
+      return unixTimeToDate(unixTime);
     },
   },
 };
@@ -96,6 +105,8 @@ export default {
   border-top: 1px solid var(--xtrans-gray);
   box-sizing: border-box;
   cursor: pointer;
+  display: flex;
+  justify-content: space-between;
 }
 #service:hover {
   background: var(--hover);
@@ -103,7 +114,9 @@ export default {
 #service:active {
   background: var(--active);
 }
-
+.faded {
+  color: gray;
+}
 /* phone view */
 @media (orientation: portrait) {
   #service {

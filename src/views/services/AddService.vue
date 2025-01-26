@@ -175,7 +175,7 @@ export default {
 </script>
 
 <style scoped>
-input,
+input:not(#check),
 textarea {
   width: 100%;
 }

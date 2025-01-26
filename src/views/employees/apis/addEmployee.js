@@ -1,4 +1,4 @@
-export default async function addService(alias, key_intervals, service_ids) {
+export default async function addEmployee(alias, key_intervals, service_ids) {
   try {
     // get app path
     const baseURL = process.env.VUE_APP_BASE_URL;

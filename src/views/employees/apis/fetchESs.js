@@ -1,13 +1,13 @@
 import getTodayUnixTime from "@/lib/getTodayUnixTime";
 
-export default async function fetchEmployees() {
+export default async function fetchEmployeeServices(employeeId) {
   try {
     // get app path
     const baseURL = process.env.VUE_APP_BASE_URL;
 
     // start requesting server
     const res = await fetch(
-      `${baseURL}/api/employees/get_employees/${getTodayUnixTime()}`,
+      `${baseURL}/api/employees/get_employee_services/${employeeId}/${getTodayUnixTime()}`,
       {
         method: "GET",
         credentials: "include",
@@ -23,21 +23,22 @@ export default async function fetchEmployees() {
     // read status and process response
     if (res.ok) {
       // refactor data and return result
-      const raw = json.all_employees;
-      const employees = [];
+      const raw = json.services;
+      const service_ids = [];
       raw.forEach((e) => {
         // unpack properties and create new employee
-        const [employee_id, alias, last_date, is_active] = e;
-        const employee = { employee_id, alias, last_date, is_active };
-
-        employees.push(employee);
+        const [service_id, ,] = e;
+        service_ids.push(service_id);
       });
 
       // return result
-      console.log("emp: ", employees);
-      return employees;
+
+      return service_ids;
     } else {
-      console.log("Failed to fetch employee list, message: ", json.message);
+      console.log(
+        "Failed to fetch employee's services, message: ",
+        json.message
+      );
     }
   } catch (e) {
     console.error("Unexpected Error: ", e);

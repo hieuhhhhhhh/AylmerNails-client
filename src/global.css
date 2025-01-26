@@ -26,6 +26,7 @@
 input, 
 textarea{
   text-transform: capitalize;
+  padding: 3px;
 }
 body {
   margin: 0;

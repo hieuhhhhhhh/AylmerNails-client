@@ -14,83 +14,100 @@
         </tr>
 
         <tr>
-          <th>Category:</th>
+          <th>Interval:</th>
           <td id="flexBox">
-            <select v-model="categoryId" required>
-              <option
-                v-for="cate in categories"
-                :key="cate.cate_id"
-                :value="cate.cate_id"
-              >
-                {{ cate.name }}
-              </option>
-              <option :value="'null'">*empty</option>
-            </select>
+            <input type="number" v-model="interval1" required :min="1" />
           </td>
         </tr>
-
         <tr>
           <th>
-            Default Length:<br />
-            (minutes)
+            Another Interval:<br />
+            (Optional)
           </th>
           <td id="flexBox">
-            <input type="number" v-model="length" required :min="1" />
+            <input type="number" v-model="interval2" :min="1" />
           </td>
         </tr>
         <tr>
-          <th>Description:</th>
-          <td id="flexBox">
-            <textarea
-              id="description"
-              type="text"
-              rows="3"
-              v-model="description"
-            />
-          </td>
-        </tr>
-        <tr>
-          <th>Members:</th>
-          <td>
-            <div v-for="employee in employees" :key="employee.employee_id">
-              <input
-                id="check"
-                type="checkbox"
-                :value="employee.employee_id"
-                v-model="checkedEmp"
-              />
-              <label>{{ employee.alias }}</label>
-            </div>
-          </td>
+          <th>Services:</th>
         </tr>
       </tbody>
     </table>
-    <br />
-    <div id="addOn">
-      <b>Additional Options:</b>
-      <AOSsEdit
-        :AOSs="AOSs"
-        :editAOS="editAOS"
-        :removeOption="removeOption"
-        :addOption="addOption"
-        :addQuestion="addQuestion"
-        :removeQuestion="removeQuestion"
-        :onInputQuestion="onInputQuestion"
+    <div id="categories">
+      <Category
+        v-for="(category, index) in categories"
+        :key="index"
+        :category="category"
+        :checkService="checkService"
+        :uncheckService="uncheckService"
       />
-      <button class="greenBtn">
-        <FontAwesomeIcon :icon="saveIcon" /> <b>Confirm New Service</b>
-      </button>
     </div>
+    <br />
+    <button class="greenBtn">
+      <FontAwesomeIcon :icon="saveIcon" /> <b>Confirm New Employee</b>
+    </button>
   </form>
 </template>
 
 <script>
-export default {};
+// icon
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
+// comps
+import Category from "./comps/Category.vue";
+// lib
+import fetchCategorizedServices from "../services/apis/fetchCategorizedServices";
+import addEmployee from "./apis/addEmployee.js";
+
+export default {
+  components: {
+    FontAwesomeIcon,
+    Category,
+  },
+  data() {
+    return {
+      // icon
+      saveIcon: faCheck,
+      // states
+      categories: [],
+      ESs: new Set(),
+      name: "",
+      interval1: null,
+      interval2: null,
+    };
+  },
+  methods: {
+    checkService(serviceId) {
+      this.ESs.add(serviceId);
+    },
+    uncheckService(serviceId) {
+      this.ESs.delete(serviceId);
+    },
+    async onSubmit() {
+      // parse intervals
+      const intervals = [];
+      intervals.push(this.interval1);
+      if (this.interval2) intervals.push(this.interval2);
+      else intervals.push(this.interval1);
+
+      console.log("intervals: ", intervals);
+
+      // parse ESs
+      const res = await addEmployee(this.name, intervals, Array.from(this.ESs));
+
+      if (res) {
+        console.log(res);
+      }
+    },
+  },
+  async created() {
+    this.categories = await fetchCategorizedServices();
+  },
+};
 </script>
 
 <style scoped>
-input,
-textarea {
+input {
   width: 100%;
 }
 th,
@@ -101,19 +118,14 @@ td {
 #flexBox {
   display: flex;
 }
-#addOn {
-  padding: 10px;
-  border-top: 3px var(--xtrans-gray) solid;
-  border-bottom: 3px var(--xtrans-gray) solid;
-}
-
-#duo {
-  display: flex;
-  gap: 15px;
-}
-
 #check {
   transform: scale(1.5);
   margin: 5px;
+}
+#categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  justify-content: center;
 }
 </style>
