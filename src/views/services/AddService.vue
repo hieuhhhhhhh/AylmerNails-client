@@ -169,8 +169,13 @@ export default {
   async created() {
     this.categoryId = this.$route.params.cate_id;
 
-    this.employees = await fetchEmployees();
-    this.categories = await fetchCategories();
+    const [employees, categories] = await Promise.all([
+      fetchEmployees(),
+      fetchCategories(),
+    ]);
+
+    this.employees = employees;
+    this.categories = categories;
   },
 };
 </script>

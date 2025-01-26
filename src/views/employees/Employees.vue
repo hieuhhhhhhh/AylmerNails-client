@@ -1,5 +1,18 @@
 <template>
-  <div></div>
+  <div id="category">
+    <div
+      id="service"
+      v-for="(employee, index) in employees"
+      :key="index"
+      @click="navigateEmp(employee.employee_id)"
+    >
+      <div id="faded" v-if="!employee.is_active">
+        ended on {{ employee.last_date }}
+      </div>
+      {{ employee.alias }}
+    </div>
+  </div>
+  <br />
   <button class="blueBtn" id="plus" @click="navigateAddEmp()">
     <FontAwesomeIcon :icon="plusIcon" /> Add Employee
   </button>
@@ -27,6 +40,9 @@ export default {
     navigateAddEmp() {
       this.$router.push(`/employees/add_employee`);
     },
+    navigateEmp(employee_id) {
+      this.$router.push(`/employees/details/${employee_id}`);
+    },
   },
   async created() {
     this.employees = await fetchEmployees();
@@ -35,3 +51,42 @@ export default {
 };
 </script>
 
+<style scoped>
+#category {
+  box-shadow: 0 0 5px var(--shadow-color);
+  max-width: 90vw;
+  width: fit-content;
+  min-width: 350px;
+  border-radius: 5px;
+  background-color: var(--background-i2);
+  box-sizing: border-box;
+  height: fit-content;
+  gap: 10px;
+}
+
+#service {
+  padding: 9px;
+  padding-inline: 15px;
+  font-size: 19px;
+  border-top: 1px solid var(--xtrans-gray);
+  box-sizing: border-box;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+}
+#service:hover {
+  background: var(--hover);
+}
+#service:active {
+  background: var(--active);
+}
+.faded {
+  color: gray;
+}
+/* phone view */
+@media (orientation: portrait) {
+  #service {
+    padding: 13px;
+  }
+}
+</style>
