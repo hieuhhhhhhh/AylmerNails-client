@@ -37,6 +37,7 @@
       <Category
         v-for="(category, index) in categories"
         :key="index"
+        :isEditing="true"
         :category="category"
         :checkService="checkService"
         :uncheckService="uncheckService"
@@ -56,7 +57,7 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons";
 // comps
 import Category from "./comps/Category.vue";
 // lib
-import fetchCategorizedServices from "../services/apis/fetchCategorizedServices";
+import fetchEmployeeServices from "./apis/fetchESs.js";
 import addEmployee from "./apis/addEmployee.js";
 
 export default {
@@ -101,7 +102,7 @@ export default {
     },
   },
   async created() {
-    this.categories = await fetchCategorizedServices();
+    this.categories = await fetchEmployeeServices(1);
   },
 };
 </script>
@@ -126,6 +127,5 @@ td {
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
-  justify-content: center;
 }
 </style>

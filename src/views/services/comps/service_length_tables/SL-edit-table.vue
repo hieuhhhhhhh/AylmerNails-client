@@ -134,7 +134,7 @@ export default {
   },
   async created() {
     this.employees = await fetchEmployees();
-    console.log("employees: ", this.employees);
+    this.employees = this.employees.filter((emp) => emp.is_active);
   },
 };
 </script>

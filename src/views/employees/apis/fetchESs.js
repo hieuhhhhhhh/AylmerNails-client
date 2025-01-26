@@ -16,24 +16,16 @@ export default async function fetchEmployeeServices(employeeId) {
         },
       }
     );
-
     // fetch json
     const json = await res.json();
 
     // read status and process response
     if (res.ok) {
-      // refactor data and return result
-      const raw = json.services;
-      const service_ids = [];
-      raw.forEach((e) => {
-        // unpack properties and create new employee
-        const [service_id, ,] = e;
-        service_ids.push(service_id);
-      });
+      // refactor services to categories and return result
+      const categories = refactorServices(json.services, json.categories);
 
-      // return result
-
-      return service_ids;
+      console.log("cates: ", categories);
+      return categories;
     } else {
       console.log(
         "Failed to fetch employee's services, message: ",
@@ -43,4 +35,41 @@ export default async function fetchEmployeeServices(employeeId) {
   } catch (e) {
     console.error("Unexpected Error: ", e);
   }
+}
+
+// re-group services by category_ids, then sort the group by number of services
+function refactorServices(rawServices, rawCategories) {
+  // a map of categories where category_id is key
+  const categories = {};
+  categories[null] = {
+    cate_id: null,
+    cate_name: "Unclassified",
+    services: [],
+  };
+
+  rawCategories.forEach((raw) => {
+    const [cate_id, cate_name] = raw;
+    categories[cate_id] = { cate_id, cate_name, services: [] };
+  });
+
+  // re-group services based on their category_id
+  rawServices.forEach((raw) => {
+    const [service_id, service_name, cate_id, employee_id] = raw;
+
+    // add the service to the matching category_id
+    categories[cate_id].services.push({
+      service_id,
+      service_name,
+      cate_id,
+      employee_id,
+    });
+  });
+
+  // sort the map based on the length of prop 'services'
+  const sorted = Object.values(categories).sort(
+    (a, b) => b.services.length - a.services.length
+  );
+
+  // return result
+  return sorted;
 }

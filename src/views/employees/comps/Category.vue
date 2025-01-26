@@ -1,13 +1,15 @@
 <template>
-  <div id="category">
+  <div v-if="category.services.length" id="category">
     <div id="title">{{ category.cate_name }}</div>
     <div v-for="(service, index) in category.services" :key="index">
-      <div v-if="service.is_active">
+      <div>
         <input
           id="check"
           type="checkbox"
           :value="service.service_id"
+          :checked="service.employee_id && uncheckedAll"
           @change="updateChecked"
+          :disabled="!isEditing"
         />
         <label>{{ service.service_name }}</label>
       </div>
@@ -20,6 +22,8 @@ export default {
   name: "Category-",
   props: {
     category: Object,
+    isEditing: Boolean,
+    uncheckedAll: Boolean,
     checkService: Function,
     uncheckService: Function,
   },
@@ -39,7 +43,7 @@ export default {
 <style scoped>
 #check {
   transform: scale(1.5);
-  margin: 5px;
+  margin: 10px;
 }
 #category {
   box-shadow: 0 0 5px var(--shadow-color);
@@ -51,7 +55,7 @@ export default {
   height: fit-content;
 }
 #title {
-  padding: 10px;
+  padding: 5px;
   text-align: center;
   font-weight: bold;
   font-size: 19px;
