@@ -79,7 +79,7 @@
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
-import fetchEmployees from "../../apis/fetchEmployees";
+import fetchEmployees from "../../../employees/apis/fetchEmployees";
 import unixToReadable from "@/lib/unixToReadable";
 
 export default {

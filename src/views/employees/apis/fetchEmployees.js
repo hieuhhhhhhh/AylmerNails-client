@@ -27,8 +27,8 @@ export default async function fetchEmployees() {
       const employees = [];
       raw.forEach((e) => {
         // unpack properties and create new employee
-        const [employee_id, alias, first_date, last_date] = e;
-        const employee = { employee_id, alias, first_date, last_date };
+        const [employee_id, alias, last_date] = e;
+        const employee = { employee_id, alias, last_date };
 
         employees.push(employee);
       });
