@@ -42,7 +42,7 @@ export default {
 
 <style scoped>
 #check {
-  transform: scale(1.5);
+  transform: scale(2);
   margin: 10px;
 }
 #category {
@@ -66,5 +66,10 @@ export default {
   padding-inline: 15px;
   font-size: 17px;
   box-sizing: border-box;
+}
+@media (orientation: portrait) {
+  #service {
+    padding: 13px;
+  }
 }
 </style>

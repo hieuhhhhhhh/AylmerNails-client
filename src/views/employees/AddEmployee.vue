@@ -120,8 +120,8 @@ td {
   display: flex;
 }
 #check {
-  transform: scale(1.5);
-  margin: 5px;
+  transform: scale(2);
+  margin: 10px;
 }
 #categories {
   display: flex;
