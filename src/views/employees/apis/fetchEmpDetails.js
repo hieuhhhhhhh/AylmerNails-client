@@ -29,18 +29,11 @@ export default async function fetchEmpDetails(emp_id) {
 
       // fetch intervals
       const si = JSON.parse(stored_intervals);
-      const interval1 = si[1];
-      const interval2 = si[2] - si[1];
-      let intervals = "";
 
-      if (interval1 != interval2) {
-        intervals = `${interval1} and ${interval2}`;
-      } else {
-        intervals = `${interval1}`;
-      }
+      const key_intervals = [si[1], si[2] - si[1]];
 
       // create and return result
-      const details = { emp_id, alias, intervals, last_date };
+      const details = { emp_id, alias, key_intervals, last_date };
       console.log("details: ", details);
       return details;
     } else {

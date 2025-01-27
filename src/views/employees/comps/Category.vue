@@ -7,7 +7,7 @@
           id="check"
           type="checkbox"
           :value="service.service_id"
-          :checked="service.employee_id && uncheckedAll"
+          :checked="service.employee_id && !uncheckedAll"
           @change="updateChecked"
           :disabled="!isEditing"
         />
@@ -46,6 +46,7 @@ export default {
   margin: 10px;
 }
 #category {
+  padding: 4px;
   box-shadow: 0 0 5px var(--shadow-color);
   max-width: 90vw;
   width: 175px;

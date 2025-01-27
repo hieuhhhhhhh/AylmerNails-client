@@ -2,6 +2,9 @@ import { DateTime } from "luxon";
 import getTimezone from "./getTimeZone";
 
 export default function unixTimeToDate(unixTime) {
+  if (!unixTime) {
+    return;
+  }
   // Convert the Unix timestamp to a DateTime object
   const dateTime = DateTime.fromMillis(unixTime * 1000);
 

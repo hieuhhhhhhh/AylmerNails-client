@@ -41,6 +41,7 @@
         :category="category"
         :checkService="checkService"
         :uncheckService="uncheckService"
+        :uncheckedAll="true"
       />
     </div>
     <br />
@@ -102,7 +103,7 @@ export default {
     },
   },
   async created() {
-    this.categories = await fetchEmployeeServices(1);
+    this.categories = (await fetchEmployeeServices(1)).categories;
   },
 };
 </script>
