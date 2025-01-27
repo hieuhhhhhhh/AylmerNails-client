@@ -58,11 +58,7 @@
         <FontAwesomeIcon :icon="saveIcon" /> Save Changes
       </button>
     </div>
-    <br />
-    <br />
   </form>
-
-  <div id="title">Schedules:</div>
 </template>
 
 <script>
@@ -184,12 +180,5 @@ th,
 td {
   padding: 10px;
   text-align: left;
-}
-#title {
-  display: flex;
-  padding: 10px;
-  text-align: left;
-  font-weight: bold;
-  border-top: 3px var(--xtrans-gray) solid;
 }
 </style>

@@ -9,7 +9,7 @@
       @click="openServiceDetails(service.service_id)"
     >
       {{ service.service_name }}
-      <span v-if="!service.is_active">
+      <span v-if="!service.is_active" class="faded">
         ended on {{ formatDate(service.last_date) }}
       </span>
     </div>
@@ -36,7 +36,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faPlus, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 // lib
 import removeCategory from "../apis/removeCategory";
-import unixTimeToDate from "@/lib/parseUT";
+import unixToReadable from "@/lib/unixToReadable";
 
 export default {
   name: "Category-",
@@ -63,7 +63,7 @@ export default {
       }
     },
     formatDate(unixTime) {
-      return unixTimeToDate(unixTime);
+      return unixToReadable(unixTime);
     },
   },
 };
@@ -107,6 +107,7 @@ export default {
   cursor: pointer;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 #service:hover {
   background: var(--hover);
@@ -116,6 +117,7 @@ export default {
 }
 .faded {
   color: gray;
+  font-size: 14px;
 }
 /* phone view */
 @media (orientation: portrait) {

@@ -2,14 +2,15 @@
   <div id="category">
     <div
       id="service"
+      :class="{ faded: !employee.is_active }"
       v-for="(employee, index) in employees"
       :key="index"
       @click="navigateEmp(employee.employee_id)"
     >
-      <div id="faded" v-if="!employee.is_active">
-        ended on {{ employee.last_date }}
-      </div>
       {{ employee.alias }}
+      <div class="faded" v-if="!employee.is_active">
+        ended on {{ formatDate(employee.last_date) }}
+      </div>
     </div>
   </div>
   <br />
@@ -24,6 +25,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 // lib
 import fetchEmployees from "./apis/fetchEmployees";
+import unixToReadable from "@/lib/unixToReadable";
 
 export default {
   name: "Employees-",
@@ -42,6 +44,9 @@ export default {
     },
     navigateEmp(employee_id) {
       this.$router.push(`/employees/details/${employee_id}`);
+    },
+    formatDate(unix) {
+      return unixToReadable(unix);
     },
   },
   async created() {
@@ -73,6 +78,7 @@ export default {
   cursor: pointer;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 #service:hover {
   background: var(--hover);
@@ -82,6 +88,8 @@ export default {
 }
 .faded {
   color: gray;
+  padding-left: 20px;
+  font-size: 14px;
 }
 /* phone view */
 @media (orientation: portrait) {
