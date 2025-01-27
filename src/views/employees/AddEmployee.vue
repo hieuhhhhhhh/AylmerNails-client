@@ -14,14 +14,14 @@
         </tr>
 
         <tr>
-          <th>Interval:</th>
+          <th>Ideal Length:<br />(minutes)</th>
           <td id="flexBox">
             <input type="number" v-model="interval1" required :min="1" />
           </td>
         </tr>
         <tr>
           <th>
-            Another Interval:<br />
+            Another Ideal Length:<br />
             (Optional)
           </th>
           <td id="flexBox">

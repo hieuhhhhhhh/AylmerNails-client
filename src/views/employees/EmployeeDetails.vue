@@ -1,9 +1,9 @@
 <template>
   <EmployeeInfo />
   <br />
-  <Schedule />
-
   <div id="title">Schedules:</div>
+
+  <Schedule />
 </template>
 <script>
 // comps

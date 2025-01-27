@@ -16,7 +16,7 @@
             <td><NA v-if="!formattedDate" /> {{ formattedDate }}</td>
           </tr>
           <tr>
-            <th>Intervals:</th>
+            <th>Ideal Lengths:<br />(minutes)</th>
             <td>{{ formattedIntervals(intervals) }}</td>
           </tr>
           <tr>
@@ -117,8 +117,9 @@ export default {
     openEditForm() {
       this.isEditing = true;
     },
-    closeEditForm() {
-      this.$router.push("/employees/refresh");
+    async closeEditForm() {
+      await this.fetchData();
+      this.isEditing = false;
     },
     formattedIntervals(intervals) {
       const interval1 = intervals[0];
@@ -149,25 +150,28 @@ export default {
         this.$router.push("/employees/refresh");
       }
     },
+    async fetchData() {
+      this.emp_id = this.$route.params.id;
+      // fetch resources
+      const [details, { categories, ES_ids }] = await Promise.all([
+        fetchEmpDetails(this.emp_id),
+        fetchEmployeeServices(this.emp_id),
+      ]);
+      this.categories = categories;
+      this.ESs = ES_ids;
+
+      // fetch state
+      this.alias = details.alias;
+      this.last_date = parseUT(details.last_date);
+      this.formattedDate = unixToReadable(details.last_date);
+      this.intervals = details.key_intervals;
+
+      // update status
+      this.isFetched = true;
+    },
   },
   async created() {
-    this.emp_id = this.$route.params.id;
-    // fetch resources
-    const [details, { categories, ES_ids }] = await Promise.all([
-      fetchEmpDetails(this.emp_id),
-      fetchEmployeeServices(this.emp_id),
-    ]);
-    this.categories = categories;
-    this.ESs = ES_ids;
-
-    // fetch state
-    this.alias = details.alias;
-    this.last_date = parseUT(details.last_date);
-    this.formattedDate = unixToReadable(details.last_date);
-    this.intervals = details.key_intervals;
-
-    // update status
-    this.isFetched = true;
+    await this.fetchData();
   },
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div id="note">*Intervals are not editable</div>
+  <div id="note">*Ideal Lengths are not editable</div>
   <table>
     <colgroup>
       <col style="width: auto" />
@@ -74,9 +74,5 @@ td {
   padding-top: 0px;
   font-style: italic;
   color: rgb(184, 121, 3);
-}
-#duo {
-  display: flex;
-  gap: 15px;
 }
 </style>
