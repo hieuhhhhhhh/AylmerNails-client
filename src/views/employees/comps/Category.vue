@@ -1,5 +1,5 @@
 <template>
-  <div v-if="category.services.length" id="category">
+  <div id="category">
     <div id="title">{{ category.cate_name }}</div>
     <div v-for="(service, index) in category.services" :key="index">
       <div>

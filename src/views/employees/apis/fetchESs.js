@@ -65,6 +65,11 @@ function refactorServices(rawServices, rawCategories) {
     });
   });
 
+  // remove 'Unclassified' if no services in there
+  if (!categories[null].services.length > 0) {
+    delete categories[null];
+  }
+
   // sort the map based on the length of prop 'services'
   const sorted = Object.values(categories).sort(
     (a, b) => b.services.length - a.services.length
