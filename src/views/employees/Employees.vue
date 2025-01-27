@@ -54,9 +54,9 @@ export default {
 <style scoped>
 #category {
   box-shadow: 0 0 5px var(--shadow-color);
-  max-width: 90vw;
   width: fit-content;
-  min-width: 350px;
+  max-width: 90vw;
+  min-width: min(350px, 90vw);
   border-radius: 5px;
   background-color: var(--background-i2);
   box-sizing: border-box;

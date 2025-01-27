@@ -98,7 +98,7 @@ export default {
       const res = await addEmployee(this.name, intervals, Array.from(this.ESs));
 
       if (res) {
-        console.log(res);
+        this.$router.push(`/employees/details/${res}`);
       }
     },
   },

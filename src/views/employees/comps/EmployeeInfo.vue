@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isFetched">
+  <form @submit.prevent="onSubmit" v-if="isFetched">
     <div v-if="!isEditing">
       <table>
         <colgroup>
@@ -13,11 +13,11 @@
           </tr>
           <tr>
             <th>Available Until:</th>
-            <td><NA v-if="!last_date" /> {{ last_date }}</td>
+            <td><NA v-if="!formattedDate" /> {{ formattedDate }}</td>
           </tr>
           <tr>
             <th>Intervals:</th>
-            <td>{{ formattedIntervals() }}</td>
+            <td>{{ formattedIntervals(intervals) }}</td>
           </tr>
           <tr>
             <th>Services:</th>
@@ -28,10 +28,8 @@
     <div v-else>
       <EditEmpInfo
         :alias="alias"
-        :intervals="intervals"
         :last_date="last_date"
-        :setAlias="SetAlias"
-        :setIntervals="setIntervals"
+        :setAlias="setAlias"
         :setLastDate="setLastDate"
       />
     </div>
@@ -62,9 +60,9 @@
     </div>
     <br />
     <br />
+  </form>
 
-    <div id="title">Schedules:</div>
-  </div>
+  <div id="title">Schedules:</div>
 </template>
 
 <script>
@@ -81,6 +79,9 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import fetchEmpDetails from "../apis/fetchEmpDetails";
 import fetchEmployeeServices from "../apis/fetchESs";
 import parseUT from "@/lib/parseUT";
+import updateEmpInfo from "../apis/updateEmpInfo";
+import unixToReadable from "@/lib/unixToReadable";
+import parseDate from "@/lib/parseDate";
 
 export default {
   components: {
@@ -99,12 +100,15 @@ export default {
       isFetched: false,
       isEditing: false,
       resetCheckers: 0,
-      // states
+      // resources
+      formattedDate: "",
+      // submit
+      emp_id: null,
       categories: [],
       alias: "",
-      intervals: [],
       last_date: null,
       ESs: new Set(),
+      intervals: [],
     };
   },
   methods: {
@@ -120,9 +124,9 @@ export default {
     closeEditForm() {
       this.$router.push("/employees/refresh");
     },
-    formattedIntervals() {
-      const interval1 = this.intervals[0];
-      const interval2 = this.intervals[1];
+    formattedIntervals(intervals) {
+      const interval1 = intervals[0];
+      const interval2 = intervals[1];
       let res = "";
 
       if (interval1 != interval2) {
@@ -135,19 +139,27 @@ export default {
     setAlias(value) {
       this.alias = value;
     },
-    setIntervals(value) {
-      this.intervals = value;
-    },
     setLastDate(value) {
       this.last_date = value;
     },
+    async onSubmit() {
+      const res = await updateEmpInfo(
+        this.emp_id,
+        this.alias,
+        parseDate(this.last_date),
+        this.ESs
+      );
+      if (res) {
+        this.$router.push("/employees/refresh");
+      }
+    },
   },
   async created() {
-    const emp_id = this.$route.params.id;
+    this.emp_id = this.$route.params.id;
     // fetch resources
     const [details, { categories, ES_ids }] = await Promise.all([
-      fetchEmpDetails(emp_id),
-      fetchEmployeeServices(emp_id),
+      fetchEmpDetails(this.emp_id),
+      fetchEmployeeServices(this.emp_id),
     ]);
     this.categories = categories;
     this.ESs = ES_ids;
@@ -155,6 +167,7 @@ export default {
     // fetch state
     this.alias = details.alias;
     this.last_date = parseUT(details.last_date);
+    this.formattedDate = unixToReadable(details.last_date);
     this.intervals = details.key_intervals;
 
     // update status
