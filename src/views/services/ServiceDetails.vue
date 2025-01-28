@@ -38,9 +38,10 @@
 </template>
 
 <script>
+// lib
 import fetchServiceDetails from "./apis/fetchServiceDetails";
 import unixToReadable from "@/lib/unixToReadable";
-
+// comps
 import ServiceLengthTable from "./comps/service_length_tables/SL-demo-table.vue";
 import NA from "@/components/NotAvailable.vue";
 import AddServiceLength from "./comps/AddSL.vue";

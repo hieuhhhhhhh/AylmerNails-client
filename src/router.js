@@ -6,13 +6,19 @@ import Profile from "./views/Profile.vue";
 import NotFound from "./views/NotFound.vue";
 import SignUp from "./views/authentication/SignUp.vue";
 import LogIn from "./views/authentication/LogIn.vue";
+import Refresh from "./components/Refresh.vue";
+import Draft from "./templates/Draft.vue";
+// services
 import ServicesLayout from "./views/services/Layout.vue";
 import Services from "./views/services/Services.vue";
-import Refresh from "./components/Refresh.vue";
 import AddService from "./views/services/AddService.vue";
 import AddCategory from "./views/services/AddCategory.vue";
 import ServiceDetails from "./views/services/ServiceDetails.vue";
-import Draft from "./templates/Draft.vue";
+// employees
+import EmployeesLayout from "./views/employees/Layout.vue";
+import Employees from "./views/employees/Employees.vue";
+import AddEmployee from "./views/employees/AddEmployee.vue";
+import EmployeeDetails from "./views/employees/EmployeeDetails.vue";
 
 const routes = [
   {
@@ -63,6 +69,29 @@ const routes = [
       {
         path: "details/:id",
         component: ServiceDetails,
+      },
+    ],
+  },
+  {
+    path: "/employees",
+    component: EmployeesLayout,
+    redirect: "/employees/all",
+    children: [
+      {
+        path: "all",
+        component: Employees,
+      },
+      {
+        path: "refresh",
+        component: Refresh,
+      },
+      {
+        path: "add_employee",
+        component: AddEmployee,
+      },
+      {
+        path: "details/:id",
+        component: EmployeeDetails,
       },
     ],
   },

@@ -54,6 +54,7 @@
           <td>
             <div v-for="employee in employees" :key="employee.employee_id">
               <input
+                v-if="employee.is_active"
                 id="check"
                 type="checkbox"
                 :value="employee.employee_id"
@@ -90,7 +91,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import AOSsEdit from "./comps/AOSs/AOSs-edit.vue";
 // lib
-import fetchEmployees from "./apis/fetchEmployees";
+import fetchEmployees from "../employees/apis/fetchEmployees";
 import fetchCategories from "./apis/fetchCategories";
 import addService from "./apis/addService";
 export default {
@@ -168,14 +169,19 @@ export default {
   async created() {
     this.categoryId = this.$route.params.cate_id;
 
-    this.employees = await fetchEmployees();
-    this.categories = await fetchCategories();
+    const [employees, categories] = await Promise.all([
+      fetchEmployees(),
+      fetchCategories(),
+    ]);
+
+    this.employees = employees;
+    this.categories = categories;
   },
 };
 </script>
 
 <style scoped>
-input,
+input:not(#check),
 textarea {
   width: 100%;
 }
@@ -199,7 +205,7 @@ td {
 }
 
 #check {
-  transform: scale(1.5);
-  margin: 5px;
+  transform: scale(2);
+  margin: 10px;
 }
 </style>

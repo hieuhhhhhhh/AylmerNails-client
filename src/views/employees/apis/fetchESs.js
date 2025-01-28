@@ -1,13 +1,13 @@
 import getTodayUnixTime from "@/lib/getTodayUnixTime";
 
-export default async function fetchCategorizedServices() {
+export default async function fetchEmployeeServices(employeeId) {
   try {
     // get app path
     const baseURL = process.env.VUE_APP_BASE_URL;
 
     // start requesting server
     const res = await fetch(
-      `${baseURL}/api/services/get_services/${getTodayUnixTime()}`,
+      `${baseURL}/api/employees/get_employee_services/${employeeId}/${getTodayUnixTime()}`,
       {
         method: "GET",
         credentials: "include",
@@ -23,10 +23,16 @@ export default async function fetchCategorizedServices() {
     if (res.ok) {
       // refactor services to categories and return result
       const categories = refactorServices(json.services, json.categories);
+      const ES_ids = fetchESids(json.services);
+      console.log("categories: ", categories);
 
-      return categories;
+      console.log("ES_ids: ", ES_ids);
+      return { categories, ES_ids };
     } else {
-      console.log("Failed to fetch employee list, message: ", json.message);
+      console.log(
+        "Failed to fetch employee's services, message: ",
+        json.message
+      );
     }
   } catch (e) {
     console.error("Unexpected Error: ", e);
@@ -50,14 +56,14 @@ function refactorServices(rawServices, rawCategories) {
 
   // re-group services based on their category_id
   rawServices.forEach((raw) => {
-    const [service_id, service_name, last_date, is_active, cate_id] = raw;
+    const [service_id, service_name, cate_id, employee_id] = raw;
 
     // add the service to the matching category_id
     categories[cate_id].services.push({
       service_id,
       service_name,
-      last_date,
-      is_active,
+      cate_id,
+      employee_id,
     });
   });
 
@@ -73,4 +79,19 @@ function refactorServices(rawServices, rawCategories) {
 
   // return result
   return sorted;
+}
+
+function fetchESids(rawServices) {
+  // extract employee's services
+  const ES_ids = new Set();
+
+  rawServices.forEach((raw) => {
+    const [service_id, , , employee_id] = raw;
+
+    // add the service to the matching category_id
+    if (employee_id) {
+      ES_ids.add(service_id);
+    }
+  });
+  return ES_ids;
 }

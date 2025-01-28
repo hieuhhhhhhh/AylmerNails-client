@@ -79,7 +79,7 @@
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
-import fetchEmployees from "../../apis/fetchEmployees";
+import fetchEmployees from "../../../employees/apis/fetchEmployees";
 import unixToReadable from "@/lib/unixToReadable";
 
 export default {
@@ -134,7 +134,7 @@ export default {
   },
   async created() {
     this.employees = await fetchEmployees();
-    console.log("employees: ", this.employees);
+    this.employees = this.employees.filter((emp) => emp.is_active);
   },
 };
 </script>

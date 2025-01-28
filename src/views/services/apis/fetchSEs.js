@@ -36,7 +36,10 @@ export default async function fetchServiceEmployees(serviceId) {
       // return result
       return employees;
     } else {
-      console.log("Failed to fetch employee list, message: ", json.message);
+      console.log(
+        "Failed to fetch service's employees, message: ",
+        json.message
+      );
     }
   } catch (e) {
     console.error("Unexpected Error: ", e);

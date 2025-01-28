@@ -47,7 +47,7 @@ function getServiceDetails(json) {
     const [effective_from, length] = raw;
 
     if (effective_from <= getTodayUnixTime()) {
-      console.log("hey");
+      // reset lengths
       lengths = [];
     }
 

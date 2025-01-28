@@ -45,7 +45,7 @@ export default {
   background: var(--background-i2);
   height: 50px;
   aspect-ratio: 1;
-  border-radius: 50%;
+  border-radius: 5px;
   transition: all 0.5s ease-out; /* Smooth transition */
 }
 #icon:hover {

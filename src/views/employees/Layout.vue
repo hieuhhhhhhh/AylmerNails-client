@@ -3,16 +3,12 @@
     <Menu
       :options="[
         {
-          text: 'Services',
-          path: '/services/all',
+          text: 'Employees',
+          path: '/employees/all',
         },
         {
-          text: 'New Category',
-          path: '/services/add_category',
-        },
-        {
-          text: 'New Service',
-          path: '/services/add_service',
+          text: 'New Employee',
+          path: '/employees/add_employee',
         },
       ]"
       :getTitle="getTitle"
@@ -34,22 +30,18 @@ export default {
       const path = this.$route.path;
 
       switch (path) {
-        case "/services/all":
-          return "Services";
+        case "/employees/all":
+          return "Employees";
 
-        case "/services/add_category":
-          return "New Category";
+        case "/employees/add_employee":
+          return "New Employee";
 
         default: {
-          if (path.includes("/services/add_service")) {
-            return `New Service`;
+          if (path.includes("/employees/details")) {
+            const employee_id = this.$route.params.id;
+            return `Employee Details (ID: ${employee_id})`;
           }
-
-          if (path.includes("/services/details")) {
-            const service_id = this.$route.params.id;
-            return `Service Details (ID: ${service_id})`;
-          }
-          return "Services";
+          return "Employees";
         }
       }
     },

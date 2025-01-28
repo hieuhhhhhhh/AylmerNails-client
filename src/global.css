@@ -9,6 +9,7 @@
   --hover: rgb(217, 217, 217);
   --active: rgb(157, 157, 157);
   -webkit-tap-highlight-color: transparent;
+  font-size: 17px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -23,9 +24,9 @@
     --active: rgb(21, 21, 21);
   }
 }
-input,select {
+input, 
+textarea{
   padding: 3px;
-  box-sizing: border-box;
 }
 body {
   margin: 0;

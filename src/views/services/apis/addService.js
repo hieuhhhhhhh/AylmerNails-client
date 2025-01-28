@@ -52,7 +52,7 @@ export default async function addService(
     if (res.ok) {
       return json.added_service_id;
     } else {
-      console.log("Failed to fetch categories list, message: ", json.message);
+      console.log("Failed to add service, message: ", json.message);
     }
   } catch (e) {
     console.error("Unexpected Error: ", e);

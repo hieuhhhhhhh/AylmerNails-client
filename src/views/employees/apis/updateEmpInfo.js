@@ -1,27 +1,25 @@
-export default async function updateServiceInfo(
-  serviceId,
-  name,
-  description,
-  categoryId,
-  lastDate
+export default async function updateEmpInfo(
+  employeeId,
+  alias,
+  lastDate,
+  serviceIds
 ) {
   try {
     // get app path
     const baseURL = process.env.VUE_APP_BASE_URL;
 
     // start requesting server
-    const res = await fetch(`${baseURL}/api/services/update_service_info`, {
+    const res = await fetch(`${baseURL}/api/employees/update_employee_info`, {
       method: "POST",
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        service_id: serviceId,
-        name: name,
-        description: description,
-        category_id: categoryId,
+        employee_id: employeeId,
+        alias: alias,
         last_date: lastDate,
+        service_ids: serviceIds,
       }),
     });
 
@@ -34,7 +32,7 @@ export default async function updateServiceInfo(
     }
 
     console.log(
-      "Failed to update service information, message: ",
+      "Failed to update employee information, message: ",
       json.message
     );
   } catch (e) {

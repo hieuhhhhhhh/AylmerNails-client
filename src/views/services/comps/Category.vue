@@ -3,23 +3,40 @@
     <div id="title">{{ category.cate_name }}</div>
     <div
       id="service"
+      :class="{ faded: !service.is_active }"
       v-for="(service, index) in category.services"
       :key="index"
       @click="openServiceDetails(service.service_id)"
     >
       {{ service.service_name }}
+      <span v-if="!service.is_active" class="faded">
+        ended on {{ formatDate(service.last_date) }}
+      </span>
     </div>
+
     <div id="flexBox">
       <button class="blueBtn" id="plus" @click="addService(category.cate_id)">
         <FontAwesomeIcon :icon="plusIcon" />
+      </button>
+      <button
+        v-if="!category.services.length"
+        class="redBtn"
+        id="plus"
+        @click="removeCate(category.cate_id)"
+      >
+        <FontAwesomeIcon :icon="removeIcon" />
       </button>
     </div>
   </div>
 </template>
 
 <script>
+// icon
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+// lib
+import removeCategory from "../apis/removeCategory";
+import unixToReadable from "@/lib/unixToReadable";
 
 export default {
   name: "Category-",
@@ -27,7 +44,7 @@ export default {
     FontAwesomeIcon,
   },
   data() {
-    return { plusIcon: faPlus };
+    return { plusIcon: faPlus, removeIcon: faTrashCan };
   },
   props: {
     category: Object,
@@ -38,6 +55,15 @@ export default {
     },
     addService(cate_id) {
       this.$router.push(`/services/add_service/${cate_id}`);
+    },
+    async removeCate(cate_id) {
+      const res = await removeCategory(cate_id);
+      if (res) {
+        this.$router.push("/services/refresh");
+      }
+    },
+    formatDate(unixTime) {
+      return unixToReadable(unixTime);
     },
   },
 };
@@ -52,6 +78,7 @@ export default {
   margin: 5px;
 }
 #flexBox {
+  border-top: 1px solid var(--xtrans-gray);
   display: flex;
   justify-content: center;
 }
@@ -78,6 +105,9 @@ export default {
   border-top: 1px solid var(--xtrans-gray);
   box-sizing: border-box;
   cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 #service:hover {
   background: var(--hover);
@@ -85,7 +115,10 @@ export default {
 #service:active {
   background: var(--active);
 }
-
+.faded {
+  color: gray;
+  font-size: 14px;
+}
 /* phone view */
 @media (orientation: portrait) {
   #service {
