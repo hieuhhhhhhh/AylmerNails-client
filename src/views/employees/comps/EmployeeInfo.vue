@@ -21,6 +21,7 @@
           </tr>
           <tr>
             <th>Services:</th>
+            <td><NA v-if="!categories.length" /></td>
           </tr>
         </tbody>
       </table>
@@ -168,6 +169,8 @@ export default {
 
       // update status
       this.isFetched = true;
+      // reset checkers
+      this.resetCheckers++;
     },
   },
   async created() {
@@ -184,5 +187,9 @@ th,
 td {
   padding: 10px;
   text-align: left;
+}
+#duo {
+  display: flex;
+  gap: 15px;
 }
 </style>

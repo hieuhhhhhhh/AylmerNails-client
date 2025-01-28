@@ -1,14 +1,13 @@
 <template>
   <EmployeeInfo />
   <br />
-  <div id="title">Schedules:</div>
 
   <Schedule />
 </template>
 <script>
 // comps
 import EmployeeInfo from "./comps/EmployeeInfo.vue";
-import Schedule from "./comps/schedules/Schedule.vue";
+import Schedule from "./comps/schedules/Parent.vue";
 
 export default {
   components: {
@@ -17,13 +16,5 @@ export default {
   },
 };
 </script>
-<style scoped>
-#title {
-  display: flex;
-  padding: 10px;
-  text-align: left;
-  font-weight: bold;
-  border-top: 3px var(--xtrans-gray) solid;
-}
-</style>
+
 

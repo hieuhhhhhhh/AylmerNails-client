@@ -3,12 +3,20 @@
     <FontAwesomeIcon :icon="plusIcon" /> Add New Schedule
   </button>
 
-  <div v-else>
+  <form v-else @submit.prevent="onSubmit">
     <div id="note">*Press on the right clock icon to select time</div>
 
     <div id="scroll">
       <table>
         <thead>
+          <tr>
+            <td colspan="7">
+              <div id="title">
+                Effective Date:
+                <input type="date" id="datePicker" v-model="date" required />
+              </div>
+            </td>
+          </tr>
           <tr>
             <th></th>
             <th>Mon</th>
@@ -42,11 +50,11 @@
       <button class="redBtn" @click.prevent="closeInput">
         <FontAwesomeIcon :icon="cancelIcon" /> Cancel
       </button>
-      <button class="greenBtn" type="submit">
-        <FontAwesomeIcon :icon="saveIcon" /> Add
+      <button class="greenBtn">
+        <FontAwesomeIcon :icon="saveIcon" /> Add Schedule
       </button>
     </div>
-  </div>
+  </form>
 </template>
 
 
@@ -58,10 +66,11 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons";
 // comps
 import HoursInputs from "./HoursInputs.vue";
 import DayCheckers from "./DayCheckers.vue";
+// lib
+import parseDate from "@/lib/parseDate";
+import addSchedule from "../../apis/addSchedule";
+
 export default {
-  props: {
-    serviceId: String,
-  },
   components: {
     FontAwesomeIcon,
     HoursInputs,
@@ -77,10 +86,12 @@ export default {
       // status
       isAdding: false,
       // states
+      date: null,
       closings: ["14:00", "14:00", "14:00", "14:00", "14:00", "14:00", null],
       openings: ["14:00", "14:00", "14:00", "14:00", "14:00", "14:00", null],
       // resources
       checked: [true, true, true, true, true, true, false],
+      empId: this.$route.params.id,
     };
   },
   methods: {
@@ -106,6 +117,18 @@ export default {
         this.closings[index] = null;
       }
     },
+    async onSubmit() {
+      const res = await addSchedule(
+        this.empId,
+        parseDate(this.date),
+        this.openings,
+        this.closings
+      );
+
+      if (res) {
+        this.$router.push("/employees/refresh");
+      }
+    },
   },
 };
 </script>
@@ -129,5 +152,10 @@ table {
 #duo {
   display: flex;
   gap: 15px;
+}
+#datePicker {
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 5px;
 }
 </style>

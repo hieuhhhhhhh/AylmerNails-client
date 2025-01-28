@@ -59,7 +59,7 @@ export default {
   padding: 5px;
   text-align: center;
   font-weight: bold;
-  font-size: 19px;
+  font-size: 15px;
   box-sizing: border-box;
 }
 #service {
