@@ -1,8 +1,9 @@
 <template>
   <div v-if="isFetched">
     <div id="title">Current Schedule:</div>
+    <div id="note">*Press on the right clock icon to select time</div>
 
-    <Schedule :key="index" :schedule="schedules[0]" />
+    <Schedule v-if="schedules.length" :key="index" :schedule="schedules[0]" />
 
     <div id="title">Future Schedules:</div>
 
@@ -49,5 +50,9 @@ export default {
   text-align: left;
   font-weight: bold;
   border-top: 3px var(--xtrans-gray) solid;
+}
+#note {
+  font-style: italic;
+  color: rgb(184, 121, 3);
 }
 </style>

@@ -4,8 +4,6 @@
   </button>
 
   <form v-else @submit.prevent="onSubmit">
-    <div id="note">*Press on the right clock icon to select time</div>
-
     <div id="scroll">
       <table>
         <thead>
@@ -144,10 +142,6 @@ table {
   width: fit-content;
   max-width: 100%;
   overflow-x: scroll;
-}
-#note {
-  font-style: italic;
-  color: rgb(184, 121, 3);
 }
 #duo {
   display: flex;

@@ -86,9 +86,9 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons";
 // comps
 import HoursInputs from "./HoursInputs.vue";
 import DayCheckers from "./DayCheckers.vue";
-import unixToReadable from "@/lib/unixToReadable";
 // lib
-// import unixToReadable from "@/lib/unixToReadable";
+import unixToReadable from "@/lib/unixToReadable";
+import addSchedule from "../../apis/addSchedule";
 
 export default {
   name: "Schedule-",
@@ -152,6 +152,18 @@ export default {
       this.closings = [...this.schedule.closings];
       this.openings = [...this.schedule.openings];
       this.checked = [...this.schedule.checked];
+    },
+    async onSubmit() {
+      const res = await addSchedule(
+        this.empId,
+        this.date,
+        this.openings,
+        this.closings
+      );
+
+      if (res) {
+        this.$router.push("/employees/refresh");
+      }
     },
   },
   created() {
