@@ -48,7 +48,7 @@ export default {
       saveIcon: faCheck,
       // status
       isEditing: false,
-      // states
+      // products
       employees: [],
       checked: [],
     };

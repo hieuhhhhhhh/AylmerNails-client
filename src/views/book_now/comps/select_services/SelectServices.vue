@@ -4,6 +4,7 @@
       v-for="(category, index) in categories"
       :key="index"
       :category="category"
+      :selectService="selectService"
     />
   </div>
 </template>
@@ -25,7 +26,19 @@ export default {
       isFetched: false,
       // resources
       categories: [],
+      // products
+      serviceIds: new Set(),
     };
+  },
+  methods: {
+    selectService(id) {
+      this.serviceIds.add(id);
+      this.$emit("serviceIds", this.serviceIds);
+    },
+    deselectService(id) {
+      this.serviceIds.delete(id);
+      this.$emit("serviceIds", this.serviceIds);
+    },
   },
   async created() {
     this.categories = await fetchActiveServices();

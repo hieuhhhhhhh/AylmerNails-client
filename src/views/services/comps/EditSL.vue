@@ -48,7 +48,7 @@ export default {
       cancelIcon: faCancel,
       saveIcon: faCheck,
 
-      // states
+      // products
       variations: [],
       defaultLength: null,
     };

@@ -106,7 +106,7 @@ export default {
       plusIcon: faPlus,
       removeIcon: faTrashCan,
 
-      // states
+      // products
       seEmployeeID: null,
       employees: [],
     };

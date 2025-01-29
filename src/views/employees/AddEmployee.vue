@@ -76,7 +76,7 @@ export default {
     return {
       // icon
       saveIcon: faCheck,
-      // states
+      // products
       categories: [],
       ESs: new Set(),
       name: "",

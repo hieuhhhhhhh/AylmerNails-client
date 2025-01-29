@@ -83,7 +83,7 @@ export default {
       saveIcon: faCheck,
       // status
       isAdding: false,
-      // states
+      // products
       date: null,
       closings: ["14:00", "14:00", "14:00", "14:00", "14:00", "14:00", null],
       openings: ["14:00", "14:00", "14:00", "14:00", "14:00", "14:00", null],

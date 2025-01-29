@@ -40,7 +40,7 @@
 <script>
 export default {
   props: {
-    // states
+    // products
     alias: String,
     last_date: String,
     // setters

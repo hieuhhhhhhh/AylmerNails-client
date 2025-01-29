@@ -5,6 +5,7 @@
       id="service"
       v-for="(service, index) in category.services"
       :key="index"
+      @click="onSelectService(service.service_id)"
     >
       {{ service.service_name }}
     </div>
@@ -19,10 +20,14 @@ export default {
   name: "Category-",
   props: {
     category: Object,
+    selectService: Function,
   },
   methods: {
     formatDate(unixTime) {
       return unixToReadable(unixTime);
+    },
+    onSelectService(id) {
+      this.selectService(id);
     },
   },
 };

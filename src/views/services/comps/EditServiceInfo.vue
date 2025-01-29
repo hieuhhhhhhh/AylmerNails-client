@@ -95,7 +95,7 @@ export default {
       cancelIcon: faCancel,
       saveIcon: faCheck,
 
-      // states
+      // products
       name: "",
       description: "",
       date: null,

@@ -54,7 +54,7 @@ export default {
       // status
       isAddingLength: false,
 
-      // states
+      // products
       date: null,
       variations: [],
       defaultLength: null,

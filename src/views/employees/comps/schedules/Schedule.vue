@@ -109,7 +109,7 @@ export default {
       // status
       isEditing: false,
       resetKey: 0,
-      // states
+      // products
       date: null,
       closings: [],
       openings: [],
