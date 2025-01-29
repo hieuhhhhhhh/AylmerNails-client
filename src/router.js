@@ -1,7 +1,6 @@
 // src/router.js
 import { createRouter, createWebHistory } from "vue-router";
 import Menu from "./views/Menu.vue";
-import BookNow from "./views/BookNow.vue";
 import Profile from "./views/Profile.vue";
 import NotFound from "./views/NotFound.vue";
 import SignUp from "./views/authentication/SignUp.vue";
@@ -19,6 +18,10 @@ import EmployeesLayout from "./views/employees/Layout.vue";
 import Employees from "./views/employees/Employees.vue";
 import AddEmployee from "./views/employees/AddEmployee.vue";
 import EmployeeDetails from "./views/employees/EmployeeDetails.vue";
+// book now
+import BookNowLayout from "./views/book_now/Layout.vue";
+import SelectServices from "./views/book_now/comps/select_services/SelectServices.vue";
+import SelectEmployees from "./views/book_now/comps/select_employees/SelectEmployees.vue";
 
 const routes = [
   {
@@ -27,7 +30,18 @@ const routes = [
   },
   {
     path: "/booknow",
-    component: BookNow,
+    component: BookNowLayout,
+    redirect: "/booknow/select_services",
+    children: [
+      {
+        path: "select_services",
+        component: SelectServices,
+      },
+      {
+        path: "select_employees",
+        component: SelectEmployees,
+      },
+    ],
   },
   {
     path: "/profile",

@@ -16,7 +16,13 @@
         <tr>
           <th>Ideal Length:<br />(minutes)</th>
           <td id="flexBox">
-            <input type="number" v-model="interval1" required :min="1" />
+            <input
+              type="number"
+              v-model="interval1"
+              required
+              :min="5"
+              step="1"
+            />
           </td>
         </tr>
         <tr>
@@ -25,7 +31,7 @@
             (Optional)
           </th>
           <td id="flexBox">
-            <input type="number" v-model="interval2" :min="1" />
+            <input type="number" v-model="interval2" :min="5" step="1" />
           </td>
         </tr>
         <tr>

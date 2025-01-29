@@ -30,7 +30,7 @@ export default async function fetchEmpDetails(emp_id) {
       // fetch intervals
       const si = JSON.parse(stored_intervals);
 
-      const key_intervals = [si[1], si[2] - si[1]];
+      const key_intervals = [si[1] / 60, (si[2] - si[1]) / 60];
 
       // create and return result
       const details = { emp_id, alias, key_intervals, last_date };

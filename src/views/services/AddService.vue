@@ -35,7 +35,7 @@
             (minutes)
           </th>
           <td id="flexBox">
-            <input type="number" v-model="length" required :min="1" />
+            <input type="number" v-model="length" required :min="5" step="1" />
           </td>
         </tr>
         <tr>

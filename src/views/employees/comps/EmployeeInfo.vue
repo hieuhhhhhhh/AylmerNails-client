@@ -109,6 +109,27 @@ export default {
     };
   },
   methods: {
+    async fetchData() {
+      this.emp_id = this.$route.params.id;
+      // fetch resources
+      const [details, { categories, ES_ids }] = await Promise.all([
+        fetchEmpDetails(this.emp_id),
+        fetchEmployeeServices(this.emp_id),
+      ]);
+      this.categories = categories;
+      this.ESs = ES_ids;
+
+      // fetch state
+      this.alias = details.alias;
+      this.last_date = parseUT(details.last_date);
+      this.formattedDate = unixToReadable(details.last_date);
+      this.intervals = details.key_intervals;
+
+      // update status
+      this.isFetched = true;
+      // reset checkers
+      this.resetCheckers++;
+    },
     checkService(serviceId) {
       this.ESs.add(serviceId);
     },
@@ -145,32 +166,11 @@ export default {
         this.emp_id,
         this.alias,
         parseDate(this.last_date),
-        this.ESs
+        [...this.ESs]
       );
       if (res) {
         this.$router.push("/employees/refresh");
       }
-    },
-    async fetchData() {
-      this.emp_id = this.$route.params.id;
-      // fetch resources
-      const [details, { categories, ES_ids }] = await Promise.all([
-        fetchEmpDetails(this.emp_id),
-        fetchEmployeeServices(this.emp_id),
-      ]);
-      this.categories = categories;
-      this.ESs = ES_ids;
-
-      // fetch state
-      this.alias = details.alias;
-      this.last_date = parseUT(details.last_date);
-      this.formattedDate = unixToReadable(details.last_date);
-      this.intervals = details.key_intervals;
-
-      // update status
-      this.isFetched = true;
-      // reset checkers
-      this.resetCheckers++;
     },
   },
   async created() {

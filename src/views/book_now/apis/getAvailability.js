@@ -1,22 +1,22 @@
-export default async function addEmployee(alias, key_intervals, service_ids) {
+import getTodayUnixTime from "@/lib/getTodayUnixTime";
+
+export default async function getAvailability() {
   try {
     // get app path
     const baseURL = process.env.VUE_APP_BASE_URL;
 
-    // convert to secs
-    key_intervals = key_intervals.map((e) => e * 60);
-
     // start requesting server
-    const res = await fetch(`${baseURL}/api/employees/add_employee`, {
+    const res = await fetch(`${baseURL}/api/appointments/get_availability`, {
       method: "POST",
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        alias: alias,
-        key_intervals: key_intervals,
-        service_ids: service_ids,
+        date: getTodayUnixTime(),
+        service_id: 1,
+        selected_AOSO: [],
+        employee_ids: [7],
       }),
     });
 
@@ -25,9 +25,9 @@ export default async function addEmployee(alias, key_intervals, service_ids) {
 
     // read status and process response
     if (res.ok) {
-      return json.added_employee_id;
+      return json.DELAs;
     } else {
-      console.log("Failed to add employee, message: ", json.message);
+      console.log("Failed to fetch availabilities, message: ", json.message);
     }
   } catch (e) {
     console.error("Unexpected Error: ", e);

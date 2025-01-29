@@ -3,7 +3,7 @@
     <div id="title">Current Schedule:</div>
     <div id="note">*Press on the right clock icon to select time</div>
 
-    <Schedule v-if="schedules.length" :key="index" :schedule="schedules[0]" />
+    <Schedule v-if="schedules.length" :schedule="schedules[0]" />
 
     <div id="title">Future Schedules:</div>
 

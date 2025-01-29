@@ -30,7 +30,8 @@
             :value="defaultLength"
             @input="onInputDefaultLength"
             required
-            min="1"
+            min="5"
+            step="1"
           />
         </td>
       </tr>
@@ -60,7 +61,8 @@
             :value="variation.length"
             @input="onInputLength(index, $event)"
             required
-            min="1"
+            min="5"
+            step="1"
           />
         </td>
       </tr>

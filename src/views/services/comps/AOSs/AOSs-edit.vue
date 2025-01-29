@@ -50,6 +50,7 @@
               :value="option.length_offset / 60"
               @input="onInputLength(parentIndex, index, $event)"
               required
+              step="1"
             />
           </td>
         </tr>
