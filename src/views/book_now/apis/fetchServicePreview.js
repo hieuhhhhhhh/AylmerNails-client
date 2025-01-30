@@ -1,3 +1,5 @@
+import getTodayUnixTime from "@/lib/getTodayUnixTime";
+
 export default async function fetchServicePreview(serviceId) {
   try {
     // get app path
@@ -5,7 +7,7 @@ export default async function fetchServicePreview(serviceId) {
 
     // start requesting server
     const res = await fetch(
-      `${baseURL}/api/services/get_service_perview/${serviceId}/${getTodayUnixTime()}`,
+      `${baseURL}/api/services/get_service_preview/${serviceId}/${getTodayUnixTime()}`,
       {
         method: "GET",
         credentials: "include",
@@ -20,7 +22,14 @@ export default async function fetchServicePreview(serviceId) {
     // read status and process response
     if (res.ok) {
       // return result if successufl
-      return json.preview;
+      const raw = json.preview;
+
+      // extract resources
+      const [, name, description, , cate_id, cate_name, length] = raw;
+      const preview = { name, description, cate_id, cate_name, length };
+
+      // return formatted result
+      return preview;
     } else {
       console.log("Failed to fetch service preview, message: ", json.message);
     }

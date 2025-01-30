@@ -1,6 +1,7 @@
 <template>
-  <h1>Welcome to BookNow!</h1>
-  <router-view @serviceIds="onInputServices" />
+  <div id="layout">
+    <router-view />
+  </div>
 </template>
 
 
@@ -22,5 +23,22 @@ export default {
       console.log(this.serviceIds);
     },
   },
+  provide() {
+    return {
+      onInputServices: this.onInputServices,
+    };
+  },
 };
 </script>
+
+<style scoped>
+#layout {
+  background-color: var(--background-i1);
+  padding: 10px;
+  width: 900px;
+  max-width: 100vw;
+  margin-inline: auto;
+  flex-grow: 1;
+  box-sizing: border-box;
+}
+</style>

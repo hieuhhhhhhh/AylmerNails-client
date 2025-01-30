@@ -36,6 +36,8 @@ body {
   flex-direction: column; /* Align content in a column */
 }
 
+
+
 .blueBtn {
   color: white;
   background-color: rgb(77, 135, 251);
