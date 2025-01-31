@@ -2,7 +2,7 @@ import { DateTime } from "luxon";
 
 export default function parseTime(timeInput) {
   if (!timeInput) {
-    return 0;
+    return null;
   }
 
   // Parse the input time string using Luxon

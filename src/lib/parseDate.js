@@ -2,6 +2,10 @@ import { DateTime } from "luxon";
 import getTimezone from "./getTimeZone";
 
 export default function dateToUnixTime(date) {
+  if (!date) {
+    return null;
+  }
+
   // Parse the date string using Luxon and set it to Toronto timezone
   const torontoDateTime = DateTime.fromISO(date, { zone: getTimezone() });
 

@@ -26,6 +26,7 @@ export default {
   provide() {
     return {
       onInputServices: this.onInputServices,
+      serviceIds: this.serviceIds,
     };
   },
 };

@@ -1,13 +1,16 @@
 import getTodayUnixTime from "@/lib/getTodayUnixTime";
 
-export default async function fetchServiceEmployees(serviceId) {
+export default async function fetchServiceEmployees(
+  serviceId,
+  date = getTodayUnixTime()
+) {
   try {
     // get app path
     const baseURL = process.env.VUE_APP_BASE_URL;
 
     // start requesting server
     const res = await fetch(
-      `${baseURL}/api/services/get_service_employees/${serviceId}/${getTodayUnixTime()}`,
+      `${baseURL}/api/services/get_service_employees/${serviceId}/${date}`,
       {
         method: "GET",
         credentials: "include",
