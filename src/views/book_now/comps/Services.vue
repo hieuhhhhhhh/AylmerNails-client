@@ -26,6 +26,7 @@
     <SelectService
       :onInputServiceId="onInputServiceId"
       :onClose="closeSelect"
+      :isReturnable="isReturnable"
     />
   </div>
 </template>
@@ -60,6 +61,7 @@ export default {
       continueIcon: faRightLong,
       // status
       isSelecting: false,
+      isReturnable: false,
       // resources
       services: {},
     };
@@ -69,6 +71,7 @@ export default {
       if (!this.services[id]) {
         this.services[id] = { serviceId: id, empIds: [], mutated: false };
       }
+      this.isReturnable = true;
       this.isSelecting = false;
     },
     openSelect() {

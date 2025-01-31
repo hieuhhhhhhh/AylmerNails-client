@@ -19,7 +19,7 @@ import Employees from "./views/employees/Employees.vue";
 import AddEmployee from "./views/employees/AddEmployee.vue";
 import EmployeeDetails from "./views/employees/EmployeeDetails.vue";
 // book now
-import BookNow from "./views/book_now2/Parent.vue";
+import BookNow from "./views/book_now/Parent.vue";
 
 const routes = [
   {

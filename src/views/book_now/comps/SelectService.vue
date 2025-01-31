@@ -1,6 +1,11 @@
 <template>
   <div>
-    <button class="orangeBtn" id="backBtn" @click="closeSelect">
+    <button
+      v-if="isReturnable"
+      class="orangeBtn"
+      id="backBtn"
+      @click="closeSelect"
+    >
       <FontAwesomeIcon :icon="backIcon" /> Return
     </button>
   </div>
@@ -29,6 +34,7 @@ import fetchActiveServices from "../apis/fetchActiveServices";
 
 export default {
   props: {
+    isReturnable: Boolean,
     onInputServiceId: Function,
     onClose: Function,
   },

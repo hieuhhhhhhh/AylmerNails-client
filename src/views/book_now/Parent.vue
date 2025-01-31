@@ -1,21 +1,32 @@
 <template>
   <div id="layout">
-    <Services :getServices="getServices" :onNavigateNext="navigateSelectTime" />
+    <div v-show="page == 1">
+      <Services
+        :getServices="getServices"
+        :onNavigateNext="navigateSelectTime"
+      />
+    </div>
+    <div v-show="page == 2"><SelectTime :services="services" /></div>
   </div>
 </template>
 
 <script>
 // comps
 import Services from "./comps/Services.vue";
+import SelectTime from "./comps/SelectTime.vue";
 
 export default {
   name: "BookNowParent",
   components: {
     Services,
+    SelectTime,
   },
   data() {
     return {
+      // resources
       services: {},
+      // status
+      page: 1,
     };
   },
   methods: {
@@ -23,6 +34,7 @@ export default {
       return this.services;
     },
     navigateSelectTime() {
+      this.page++;
       console.log(this.services);
     },
   },
