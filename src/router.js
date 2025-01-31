@@ -19,10 +19,7 @@ import Employees from "./views/employees/Employees.vue";
 import AddEmployee from "./views/employees/AddEmployee.vue";
 import EmployeeDetails from "./views/employees/EmployeeDetails.vue";
 // book now
-import BookNowLayout from "./views/book_now/Layout.vue";
-import SelectServices from "./views/book_now/comps/select_services/SelectServices.vue";
-import SelectEmployees from "./views/book_now/comps/select_employees/SelectEmployees.vue";
-import SelectTime from "./views/book_now/comps/select_time/SelectTime.vue";
+import BookNow from "./views/book_now2/Parent.vue";
 
 const routes = [
   {
@@ -31,22 +28,7 @@ const routes = [
   },
   {
     path: "/booknow",
-    component: BookNowLayout,
-    redirect: "/booknow/select_services",
-    children: [
-      {
-        path: "select_services",
-        component: SelectServices,
-      },
-      {
-        path: "select_employees",
-        component: SelectEmployees,
-      },
-      {
-        path: "select_time",
-        component: SelectTime,
-      },
-    ],
+    component: BookNow,
   },
   {
     path: "/profile",
