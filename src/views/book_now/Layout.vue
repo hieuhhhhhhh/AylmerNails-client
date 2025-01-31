@@ -14,19 +14,26 @@ export default {
       serviceIds: new Set(),
       // products
       date: null,
-      services: [],
+      services: {},
     };
   },
   methods: {
-    onInputServices(value) {
+    onInputServiceIds(value) {
       this.serviceIds = value;
       console.log(this.serviceIds);
+    },
+    getServiceIds() {
+      return this.serviceIds;
+    },
+    onCommitServices(services) {
+      this.services = services;
     },
   },
   provide() {
     return {
-      onInputServices: this.onInputServices,
-      serviceIds: this.serviceIds,
+      onInputServiceIds: this.onInputServiceIds,
+      getServiceIds: this.getServiceIds,
+      onCommitServices: this.onCommitServices,
     };
   },
 };

@@ -10,6 +10,28 @@
         >
       </div>
       <div id="des">{{ description }}</div>
+      <br />
+      <div id="technicians">
+        <div>
+          <input
+            id="check"
+            type="checkbox"
+            :checked="checked.length == max"
+            @change="onCheckAll"
+          />
+          <label>All</label>
+        </div>
+        <div v-for="employee in employees" :key="employee.employee_id">
+          <input
+            id="check"
+            type="checkbox"
+            :value="employee.employee_id"
+            v-model="checked"
+            @change="onCheck"
+          />
+          <label>{{ employee.alias }}</label>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -25,6 +47,7 @@ export default {
   name: "Service-",
   props: {
     serviceId: Number,
+    onInputEmpIds: Function,
   },
   components: {
     FontAwesomeIcon,
@@ -35,12 +58,30 @@ export default {
       timeIcon: faClock,
       dollarIcon: faDollarSign,
       // resources
-      employeeIds: [],
+      employees: [],
+      checked: [],
+      checkedAll: [],
+      max: 0,
       // products
       name: "",
       description: "",
       length: "",
     };
+  },
+  methods: {
+    onCheck() {
+      this.onInputEmpIds(this.serviceId, this.checked);
+    },
+    onCheckAll(event) {
+      const value = event.target.value;
+      if (value) {
+        this.checkAll();
+      }
+    },
+    checkAll() {
+      this.checked = [...this.checkedAll];
+      this.onCheck();
+    },
   },
 
   async created() {
@@ -49,16 +90,31 @@ export default {
     this.description = preview.description;
     this.length = preview.length;
 
-    this.employeeIds = await fetchServiceEmployees(this.serviceId);
+    this.employees = await fetchServiceEmployees(this.serviceId);
+    this.employees.forEach((e) => {
+      this.max++;
+      this.checkedAll.push(e.employee_id);
+    });
+
+    this.checkAll();
     console.log("empIds: ", this.employeeIds);
   },
 };
 </script>
 
 <style scoped>
+#technicians {
+  border-top: 2px solid var(--xtrans-gray);
+  padding: 5px;
+}
+#check {
+  transform: scale(2);
+  margin: 10px;
+}
 #bar {
   display: flex;
   align-items: center;
+  flex-direction: column;
 }
 #card {
   box-shadow: 0 0 5px var(--shadow-color);

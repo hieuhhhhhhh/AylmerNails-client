@@ -22,6 +22,7 @@ import EmployeeDetails from "./views/employees/EmployeeDetails.vue";
 import BookNowLayout from "./views/book_now/Layout.vue";
 import SelectServices from "./views/book_now/comps/select_services/SelectServices.vue";
 import SelectEmployees from "./views/book_now/comps/select_employees/SelectEmployees.vue";
+import SelectTime from "./views/book_now/comps/select_time/SelectTime.vue";
 
 const routes = [
   {
@@ -40,6 +41,10 @@ const routes = [
       {
         path: "select_employees",
         component: SelectEmployees,
+      },
+      {
+        path: "select_time",
+        component: SelectTime,
       },
     ],
   },

@@ -10,10 +10,18 @@
     />
     <br />
 
-    <button class="blueBtn" @click="openSelect">
+    <button class="greenBtn" id="addBtn" @click="openSelect">
       <FontAwesomeIcon :icon="addIcon" /> Add Service
     </button>
     <br />
+    <div id="duo">
+      <button class="blueBtn" id="leftBtn">
+        <FontAwesomeIcon :icon="backIcon" /> Back
+      </button>
+      <button class="blueBtn" id="rightBtn" @click="navigateNext">
+        Next <FontAwesomeIcon :icon="continueIcon" />
+      </button>
+    </div>
   </div>
 
   <div v-else-if="isFetched">
@@ -39,7 +47,11 @@
 <script>
 // icons
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faPlus, faLeftLong } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPlus,
+  faLeftLong,
+  faRightLong,
+} from "@fortawesome/free-solid-svg-icons";
 // lib
 import fetchActiveServices from "../../apis/fetchActiveServices";
 // comps
@@ -47,7 +59,7 @@ import Category from "./Category.vue";
 import Service from "./Service.vue";
 
 export default {
-  inject: ["onInputServices"],
+  inject: ["onInputServiceIds", "getServiceIds"],
   components: {
     FontAwesomeIcon,
     Category,
@@ -58,6 +70,7 @@ export default {
       // icons
       addIcon: faPlus,
       backIcon: faLeftLong,
+      continueIcon: faRightLong,
       // status
       isAdding: true,
       isFetched: false,
@@ -70,12 +83,12 @@ export default {
   methods: {
     selectService(id) {
       this.serviceIds.add(id);
-      this.onInputServices(this.serviceIds);
+      this.onInputServiceIds(this.serviceIds);
       this.isAdding = false;
     },
     deselectService(id) {
       this.serviceIds.delete(id);
-      this.onInputServices(this.serviceIds);
+      this.onInputServiceIds(this.serviceIds);
     },
     openSelect() {
       this.isAdding = true;
@@ -83,15 +96,39 @@ export default {
     closeSelect() {
       this.isAdding = false;
     },
+    navigateNext() {
+      this.$router.push("/booknow/select_employees");
+    },
   },
   async created() {
     this.categories = await fetchActiveServices();
     this.isFetched = true;
+    this.serviceIds = this.getServiceIds();
+    this.isAdding = !this.serviceIds.size;
   },
 };
 </script>
 
 <style scoped>
+#rightBtn {
+  font-size: 23px;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+}
+#leftBtn {
+  font-size: 23px;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+}
+#duo {
+  display: flex;
+  gap: 5px;
+  width: 90%;
+  justify-content: flex-end;
+}
+#addBtn {
+  border-radius: 30px;
+}
 #flexBox {
   display: flex;
   flex-wrap: wrap;
@@ -108,6 +145,7 @@ export default {
   top: 10px;
   left: 10px;
   z-index: 10;
+  font-size: 22px;
 }
 #note {
   padding: 10px;
