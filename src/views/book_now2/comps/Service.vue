@@ -20,7 +20,9 @@
             v-model="checked"
             @change="onCheckEmp"
           />
-          <label>{{ employee.alias }}</label>
+          <label
+            ><FontAwesomeIcon :icon="userIcon" /> {{ employee.alias }}</label
+          >
         </div>
       </div>
       <div id="note" v-else>No available technicians</div>
@@ -40,6 +42,8 @@ import {
   faDollarSign,
   faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
+
+import { faUser } from "@fortawesome/free-regular-svg-icons";
 // library
 import fetchServicePreview from "../apis/fetchServicePreview";
 import fetchServiceEmployees from "../apis/fetchSEs";
@@ -60,6 +64,7 @@ export default {
       timeIcon: faClock,
       dollarIcon: faDollarSign,
       removeIcon: faTrashCan,
+      userIcon: faUser,
       // resources
       SEs: [],
       checked: [],
@@ -78,19 +83,23 @@ export default {
     },
   },
   async created() {
-    const preview = await fetchServicePreview(this.service.serviceId);
+    const [preview, employees] = await Promise.all([
+      fetchServicePreview(this.service.serviceId),
+      fetchServiceEmployees(this.service.serviceId),
+    ]);
+
+    // Assign preview details
     this.name = preview.name;
     this.description = preview.description;
     this.length = preview.length;
 
-    this.SEs = await fetchServiceEmployees(this.service.serviceId);
-    this.max = this.SEs.length;
-    if (!this.service.mutated) {
-      // by default select all employees
-      this.SEs.forEach((e) => {
-        this.checked.push(e.employee_id);
-      });
+    // Assign employees
+    this.SEs = employees;
+    this.max = employees.length;
 
+    if (!this.service.mutated) {
+      // By default, select all employees
+      this.checked = employees.map((e) => e.employee_id);
       this.onCheckEmp();
     } else {
       this.checked = this.service.empIds;

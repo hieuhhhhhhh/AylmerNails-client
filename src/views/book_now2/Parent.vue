@@ -1,6 +1,6 @@
 <template>
   <div id="layout">
-    <Services :getServices="getServices" />
+    <Services :getServices="getServices" :onNavigateNext="navigateSelectTime" />
   </div>
 </template>
 
@@ -21,6 +21,9 @@ export default {
   methods: {
     getServices() {
       return this.services;
+    },
+    navigateSelectTime() {
+      console.log(this.services);
     },
   },
 };

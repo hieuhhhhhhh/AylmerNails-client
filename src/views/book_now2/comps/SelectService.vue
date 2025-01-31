@@ -4,6 +4,9 @@
       <FontAwesomeIcon :icon="backIcon" /> Return
     </button>
   </div>
+  <div id="note">
+    *Prices and service lengths being shown are starting values
+  </div>
 
   <div v-if="isFetched" id="flexBox">
     <Category
@@ -69,6 +72,13 @@ export default {
   left: 10px;
   z-index: 10;
   font-size: 22px;
+}
+#note {
+  padding: 10px;
+  padding-top: 0px;
+  font-style: italic;
+  color: rgb(184, 121, 3);
+  text-align: center;
 }
 </style>
 

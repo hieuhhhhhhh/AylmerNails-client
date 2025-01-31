@@ -1,7 +1,6 @@
 <template>
-  <div v-if="!isSelecting" id="flexBox">
-    <div id="note">*Below are starting prices and minimal service lengths</div>
-    <div id="note">*By default, all technicians are selected</div>
+  <div v-show="!isSelecting" id="flexBox">
+    <div id="note">*Use checkboxes to select technicians</div>
 
     <Service
       v-for="(service, index) in services"
@@ -14,18 +13,30 @@
     <button class="greenBtn" id="addBtn" @click="openSelect">
       <FontAwesomeIcon :icon="addIcon" /> Add Service
     </button>
+    <br />
+
+    <div id="duo">
+      <button class="blueBtn" id="rightBtn" @click="onSubmit">
+        Next <FontAwesomeIcon :icon="continueIcon" />
+      </button>
+    </div>
   </div>
 
-  <SelectService
-    v-else
-    :onInputServiceId="onInputServiceId"
-    :onClose="closeSelect"
-  />
+  <div v-show="isSelecting">
+    <SelectService
+      :onInputServiceId="onInputServiceId"
+      :onClose="closeSelect"
+    />
+  </div>
 </template>
 
 <script>
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPlus,
+  faLeftLong,
+  faRightLong,
+} from "@fortawesome/free-solid-svg-icons";
 // comps
 import SelectService from "./SelectService.vue";
 import Service from "./Service.vue";
@@ -39,11 +50,14 @@ export default {
   },
   props: {
     getServices: Function,
+    onNavigateNext: Function,
   },
   data() {
     return {
-      // icon
+      // icons
       addIcon: faPlus,
+      backIcon: faLeftLong,
+      continueIcon: faRightLong,
       // status
       isSelecting: false,
       // resources
@@ -70,9 +84,15 @@ export default {
       this.services[serviceId].empIds = value;
       this.services[serviceId].mutated = true;
     },
+    onSubmit() {
+      this.onNavigateNext();
+    },
   },
   created() {
     this.services = this.getServices();
+    if (!Object.keys(this.services).length) {
+      this.isSelecting = true;
+    }
   },
 };
 </script>
@@ -90,5 +110,22 @@ export default {
   padding-top: 0px;
   font-style: italic;
   color: rgb(184, 121, 3);
+}
+#rightBtn {
+  padding: 10px;
+  font-size: 25px;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+}
+#leftBtn {
+  font-size: 23px;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+}
+#duo {
+  display: flex;
+  gap: 5px;
+  width: 90%;
+  justify-content: flex-end;
 }
 </style>
