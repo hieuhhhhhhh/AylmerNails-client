@@ -97,13 +97,8 @@ export default {
     this.SEs = employees;
     this.max = employees.length;
 
-    if (!this.service.mutated) {
-      // By default, select all employees
-      this.checked = employees.map((e) => e.employee_id);
-      this.onCheckEmp();
-    } else {
-      this.checked = this.service.empIds;
-    }
+    this.checked = employees.map((e) => e.employee_id);
+    this.onCheckEmp();
   },
 };
 </script>

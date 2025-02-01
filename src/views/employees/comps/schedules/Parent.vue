@@ -38,6 +38,7 @@ export default {
   async created() {
     const empId = this.$route.params.id;
     this.schedules = await fetchSchedules(empId);
+    console.log("schedules: ", this.schedules);
     this.isFetched = true;
   },
 };

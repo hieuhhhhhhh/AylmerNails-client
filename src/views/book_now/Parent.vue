@@ -6,7 +6,7 @@
         :onNavigateNext="navigateSelectTime"
       />
     </div>
-    <div v-show="page == 2"><SelectTime :services="services" /></div>
+    <div v-if="page == 2"><SelectTime :services="services" /></div>
   </div>
 </template>
 

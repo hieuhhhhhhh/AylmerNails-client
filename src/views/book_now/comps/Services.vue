@@ -69,7 +69,7 @@ export default {
   methods: {
     onInputServiceId(id) {
       if (!this.services[id]) {
-        this.services[id] = { serviceId: id, empIds: [], mutated: false };
+        this.services[id] = { serviceId: id, empIds: [] };
       }
       this.isReturnable = true;
       this.isSelecting = false;
@@ -85,7 +85,6 @@ export default {
     },
     onInputEmpIds(serviceId, value) {
       this.services[serviceId].empIds = value;
-      this.services[serviceId].mutated = true;
     },
     onSubmit() {
       this.onNavigateNext();

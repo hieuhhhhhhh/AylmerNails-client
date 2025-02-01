@@ -3,12 +3,14 @@ export default async function fetchAvailability(date, services) {
     // parse input to payload
     const DELAs_requests = Object.values(services).map(
       ({ empIds, serviceId }) => ({
-        employe_ids: empIds,
+        employee_ids: empIds,
         service_id: serviceId,
         selected_AOSO: [],
-        date,
+        date: date,
       })
     );
+
+    console.log("step A");
 
     // get app path
     const baseURL = process.env.VUE_APP_BASE_URL;
@@ -33,7 +35,7 @@ export default async function fetchAvailability(date, services) {
 
     // read status and process response
     if (res.ok) {
-      return json.DELAs;
+      return json.DELAs_list;
     } else {
       console.log("Failed to fetch availabilities, message: ", json.message);
     }

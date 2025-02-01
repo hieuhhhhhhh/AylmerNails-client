@@ -2,6 +2,7 @@
   <div>{{ DELAs }}</div>
 </template>
 <script>
+import getTodayUnixTime from "@/lib/getTodayUnixTime";
 // lib
 import fetchAvailability from "../apis/fetchAvailability";
 export default {
@@ -14,10 +15,9 @@ export default {
       DELAs: null,
     };
   },
-  methods: {
-    async getAvailability() {
-      this.DELAs = await fetchAvailability(this.services);
-    },
+  async created() {
+    this.DELAs = await fetchAvailability(getTodayUnixTime(), this.services);
+    console.log(this.DELAs);
   },
 };
 </script>

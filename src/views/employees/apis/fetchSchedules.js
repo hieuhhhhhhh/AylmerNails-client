@@ -67,15 +67,9 @@ function refactorSchedules(raw) {
     }
 
     // stack all 7 days of week to one schedule prop
-    if (closing_time > opening_time) {
-      schedules[schedule_id].openings.push(parseUnixHours(opening_time));
-      schedules[schedule_id].closings.push(parseUnixHours(closing_time));
-      schedules[schedule_id].checked.push(true);
-    } else {
-      schedules[schedule_id].openings.push(null);
-      schedules[schedule_id].closings.push(null);
-      schedules[schedule_id].checked.push(false);
-    }
+    schedules[schedule_id].openings.push(parseUnixHours(opening_time));
+    schedules[schedule_id].closings.push(parseUnixHours(closing_time));
+    schedules[schedule_id].checked.push(!!(closing_time && opening_time));
   });
 
   // sort the map based on the length of prop 'services'
