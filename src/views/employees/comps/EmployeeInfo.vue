@@ -20,6 +20,10 @@
             <td>{{ formattedIntervals(intervals) }}</td>
           </tr>
           <tr>
+            <th>Ideal Percentage:</th>
+            <td>{{ intervalPercent }}%</td>
+          </tr>
+          <tr>
             <th>Services:</th>
             <td><NA v-if="!categories.length" /></td>
           </tr>
@@ -30,8 +34,10 @@
       <EditEmpInfo
         :alias="alias"
         :last_date="last_date"
+        :interval_percent="intervalPercent"
         :setAlias="setAlias"
         :setLastDate="setLastDate"
+        :setIntervalPercent="setIntervalPercent"
       />
     </div>
 
@@ -99,13 +105,14 @@ export default {
       resetCheckers: 0,
       // resources
       formattedDate: "",
-      // submit
+      // payload
       emp_id: null,
       categories: [],
       alias: "",
       last_date: null,
       ESs: new Set(),
       intervals: [],
+      intervalPercent: null,
     };
   },
   methods: {
@@ -124,6 +131,7 @@ export default {
       this.last_date = parseUT(details.last_date);
       this.formattedDate = unixToReadable(details.last_date);
       this.intervals = details.key_intervals;
+      this.intervalPercent = details.interval_percent;
 
       // update status
       this.isFetched = true;
@@ -161,10 +169,14 @@ export default {
     setLastDate(value) {
       this.last_date = value;
     },
+    setIntervalPercent(value) {
+      this.intervalPercent = value;
+    },
     async onSubmit() {
       const res = await updateEmpInfo(
         this.emp_id,
         this.alias,
+        this.intervalPercent,
         parseDate(this.last_date),
         [...this.ESs]
       );

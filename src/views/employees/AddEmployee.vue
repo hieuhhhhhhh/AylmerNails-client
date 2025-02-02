@@ -35,6 +35,22 @@
           </td>
         </tr>
         <tr>
+          <th>
+            Ideal Percentage:<br />
+            (should be > 40)
+          </th>
+          <td id="flexBox">
+            <input
+              type="number"
+              v-model="intervalPercent"
+              required
+              :min="10"
+              :max="100"
+              step="1"
+            />
+          </td>
+        </tr>
+        <tr>
           <th>Services:</th>
         </tr>
       </tbody>
@@ -76,7 +92,8 @@ export default {
     return {
       // icon
       saveIcon: faCheck,
-      // products
+      // payloads
+      intervalPercent: null,
       categories: [],
       ESs: new Set(),
       name: "",
@@ -101,7 +118,12 @@ export default {
       console.log("intervals: ", intervals);
 
       // parse ESs
-      const res = await addEmployee(this.name, intervals, Array.from(this.ESs));
+      const res = await addEmployee(
+        this.name,
+        intervals,
+        this.intervalPercent,
+        Array.from(this.ESs)
+      );
 
       if (res) {
         this.$router.push(`/employees/details/${res}`);

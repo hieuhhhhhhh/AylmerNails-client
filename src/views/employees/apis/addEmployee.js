@@ -1,4 +1,9 @@
-export default async function addEmployee(alias, key_intervals, service_ids) {
+export default async function addEmployee(
+  alias,
+  key_intervals,
+  intervalPercent,
+  service_ids
+) {
   try {
     // get app path
     const baseURL = process.env.VUE_APP_BASE_URL;
@@ -16,6 +21,7 @@ export default async function addEmployee(alias, key_intervals, service_ids) {
       body: JSON.stringify({
         alias: alias,
         key_intervals: key_intervals,
+        interval_percent: intervalPercent,
         service_ids: service_ids,
       }),
     });

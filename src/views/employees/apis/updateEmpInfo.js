@@ -1,6 +1,7 @@
 export default async function updateEmpInfo(
   employeeId,
   alias,
+  intervalPercent,
   lastDate,
   serviceIds
 ) {
@@ -18,6 +19,7 @@ export default async function updateEmpInfo(
       body: JSON.stringify({
         employee_id: employeeId,
         alias: alias,
+        interval_percent: intervalPercent,
         last_date: lastDate,
         service_ids: serviceIds,
       }),

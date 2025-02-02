@@ -29,6 +29,24 @@
           />
         </td>
       </tr>
+
+      <tr>
+        <th>
+          Ideal Percentage:<br />
+          (should be > 40)
+        </th>
+        <td id="flexBox">
+          <input
+            type="number"
+            :value="interval_percent"
+            @change="onInputIntervalPercent"
+            required
+            :min="10"
+            :max="100"
+            step="1"
+          />
+        </td>
+      </tr>
       <tr>
         <th>Services:</th>
       </tr>
@@ -43,9 +61,11 @@ export default {
     // products
     alias: String,
     last_date: String,
+    interval_percent: Number,
     // setters
     setAlias: Function,
     setLastDate: Function,
+    setIntervalPercent: Function,
   },
   methods: {
     onInputAlias(event) {
@@ -53,6 +73,9 @@ export default {
     },
     onInputLastDate(event) {
       this.setLastDate(event.target.value);
+    },
+    onInputIntervalPercent(event) {
+      this.setIntervalPercent(event.target.value);
     },
   },
 };
