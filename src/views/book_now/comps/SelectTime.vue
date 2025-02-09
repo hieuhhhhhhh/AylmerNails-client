@@ -1,9 +1,7 @@
 <template>
   <div v-for="(opening, index) in sortedOpenings" :key="index">
-    <div>{{ opening.start }}</div>
-    <div>{{ opening.end }}</div>
-    <div>{{ opening.minEnd }}</div>
-    <div>{{ opening.chains.length }}</div>
+    <button @click="onChooseOpening(opening)">select opening</button>
+    <div>{{ formatTime(opening.start) }}</div>
   </div>
 
   <div>{{ chains.length }}</div>
@@ -12,9 +10,12 @@
 import getTodayUnixTime from "@/lib/getTodayUnixTime";
 // lib
 import fetchAvailability from "../apis/fetchAvailability";
+import secondsToClock from "../apis/secondsToClock";
+
 export default {
   props: {
     services: Object,
+    onSelectChain: Function,
   },
   data() {
     return {
@@ -23,6 +24,17 @@ export default {
       openings: {},
       sortedOpenings: [],
     };
+  },
+  methods: {
+    formatTime(seconds) {
+      return secondsToClock(seconds);
+    },
+    onChooseOpening(opening) {
+      const max = opening.chains.length;
+      const random = Math.floor(Math.random() * max);
+      const randomChain = opening.chains[random];
+      this.onSelectChain(randomChain);
+    },
   },
   async created() {
     this.chains = await fetchAvailability(getTodayUnixTime(), this.services);
@@ -33,6 +45,7 @@ export default {
       const end = chain.chainEnd;
       const minEnd = chain.minEnd;
 
+      // group chains to groups called 'openings'
       if (!this.openings[start] || this.openings[start].end > end) {
         const opening = { start: start, end: end, minEnd: minEnd, chains: [] };
         this.openings[start] = opening;

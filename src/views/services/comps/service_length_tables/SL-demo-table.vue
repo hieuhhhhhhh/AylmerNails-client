@@ -26,7 +26,6 @@
         </tr>
       </tbody>
     </table>
-    <br />
   </div>
   <EditSL
     v-else

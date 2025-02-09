@@ -1,17 +1,21 @@
 <template>
   <div v-if="isFetched">
-    <div id="title">Current Schedule:</div>
-    <div id="note">*Press on the right clock icon to select time</div>
+    <div id="title">Schedules:</div>
 
-    <Schedule v-if="schedules.length" :schedule="schedules[0]" />
+    <div v-if="schedules.length">
+      <div id="note">*Press on the right clock icon to select time</div>
+      <div id="highlight"><Schedule :schedule="schedules[0]" /></div>
+    </div>
+    <div v-else id="note">*Warning: employee has no schedules</div>
 
-    <div id="title">Future Schedules:</div>
-
-    <Schedule
-      v-for="(schedule, index) in schedules.slice(1)"
-      :key="index"
-      :schedule="schedule"
-    />
+    <div>
+      <Schedule
+        v-for="(schedule, index) in schedules.slice(1)"
+        :key="index"
+        :schedule="schedule"
+      /><br />
+      <br />
+    </div>
   </div>
   <AddSchedule />
 </template>
@@ -53,7 +57,13 @@ export default {
   border-top: 3px var(--xtrans-gray) solid;
 }
 #note {
+  padding: 10px;
   font-style: italic;
   color: rgb(184, 121, 3);
+}
+#highlight {
+  outline: 3px outset;
+  width: fit-content;
+  height: fit-content;
 }
 </style>

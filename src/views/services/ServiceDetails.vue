@@ -16,24 +16,23 @@
   <br />
   <br />
 
-  <th>Current Length Setting</th>
-  <ServiceLengthTable
-    v-if="currentLength && Object.keys(currentLength).length"
-    :serviceLength="currentLength"
-    :serviceId="service_id"
-  />
+  <th>Length Settings</th>
+  <div id="highlight" v-if="currentLength && Object.keys(currentLength).length">
+    <ServiceLengthTable
+      :serviceLength="currentLength"
+      :serviceId="service_id"
+    />
+  </div>
   <td v-else-if="isFetched"><NA /></td>
   <br />
-
-  <th>Future Length Settings</th>
-  <NA v-if="!futureLengths.length > 0 && isFetched" />
-
   <ServiceLengthTable
     v-for="(serviceLength, index) in futureLengths"
     :key="index"
     :serviceLength="serviceLength"
     :serviceId="service_id"
   />
+  <br />
+
   <AddServiceLength :serviceId="service_id" />
 </template>
 
@@ -116,5 +115,11 @@ td {
   font-size: 19px;
   display: flex;
   text-align: left;
+}
+#highlight {
+  outline: 3px outset;
+
+  width: fit-content;
+  height: fit-content;
 }
 </style>

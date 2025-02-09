@@ -142,7 +142,8 @@ export default {
       this.ESs.add(serviceId);
     },
     uncheckService(serviceId) {
-      this.ESs.delete(serviceId);
+      this.ESs.delete(Number(serviceId));
+      console.log("ESs", this.ESs);
     },
     openEditForm() {
       this.isEditing = true;

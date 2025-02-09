@@ -73,9 +73,6 @@
       </table>
     </div>
   </form>
-  <br />
-  <br />
-  <br />
 </template>
 
 <script>

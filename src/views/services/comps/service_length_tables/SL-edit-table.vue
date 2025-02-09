@@ -24,15 +24,17 @@
     <tbody>
       <tr>
         <td>ALL</td>
-        <td id="flexBox">
-          <input
-            type="number"
-            :value="defaultLength"
-            @input="onInputDefaultLength"
-            required
-            min="5"
-            step="1"
-          />
+        <td>
+          <div id="flexBox">
+            <input
+              type="number"
+              :value="defaultLength"
+              @input="onInputDefaultLength"
+              required
+              min="5"
+              step="1"
+            />
+          </div>
         </td>
       </tr>
 
@@ -55,21 +57,23 @@
             </option>
           </select>
         </td>
-        <td id="flexBox">
-          <input
-            type="number"
-            :value="variation.length"
-            @input="onInputLength(index, $event)"
-            required
-            min="5"
-            step="1"
-          />
+        <td>
+          <div id="flexBox">
+            <input
+              type="number"
+              :value="variation.length"
+              @input="onInputLength(index, $event)"
+              required
+              min="5"
+              step="1"
+            />
+          </div>
         </td>
       </tr>
       <tr>
         <td colspan="2">
           <button class="orangeBtn" id="smallBtn" @click.prevent="addVariation">
-            <FontAwesomeIcon :icon="plusIcon" /> More Variation
+            <FontAwesomeIcon :icon="plusIcon" /> Employee
           </button>
         </td>
       </tr>
@@ -171,5 +175,6 @@ td {
   font-size: 16px;
   padding: 10px;
   border-radius: 5px;
+  box-sizing: border-box;
 }
 </style>

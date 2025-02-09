@@ -6,7 +6,9 @@
         :onNavigateNext="navigateSelectTime"
       />
     </div>
-    <div v-if="page == 2"><SelectTime :services="services" /></div>
+    <div v-if="page == 2">
+      <SelectTime :services="services" :onSelectChain="onSelectChain" />
+    </div>
   </div>
 </template>
 
@@ -27,6 +29,8 @@ export default {
       services: {},
       // status
       page: 1,
+      // payload
+      chain: {},
     };
   },
   methods: {
@@ -36,6 +40,10 @@ export default {
     navigateSelectTime() {
       this.page++;
       console.log(this.services);
+    },
+    onSelectChain(chain) {
+      this.chain = chain;
+      console.log("chain", JSON.stringify(this.chain));
     },
   },
 };
