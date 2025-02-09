@@ -9,9 +9,7 @@
       <FontAwesomeIcon :icon="backIcon" /> Return
     </button>
   </div>
-  <div id="note">
-    *Prices and service lengths being shown are starting values
-  </div>
+  <div id="note">*Below are starting prices and minimal time taken</div>
 
   <div v-if="isFetched" id="flexBox">
     <Category

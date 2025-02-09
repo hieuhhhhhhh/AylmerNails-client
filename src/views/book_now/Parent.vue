@@ -9,6 +9,9 @@
     <div v-if="page == 2">
       <SelectTime :services="services" :onSelectChain="onSelectChain" />
     </div>
+    <div v-if="page == 3">
+      <FinalPreview :chain="chain" />
+    </div>
   </div>
 </template>
 
@@ -16,12 +19,16 @@
 // comps
 import Services from "./comps/Services.vue";
 import SelectTime from "./comps/SelectTime.vue";
+import FinalPreview from "./comps/FinalPreview.vue";
+// lib
+import submitAppoChain from "./apis/submitAppoChain";
 
 export default {
   name: "BookNowParent",
   components: {
     Services,
     SelectTime,
+    FinalPreview,
   },
   data() {
     return {
@@ -43,7 +50,10 @@ export default {
     },
     onSelectChain(chain) {
       this.chain = chain;
-      console.log("chain", JSON.stringify(this.chain));
+      this.page++;
+    },
+    onSubmit() {
+      submitAppoChain(this.chain);
     },
   },
 };
