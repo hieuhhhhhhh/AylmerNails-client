@@ -1,39 +1,38 @@
-export default async function submitAppoChain(chain) {
+export default async function submitAppoChain(chain, date) {
   try {
     // count of presentation of every employee in the chain
     const newSlots = chainToNewSlots(chain);
     console.log("new slots:", newSlots);
+    console.log("date", date);
 
-    // // call api with newSlots
+    // get app path
+    const baseURL = process.env.VUE_APP_BASE_URL;
 
-    // console.log("new slots: ", newSlots);
-    // // get app path
-    // const baseURL = process.env.VUE_APP_BASE_URL;
+    // start requesting server
+    const res = await fetch(`${baseURL}/api/appointments/add_appo_by_chain`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        slots: newSlots,
+        date: date,
+      }),
+    });
 
-    // // start requesting server
-    // const res = await fetch(`${baseURL}/api/`, {
-    //   method: "POST",
-    //   credentials: "include",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify({
-    //     slots: newSlots,
-    //   }),
-    // });
+    // fetch json
+    const json = await res.json();
 
-    // // fetch json
-    // const json = await res.json();
-
-    // // read status and process response
-    // if (res.ok) {
-    //   return true;
-    // } else {
-    //   console.log(
-    //     "Failed to add appointments by chain, message: ",
-    //     json.message
-    //   );
-    // }
+    // read status and process response
+    if (res.ok) {
+      return true;
+    } else {
+      console.log(
+        "Failed to add appointments by chain, message: ",
+        json.message
+      );
+    }
   } catch (e) {
     console.error("Unexpected Error: ", e);
   }
@@ -63,14 +62,17 @@ function chainToNewSlots(chain) {
     empIds.sort((a, b) => -(empCount[a] - empCount[b]));
 
     // filter employee ids that have most count
-    const max = empIds[0];
+    const topEmpId = empIds[0];
+    const max = empCount[topEmpId];
+
+    console.log("empIds: ", JSON.stringify(empIds));
     let topEmpIds = empIds; // by default take all values
     for (let i = 0; i < empIds.length; i++) {
       const id = empIds[i];
 
       if (empCount[id] < max) {
         const j = i - 1;
-        topEmpIds = empIds.sliced(0, j);
+        topEmpIds = empIds.slice(0, j);
         break;
       }
     }

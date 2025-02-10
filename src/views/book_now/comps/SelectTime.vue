@@ -23,6 +23,8 @@ export default {
       chains: [],
       openings: {},
       sortedOpenings: [],
+      // outcome
+      date: getTodayUnixTime(),
     };
   },
   methods: {
@@ -33,11 +35,11 @@ export default {
       const max = opening.chains.length;
       const random = Math.floor(Math.random() * max);
       const randomChain = opening.chains[random];
-      this.onSelectChain(randomChain);
+      this.onSelectChain(randomChain, this.date);
     },
   },
   async created() {
-    this.chains = await fetchAvailability(getTodayUnixTime(), this.services);
+    this.chains = await fetchAvailability(this.date, this.services);
 
     // append object 'openings'
     for (let chain of this.chains) {

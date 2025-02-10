@@ -11,10 +11,11 @@ import submitAppoChain from "../apis/submitAppoChain";
 export default {
   props: {
     chain: Object,
+    date: Number,
   },
   methods: {
     async onSubmit() {
-      const res = await submitAppoChain(this.chain);
+      const res = await submitAppoChain(this.chain, this.date);
       console.log(res);
     },
   },
