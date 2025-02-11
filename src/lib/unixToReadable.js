@@ -12,7 +12,7 @@ export default function unixToReadable(unixTimestamp) {
   );
 
   // Format the date in a readable way (e.g., "January 20, 2025")
-  const readableDate = dateTime.toLocaleString(DateTime.DATE_FULL);
+  const readableDate = dateTime.toLocaleString(DateTime.DATE_MED);
 
   return readableDate;
 }
