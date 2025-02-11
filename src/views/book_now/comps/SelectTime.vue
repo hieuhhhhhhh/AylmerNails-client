@@ -2,13 +2,25 @@
   <div>
     <input id="date" type="date" :value="date" @change="onInputDate" />
   </div>
-  <div v-if="msg">{{ msg }}</div>
+
   <div v-for="(opening, index) in sortedOpenings" :key="index">
     <button @click="onChooseOpening(opening)">select opening</button>
     <div>{{ formatTime(opening.start) }}</div>
   </div>
+  <div v-if="msg">{{ msg }}</div>
+  <div id="duo">
+    <button class="orangeBtn" id="leftBtn" @click="onBack">
+      <FontAwesomeIcon :icon="backIcon" /> Back
+    </button>
+    <button class="blueBtn" id="rightBtn" @click="onContinue">
+      Next <FontAwesomeIcon :icon="continueIcon" />
+    </button>
+  </div>
 </template>
 <script>
+// icons
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faLeftLong, faRightLong } from "@fortawesome/free-solid-svg-icons";
 // lib
 import getTodayUnixTime from "@/lib/getTodayUnixTime";
 import fetchAvailability from "../apis/fetchAvailability";
@@ -19,9 +31,17 @@ export default {
   props: {
     services: Object,
     onSelectChain: Function,
+    onReturn: Function,
+  },
+
+  components: {
+    FontAwesomeIcon,
   },
   data() {
     return {
+      // icons
+      backIcon: faLeftLong,
+      continueIcon: faRightLong,
       // resources
       msg: "",
       chains: [],
@@ -29,18 +49,36 @@ export default {
       sortedOpenings: [],
       date: null,
       // outcome
+      chain: null,
       unixDate: null,
     };
   },
   methods: {
+    onBack() {
+      this.onReturn();
+    },
+    onContinue() {
+      if (!this.unixDate) {
+        this.msg = "Please select a date!";
+        return;
+      }
+      if (!this.chain) {
+        this.msg = "Please select a time stamp for your appointment!";
+        return;
+      }
+      this.onSelectChain(this.chain, this.unixDate);
+    },
     formatTime(seconds) {
       return secondsToClock(seconds);
     },
     onChooseOpening(opening) {
+      // reset state
+      this.msg = "";
+      this.chain = null;
+      // choose a random chain
       const max = opening.chains.length;
       const random = Math.floor(Math.random() * max);
-      const randomChain = opening.chains[random];
-      this.onSelectChain(randomChain, this.unixDate);
+      this.chain = opening.chains[random];
     },
     isInThePast(value) {
       const today = getTodayUnixTime();
@@ -54,6 +92,7 @@ export default {
       this.openings = {};
       this.sortedOpenings = [];
       this.date = null;
+      this.chain = null;
       this.unixDate = null;
     },
     async onInputDate(event) {
@@ -63,7 +102,7 @@ export default {
       const value = event.target.value;
       // if user select day in the past do nothing
       if (this.isInThePast(value)) {
-        this.msg = "Please select a valid date.";
+        this.msg = "Please select a valid date!";
         return;
       }
 
@@ -104,3 +143,23 @@ export default {
   },
 };
 </script>
+<style scoped>
+#duo {
+  display: flex;
+  gap: 5px;
+  width: 90%;
+  justify-content: flex-end;
+}
+
+#rightBtn {
+  padding: 10px;
+  font-size: 25px;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+}
+#leftBtn {
+  font-size: 23px;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+}
+</style>

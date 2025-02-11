@@ -4,13 +4,18 @@
       <Services
         :getServices="getServices"
         :onNavigateNext="navigateSelectTime"
+        :resetPage2="resetPage2"
       />
     </div>
-    <div v-if="page == 2">
-      <SelectTime :services="services" :onSelectChain="onSelectChain" />
+    <div v-show="page == 2" :key="page2trigger">
+      <SelectTime
+        :services="services"
+        :onSelectChain="onSelectChain"
+        :onReturn="onReturn"
+      />
     </div>
-    <div v-if="page == 3">
-      <FinalPreview :chain="chain" :date="date" />
+    <div v-show="page == 3" :key="page3trigger">
+      <FinalPreview :chain="chain" :date="date" :onReturn="onReturn" />
     </div>
   </div>
 </template>
@@ -34,6 +39,8 @@ export default {
       services: {},
       // status
       page: 1,
+      page2trigger: 0,
+      page3trigger: 0,
       // payload
       chain: {},
       date: null,
@@ -47,10 +54,17 @@ export default {
       this.page++;
       console.log(this.services);
     },
+    resetPage2() {
+      this.page2trigger++;
+    },
+    onReturn() {
+      this.page--;
+    },
     onSelectChain(chain, date) {
       console.log("date", date);
       this.date = date;
       this.chain = chain;
+      this.page3trigger++;
       this.page++;
     },
   },

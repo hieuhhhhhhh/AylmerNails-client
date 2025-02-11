@@ -52,6 +52,7 @@ export default {
   props: {
     getServices: Function,
     onNavigateNext: Function,
+    resetPage2: Function,
   },
   data() {
     return {
@@ -73,6 +74,7 @@ export default {
       }
       this.isReturnable = true;
       this.isSelecting = false;
+      this.resetPage2();
     },
     openSelect() {
       this.isSelecting = true;
@@ -82,9 +84,11 @@ export default {
     },
     onRemoveService(id) {
       delete this.services[id];
+      this.resetPage2();
     },
     onInputEmpIds(serviceId, value) {
       this.services[serviceId].empIds = value;
+      this.resetPage2();
     },
     onSubmit() {
       this.onNavigateNext();
