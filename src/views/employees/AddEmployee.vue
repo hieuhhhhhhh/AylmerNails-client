@@ -14,6 +14,26 @@
         </tr>
 
         <tr>
+          <th>Color:</th>
+          <td id="flexBox">
+            <select
+              v-model="colorId"
+              :style="{ backgroundColor: getColor(), color: 'white' }"
+              required
+            >
+              <option
+                v-for="color in colors"
+                :key="color.colorId"
+                :value="color.colorId"
+                :style="{ backgroundColor: color.code, color: 'white' }"
+              >
+                {{ color.name }}
+              </option>
+            </select>
+          </td>
+        </tr>
+
+        <tr>
           <th>Ideal Length:<br />(minutes)</th>
           <td id="flexBox">
             <input
@@ -82,6 +102,7 @@ import Category from "./comps/Category.vue";
 // lib
 import fetchEmployeeServices from "./apis/fetchESs.js";
 import addEmployee from "./apis/addEmployee.js";
+import fetchColors from "./apis/fetchColors.js";
 
 export default {
   components: {
@@ -92,16 +113,26 @@ export default {
     return {
       // icon
       saveIcon: faCheck,
-      // payloads
-      intervalPercent: null,
+      // resources
       categories: [],
+      colors: [],
+      colorCode: "",
+      // outcome
+      intervalPercent: null,
       ESs: new Set(),
       name: "",
+      colorId: null,
       interval1: null,
       interval2: null,
     };
   },
   methods: {
+    getColor() {
+      const selected = this.colors.find(
+        (color) => color.colorId === this.colorId
+      );
+      return selected ? selected.code : "gray";
+    },
     checkService(serviceId) {
       this.ESs.add(serviceId);
     },
@@ -122,6 +153,7 @@ export default {
         this.name,
         intervals,
         this.intervalPercent,
+        this.colorId,
         Array.from(this.ESs)
       );
 
@@ -131,7 +163,13 @@ export default {
     },
   },
   async created() {
-    this.categories = (await fetchEmployeeServices(1)).categories;
+    const [servicesData, colorsData] = await Promise.all([
+      fetchEmployeeServices(1),
+      fetchColors(),
+    ]);
+
+    this.categories = servicesData.categories;
+    this.colors = colorsData;
   },
 };
 </script>

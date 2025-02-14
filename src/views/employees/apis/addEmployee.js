@@ -2,6 +2,7 @@ export default async function addEmployee(
   alias,
   key_intervals,
   intervalPercent,
+  colorId,
   service_ids
 ) {
   try {
@@ -22,6 +23,7 @@ export default async function addEmployee(
         alias: alias,
         key_intervals: key_intervals,
         interval_percent: intervalPercent,
+        color_id: colorId,
         service_ids: service_ids,
       }),
     });

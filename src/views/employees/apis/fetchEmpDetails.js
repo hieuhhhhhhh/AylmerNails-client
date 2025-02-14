@@ -25,8 +25,16 @@ export default async function fetchEmpDetails(emp_id) {
       console.log("raw: ", raw);
 
       // unpack properties and create new employee
-      const [emp_id, alias, stored_intervals, interval_percent, last_date] =
-        raw;
+      const [
+        emp_id,
+        alias,
+        colorId,
+        colorName,
+        colorCode,
+        stored_intervals,
+        interval_percent,
+        last_date,
+      ] = raw;
 
       // fetch intervals
       const si = JSON.parse(stored_intervals);
@@ -37,6 +45,9 @@ export default async function fetchEmpDetails(emp_id) {
       const details = {
         emp_id,
         alias,
+        colorId,
+        colorName,
+        colorCode,
         key_intervals,
         interval_percent,
         last_date,

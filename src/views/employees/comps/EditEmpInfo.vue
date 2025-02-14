@@ -19,6 +19,26 @@
         </td>
       </tr>
       <tr>
+        <th>Color:</th>
+        <td id="flexBox">
+          <select
+            v-model="colorId_"
+            @change="onInputColor"
+            :style="{ backgroundColor: getColor(), color: 'white' }"
+            required
+          >
+            <option
+              v-for="color in colors"
+              :key="color.colorId"
+              :value="color.colorId"
+              :style="{ backgroundColor: color.code, color: 'white' }"
+            >
+              {{ color.name }}
+            </option>
+          </select>
+        </td>
+      </tr>
+      <tr>
         <th>Available Until:</th>
         <td>
           <input
@@ -56,18 +76,35 @@
 </template>
 
 <script>
+import fetchColors from "../apis/fetchColors.js";
+
 export default {
   props: {
-    // products
+    // outcome
     alias: String,
+    colorId: Number,
     last_date: String,
     interval_percent: Number,
     // setters
     setAlias: Function,
+    setColorId: Function,
     setLastDate: Function,
     setIntervalPercent: Function,
   },
+  data() {
+    return {
+      // resources
+      colorId_: this.colorId,
+      colors: [],
+    };
+  },
   methods: {
+    getColor() {
+      const selected = this.colors.find(
+        (color) => color.colorId === this.colorId_
+      );
+      return selected ? selected.code : "gray";
+    },
     onInputAlias(event) {
       this.setAlias(event.target.value);
     },
@@ -77,6 +114,12 @@ export default {
     onInputIntervalPercent(event) {
       this.setIntervalPercent(event.target.value);
     },
+    onInputColor(event) {
+      this.setColorId(Number(event.target.value));
+    },
+  },
+  async created() {
+    this.colors = await fetchColors();
   },
 };
 </script>

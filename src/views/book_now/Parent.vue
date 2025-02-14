@@ -81,4 +81,7 @@ export default {
   flex-grow: 1;
   box-sizing: border-box;
 }
+#xs {
+  color: rgb(193, 0, 0);
+}
 </style>

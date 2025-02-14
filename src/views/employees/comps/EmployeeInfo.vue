@@ -12,6 +12,11 @@
             <td>{{ alias }}</td>
           </tr>
           <tr>
+            <th>Color:</th>
+            <td :style="{ color: colorCode }">{{ colorName }}</td>
+          </tr>
+
+          <tr>
             <th>Available Until:</th>
             <td><NA v-if="!formattedDate" /> {{ formattedDate }}</td>
           </tr>
@@ -33,9 +38,11 @@
     <div v-else>
       <EditEmpInfo
         :alias="alias"
+        :colorId="colorId"
         :last_date="last_date"
         :interval_percent="intervalPercent"
         :setAlias="setAlias"
+        :setColorId="setColorId"
         :setLastDate="setLastDate"
         :setIntervalPercent="setIntervalPercent"
       />
@@ -105,10 +112,13 @@ export default {
       resetCheckers: 0,
       // resources
       formattedDate: "",
-      // payload
+      colorName: "",
+      colorCode: null,
+      // outcome
       emp_id: null,
       categories: [],
       alias: "",
+      colorId: null,
       last_date: null,
       ESs: new Set(),
       intervals: [],
@@ -128,6 +138,9 @@ export default {
 
       // fetch state
       this.alias = details.alias;
+      this.colorId = details.colorId;
+      this.colorName = details.colorName;
+      this.colorCode = details.colorCode;
       this.last_date = parseUT(details.last_date);
       this.formattedDate = unixToReadable(details.last_date);
       this.intervals = details.key_intervals;
@@ -167,6 +180,9 @@ export default {
     setAlias(value) {
       this.alias = value;
     },
+    setColorId(value) {
+      this.colorId = value;
+    },
     setLastDate(value) {
       this.last_date = value;
     },
@@ -177,6 +193,7 @@ export default {
       const res = await updateEmpInfo(
         this.emp_id,
         this.alias,
+        this.colorId,
         this.intervalPercent,
         parseDate(this.last_date),
         [...this.ESs]
