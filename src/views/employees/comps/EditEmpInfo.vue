@@ -1,5 +1,4 @@
 <template>
-  <div id="note">*Ideal Lengths are not editable</div>
   <table>
     <colgroup>
       <col style="width: auto" />
@@ -47,6 +46,12 @@
             :value="last_date"
             @change="onInputLastDate"
           />
+        </td>
+      </tr>
+
+      <tr>
+        <td colspan="2">
+          <div id="note">*Ideal Lengths are not editable</div>
         </td>
       </tr>
 

@@ -20,6 +20,8 @@ import AddEmployee from "./views/employees/AddEmployee.vue";
 import EmployeeDetails from "./views/employees/EmployeeDetails.vue";
 // book now
 import BookNow from "./views/book_now/Parent.vue";
+// calendar
+import Calendar from "./views/calendar/Calendar.vue";
 
 const routes = [
   {
@@ -96,6 +98,8 @@ const routes = [
       },
     ],
   },
+
+  { path: "/calendar", component: Calendar },
 
   // wildcard route for 404 - not found
   {

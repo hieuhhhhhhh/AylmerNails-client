@@ -113,8 +113,12 @@ export default {
     },
     async fetchData() {
       const res = await fetchAvailability(this.unixDate, this.services);
-      if (res) this.chains = res;
+
+      // if no result -> error occured -> do nothing
+      if (!res) return;
+
       // append object 'openings'
+      this.chains = res;
       for (let chain of this.chains) {
         const start = chain.chainStart;
         const end = chain.chainEnd;

@@ -64,6 +64,7 @@ export default {
 #highlight {
   outline: 3px outset;
   width: fit-content;
+  max-width: 100%;
   height: fit-content;
 }
 </style>
