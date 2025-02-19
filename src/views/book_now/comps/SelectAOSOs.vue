@@ -1,6 +1,12 @@
 <template>
   <button @click="handleClose">Close</button>
-  <div>{{ AOSs }}</div>
+  <div>Additional Questions:</div>
+  <div v-for="(question, index) in questions" :key="index">
+    {{ index + 1 }}. {{ question.questionText }}
+    <div v-for="(option, index) in question.options" :key="index">
+      {{ option.optionText }} {{ formatOffset(option.optionOffset) }}
+    </div>
+  </div>
 </template>
 <script>
 import fetchAOSs from "../apis/fetchAOSs";
@@ -14,7 +20,7 @@ export default {
   data() {
     return {
       // resource
-      AOSs: [],
+      questions: [],
       // outcome
       AOSOs: [],
     };
@@ -26,9 +32,17 @@ export default {
     handleClose() {
       this.onClose();
     },
+    formatOffset(seconds) {
+      if (seconds === 0) return;
+
+      let sign = seconds >= 0 ? "+" : "-";
+      let absMinutes = Math.abs(Math.floor(seconds / 60));
+
+      return `(${sign}${absMinutes} mins)`;
+    },
   },
   async created() {
-    this.AOSs = await fetchAOSs(this.serviceId);
+    this.questions = await fetchAOSs(this.serviceId);
   },
 };
 </script>

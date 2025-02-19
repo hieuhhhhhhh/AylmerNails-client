@@ -19,15 +19,46 @@ export default async function fetchAOSs(serviceId) {
 
     // read status and process response
     if (res.ok) {
-      // return result if successufl
+      // read response
       const raw = json.add_on_services;
 
       // return formatted result
-      return raw;
+      return rawToQuestions(raw);
     } else {
       console.log("Failed to fetch add-on services, message: ", json.message);
     }
   } catch (e) {
     console.error("Unexpected Error: ", e);
   }
+}
+
+function rawToQuestions(raw) {
+  // result holder
+  let questions = [];
+
+  // iterate every element (row)
+  let i = -1;
+  let currentId = null;
+  for (let row of raw) {
+    // unpack
+    const [optionId, optionText, optionOffset, questionId, questionText] = row;
+
+    // read questionId, if same id do nothing, if new push new question
+    if (currentId !== questionId) {
+      // push new quesiton
+      const question = { questionId, questionText, options: [] };
+      questions.push(question);
+
+      // increment index
+      currentId = questionId;
+      i++;
+    }
+
+    // push new option
+    const option = { optionId, optionText, optionOffset };
+    questions[i].options.push(option);
+  }
+
+  // return result
+  return questions;
 }
