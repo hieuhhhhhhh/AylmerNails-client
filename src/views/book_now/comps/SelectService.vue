@@ -19,6 +19,14 @@
       :onInputServiceId="onInputServiceId"
     />
   </div>
+
+  <div v-if="openAOSs">
+    <SelectAOSOs
+      :serviceId="serviceId"
+      :onClose="closeAOSOs"
+      :onInputAOSOs="onInputAOSOs"
+    />
+  </div>
 </template>
 
 <script>
@@ -29,16 +37,18 @@ import { faLeftLong } from "@fortawesome/free-solid-svg-icons";
 import Category from "./Category.vue";
 // lib
 import fetchActiveServices from "../apis/fetchActiveServices";
+import SelectAOSOs from "./SelectAOSOs.vue";
 
 export default {
   props: {
     isReturnable: Boolean,
-    onInputServiceId: Function,
+    onInputService: Function,
     onClose: Function,
   },
   components: {
     FontAwesomeIcon,
     Category,
+    SelectAOSOs,
   },
   data() {
     return {
@@ -46,13 +56,26 @@ export default {
       backIcon: faLeftLong,
       // status
       isFetched: false,
+      openAOSs: false,
       // resources
       categories: [],
+      // outcome
+      serviceId: null,
     };
   },
   methods: {
     closeSelect() {
       this.onClose();
+    },
+    onInputServiceId(serviceId) {
+      this.serviceId = serviceId;
+      this.openAOSs = true;
+    },
+    closeAOSOs() {
+      this.openAOSs = false;
+    },
+    onInputAOSOs(AOSOs) {
+      this.onInputService(this.serviceId, AOSOs);
     },
   },
   async created() {

@@ -24,7 +24,7 @@
 
   <div v-show="isSelecting">
     <SelectService
-      :onInputServiceId="onInputServiceId"
+      :onInputService="onInputService"
       :onClose="closeSelect"
       :isReturnable="isReturnable"
     />
@@ -68,9 +68,9 @@ export default {
     };
   },
   methods: {
-    onInputServiceId(id) {
+    onInputService(id, AOSOs) {
       if (!this.services[id]) {
-        this.services[id] = { serviceId: id, empIds: [] };
+        this.services[id] = { serviceId: id, empIds: [], AOSOs: AOSOs };
       }
       this.isReturnable = true;
       this.isSelecting = false;

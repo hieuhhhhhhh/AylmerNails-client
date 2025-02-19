@@ -20,7 +20,7 @@ export default async function fetchAOSs(serviceId) {
     // read status and process response
     if (res.ok) {
       // return result if successufl
-      const raw = json.AOSs;
+      const raw = json.add_on_services;
 
       // return formatted result
       return raw;
