@@ -1,12 +1,24 @@
 <template>
   <button @click="handleClose">Close</button>
-  <div>Additional Questions:</div>
-  <div v-for="(question, index) in questions" :key="index">
-    {{ index + 1 }}. {{ question.questionText }}
-    <div v-for="(option, index) in question.options" :key="index">
-      {{ option.optionText }} {{ formatOffset(option.optionOffset) }}
+  <form @submit.prevent="onSubmit">
+    <div v-for="(question, index) in questions" :key="index">
+      {{ index + 1 }}. {{ question.questionText }}
+      <div v-for="(option, childIndex) in question.options" :key="childIndex">
+        <label>
+          <input
+            type="radio"
+            :value="option.optionId"
+            v-model="answers[question.questionId]"
+            required
+          />
+          {{ option.optionText }} {{ formatOffset(option.optionOffset) }}
+        </label>
+      </div>
     </div>
-  </div>
+    <div v-if="msg">{{ msg }}</div>
+
+    <button>Submit</button>
+  </form>
 </template>
 <script>
 import fetchAOSs from "../apis/fetchAOSs";
@@ -21,13 +33,23 @@ export default {
     return {
       // resource
       questions: [],
+      msg: "",
       // outcome
-      AOSOs: [],
+      answers: {},
     };
   },
   methods: {
     onSubmit() {
-      this.onInputAOSOs(this.AOSOs);
+      const AOSOs = [];
+      for (let key in this.answers) {
+        AOSOs.push(Number(key));
+        AOSOs.push(this.answers[key]);
+      }
+      if (AOSOs.length / 2 !== this.questions.length) {
+        this.msg = "Please provide answer to all questions";
+        return;
+      }
+      this.onInputAOSOs(AOSOs);
     },
     handleClose() {
       this.onClose();
@@ -40,6 +62,7 @@ export default {
 
       return `(${sign}${absMinutes} mins)`;
     },
+    onInputAnswer() {},
   },
   async created() {
     this.questions = await fetchAOSs(this.serviceId);

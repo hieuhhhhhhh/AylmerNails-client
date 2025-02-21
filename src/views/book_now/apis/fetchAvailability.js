@@ -2,10 +2,10 @@ export default async function fetchAvailability(date, services) {
   try {
     // parse input to payload
     const DELAs_requests = Object.values(services).map(
-      ({ empIds, serviceId }) => ({
+      ({ empIds, serviceId, AOSOs }) => ({
         employee_ids: empIds,
         service_id: serviceId,
-        selected_AOSO: [],
+        selected_AOSO: AOSOs,
         date: date,
       })
     );
