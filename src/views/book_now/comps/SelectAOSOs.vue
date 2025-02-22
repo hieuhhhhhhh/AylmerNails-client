@@ -1,24 +1,37 @@
 <template>
-  <button @click="handleClose">Close</button>
-  <form @submit.prevent="onSubmit">
-    <div v-for="(question, index) in questions" :key="index">
-      {{ index + 1 }}. {{ question.questionText }}
-      <div v-for="(option, childIndex) in question.options" :key="childIndex">
-        <label>
-          <input
-            type="radio"
-            :value="option.optionId"
-            v-model="answers[question.questionId]"
-            required
-          />
-          {{ option.optionText }} {{ formatOffset(option.optionOffset) }}
-        </label>
-      </div>
+  <div id="parent">
+    <div id="background" @click="handleClose" />
+    <div id="window">
+      <button @click="handleClose" id="closeBtn" class="redBtn">X</button>
+      <form @submit.prevent="onSubmit" id="content">
+        <div
+          v-for="(question, index) in questions"
+          :key="index"
+          id="questionBox"
+        >
+          <span id="question"
+            >{{ index + 1 }}. {{ question.questionText }}</span
+          >
+          <div
+            v-for="(option, childIndex) in question.options"
+            :key="childIndex"
+          >
+            <label>
+              <input
+                type="radio"
+                :value="option.optionId"
+                v-model="answers[question.questionId]"
+                required
+              />
+              {{ option.optionText }} {{ formatOffset(option.optionOffset) }}
+            </label>
+          </div>
+        </div>
+        <div v-if="msg" id="msg">{{ msg }}</div>
+        <div id="btnBox"><button class="blueBtn">Submit</button></div>
+      </form>
     </div>
-    <div v-if="msg">{{ msg }}</div>
-
-    <button>Submit</button>
-  </form>
+  </div>
 </template>
 <script>
 import fetchAOSs from "../apis/fetchAOSs";
@@ -69,3 +82,63 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+#parent {
+  z-index: 15;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#background {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+#window {
+  position: relative;
+  z-index: 20;
+  width: 500px;
+  max-width: 100%;
+  background-color: var(--background-i2);
+  overflow-y: auto;
+  max-height: 80%;
+}
+#content {
+  padding: 20px;
+  margin-top: 10px;
+}
+#closeBtn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  aspect-ratio: 1;
+  height: 30px;
+  padding: 0;
+}
+#btnBox {
+  display: flex;
+  justify-content: center;
+}
+#msg {
+  text-align: center;
+  color: red;
+}
+input[type="radio"] {
+  transform: scale(1.5);
+  margin: 7px;
+}
+#question {
+  font-size: 20px;
+}
+#questionBox {
+  margin-bottom: 15px;
+}
+</style>
