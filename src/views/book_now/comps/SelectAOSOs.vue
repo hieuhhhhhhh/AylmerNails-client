@@ -63,6 +63,7 @@ export default {
         return;
       }
       this.onInputAOSOs(AOSOs);
+      this.onClose();
     },
     handleClose() {
       this.onClose();
