@@ -71,5 +71,5 @@ function parseApiRes(json) {
   }
 
   // return all results
-  return { employees: newEmployees, dayStart, dayEnd };
+  return { employees: Object.values(newEmployees), dayStart, dayEnd };
 }
