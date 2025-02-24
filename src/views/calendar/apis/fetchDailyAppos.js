@@ -50,10 +50,10 @@ function parseApiRes(json) {
     newEmployees[id] = newEmp;
 
     // find day's start and day's end
-    if (start < dayStart || !dayStart) {
+    if ((start && start < dayStart) || !dayStart) {
       dayStart = start;
     }
-    if (end < dayEnd || !dayEnd) {
+    if ((end && end > dayEnd) || !dayEnd) {
       dayEnd = end;
     }
   }

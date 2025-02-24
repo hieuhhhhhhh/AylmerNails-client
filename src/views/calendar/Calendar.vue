@@ -1,8 +1,6 @@
 <template>
-  <div id="layout">
-    <DayInput v-if="unixDate" :unixDate="unixDate" :onInputDate="onInputDate" />
-    <br />
-    <br />
+  <div id="layout" v-if="isFetched">
+    <DayInput :unixDate="unixDate" :onInputDate="onInputDate" />
 
     <div id="aliasRelative">
       <div id="scroll">
@@ -26,9 +24,7 @@
             </div>
           </div>
 
-          <div id="graduations">
-            <VerticalTimeMarks />
-          </div>
+          <VerticalTimeMarks :dayStart="dayStart" :dayEnd="dayEnd" />
           <div id="empAlias" :style="{ backgroundColor: emp.colorCode }">
             {{ emp.alias }}
           </div>
@@ -56,6 +52,8 @@ export default {
   },
   data() {
     return {
+      // status
+      isFetched: false,
       // resources
       unixDate: null,
       employees: [],
@@ -82,9 +80,13 @@ export default {
     },
     async fetchData() {
       const dayInfo = await fetchDailyAppos(this.unixDate);
+      console.log("dayInfo", dayInfo);
       this.employees = dayInfo.employees;
       this.dayStart = dayInfo.dayStart;
       this.dayEnd = dayInfo.dayEnd;
+
+      // update status
+      this.isFetched = true;
     },
   },
   async created() {
@@ -100,19 +102,13 @@ export default {
 <style scoped>
 #scroll {
   font-size: 14px;
-
   border: 3px outset;
-  overflow-x: scroll;
+  overflow-x: auto;
   height: 100%;
   background: white;
   color: black;
 }
-#graduations {
-  display: flex;
-  height: 70px;
-  width: fit-content;
-  box-sizing: border-box;
-}
+
 #layout {
   background-color: var(--background-i1);
   padding: 10px;

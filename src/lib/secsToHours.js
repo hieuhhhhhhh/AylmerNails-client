@@ -1,5 +1,8 @@
 import { DateTime } from "luxon";
 
 export default function secsToHours(secs) {
-  return DateTime.fromSeconds(secs).toFormat("h:mm a");
+  console.log(secs);
+  return DateTime.fromObject({ hour: 0 })
+    .plus({ seconds: secs })
+    .toFormat("h:mm a");
 }
