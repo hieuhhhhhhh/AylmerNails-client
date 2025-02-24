@@ -63,6 +63,8 @@ export default {
     const getLeft = (appo) => secsToLength(appo.start - dayStart.value);
     const getWidth = (appo) => secsToLength(appo.end - appo.start);
     const formatTime = (seconds) => secsToHours(seconds);
+
+    // apis
     const fetchData = async () => {
       isFetched.value = false;
       const dayInfo = await fetchDailyAppos(props.unixDate);

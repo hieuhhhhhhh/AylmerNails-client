@@ -1,5 +1,5 @@
 <template>
-  <div id="layout">
+  <div id="layout" v-if="unixDate">
     <DayInput
       :unixDate="unixDate"
       :onInputDate="onInputDate"
@@ -21,6 +21,9 @@
 // comps
 import DayInput from "./comps/DayInput.vue";
 import ScrollContent from "./comps/ScrollContent.vue";
+// lib
+import { ref, onMounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
 
 export default {
   name: "Calendar-",
@@ -28,46 +31,63 @@ export default {
     DayInput,
     ScrollContent,
   },
-  data() {
-    return {
-      // status
-      isCompacting: false,
-      // resources
-      unixDate: null,
-    };
-  },
-  methods: {
-    onMoveRight() {
+  setup() {
+    // status
+    const isCompacting = ref(false);
+    // resources
+    const unixDate = ref(null);
+    // lib
+    const router = useRouter();
+    const route = useRoute();
+
+    const onMoveRight = () => {
       const scrollElement = document.getElementById("scroll");
       if (scrollElement) {
         scrollElement.scrollLeft += 140;
       }
-    },
-    onMoveLeft() {
+    };
+
+    const onMoveLeft = () => {
       const scrollElement = document.getElementById("scroll");
       if (scrollElement) {
         scrollElement.scrollLeft -= 140;
       }
-    },
-    onMoveEnd(onward) {
+    };
+
+    const onMoveEnd = (onward) => {
       const scrollElement = document.getElementById("scroll");
       if (onward) {
         scrollElement.scrollLeft = scrollElement.scrollWidth;
       } else {
         scrollElement.scrollLeft = 0;
       }
-    },
-    async onInputDate(value) {
-      this.$router.push(`/calendar/${value}`);
-      this.unixDate = value;
-    },
-    onCompact() {
-      this.isCompacting = !this.isCompacting;
-    },
-  },
-  async created() {
-    // fetch unix date from URL
-    this.unixDate = Number(this.$route.params.unixDate);
+    };
+
+    const onInputDate = async (value) => {
+      // Use the router object for navigation
+      router.push(`/calendar/${value}`);
+      unixDate.value = value;
+    };
+
+    const onCompact = () => {
+      isCompacting.value = !isCompacting.value;
+    };
+
+    onMounted(() => {
+      // fetch unix date from URL on mount using the route object
+      unixDate.value = Number(route.params.unixDate);
+    });
+
+    // Return all reactive variables and methods
+    return {
+      unixDate,
+      isCompacting,
+      onMoveRight,
+      onMoveLeft,
+      onMoveEnd,
+      onInputDate,
+      onCompact,
+    };
   },
 };
 </script>
