@@ -13,6 +13,7 @@
 </template>
 
 <script>
+// lib
 import secsToLength from "../helpers/secsToLength";
 
 export default {

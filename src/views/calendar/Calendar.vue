@@ -8,10 +8,16 @@
       :onMoveEnd="onMoveEnd"
     />
 
-    <div id="aliasRelative">
+    <div id="relative">
       <div id="scroll">
         <div v-for="(emp, index) in employees" :key="index">
-          <div id="appoRelative">
+          <div id="relative">
+            <GrayPart
+              :dayStart="dayStart"
+              :dayEnd="dayEnd"
+              :start="emp.start"
+              :end="emp.end"
+            />
             <div
               id="appo"
               v-for="(appo, index) in emp.appos"
@@ -47,6 +53,7 @@ import secsToHours from "@/lib/secsToHours";
 // comps
 import VerticalTimeMarks from "./comps/VerticalTimeMarks.vue";
 import secsToLength from "./helpers/secsToLength";
+import GrayPart from "./comps/GrayPart.vue";
 
 import DayInput from "./comps/DayInput.vue";
 
@@ -55,6 +62,7 @@ export default {
   components: {
     VerticalTimeMarks,
     DayInput,
+    GrayPart,
   },
   data() {
     return {
@@ -154,10 +162,7 @@ export default {
   box-sizing: border-box;
   transform: translate(-1px, calc(-100% - 1px));
 }
-#aliasRelative {
-  position: relative;
-  z-index: 0;
-}
+
 #appo {
   position: absolute;
   padding: 3px;
@@ -165,7 +170,7 @@ export default {
   border: 1px solid black;
   box-sizing: border-box;
 }
-#appoRelative {
+#relative {
   position: relative;
   z-index: 0;
 }
