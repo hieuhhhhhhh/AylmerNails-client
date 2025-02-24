@@ -10,7 +10,11 @@
 
     <div id="relative">
       <div id="scroll">
-        <ScrollContent :unixDate="unixDate" />
+        <ScrollContent
+          :unixDate="unixDate"
+          :isCompacting="isCompacting"
+          :width="scrollWidth"
+        />
       </div>
     </div>
     <button @click="onCompact">Compact</button>
@@ -22,7 +26,7 @@
 import DayInput from "./comps/DayInput.vue";
 import ScrollContent from "./comps/ScrollContent.vue";
 // lib
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onBeforeUnmount } from "vue";
 import { useRouter, useRoute } from "vue-router";
 
 export default {
@@ -36,6 +40,7 @@ export default {
     const isCompacting = ref(false);
     // resources
     const unixDate = ref(null);
+    const scrollWidth = ref(null);
     // lib
     const router = useRouter();
     const route = useRoute();
@@ -64,7 +69,6 @@ export default {
     };
 
     const onInputDate = async (value) => {
-      // Use the router object for navigation
       router.push(`/calendar/${value}`);
       unixDate.value = value;
     };
@@ -73,9 +77,26 @@ export default {
       isCompacting.value = !isCompacting.value;
     };
 
+    // Function to update scroll width dynamically
+    const updateScrollWidth = () => {
+      const scrollElement = document.getElementById("scroll");
+      if (scrollElement) {
+        scrollWidth.value = scrollElement.offsetWidth; // Get current width of #scroll
+      }
+    };
+
+    // Set the initial value of scrollWidth on mount
     onMounted(() => {
-      // fetch unix date from URL on mount using the route object
       unixDate.value = Number(route.params.unixDate);
+      updateScrollWidth(); // Initial value on mount
+
+      // Add resize event listener
+      window.addEventListener("resize", updateScrollWidth);
+    });
+
+    // Clean up the resize event listener when component is unmounted
+    onBeforeUnmount(() => {
+      window.removeEventListener("resize", updateScrollWidth);
     });
 
     // Return all reactive variables and methods
@@ -87,6 +108,7 @@ export default {
       onMoveEnd,
       onInputDate,
       onCompact,
+      scrollWidth, // Expose scrollWidth to template
     };
   },
 };

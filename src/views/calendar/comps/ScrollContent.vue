@@ -39,6 +39,7 @@ import { ref, watch, onMounted } from "vue";
 import fetchDailyAppos from "../apis/fetchDailyAppos";
 import secsToHours from "@/lib/secsToHours";
 import secsToLength from "../helpers/secsToLength";
+// import getCompactScale from "../helpers/getCompactScale";
 // comps
 import VerticalTimeMarks from "./VerticalTimeMarks.vue";
 import GrayPart from "./GrayPart.vue";
@@ -46,6 +47,8 @@ import GrayPart from "./GrayPart.vue";
 export default {
   props: {
     unixDate: Number,
+    isCompacting: Boolean,
+    width: Number,
   },
   components: {
     VerticalTimeMarks,
@@ -80,6 +83,15 @@ export default {
 
     // dependencies
     watch(() => props.unixDate, fetchData);
+    // Watch for changes to both isCompacting and width
+    watch(
+      [() => props.isCompacting, () => props.width], // Watching both props
+      ([newIsCompacting, newWidth]) => {
+        if (newIsCompacting && newWidth !== null) {
+          console.log(" newWidth:", newWidth);
+        }
+      }
+    );
 
     return {
       isFetched,
