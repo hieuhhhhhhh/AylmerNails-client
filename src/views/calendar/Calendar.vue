@@ -1,5 +1,9 @@
 <template>
   <div id="layout">
+    <DayInput v-if="unixDate" :unixDate="unixDate" :onInputDate="onInputDate" />
+    <br />
+    <br />
+
     <div id="aliasRelative">
       <div id="scroll">
         <div v-for="(emp, index) in employees" :key="index">
@@ -36,17 +40,19 @@
 
 <script>
 // lib
-
 import fetchDailyAppos from "./apis/fetchDailyAppos";
 import secsToHours from "@/lib/secsToHours";
 // comps
 import VerticalTimeMarks from "./comps/VerticalTimeMarks.vue";
 import secsToLength from "./helpers/secsToLength";
 
+import DayInput from "./comps/DayInput.vue";
+
 export default {
   name: "Calendar-",
   components: {
     VerticalTimeMarks,
+    DayInput,
   },
   data() {
     return {
@@ -69,17 +75,24 @@ export default {
     formatTime(seconds) {
       return secsToHours(seconds);
     },
+    async onInputDate(value) {
+      this.$router.push(`/calendar/${value}`);
+      this.unixDate = value;
+      await this.fetchData();
+    },
+    async fetchData() {
+      const dayInfo = await fetchDailyAppos(this.unixDate);
+      this.employees = dayInfo.employees;
+      this.dayStart = dayInfo.dayStart;
+      this.dayEnd = dayInfo.dayEnd;
+    },
   },
   async created() {
     // fetch unix date from URL
-    this.unixDate = this.$route.params.unixDate;
+    this.unixDate = Number(this.$route.params.unixDate);
 
     // fetch date's schedule
-    const dayInfo = await fetchDailyAppos(this.unixDate);
-    console.log(dayInfo);
-    this.employees = dayInfo.employees;
-    this.dayStart = dayInfo.dayStart;
-    this.dayEnd = dayInfo.dayEnd;
+    this.fetchData();
   },
 };
 </script>
@@ -109,7 +122,6 @@ export default {
   flex-grow: 1;
   box-sizing: border-box;
 }
-
 #empAlias {
   position: absolute;
   font-weight: bold;
