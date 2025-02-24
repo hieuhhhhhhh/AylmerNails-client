@@ -3,7 +3,7 @@
     v-for="hour in 24"
     :key="hour"
     class="verticalLine"
-    :style="{ width: secsToLength(60 * 60) - 1 + 'px' }"
+    :style="{ width: secsToLength(60 * 60) + 'px' }"
   ></div>
 </template>
 
@@ -19,8 +19,8 @@ export default {
 
 <style scoped>
 .verticalLine {
-  border-left: 1px solid gray;
-
+  border: 1px solid gray;
   flex-shrink: 0;
+  box-sizing: border-box;
 }
 </style>

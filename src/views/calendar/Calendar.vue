@@ -1,13 +1,27 @@
 <template>
   <div id="layout">
     <div>This is Calendar</div>
-    <div id="container">
+    <div id="aliasRelative">
       <div id="scroll">
         <div v-for="(emp, index) in employees" :key="index">
-          <div id="empAlias" :style="{ color: emp.colorCode }">
+          <div id="appoRelative">
+            <div
+              id="appo"
+              v-for="(appo, index) in emp.appos"
+              :key="index"
+              :style="{
+                left: getLeft(appo) + 'px',
+                width: getWidth(appo) + 'px',
+                backgroundColor: emp.colorCode,
+              }"
+            >
+              {{ appo.id }}
+            </div>
+          </div>
+          <div id="empAlias">
             {{ emp.alias }}
           </div>
-          <div id="row">
+          <div id="graduations">
             <VerticalTimeMarks />
           </div>
         </div>
@@ -17,10 +31,12 @@
 </template>
 
 <script>
+// lib
 import getTodayUnixTime from "@/lib/getTodayUnixTime";
 import fetchDailyAppos from "./apis/fetchDailyAppos";
-
+// comps
 import VerticalTimeMarks from "./comps/VerticalTimeMarks.vue";
+import secsToLength from "./helpers/secsToLength";
 
 export default {
   name: "Calendar-",
@@ -35,8 +51,19 @@ export default {
       dayEnd: null,
     };
   },
+  methods: {
+    getLeft(appo) {
+      const gap = appo.start - this.dayStart;
+      return secsToLength(gap);
+    },
+    getWidth(appo) {
+      const gap = appo.end - appo.start;
+      return secsToLength(gap);
+    },
+  },
   async created() {
     const dayInfo = await fetchDailyAppos(getTodayUnixTime());
+    console.log(dayInfo);
     this.employees = dayInfo.employees;
     this.dayStart = dayInfo.dayStart;
     this.dayEnd = dayInfo.dayEnd;
@@ -50,12 +77,13 @@ export default {
   overflow-x: scroll;
   height: 100%;
   background: white;
+  color: black;
 }
-#row {
+#graduations {
   display: flex;
-  height: 100px;
+  height: 70px;
   width: fit-content;
-  border-top: 1px solid gray;
+  box-sizing: border-box;
 }
 #layout {
   background-color: var(--background-i1);
@@ -66,18 +94,28 @@ export default {
   flex-grow: 1;
   box-sizing: border-box;
 }
-#container {
-  position: relative;
-}
+
 #empAlias {
+  position: absolute;
   font-size: 14px;
   font-weight: bold;
   background-color: white;
-  position: absolute;
-  padding: 5px;
-  margin-top: 1px;
+  padding: 3px;
+  margin: 1px;
   width: fit-content;
-  left: 4px;
-  z-index: 1;
+}
+#aliasRelative {
+  position: relative;
+  z-index: 0;
+}
+#appo {
+  position: absolute;
+  height: 70px;
+  border: 1px solid black;
+  box-sizing: border-box;
+}
+#appoRelative {
+  position: relative;
+  z-index: 0;
 }
 </style>

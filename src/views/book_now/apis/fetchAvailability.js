@@ -36,7 +36,7 @@ export default async function fetchAvailability(date, services) {
       const serviceSlots = getServiceSlots(json.DELAs_list);
       console.log("serviceSlots 1: ", serviceSlots);
 
-      const chains = getChains(serviceSlots);
+      const chains = getChains(serviceSlots, services);
       console.log("chains 1: ", chains);
 
       return removeShortChains(chains, DELAs_requests.length);
@@ -106,8 +106,7 @@ function getServiceSlots(DELAs_list) {
   return serviceSlots;
 }
 
-function getChains(serviceSlots) {
-  console.log("ss:", serviceSlots);
+function getChains(serviceSlots, services) {
   // container
   let chains = [];
 
@@ -117,9 +116,10 @@ function getChains(serviceSlots) {
       // unpack
       const { serviceId, slots } = e;
 
-      // add serviceId to them
-      slots.forEach((e) => {
-        e.serviceId = serviceId;
+      // add serviceId and AOSOs to them
+      slots.forEach((slot) => {
+        slot.serviceId = serviceId;
+        slot.AOSOs = services[serviceId].AOSOs;
       });
 
       // create sub array excluding current element
@@ -145,6 +145,9 @@ function getChains(serviceSlots) {
 
   slots.forEach((e) => {
     e.serviceId = serviceId;
+    e.AOSOs = services[serviceId].AOSOs;
+
+    // create new chain
     let chain = {
       chainStart: e.start,
       chainEnd: e.end,

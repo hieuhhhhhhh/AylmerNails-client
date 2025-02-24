@@ -57,7 +57,7 @@ function chainToNewSlots(chain) {
   // create new array of slots
   const newSlots = [];
   for (const slot of slots) {
-    const { start, end, empIds, serviceId } = slot;
+    const { start, end, empIds, serviceId, AOSOs } = slot;
 
     empIds.sort((a, b) => -(empCount[a] - empCount[b]));
 
@@ -82,7 +82,7 @@ function chainToNewSlots(chain) {
     const random = Math.floor(Math.random() * topEmpIds.length);
 
     // create new slot
-    const newSlot = { start, end, empId: topEmpIds[random], serviceId };
+    const newSlot = { start, end, empId: topEmpIds[random], serviceId, AOSOs };
 
     newSlots.push(newSlot);
   }

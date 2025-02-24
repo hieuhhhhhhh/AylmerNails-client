@@ -67,8 +67,9 @@ function parseApiRes(json) {
     const newAppo = { id, empId, serviceId, AOSOs, date, start, end };
 
     // append new appointment to employee
-    newEmployees[empId].push(newAppo);
+    newEmployees[empId].appos.push(newAppo);
   }
+  console.log("appos", appos);
 
   // return all results
   return { employees: Object.values(newEmployees), dayStart, dayEnd };
