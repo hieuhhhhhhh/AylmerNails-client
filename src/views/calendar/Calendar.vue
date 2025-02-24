@@ -17,14 +17,17 @@
             >
               {{ formatTime(appo.start) }}
 
-              <div id="serviceName">{{ appo.serviceName }}</div>
+              <div id="serviceName">
+                {{ appo.serviceName }}
+              </div>
             </div>
           </div>
-          <div id="empAlias">
-            {{ emp.alias }}
-          </div>
+
           <div id="graduations">
             <VerticalTimeMarks />
+          </div>
+          <div id="empAlias" :style="{ backgroundColor: emp.colorCode }">
+            {{ emp.alias }}
           </div>
         </div>
       </div>
@@ -106,10 +109,12 @@ export default {
 #empAlias {
   position: absolute;
   font-weight: bold;
-  background-color: white;
-  padding: 3px;
-  margin: 1px;
+  padding: 5px;
   width: fit-content;
+  right: 3px;
+  border: 3px solid white;
+  box-sizing: border-box;
+  transform: translate(-1px, calc(-100% - 1px));
 }
 #aliasRelative {
   position: relative;
