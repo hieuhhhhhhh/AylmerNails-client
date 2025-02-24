@@ -1,6 +1,12 @@
 <template>
   <div id="layout" v-if="isFetched">
-    <DayInput :unixDate="unixDate" :onInputDate="onInputDate" />
+    <DayInput
+      :unixDate="unixDate"
+      :onInputDate="onInputDate"
+      :onMoveLeft="onMoveLeft"
+      :onMoveRight="onMoveRight"
+      :onMoveEnd="onMoveEnd"
+    />
 
     <div id="aliasRelative">
       <div id="scroll">
@@ -72,6 +78,26 @@ export default {
     },
     formatTime(seconds) {
       return secsToHours(seconds);
+    },
+    onMoveRight() {
+      const scrollElement = document.getElementById("scroll");
+      if (scrollElement) {
+        scrollElement.scrollLeft += 140;
+      }
+    },
+    onMoveLeft() {
+      const scrollElement = document.getElementById("scroll");
+      if (scrollElement) {
+        scrollElement.scrollLeft -= 140;
+      }
+    },
+    onMoveEnd(onward) {
+      const scrollElement = document.getElementById("scroll");
+      if (onward) {
+        scrollElement.scrollLeft = scrollElement.scrollWidth;
+      } else {
+        scrollElement.scrollLeft = 0;
+      }
     },
     async onInputDate(value) {
       this.$router.push(`/calendar/${value}`);
