@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isFetched">
+  <div v-if="isFetched" :style="{ transform: `scale(${scaleValue})` }">
     <div v-for="(emp, index) in employees" :key="index">
       <div id="relative">
         <GrayPart
@@ -39,7 +39,7 @@ import { ref, watch, onMounted } from "vue";
 import fetchDailyAppos from "../apis/fetchDailyAppos";
 import secsToHours from "@/lib/secsToHours";
 import secsToLength from "../helpers/secsToLength";
-// import getCompactScale from "../helpers/getCompactScale";
+import getCompactScale from "../helpers/getCompactScale";
 // comps
 import VerticalTimeMarks from "./VerticalTimeMarks.vue";
 import GrayPart from "./GrayPart.vue";
@@ -61,6 +61,7 @@ export default {
     const employees = ref([]);
     const dayStart = ref(null);
     const dayEnd = ref(null);
+    const scaleValue = ref(null);
 
     // helpers
     const getLeft = (appo) => secsToLength(appo.start - dayStart.value);
@@ -83,14 +84,25 @@ export default {
 
     // dependencies
     watch(() => props.unixDate, fetchData);
-    // Watch for changes to both isCompacting and width
     watch(
       [() => props.isCompacting, () => props.width], // Watching both props
       ([newIsCompacting, newWidth]) => {
-        if (newIsCompacting && newWidth !== null) {
-          console.log(" newWidth:", newWidth);
+        if (!newIsCompacting) {
+          scaleValue.value = 1;
+          return;
         }
-      }
+        if (newIsCompacting && newWidth !== null) {
+          console.log(" newWidth:", scaleValue.value);
+
+          scaleValue.value = getCompactScale(
+            dayStart.value,
+            dayEnd.value,
+            newWidth
+          );
+          console.log(" newWidth:", scaleValue.value);
+        }
+      },
+      { immediate: true }
     );
 
     return {
@@ -98,6 +110,7 @@ export default {
       employees,
       dayStart,
       dayEnd,
+      scaleValue,
       getLeft,
       getWidth,
       formatTime,
