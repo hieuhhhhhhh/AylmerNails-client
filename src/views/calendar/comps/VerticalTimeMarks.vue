@@ -19,7 +19,7 @@ export default {
 
 <style scoped>
 .verticalLine {
-  border: 1px solid gray;
+  border: 1px solid rgb(193, 193, 193);
   flex-shrink: 0;
   box-sizing: border-box;
 }

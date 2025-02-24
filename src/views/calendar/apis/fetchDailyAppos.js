@@ -61,10 +61,19 @@ function parseApiRes(json) {
   // read data about appointments
   for (let appo of appos) {
     // unpack
-    const [id, empId, serviceId, AOSOs, date, start, end] = appo;
+    const [id, empId, serviceId, AOSOs, date, start, end, serviceName] = appo;
 
     // create new appointment
-    const newAppo = { id, empId, serviceId, AOSOs, date, start, end };
+    const newAppo = {
+      id,
+      empId,
+      serviceId,
+      AOSOs,
+      date,
+      start,
+      end,
+      serviceName,
+    };
 
     // append new appointment to employee
     newEmployees[empId].appos.push(newAppo);

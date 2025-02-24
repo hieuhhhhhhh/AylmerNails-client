@@ -15,7 +15,9 @@
                 backgroundColor: emp.colorCode,
               }"
             >
-              {{ appo.id }}
+              {{ formatTime(appo.start) }}
+
+              <div id="serviceName">{{ appo.serviceName }}</div>
             </div>
           </div>
           <div id="empAlias">
@@ -34,6 +36,7 @@
 // lib
 import getTodayUnixTime from "@/lib/getTodayUnixTime";
 import fetchDailyAppos from "./apis/fetchDailyAppos";
+import secsToHours from "@/lib/secsToHours";
 // comps
 import VerticalTimeMarks from "./comps/VerticalTimeMarks.vue";
 import secsToLength from "./helpers/secsToLength";
@@ -60,6 +63,9 @@ export default {
       const gap = appo.end - appo.start;
       return secsToLength(gap);
     },
+    formatTime(seconds) {
+      return secsToHours(seconds);
+    },
   },
   async created() {
     const dayInfo = await fetchDailyAppos(getTodayUnixTime());
@@ -73,6 +79,8 @@ export default {
 
 <style scoped>
 #scroll {
+  font-size: 14px;
+
   border: 3px outset;
   overflow-x: scroll;
   height: 100%;
@@ -97,7 +105,6 @@ export default {
 
 #empAlias {
   position: absolute;
-  font-size: 14px;
   font-weight: bold;
   background-color: white;
   padding: 3px;
@@ -110,6 +117,7 @@ export default {
 }
 #appo {
   position: absolute;
+  padding: 3px;
   height: 70px;
   border: 1px solid black;
   box-sizing: border-box;
@@ -117,5 +125,8 @@ export default {
 #appoRelative {
   position: relative;
   z-index: 0;
+}
+#serviceName {
+  font-weight: bold;
 }
 </style>

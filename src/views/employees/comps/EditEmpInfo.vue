@@ -23,14 +23,14 @@
           <select
             v-model="colorId_"
             @change="onInputColor"
-            :style="{ backgroundColor: getColor(), color: 'white' }"
+            :style="{ backgroundColor: getColor(), color: 'black' }"
             required
           >
             <option
               v-for="color in colors"
               :key="color.colorId"
               :value="color.colorId"
-              :style="{ backgroundColor: color.code, color: 'white' }"
+              :style="{ backgroundColor: color.code, color: 'black' }"
             >
               {{ color.name }}
             </option>
