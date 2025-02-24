@@ -7,9 +7,23 @@
     <div><router-link to="/login">Log In</router-link></div>
     <div><router-link to="/services">Services</router-link></div>
     <div><router-link to="/employees">Employees</router-link></div>
-    <div><router-link to="/calendar">Calendar</router-link></div>
+    <div>
+      <router-link :to="`/calendar/${getToday()}`">Calendar</router-link>
+    </div>
   </div>
 </template>
+<script>
+import getTodayUnixTime from "@/lib/getTodayUnixTime";
+
+export default {
+  methods: {
+    getToday() {
+      return getTodayUnixTime();
+    },
+  },
+};
+</script>
+
 
 <style scoped>
 #DrawerContent {

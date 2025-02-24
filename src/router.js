@@ -99,7 +99,7 @@ const routes = [
     ],
   },
 
-  { path: "/calendar", component: Calendar },
+  { path: "/calendar/:unixDate", component: Calendar },
 
   // wildcard route for 404 - not found
   {

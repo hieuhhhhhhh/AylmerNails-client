@@ -1,6 +1,5 @@
 <template>
   <div id="layout">
-    <div>This is Calendar</div>
     <div id="aliasRelative">
       <div id="scroll">
         <div v-for="(emp, index) in employees" :key="index">
@@ -37,7 +36,7 @@
 
 <script>
 // lib
-import getTodayUnixTime from "@/lib/getTodayUnixTime";
+
 import fetchDailyAppos from "./apis/fetchDailyAppos";
 import secsToHours from "@/lib/secsToHours";
 // comps
@@ -52,6 +51,7 @@ export default {
   data() {
     return {
       // resources
+      unixDate: null,
       employees: [],
       dayStart: null,
       dayEnd: null,
@@ -71,7 +71,11 @@ export default {
     },
   },
   async created() {
-    const dayInfo = await fetchDailyAppos(getTodayUnixTime());
+    // fetch unix date from URL
+    this.unixDate = this.$route.params.unixDate;
+
+    // fetch date's schedule
+    const dayInfo = await fetchDailyAppos(this.unixDate);
     console.log(dayInfo);
     this.employees = dayInfo.employees;
     this.dayStart = dayInfo.dayStart;
