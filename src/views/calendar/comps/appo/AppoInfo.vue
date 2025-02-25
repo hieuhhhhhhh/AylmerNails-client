@@ -15,7 +15,7 @@
       </tr>
       <tr>
         <th>Date Time</th>
-        <td>{{ getTime() }}<br />{{ getDate() }}</td>
+        <td>{{ getTime() }}<br />{{ getDate() }} {{ getReminder() }}</td>
       </tr>
       <tr>
         <th>Duration</th>
@@ -38,19 +38,29 @@
 // lib
 import unixToReadable from "@/lib/unixToReadable";
 import secsToHours from "@/lib/secsToHours";
+import unixTimeToReminder from "@/lib/unixTimeToReminder";
 
 export default {
   props: {
     details: Object,
   },
   setup(props) {
+    // helpers
     const getTime = () => {
       const seconds = props.details.start;
       return secsToHours(seconds);
     };
     const getDate = () => {
-      const unixDate = props.details.date;
+      const unixDate = props.details.date + 12 * 60 * 60;
       return unixToReadable(unixDate);
+    };
+
+    const getReminder = () => {
+      const unixDate = props.details.date + 12 * 60 * 60;
+      const text = unixTimeToReminder(unixDate);
+      if (text) {
+        return `(${text})`;
+      }
     };
 
     const getDuration = () => {
@@ -62,7 +72,7 @@ export default {
       const seconds = props.details.end;
       return secsToHours(seconds);
     };
-    return { getTime, getDate, getDuration, getEndTime };
+    return { getTime, getDate, getDuration, getEndTime, getReminder };
   },
 };
 </script>

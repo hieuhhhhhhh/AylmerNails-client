@@ -69,9 +69,10 @@ export default {
       this.onInputDate(parseDate(this.date));
     },
     moveDay(direction) {
-      const currentDate = new Date(this.date); // create a Date object from the selected date
-      currentDate.setDate(currentDate.getDate() + direction); // modify the date by +/- 1 day
-      this.date = currentDate.toISOString().split("T")[0]; // format back to 'YYYY-MM-DD'
+      const [year, month, day] = this.date.split("-").map(Number);
+      const currentDate = new Date(Date.UTC(year, month - 1, day)); // Ensure UTC time
+      currentDate.setUTCDate(currentDate.getUTCDate() + direction);
+      this.date = currentDate.toISOString().split("T")[0]; // YYYY-MM-DD format
       this.onInputDate(parseDate(this.date));
     },
     moveLeft() {
