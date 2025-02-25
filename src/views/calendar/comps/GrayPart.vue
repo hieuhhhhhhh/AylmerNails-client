@@ -5,6 +5,7 @@
       :style="{
         width: getStartWidth() + 'px',
       }"
+      @click.stop
     />
     <div
       id="grayPart"
@@ -12,6 +13,7 @@
         width: getEndWidth() + 'px',
         marginLeft: getEndMargin() + 'px',
       }"
+      @click.stop
     />
   </div>
   <div v-else>

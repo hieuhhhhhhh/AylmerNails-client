@@ -15,9 +15,12 @@
           :unixDate="unixDate"
           :isCompacting="isCompacting"
           :width="scrollWidth"
+          :onSelectAppo="onSelectAppo"
         />
       </div>
     </div>
+
+    <AppoDetails v-if="appoId" :appoId="appoId" :onCloseAppo="onCloseAppo" />
   </div>
 </template>
 
@@ -25,6 +28,7 @@
 // comps
 import DayInput from "./comps/DayInput.vue";
 import ScrollContent from "./comps/ScrollContent.vue";
+import AppoDetails from "./comps/AppoDetails.vue";
 // lib
 import { ref, onMounted, onBeforeUnmount, nextTick } from "vue";
 import { useRouter, useRoute } from "vue-router";
@@ -34,6 +38,7 @@ export default {
   components: {
     DayInput,
     ScrollContent,
+    AppoDetails,
   },
   setup() {
     // status
@@ -41,10 +46,13 @@ export default {
     // resources
     const unixDate = ref(null);
     const scrollWidth = ref(null);
+    // outcomes
+    const appoId = ref(null);
     // lib
     const router = useRouter();
     const route = useRoute();
 
+    // helpers
     const onMoveRight = () => {
       const scrollElement = document.getElementById("scroll");
       if (scrollElement) {
@@ -66,6 +74,16 @@ export default {
 
     const onCompact = () => {
       isCompacting.value = !isCompacting.value;
+    };
+
+    const onSelectAppo = (id) => {
+      console.log("appoId", id);
+
+      appoId.value = id;
+    };
+
+    const onCloseAppo = () => {
+      appoId.value = null;
     };
 
     // Function to update scroll width dynamically
@@ -95,12 +113,15 @@ export default {
     // Return all reactive variables and methods
     return {
       unixDate,
+      scrollWidth,
+      appoId,
       isCompacting,
       onMoveRight,
       onMoveLeft,
       onInputDate,
       onCompact,
-      scrollWidth, // Expose scrollWidth to template
+      onSelectAppo,
+      onCloseAppo,
     };
   },
 };

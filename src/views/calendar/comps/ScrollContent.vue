@@ -24,6 +24,7 @@
               width: getWidth(appo) + 'px',
               backgroundColor: emp.colorCode,
             }"
+            @click.stop="onSelectAppo(appo.id)"
           >
             {{ formatTime(appo.start) }}
             <div id="serviceName">
@@ -64,6 +65,7 @@ export default {
     unixDate: Number,
     isCompacting: Boolean,
     width: Number,
+    onSelectAppo: Function,
   },
   components: {
     VerticalTimeMarks,
@@ -156,7 +158,7 @@ export default {
   position: absolute;
   padding: 3px;
   height: 100%;
-
+  cursor: pointer;
   border: 1px solid black;
   box-sizing: border-box;
 }

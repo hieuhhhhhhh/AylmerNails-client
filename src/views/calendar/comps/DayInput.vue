@@ -96,12 +96,13 @@ export default {
 #flexBox {
   display: flex;
   justify-content: center;
+  margin-bottom: 10px;
 }
 #main {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 #datePicker {
   font-size: 16px;
