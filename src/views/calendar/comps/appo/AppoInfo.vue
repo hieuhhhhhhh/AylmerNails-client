@@ -1,0 +1,91 @@
+<template>
+  <table>
+    <colgroup>
+      <col style="width: auto" />
+      <col style="width: 80%" />
+    </colgroup>
+    <tbody>
+      <tr>
+        <th>Service</th>
+        <td>{{ details.serviceName }}({{ details.cateName }})</td>
+      </tr>
+      <tr>
+        <th>Employee</th>
+        <td>{{ details.empAlias }}</td>
+      </tr>
+      <tr>
+        <th>Date Time</th>
+        <td>{{ getTime() }}<br />{{ getDate() }}</td>
+      </tr>
+      <tr>
+        <th>Duration</th>
+        <td>{{ getDuration() + " mins" }} <br />(to {{ getEndTime() }})</td>
+      </tr>
+      <tr>
+        <th>Client</th>
+        <td></td>
+      </tr>
+
+      <tr>
+        <th>Note</th>
+        <td>{{ details.note }}</td>
+      </tr>
+    </tbody>
+  </table>
+</template>
+
+<script>
+// lib
+import unixToReadable from "@/lib/unixToReadable";
+import secsToHours from "@/lib/secsToHours";
+
+export default {
+  props: {
+    details: Object,
+  },
+  setup(props) {
+    const getTime = () => {
+      const seconds = props.details.start;
+      return secsToHours(seconds);
+    };
+    const getDate = () => {
+      const unixDate = props.details.date;
+      return unixToReadable(unixDate);
+    };
+
+    const getDuration = () => {
+      const gap = props.details.end - props.details.start;
+      return gap / 60;
+    };
+
+    const getEndTime = () => {
+      const seconds = props.details.end;
+      return secsToHours(seconds);
+    };
+    return { getTime, getDate, getDuration, getEndTime };
+  },
+};
+</script>
+
+<style scoped>
+#background {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+table {
+  text-align: left;
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 14px;
+}
+th,
+td {
+  border: 1px solid black;
+
+  padding: 5px;
+  text-align: left;
+}
+</style>

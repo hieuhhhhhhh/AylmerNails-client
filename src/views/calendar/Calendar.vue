@@ -28,7 +28,7 @@
 // comps
 import DayInput from "./comps/DayInput.vue";
 import ScrollContent from "./comps/ScrollContent.vue";
-import AppoDetails from "./comps/AppoDetails.vue";
+import AppoDetails from "./comps/appo/Parent.vue";
 // lib
 import { ref, onMounted, onBeforeUnmount, nextTick } from "vue";
 import { useRouter, useRoute } from "vue-router";

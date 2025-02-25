@@ -3,17 +3,26 @@
     <div id="background" @click="onCloseAppo" />
     <div id="window" :style="{ backgroundColor: details.color }">
       <button @click="onCloseAppo" id="closeBtn" class="redBtn">X</button>
-      <div id="content">{{ details }}</div>
+      <div id="content">
+        <AppoInfo :details="details" />
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+// lib
 import { onMounted, ref, watch } from "vue";
-import fetchAppoDetails from "../apis/fetchAppoDetails";
+import fetchAppoDetails from "../../apis/fetchAppoDetails";
+// comp
+
+import AppoInfo from "./AppoInfo.vue";
 
 export default {
-  name: "AppoDetailsComponent",
+  name: "AppoDetails",
+  components: {
+    AppoInfo,
+  },
   props: {
     appoId: Number,
     onCloseAppo: Function,
@@ -25,6 +34,7 @@ export default {
     // apis
     const fetchDetails = async () => {
       details.value = await fetchAppoDetails(props.appoId);
+      console.log("details.value", details.value);
     };
 
     // lifecycle
@@ -76,7 +86,7 @@ export default {
 }
 #content {
   padding: 20px;
-  margin-top: 10px;
+  margin-top: 13px;
 }
 #closeBtn {
   position: absolute;
@@ -86,5 +96,17 @@ export default {
   height: 30px;
   padding: 0;
   border-radius: 0;
+}
+table {
+  text-align: left;
+  border-collapse: collapse;
+  width: 100%;
+}
+th,
+td {
+  border: 1px solid black;
+
+  padding: 5px;
+  text-align: left;
 }
 </style>
