@@ -49,6 +49,6 @@ export default {
 #grayPart {
   position: absolute;
   background-color: rgb(193, 193, 193);
-  height: 70px;
+  height: 100%;
 }
 </style>

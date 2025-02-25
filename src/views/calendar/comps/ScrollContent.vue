@@ -1,32 +1,47 @@
 <template>
-  <div v-if="isFetched" :style="{ transform: `scale(${scaleValue})` }">
+  <div v-if="isFetched">
     <div v-for="(emp, index) in employees" :key="index">
       <div id="relative">
-        <GrayPart
-          :dayStart="dayStart"
-          :dayEnd="dayEnd"
-          :start="emp.start"
-          :end="emp.end"
-        />
         <div
-          id="appo"
-          v-for="(appo, index) in emp.appos"
-          :key="index"
+          id="transform"
           :style="{
-            left: getLeft(appo) + 'px',
-            width: getWidth(appo) + 'px',
-            backgroundColor: emp.colorCode,
+            transform: `scale(${scaleValue})`,
+            marginBottom: -(1 - scaleValue) * 70 + 'px',
           }"
         >
-          {{ formatTime(appo.start) }}
-          <div id="serviceName">
-            {{ appo.serviceName }}
+          <GrayPart
+            :dayStart="dayStart"
+            :dayEnd="dayEnd"
+            :start="emp.start"
+            :end="emp.end"
+          />
+          <div
+            id="appo"
+            v-for="(appo, index) in emp.appos"
+            :key="index"
+            :style="{
+              left: getLeft(appo) + 'px',
+              width: getWidth(appo) + 'px',
+              backgroundColor: emp.colorCode,
+            }"
+          >
+            {{ formatTime(appo.start) }}
+            <div id="serviceName">
+              {{ appo.serviceName }}
+            </div>
           </div>
+
+          <VerticalTimeMarks :dayStart="dayStart" :dayEnd="dayEnd" />
         </div>
       </div>
-
-      <VerticalTimeMarks :dayStart="dayStart" :dayEnd="dayEnd" />
-      <div id="empAlias" :style="{ backgroundColor: emp.colorCode }">
+      <div
+        id="empAlias"
+        :style="{
+          backgroundColor: emp.colorCode,
+          fontSize: scaleValue * 14 + 'px',
+          padding: scaleValue * 5 + 'px',
+        }"
+      >
         {{ emp.alias }}
       </div>
     </div>
@@ -34,8 +49,8 @@
 </template>
 
 <script>
+import { ref, watch, onMounted, toRef } from "vue";
 // lib
-import { ref, watch, onMounted } from "vue";
 import fetchDailyAppos from "../apis/fetchDailyAppos";
 import secsToHours from "@/lib/secsToHours";
 import secsToLength from "../helpers/secsToLength";
@@ -57,18 +72,34 @@ export default {
   setup(props) {
     // status
     const isFetched = ref(false);
+
     // resources
     const employees = ref([]);
     const dayStart = ref(null);
     const dayEnd = ref(null);
-    const scaleValue = ref(null);
+    const scaleValue = ref(1); // Default scale value
+    const totalWidth = ref(0);
+
+    // reactive props
+    const unixDateRef = toRef(props, "unixDate");
+    const isCompactingRef = toRef(props, "isCompacting");
+    const widthRef = toRef(props, "width");
 
     // helpers
     const getLeft = (appo) => secsToLength(appo.start - dayStart.value);
     const getWidth = (appo) => secsToLength(appo.end - appo.start);
     const formatTime = (seconds) => secsToHours(seconds);
 
-    // apis
+    // Function to update scale based on width
+    const updateScale = (newWidth) => {
+      if (!newWidth) return;
+      console.log("newWidth:", newWidth);
+      const res = getCompactScale(totalWidth.value, newWidth);
+      if (res < 1) scaleValue.value = res;
+      console.log("scale:", scaleValue.value);
+    };
+
+    // API call to fetch daily appointments
     const fetchData = async () => {
       isFetched.value = false;
       const dayInfo = await fetchDailyAppos(props.unixDate);
@@ -76,34 +107,25 @@ export default {
       employees.value = dayInfo.employees;
       dayStart.value = dayInfo.dayStart;
       dayEnd.value = dayInfo.dayEnd;
+      totalWidth.value = secsToLength(dayEnd.value - dayStart.value);
       isFetched.value = true;
     };
 
-    // first
+    // first load
     onMounted(fetchData);
 
-    // dependencies
-    watch(() => props.unixDate, fetchData);
-    watch(
-      [() => props.isCompacting, () => props.width], // Watching both props
-      ([newIsCompacting, newWidth]) => {
-        if (!newIsCompacting) {
-          scaleValue.value = 1;
-          return;
-        }
-        if (newIsCompacting && newWidth !== null) {
-          console.log(" newWidth:", scaleValue.value);
+    // watch unixDate
+    watch(unixDateRef, fetchData);
 
-          scaleValue.value = getCompactScale(
-            dayStart.value,
-            dayEnd.value,
-            newWidth
-          );
-          console.log(" newWidth:", scaleValue.value);
-        }
-      },
-      { immediate: true }
-    );
+    // watcg isCompacting, width, dayStart - dayEnd,
+    watch([isCompactingRef, widthRef, totalWidth], ([isCompacting]) => {
+      console.log("width", props.width);
+      if (!isCompacting) {
+        scaleValue.value = 1;
+      } else {
+        updateScale(props.width);
+      }
+    });
 
     return {
       isFetched,
@@ -123,8 +145,7 @@ export default {
 #empAlias {
   position: absolute;
   font-weight: bold;
-  padding: 5px;
-  width: fit-content;
+  justify-content: flex-end;
   right: 3px;
   border: 3px solid white;
   box-sizing: border-box;
@@ -134,7 +155,8 @@ export default {
 #appo {
   position: absolute;
   padding: 3px;
-  height: 70px;
+  height: 100%;
+
   border: 1px solid black;
   box-sizing: border-box;
 }
@@ -144,5 +166,9 @@ export default {
 }
 #serviceName {
   font-weight: bold;
+}
+#transform {
+  transform-origin: top left;
+  height: 70px;
 }
 </style>

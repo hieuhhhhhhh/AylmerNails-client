@@ -5,7 +5,8 @@
       :onInputDate="onInputDate"
       :onMoveLeft="onMoveLeft"
       :onMoveRight="onMoveRight"
-      :onMoveEnd="onMoveEnd"
+      :isCompacting="isCompacting"
+      :onCompact="onCompact"
     />
 
     <div id="relative">
@@ -17,7 +18,6 @@
         />
       </div>
     </div>
-    <button @click="onCompact">Compact</button>
   </div>
 </template>
 
@@ -26,7 +26,7 @@
 import DayInput from "./comps/DayInput.vue";
 import ScrollContent from "./comps/ScrollContent.vue";
 // lib
-import { ref, onMounted, onBeforeUnmount } from "vue";
+import { ref, onMounted, onBeforeUnmount, nextTick } from "vue";
 import { useRouter, useRoute } from "vue-router";
 
 export default {
@@ -37,7 +37,7 @@ export default {
   },
   setup() {
     // status
-    const isCompacting = ref(false);
+    const isCompacting = ref(true);
     // resources
     const unixDate = ref(null);
     const scrollWidth = ref(null);
@@ -59,15 +59,6 @@ export default {
       }
     };
 
-    const onMoveEnd = (onward) => {
-      const scrollElement = document.getElementById("scroll");
-      if (onward) {
-        scrollElement.scrollLeft = scrollElement.scrollWidth;
-      } else {
-        scrollElement.scrollLeft = 0;
-      }
-    };
-
     const onInputDate = async (value) => {
       router.push(`/calendar/${value}`);
       unixDate.value = value;
@@ -86,9 +77,11 @@ export default {
     };
 
     // Set the initial value of scrollWidth on mount
-    onMounted(() => {
+    onMounted(async () => {
       unixDate.value = Number(route.params.unixDate);
-      updateScrollWidth(); // Initial value on mount
+
+      await nextTick(); // Wait for the DOM to update
+      updateScrollWidth(); // Ensure the correct width is captured
 
       // Add resize event listener
       window.addEventListener("resize", updateScrollWidth);
@@ -105,7 +98,6 @@ export default {
       isCompacting,
       onMoveRight,
       onMoveLeft,
-      onMoveEnd,
       onInputDate,
       onCompact,
       scrollWidth, // Expose scrollWidth to template
@@ -119,7 +111,8 @@ export default {
   font-size: 14px;
   border: 3px outset;
   overflow-x: auto;
-  height: 100%;
+  overflow-y: hidden;
+
   background: white;
   color: black;
 }

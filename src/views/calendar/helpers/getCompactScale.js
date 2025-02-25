@@ -1,10 +1,5 @@
-import secsToLength from "./secsToLength";
-
-export default function getCompactScale(dayStart, dayEnd, newWidth) {
-  console.log("dayStart", dayStart);
-
-  const oldWidth = secsToLength(Math.abs(dayEnd - dayStart));
+export default function getCompactScale(oldWidth, newWidth) {
   console.log("oldWidth", oldWidth);
-  const value = newWidth / oldWidth;
+  const value = (newWidth - 6) / oldWidth;
   return value;
 }

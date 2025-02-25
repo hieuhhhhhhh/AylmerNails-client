@@ -48,7 +48,7 @@ export default {
 #container {
   overflow: hidden;
   display: flex;
-  height: 70px;
+  height: 100%;
   box-sizing: border-box;
 }
 </style>

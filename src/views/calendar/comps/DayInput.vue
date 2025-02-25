@@ -7,13 +7,13 @@
       <FontAwesomeIcon :icon="backIcon" />
     </button>
     <div>
-      <button @click="moveLeft">
+      <button v-if="!isCompacting" @click="moveLeft">
         <FontAwesomeIcon :icon="leftIcon" />
       </button>
       <button @click="moveEnd">
-        <FontAwesomeIcon :icon="rotateIcon" />
+        <FontAwesomeIcon :icon="expandIcon" />
       </button>
-      <button @click="moveRight">
+      <button v-if="!isCompacting" @click="moveRight">
         <FontAwesomeIcon :icon="rightIcon" />
       </button>
     </div>
@@ -32,7 +32,7 @@ import {
   faAngleDoubleRight,
   faAngleRight,
   faAngleLeft,
-  faArrowsRotate,
+  faExpand,
 } from "@fortawesome/free-solid-svg-icons";
 
 // lib
@@ -48,7 +48,8 @@ export default {
     onInputDate: Function,
     onMoveLeft: Function,
     onMoveRight: Function,
-    onMoveEnd: Function,
+    isCompacting: Boolean,
+    onCompact: Function,
   },
   data() {
     return {
@@ -57,10 +58,9 @@ export default {
       rightIcon: faAngleRight,
       backIcon: faAngleDoubleLeft,
       nextIcon: faAngleDoubleRight,
-      rotateIcon: faArrowsRotate,
+      expandIcon: faExpand,
       // outcome
       date: null,
-      onward: true,
     };
   },
   methods: {
@@ -83,8 +83,7 @@ export default {
       this.onward = false;
     },
     moveEnd() {
-      this.onMoveEnd(this.onward);
-      this.onward = !this.onward;
+      this.onCompact();
     },
   },
   created() {
