@@ -38,6 +38,7 @@ import {
 // lib
 import parseDate from "@/lib/parseDate";
 import parseUT from "@/lib/parseUT";
+import { ref, watch } from "vue";
 
 export default {
   components: {
@@ -51,44 +52,60 @@ export default {
     isCompacting: Boolean,
     onCompact: Function,
   },
-  data() {
-    return {
-      // icons
-      leftIcon: faAngleLeft,
-      rightIcon: faAngleRight,
-      backIcon: faAngleDoubleLeft,
-      nextIcon: faAngleDoubleRight,
-      expandIcon: faExpand,
-      // outcome
-      date: null,
+  setup(props) {
+    // Define reactive variables
+    const date = ref(null);
+
+    // Watch for changes in props.unixDate
+    watch(
+      () => props.unixDate,
+      (newVal) => {
+        date.value = parseUT(newVal); // Ensure it's properly parsed
+      }
+    );
+
+    // Methods
+    const onSelect = (event) => {
+      date.value = event.target.value;
+      props.onInputDate(parseDate(date.value));
     };
-  },
-  methods: {
-    onSelect(event) {
-      this.date = event.target.value;
-      this.onInputDate(parseDate(this.date));
-    },
-    moveDay(direction) {
-      const [year, month, day] = this.date.split("-").map(Number);
+
+    const moveDay = (direction) => {
+      const [year, month, day] = date.value.split("-").map(Number);
       const currentDate = new Date(Date.UTC(year, month - 1, day)); // Ensure UTC time
       currentDate.setUTCDate(currentDate.getUTCDate() + direction);
-      this.date = currentDate.toISOString().split("T")[0]; // YYYY-MM-DD format
-      this.onInputDate(parseDate(this.date));
-    },
-    moveLeft() {
-      this.onMoveLeft();
-      this.onward = true;
-    },
-    moveRight() {
-      this.onMoveRight();
-      this.onward = false;
-    },
-    moveEnd() {
-      this.onCompact();
-    },
-  },
-  created() {
-    this.date = parseUT(this.unixDate);
+      date.value = currentDate.toISOString().split("T")[0]; // YYYY-MM-DD format
+      props.onInputDate(parseDate(date.value));
+    };
+
+    const moveLeft = () => {
+      props.onMoveLeft();
+    };
+
+    const moveRight = () => {
+      props.onMoveRight();
+    };
+
+    const moveEnd = () => {
+      props.onCompact();
+    };
+
+    // Initialize date when the component is created
+    date.value = parseUT(props.unixDate);
+
+    return {
+      date,
+      onSelect,
+      moveDay,
+      moveLeft,
+      moveRight,
+      moveEnd,
+      backIcon: faAngleDoubleLeft,
+      nextIcon: faAngleDoubleRight,
+      leftIcon: faAngleLeft,
+      rightIcon: faAngleRight,
+      expandIcon: faExpand,
+    };
   },
 };
 </script>

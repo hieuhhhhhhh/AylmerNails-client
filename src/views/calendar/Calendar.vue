@@ -28,7 +28,9 @@
         :onEditAppo="onEditAppo"
       />
     </div>
+
     <EditAppo
+      id="edit-appo"
       v-if="editId"
       :appoId="editId"
       :onCancelEdit="onCancelEdit"
@@ -94,7 +96,12 @@ export default {
       isCompacting.value = !isCompacting.value;
     };
 
-    const onToogleScreen = () => {
+    const onToogleScreen = (value) => {
+      if (value !== undefined) {
+        isHidingMain.value = value;
+        return;
+      }
+
       const last = isHidingMain.value;
       isHidingMain.value = !last;
 
@@ -124,6 +131,19 @@ export default {
     };
 
     // event
+    watch(editId, async (newVal) => {
+      if (newVal) {
+        await nextTick();
+        const target = document.querySelector("#edit-appo");
+        if (target) {
+          // Scroll the window to the EditAppo component
+          target.scrollIntoView({
+            block: "end",
+          });
+        }
+      }
+    });
+
     watch(isHidingMain, async (newValue) => {
       if (!newValue) {
         await nextTick();
@@ -138,7 +158,6 @@ export default {
         // read params from URL
         unixDate.value = Number(route.params.unixDate);
         appoId.value = Number(route.params.appoId);
-        onCancelEdit();
         onCloseAppo();
       }
     );

@@ -12,6 +12,10 @@
           :start="start"
           :duration="duration"
           :note="note"
+          :setDate="setDate"
+          :setStart="setStart"
+          :setDuration="setDuration"
+          :setNote="setNote"
         />
       </div>
       <button @click="onCancelEdit">Cancel</button>
@@ -24,6 +28,7 @@
 // lib
 import { onMounted, ref, watch } from "vue";
 import fetchAppoDetails from "../../apis/fetchAppoDetails";
+import { useRoute } from "vue-router";
 // comps
 import AppoEdit from "./AppoEdit.vue";
 
@@ -39,6 +44,9 @@ export default {
     onToogleScreen: Function,
   },
   setup(props) {
+    // lib
+    const route = useRoute();
+
     // outcomes
     const serviceName = ref("");
     const category = ref("");
@@ -76,6 +84,7 @@ export default {
     };
     const setNote = (value) => {
       note.value = value;
+      console.log("new Note", value);
     };
 
     // apis
@@ -98,8 +107,14 @@ export default {
       color.value = details.color;
     };
 
-    // event
+    // dependencies
     watch(() => props.appoId, fetchDetails);
+    watch(
+      () => route.path,
+      () => {
+        props.onToogleScreen(false);
+      }
+    );
 
     // life cycle
     onMounted(fetchDetails);
@@ -136,6 +151,7 @@ export default {
   padding: 20px;
   width: 500px;
   max-width: 100%;
+  box-sizing: border-box;
 }
 #content {
   color: black;

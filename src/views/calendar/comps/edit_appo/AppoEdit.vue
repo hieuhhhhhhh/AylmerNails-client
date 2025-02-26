@@ -22,11 +22,34 @@
       </tr>
       <tr>
         <th>Date Time</th>
-        <td></td>
+        <td>
+          <input
+            type="time"
+            :value="parseUnixHours(start)"
+            @change="onInputStart"
+            required
+          />
+          <input
+            type="date"
+            :value="parseUT(date)"
+            @change="onInputDate"
+            required
+          />
+        </td>
       </tr>
       <tr>
-        <th>Duration</th>
-        <td></td>
+        <th>Duration (mins)</th>
+        <td>
+          <input
+            type="number"
+            :value="duration / 60"
+            @input="onInputDuration"
+            required
+            :min="5"
+            step="1"
+          />
+          (to {{ secsToHours(start + duration) }})
+        </td>
       </tr>
       <tr>
         <th>Client</th>
@@ -35,12 +58,27 @@
 
       <tr>
         <th>Note</th>
-        <td></td>
+        <td>
+          <textarea
+            type="text"
+            rows="3"
+            placeholder="write a non-public note..."
+            :value="note"
+            @change="onInputNote"
+          />
+        </td>
       </tr>
     </tbody>
   </table>
 </template>
 <script>
+// lib
+import parseDate from "@/lib/parseDate";
+import parseUT from "@/lib/parseUT";
+import parseTime from "@/lib/parseTime";
+import parseUnixHours from "@/lib/parseUnixHours";
+import secsToHours from "@/lib/secsToHours";
+
 export default {
   props: {
     serviceName: String,
@@ -51,8 +89,33 @@ export default {
     start: Number,
     duration: Number,
     note: String,
+    setDate: Function,
+    setStart: Function,
+    setDuration: Function,
+    setNote: Function,
   },
-  setup() {
+  setup(props) {
+    // input
+    const onInputStart = (event) => {
+      const value = parseTime(event.target.value);
+      props.setStart(value);
+    };
+
+    const onInputDate = (event) => {
+      const value = parseDate(event.target.value);
+      props.setDate(value);
+    };
+
+    const onInputDuration = (event) => {
+      const value = event.target.value * 60;
+      props.setDuration(value);
+    };
+
+    const onInputNote = (event) => {
+      const value = event.target.value;
+      props.setNote(value);
+    };
+
     // helpers
     const formatOffset = (seconds) => {
       if (seconds === 0) return;
@@ -65,6 +128,13 @@ export default {
 
     return {
       formatOffset,
+      onInputDate,
+      onInputStart,
+      onInputDuration,
+      onInputNote,
+      parseUT,
+      parseUnixHours,
+      secsToHours,
     };
   },
 };
@@ -92,5 +162,15 @@ td {
 }
 #AOS {
   font-size: 12px;
+}
+input[type="time"] {
+  width: 100px;
+  margin-right: 10px;
+}
+input[type="number"] {
+  width: 100px;
+}
+textarea {
+  width: 90%;
 }
 </style>
