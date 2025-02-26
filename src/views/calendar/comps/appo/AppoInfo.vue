@@ -7,7 +7,14 @@
     <tbody>
       <tr>
         <th>Service</th>
-        <td>{{ details.serviceName }}({{ details.cateName }})</td>
+        <td>
+          {{ details.serviceName }} ({{ details.cateName }})
+          <br />
+          <div id="AOS" v-for="(AOS, index) in details.AOSOs" :key="index">
+            {{ AOS.question }} ~ {{ AOS.answer }}
+            {{ formatOffset(AOS.offset) }}
+          </div>
+        </td>
       </tr>
       <tr>
         <th>Employee</th>
@@ -46,10 +53,20 @@ export default {
   },
   setup(props) {
     // helpers
+    const formatOffset = (seconds) => {
+      if (seconds === 0) return;
+
+      let sign = seconds >= 0 ? "+" : "-";
+      let absMinutes = Math.abs(Math.floor(seconds / 60));
+
+      return `(${sign}${absMinutes} mins)`;
+    };
+
     const getTime = () => {
       const seconds = props.details.start;
       return secsToHours(seconds);
     };
+
     const getDate = () => {
       const unixDate = props.details.date + 12 * 60 * 60;
       return unixToReadable(unixDate);
@@ -72,7 +89,14 @@ export default {
       const seconds = props.details.end;
       return secsToHours(seconds);
     };
-    return { getTime, getDate, getDuration, getEndTime, getReminder };
+    return {
+      formatOffset,
+      getTime,
+      getDate,
+      getDuration,
+      getEndTime,
+      getReminder,
+    };
   },
 };
 </script>
@@ -97,5 +121,8 @@ td {
 
   padding: 5px;
   text-align: left;
+}
+#AOS {
+  font-size: 12px;
 }
 </style>

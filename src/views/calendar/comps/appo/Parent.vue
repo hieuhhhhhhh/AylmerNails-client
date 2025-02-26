@@ -4,7 +4,18 @@
     <div id="window" :style="{ backgroundColor: details.color }">
       <button @click="onCloseAppo" id="closeBtn" class="redBtn">X</button>
       <div id="content">
-        <AppoInfo :details="details" />
+        <AppoInfo v-if="!isEditing" :details="details" />
+        <AppoEdit v-else />
+      </div>
+
+      <div id="flexBox">
+        <button v-if="!isEditing" class="btn" @click.prevent="toogleEdit">
+          Edit
+        </button>
+        <button v-if="isEditing" class="btn" @click.prevent="toogleEdit">
+          Cancel
+        </button>
+        <button v-if="isEditing" class="btn" id="saveBtn">Save</button>
       </div>
     </div>
   </div>
@@ -15,13 +26,14 @@
 import { onMounted, ref, watch } from "vue";
 import fetchAppoDetails from "../../apis/fetchAppoDetails";
 // comp
-
 import AppoInfo from "./AppoInfo.vue";
+import AppoEdit from "./AppoEdit.vue";
 
 export default {
   name: "AppoDetails",
   components: {
     AppoInfo,
+    AppoEdit,
   },
   props: {
     appoId: Number,
@@ -30,7 +42,13 @@ export default {
   setup(props) {
     // resources
     const details = ref({});
+    // status
+    const isEditing = ref(false);
 
+    // helpers
+    const toogleEdit = () => {
+      isEditing.value = !isEditing.value;
+    };
     // apis
     const fetchDetails = async () => {
       details.value = await fetchAppoDetails(props.appoId);
@@ -48,9 +66,7 @@ export default {
       }
     );
 
-    return {
-      details,
-    };
+    return { details, isEditing, toogleEdit };
   },
 };
 </script>
@@ -80,13 +96,15 @@ export default {
   z-index: 20;
   width: 500px;
   max-width: 100%;
+  max-height: 100%;
   background-color: var(--background-i2);
   overflow-y: auto;
   max-height: 80%;
+  border: 1px solid black;
 }
 #content {
   padding: 20px;
-  margin-top: 13px;
+  margin-top: 15px;
 }
 #closeBtn {
   position: absolute;
@@ -108,5 +126,20 @@ td {
 
   padding: 5px;
   text-align: left;
+}
+.btn {
+  background-color: white;
+  padding: 2px;
+  padding-inline: 10px;
+}
+#flexBox {
+  display: flex;
+  gap: 5px;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+#saveBtn {
+  color: green;
 }
 </style>
