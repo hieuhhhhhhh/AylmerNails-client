@@ -7,11 +7,18 @@
     <tbody>
       <tr>
         <th>Service</th>
-        <td></td>
+        <td>
+          {{ serviceName }} ({{ category }})
+          <br />
+          <div id="AOS" v-for="(AOS, index) in AOSOs" :key="index">
+            {{ AOS.question }} ~ {{ AOS.answer }}
+            {{ formatOffset(AOS.offset) }}
+          </div>
+        </td>
       </tr>
       <tr>
         <th>Employee</th>
-        <td></td>
+        <td>{{ empAlias }}</td>
       </tr>
       <tr>
         <th>Date Time</th>
@@ -35,7 +42,31 @@
 </template>
 <script>
 export default {
-  setup() {},
+  props: {
+    serviceName: String,
+    category: String,
+    AOSOs: Object,
+    empAlias: String,
+    date: Number,
+    start: Number,
+    duration: Number,
+    note: String,
+  },
+  setup() {
+    // helpers
+    const formatOffset = (seconds) => {
+      if (seconds === 0) return;
+
+      let sign = seconds >= 0 ? "+" : "-";
+      let absMinutes = Math.abs(Math.floor(seconds / 60));
+
+      return `(${sign}${absMinutes} mins)`;
+    };
+
+    return {
+      formatOffset,
+    };
+  },
 };
 </script>
 
@@ -55,9 +86,11 @@ table {
 }
 th,
 td {
-  border: 1px solid black;
-
+  border: 1px solid;
   padding: 5px;
   text-align: left;
+}
+#AOS {
+  font-size: 12px;
 }
 </style>

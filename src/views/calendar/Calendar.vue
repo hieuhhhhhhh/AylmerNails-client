@@ -1,26 +1,39 @@
 <template>
   <div id="layout" v-if="unixDate">
-    <DayInput
-      :unixDate="unixDate"
-      :onInputDate="onInputDate"
-      :onMoveLeft="onMoveLeft"
-      :onMoveRight="onMoveRight"
-      :isCompacting="isCompacting"
-      :onCompact="onCompact"
-    />
+    <div v-show="!isHidingMain">
+      <DayInput
+        :unixDate="unixDate"
+        :onInputDate="onInputDate"
+        :onMoveLeft="onMoveLeft"
+        :onMoveRight="onMoveRight"
+        :isCompacting="isCompacting"
+        :onCompact="onCompact"
+      />
 
-    <div id="relative">
-      <div id="scroll">
-        <ScrollContent
-          :unixDate="unixDate"
-          :isCompacting="isCompacting"
-          :width="scrollWidth"
-          :onSelectAppo="onSelectAppo"
-        />
+      <div id="relative">
+        <div id="scroll">
+          <ScrollContent
+            :unixDate="unixDate"
+            :isCompacting="isCompacting"
+            :width="scrollWidth"
+            :onSelectAppo="onSelectAppo"
+          />
+        </div>
       </div>
-    </div>
 
-    <AppoDetails v-if="appoId" :appoId="appoId" :onCloseAppo="onCloseAppo" />
+      <AppoDetails
+        v-if="appoId"
+        :appoId="appoId"
+        :onCloseAppo="onCloseAppo"
+        :onEditAppo="onEditAppo"
+      />
+    </div>
+    <EditAppo
+      v-if="editId"
+      :appoId="editId"
+      :onCancelEdit="onCancelEdit"
+      :onToogleScreen="onToogleScreen"
+    />
   </div>
 </template>
 
@@ -29,8 +42,9 @@
 import DayInput from "./comps/DayInput.vue";
 import ScrollContent from "./comps/ScrollContent.vue";
 import AppoDetails from "./comps/appo/Parent.vue";
+import EditAppo from "./comps/edit_appo/Parent.vue";
 // lib
-import { ref, onMounted, onBeforeUnmount, nextTick } from "vue";
+import { ref, onMounted, onBeforeUnmount, nextTick, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
 
 export default {
@@ -39,15 +53,19 @@ export default {
     DayInput,
     ScrollContent,
     AppoDetails,
+    EditAppo,
   },
   setup() {
     // status
     const isCompacting = ref(true);
+    const isHidingMain = ref(false);
     // resources
     const unixDate = ref(null);
     const scrollWidth = ref(null);
-    // outcomes
     const appoId = ref(null);
+    const editId = ref(null);
+    const lastScroll = ref(0);
+
     // lib
     const router = useRouter();
     const route = useRoute();
@@ -76,9 +94,18 @@ export default {
       isCompacting.value = !isCompacting.value;
     };
 
+    const onToogleScreen = () => {
+      const last = isHidingMain.value;
+      isHidingMain.value = !last;
+
+      if (!last) {
+        lastScroll.value = window.scrollY;
+        console.log("lastScroll.value", lastScroll.value);
+      }
+    };
+
     const onSelectAppo = (id) => {
       console.log("appoId", id);
-
       appoId.value = id;
     };
 
@@ -86,7 +113,37 @@ export default {
       appoId.value = null;
     };
 
-    // Function to update scroll width dynamically
+    const onEditAppo = (id) => {
+      appoId.value = null;
+      editId.value = id;
+    };
+
+    const onCancelEdit = () => {
+      isHidingMain.value = false;
+      editId.value = null;
+    };
+
+    // event
+    watch(isHidingMain, async (newValue) => {
+      if (!newValue) {
+        await nextTick();
+        window.scrollTo(0, lastScroll.value);
+        console.log("scrolling");
+      }
+    });
+
+    watch(
+      () => route.path,
+      () => {
+        // read params from URL
+        unixDate.value = Number(route.params.unixDate);
+        appoId.value = Number(route.params.appoId);
+        onCancelEdit();
+        onCloseAppo();
+      }
+    );
+
+    // event handlers
     const updateScrollWidth = () => {
       const scrollElement = document.getElementById("scroll");
       if (scrollElement) {
@@ -94,9 +151,11 @@ export default {
       }
     };
 
-    // Set the initial value of scrollWidth on mount
+    // life cycle
     onMounted(async () => {
+      // read params from URL
       unixDate.value = Number(route.params.unixDate);
+      appoId.value = Number(route.params.appoId);
 
       await nextTick(); // Wait for the DOM to update
       updateScrollWidth(); // Ensure the correct width is captured
@@ -105,7 +164,7 @@ export default {
       window.addEventListener("resize", updateScrollWidth);
     });
 
-    // Clean up the resize event listener when component is unmounted
+    // life cycle
     onBeforeUnmount(() => {
       window.removeEventListener("resize", updateScrollWidth);
     });
@@ -115,13 +174,18 @@ export default {
       unixDate,
       scrollWidth,
       appoId,
+      editId,
       isCompacting,
+      isHidingMain,
       onMoveRight,
       onMoveLeft,
       onInputDate,
       onCompact,
       onSelectAppo,
       onCloseAppo,
+      onEditAppo,
+      onCancelEdit,
+      onToogleScreen,
     };
   },
 };

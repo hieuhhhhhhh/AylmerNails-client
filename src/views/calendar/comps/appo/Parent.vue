@@ -4,18 +4,11 @@
     <div id="window" :style="{ backgroundColor: details.color }">
       <button @click="onCloseAppo" id="closeBtn" class="redBtn">X</button>
       <div id="content">
-        <AppoInfo v-if="!isEditing" :details="details" />
-        <AppoEdit v-else />
+        <AppoInfo :details="details" />
       </div>
 
       <div id="flexBox">
-        <button v-if="!isEditing" class="btn" @click.prevent="toogleEdit">
-          Edit
-        </button>
-        <button v-if="isEditing" class="btn" @click.prevent="toogleEdit">
-          Cancel
-        </button>
-        <button v-if="isEditing" class="btn" id="saveBtn">Save</button>
+        <button class="btn" @click="onEditAppo(appoId)">Edit</button>
       </div>
     </div>
   </div>
@@ -27,28 +20,21 @@ import { onMounted, ref, watch } from "vue";
 import fetchAppoDetails from "../../apis/fetchAppoDetails";
 // comp
 import AppoInfo from "./AppoInfo.vue";
-import AppoEdit from "./AppoEdit.vue";
 
 export default {
   name: "AppoDetails",
   components: {
     AppoInfo,
-    AppoEdit,
   },
   props: {
     appoId: Number,
     onCloseAppo: Function,
+    onEditAppo: Function,
   },
   setup(props) {
     // resources
     const details = ref({});
-    // status
-    const isEditing = ref(false);
 
-    // helpers
-    const toogleEdit = () => {
-      isEditing.value = !isEditing.value;
-    };
     // apis
     const fetchDetails = async () => {
       details.value = await fetchAppoDetails(props.appoId);
@@ -66,7 +52,7 @@ export default {
       }
     );
 
-    return { details, isEditing, toogleEdit };
+    return { details };
   },
 };
 </script>

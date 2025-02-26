@@ -68,6 +68,14 @@ export default {
       this.page++;
     },
   },
+  beforeRouteLeave(to, from, next) {
+    const answer = confirm("Your progress won't be saved. Wanna leave?");
+    if (answer) {
+      next(); // Proceed with navigation
+    } else {
+      next(false); // Prevent navigation
+    }
+  },
 };
 </script>
 
