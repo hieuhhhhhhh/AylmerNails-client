@@ -64,7 +64,8 @@
             rows="3"
             placeholder="write a non-public note..."
             :value="note"
-            @change="onInputNote"
+            ref="TAref"
+            @input="onInputNote"
           />
         </td>
       </tr>
@@ -73,6 +74,7 @@
 </template>
 <script>
 // lib
+import { ref, onMounted, nextTick } from "vue";
 import parseDate from "@/lib/parseDate";
 import parseUT from "@/lib/parseUT";
 import parseTime from "@/lib/parseTime";
@@ -95,6 +97,9 @@ export default {
     setNote: Function,
   },
   setup(props) {
+    //  element ref
+    const TAref = ref(null);
+
     // input
     const onInputStart = (event) => {
       const value = parseTime(event.target.value);
@@ -114,6 +119,7 @@ export default {
     const onInputNote = (event) => {
       const value = event.target.value;
       props.setNote(value);
+      expandNoteTA();
     };
 
     // helpers
@@ -121,12 +127,29 @@ export default {
       if (seconds === 0) return;
 
       let sign = seconds >= 0 ? "+" : "-";
-      let absMinutes = Math.abs(Math.floor(seconds / 60));
+      let mins = Math.abs(Math.floor(seconds / 60));
 
-      return `(${sign}${absMinutes} mins)`;
+      return `(${sign}${mins} mins)`;
     };
 
+    // handler
+    const expandNoteTA = () => {
+      nextTick(() => {
+        const el = TAref.value;
+        if (el) {
+          el.style.height = "auto";
+          el.style.height = el.scrollHeight + "px";
+        }
+      });
+    };
+
+    // lifecycle
+    onMounted(() => {
+      expandNoteTA();
+    });
+
     return {
+      TAref,
       formatOffset,
       onInputDate,
       onInputStart,
@@ -171,6 +194,9 @@ input[type="number"] {
   width: 100px;
 }
 textarea {
-  width: 90%;
+  width: 100%;
+  box-sizing: border-box;
+  padding-bottom: 10px;
+  overflow-y: hidden;
 }
 </style>
