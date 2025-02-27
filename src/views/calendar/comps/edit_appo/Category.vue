@@ -3,11 +3,13 @@
     <div id="title">{{ category.cate_name }}</div>
     <div
       id="service"
-      v-for="(service, index) in category.services"
+      v-for="(ser, index) in category.services"
       :key="index"
-      @click="onSelectService(service.service_id)"
+      @click="
+        onSelectService(ser.service_id, ser.service_name, category.cate_name)
+      "
     >
-      {{ service.service_name }}
+      {{ ser.service_name }}
     </div>
   </div>
 </template>
@@ -20,14 +22,14 @@ export default {
   name: "Category-",
   props: {
     category: Object,
-    onInputServiceId: Function,
+    onInputService: Function,
   },
   methods: {
     formatDate(unixTime) {
       return unixToReadable(unixTime);
     },
-    onSelectService(id) {
-      this.onInputServiceId(id);
+    onSelectService(id, name, cate) {
+      this.onInputService(id, name, cate);
     },
   },
 };

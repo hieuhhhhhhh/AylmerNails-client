@@ -20,9 +20,9 @@
           :resetService="resetService"
         />
       </div>
-      <button @click="onCancelEdit">Cancel</button>
-      <button @click="onOpenEmpPicker">Pick Emp</button>
-      <button @click="onOpenServicePicker">Pick Service</button>
+      <button @click.prevent="onCancelEdit">Cancel</button>
+      <button @click.prevent="onOpenEmpPicker">Pick Emp</button>
+      <button @click.prevent="onOpenServicePicker">Pick Service</button>
     </div>
     <EmployeePicker
       v-if="isPickingEmp"
@@ -33,6 +33,7 @@
 
     <ServicePicker
       v-if="isPickingService"
+      :date="date"
       :setService="setService"
       :onStopPicking="onStopPicking"
     />
@@ -84,11 +85,14 @@ export default {
     const note = ref("");
 
     // payload setters
-    const setService = (newId, newName, newCate, newAOSOs) => {
+    const setService = (newId, newName, newCate, newAOSOs, newAOSOsText) => {
       serviceId.value = newId;
       serviceName.value = newName;
       category.value = newCate;
       AOSOs.value = newAOSOs;
+      AOSOsText.value = newAOSOsText;
+
+      onStopPicking();
     };
 
     const setEmp = (newId, newAlias, newColor) => {
