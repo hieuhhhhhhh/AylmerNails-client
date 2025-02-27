@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="container">
+    <div id="container" v-if="!isPickingEmp && !isPickingService">
       <div id="title">Editing</div>
       <div id="content" :style="{ backgroundColor: color }">
         <AppoEdit
@@ -16,11 +16,26 @@
           :setStart="setStart"
           :setDuration="setDuration"
           :setNote="setNote"
+          :resetEmp="resetEmp"
+          :resetService="resetService"
         />
       </div>
       <button @click="onCancelEdit">Cancel</button>
-      <button @click="onToogleScreen">Toogle</button>
+      <button @click="onOpenEmpPicker">Pick Emp</button>
+      <button @click="onOpenServicePicker">Pick Service</button>
     </div>
+    <EmployeePicker
+      v-if="isPickingEmp"
+      :date="date"
+      :setEmp="setEmp"
+      :onStopPicking="onStopPicking"
+    />
+
+    <ServicePicker
+      v-if="isPickingService"
+      :setService="setService"
+      :onStopPicking="onStopPicking"
+    />
   </div>
 </template>
 
@@ -31,29 +46,34 @@ import fetchAppoDetails from "../../apis/fetchAppoDetails";
 import { useRoute } from "vue-router";
 // comps
 import AppoEdit from "./AppoEdit.vue";
+import EmployeePicker from "./EmployeePicker.vue";
+import ServicePicker from "./ServicePicker.vue";
 
 export default {
   name: "EditAppo",
   components: {
     AppoEdit,
+    EmployeePicker,
+    ServicePicker,
   },
   props: {
     appoId: Number,
     onCancelEdit: Function,
     onSelectAppo: Function,
-    onToogleScreen: Function,
+    onHideMain: Function,
   },
   setup(props) {
     // lib
     const route = useRoute();
-
+    // status
+    const isPickingEmp = ref(false);
+    const isPickingService = ref(false);
     // outcomes
     const serviceName = ref("");
     const category = ref("");
-    const AOSOsText = ref("");
+    const AOSOsText = ref([]);
     const empAlias = ref("");
     const color = ref("");
-
     // payload
     const serviceId = ref(null);
     const AOSOs = ref([]);
@@ -64,14 +84,18 @@ export default {
     const note = ref("");
 
     // payload setters
-    const setServiceId = (value) => {
-      serviceId.value = value;
+    const setService = (newId, newName, newCate, newAOSOs) => {
+      serviceId.value = newId;
+      serviceName.value = newName;
+      category.value = newCate;
+      AOSOs.value = newAOSOs;
     };
-    const setAOSOs = (value) => {
-      AOSOs.value = value;
-    };
-    const setEmpId = (value) => {
-      empId.value = value;
+
+    const setEmp = (newId, newAlias, newColor) => {
+      empId.value = newId;
+      empAlias.value = newAlias;
+      color.value = newColor;
+      onStopPicking();
     };
     const setDate = (value) => {
       date.value = value;
@@ -85,6 +109,38 @@ export default {
     const setNote = (value) => {
       note.value = value;
       console.log("new Note", value);
+    };
+
+    // input handlers
+    const resetEmp = () => {
+      empAlias.value = "";
+      empId.value = null;
+      color.value = "white";
+    };
+
+    const resetService = () => {
+      serviceName.value = "";
+      serviceId.value = null;
+      category.value = "";
+      AOSOsText.value = [];
+      AOSOs.value = [];
+      color.value = "white";
+    };
+
+    const onOpenEmpPicker = () => {
+      props.onHideMain(true);
+      isPickingEmp.value = true;
+    };
+
+    const onOpenServicePicker = () => {
+      props.onHideMain(true);
+      isPickingService.value = true;
+    };
+
+    const onStopPicking = () => {
+      isPickingEmp.value = false;
+      isPickingService.value = false;
+      props.onHideMain(false);
     };
 
     // apis
@@ -112,7 +168,8 @@ export default {
     watch(
       () => route.path,
       () => {
-        props.onToogleScreen(false);
+        onStopPicking();
+        props.onHideMain(false);
       }
     );
 
@@ -120,13 +177,16 @@ export default {
     onMounted(fetchDetails);
 
     return {
-      setServiceId,
-      setAOSOs,
-      setEmpId,
+      isPickingEmp,
+      isPickingService,
+      setService,
+      setEmp,
       setDate,
       setStart,
       setDuration,
       setNote,
+      resetEmp,
+      resetService,
       serviceName,
       AOSOsText,
       category,
@@ -136,6 +196,9 @@ export default {
       duration,
       note,
       color,
+      onOpenEmpPicker,
+      onOpenServicePicker,
+      onStopPicking,
     };
   },
 };

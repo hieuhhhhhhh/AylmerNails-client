@@ -89,7 +89,7 @@ export default {
   props: {
     serviceName: String,
     category: String,
-    AOSOs: Object,
+    AOSOs: Array,
     empAlias: String,
     date: Number,
     start: Number,

@@ -34,7 +34,7 @@
       v-if="editId"
       :appoId="editId"
       :onCancelEdit="onCancelEdit"
-      :onToogleScreen="onToogleScreen"
+      :onHideMain="onHideMain"
     />
   </div>
 </template>
@@ -96,19 +96,14 @@ export default {
       isCompacting.value = !isCompacting.value;
     };
 
-    const onToogleScreen = (value) => {
-      if (value !== undefined) {
-        isHidingMain.value = value;
-        return;
-      }
-
-      const last = isHidingMain.value;
-      isHidingMain.value = !last;
-
-      if (!last) {
+    const onHideMain = (value) => {
+      if (value) {
+        // store current scroll y before hide main
         lastScroll.value = window.scrollY;
         console.log("lastScroll.value", lastScroll.value);
       }
+
+      isHidingMain.value = value;
     };
 
     const onSelectAppo = (id) => {
@@ -204,7 +199,7 @@ export default {
       onCloseAppo,
       onEditAppo,
       onCancelEdit,
-      onToogleScreen,
+      onHideMain,
     };
   },
 };
