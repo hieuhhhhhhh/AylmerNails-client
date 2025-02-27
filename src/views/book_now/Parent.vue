@@ -69,7 +69,7 @@ export default {
     },
   },
   beforeRouteLeave(to, from, next) {
-    const answer = confirm("Your progress won't be saved. Wanna leave?");
+    const answer = confirm("Your progress won't be saved. Proceed to leave?");
     if (answer) {
       next(); // Proceed with navigation
     } else {

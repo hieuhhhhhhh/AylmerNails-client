@@ -6,6 +6,10 @@
     </colgroup>
     <tbody>
       <tr>
+        <th>Client</th>
+        <td></td>
+      </tr>
+      <tr>
         <th>Service</th>
         <td>
           {{ details.serviceName }} ({{ details.cateName }})
@@ -29,7 +33,7 @@
         <td>{{ getDuration() + " mins" }} <br />(to {{ getEndTime() }})</td>
       </tr>
       <tr>
-        <th>Client</th>
+        <th>Booker</th>
         <td></td>
       </tr>
 

@@ -6,6 +6,10 @@
     </colgroup>
     <tbody>
       <tr>
+        <th>Client</th>
+        <td></td>
+      </tr>
+      <tr>
         <th>Service</th>
         <td>
           {{ serviceName }} ({{ category }})
@@ -51,18 +55,18 @@
           (to {{ secsToHours(start + duration) }})
         </td>
       </tr>
+
       <tr>
-        <th>Client</th>
+        <th>Booker</th>
         <td></td>
       </tr>
-
       <tr>
         <th>Note</th>
         <td>
           <textarea
             type="text"
             rows="3"
-            placeholder="write a non-public note..."
+            placeholder="write a note... (not visible to client)"
             :value="note"
             ref="TAref"
             @input="onInputNote"

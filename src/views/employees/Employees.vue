@@ -5,6 +5,7 @@
       :class="{ faded: !employee.is_active }"
       v-for="(employee, index) in employees"
       :key="index"
+      :style="{ background: employee.color }"
       @click="navigateEmp(employee.employee_id)"
     >
       {{ employee.alias }}
@@ -63,6 +64,7 @@ export default {
   max-width: 90vw;
   min-width: min(350px, 90vw);
   border-radius: 5px;
+  overflow: hidden;
   background-color: var(--background-i2);
   box-sizing: border-box;
   height: fit-content;
@@ -70,6 +72,7 @@ export default {
 }
 
 #service {
+  color: black;
   padding: 9px;
   padding-inline: 15px;
   font-size: 19px;
@@ -79,12 +82,13 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  transition: all 0.1s ease-out;
 }
 #service:hover {
-  background: var(--hover);
+  background: gray !important;
 }
 #service:active {
-  background: var(--active);
+  background: gray !important;
 }
 .faded {
   color: gray;
