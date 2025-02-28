@@ -1,6 +1,6 @@
 <template>
   <div id="layout" v-if="unixDate">
-    <div v-show="!isHidingMain">
+    <div v-show="!isHidingMain" :key="resetMain">
       <DayInput
         :unixDate="unixDate"
         :onInputDate="onInputDate"
@@ -35,6 +35,7 @@
       :appoId="editId"
       :onCancelEdit="onCancelEdit"
       :onHideMain="onHideMain"
+      :onDoneEdit="onDoneEdit"
     />
   </div>
 </template>
@@ -62,17 +63,17 @@ export default {
     const isCompacting = ref(true);
     const isHidingMain = ref(false);
     // resources
+    const resetMain = ref(0);
     const unixDate = ref(null);
     const scrollWidth = ref(null);
     const appoId = ref(null);
     const editId = ref(null);
     const lastScroll = ref(0);
-
     // lib
     const router = useRouter();
     const route = useRoute();
 
-    // helpers
+    // INPUT HANDLERS
     const onMoveRight = () => {
       const scrollElement = document.getElementById("scroll");
       if (scrollElement) {
@@ -125,7 +126,13 @@ export default {
       editId.value = null;
     };
 
-    // event
+    const onDoneEdit = (newDate, newAppoId) => {
+      resetMain.value++; // reset component by increment its key
+      editId.value = null;
+      router.push(`/calendar/${newDate}/${newAppoId}`);
+    };
+
+    // DEPENDENT
     watch(editId, async (newVal) => {
       if (newVal) {
         await nextTick();
@@ -153,11 +160,10 @@ export default {
         // read params from URL
         unixDate.value = Number(route.params.unixDate);
         appoId.value = Number(route.params.appoId);
-        onCloseAppo();
       }
     );
 
-    // event handlers
+    // STYLES
     const updateScrollWidth = () => {
       const scrollElement = document.getElementById("scroll");
       if (scrollElement) {
@@ -165,7 +171,7 @@ export default {
       }
     };
 
-    // life cycle
+    // LIFECYCLE
     onMounted(async () => {
       // read params from URL
       unixDate.value = Number(route.params.unixDate);
@@ -178,13 +184,12 @@ export default {
       window.addEventListener("resize", updateScrollWidth);
     });
 
-    // life cycle
     onBeforeUnmount(() => {
       window.removeEventListener("resize", updateScrollWidth);
     });
 
-    // Return all reactive variables and methods
     return {
+      resetMain,
       unixDate,
       scrollWidth,
       appoId,
@@ -199,6 +204,7 @@ export default {
       onCloseAppo,
       onEditAppo,
       onCancelEdit,
+      onDoneEdit,
       onHideMain,
     };
   },

@@ -38,7 +38,7 @@ function parseApiRes(json) {
     id,
     empId,
     serviceId,
-    ,
+    AOSOs,
     date,
     start,
     end,
@@ -54,6 +54,7 @@ function parseApiRes(json) {
     id,
     empId,
     serviceId,
+    AOSOs: JSON.parse(AOSOs),
     date,
     start,
     end,
@@ -62,20 +63,20 @@ function parseApiRes(json) {
     empAlias,
     serviceName,
     cateName,
-    AOSOs: [],
+    AOSOsText: [],
   };
 
   // read AOSOs
-  const AOSOs = json.AOSOs;
-  for (let AOSO of AOSOs) {
+  const AOSOsText = json.AOSOs;
+  for (let e of AOSOsText) {
     // unpack
-    const [id, question, optionId, answer, offset] = AOSO[0];
+    const [id, question, optionId, answer, offset] = e[0];
 
     // create new AOSO
-    const newAOSO = { id, question, optionId, answer, offset };
+    const text = { id, question, optionId, answer, offset };
 
     // append
-    details.AOSOs.push(newAOSO);
+    details.AOSOsText.push(text);
   }
 
   // return result

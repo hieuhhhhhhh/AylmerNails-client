@@ -1,6 +1,10 @@
 <template>
   <div>
-    <div id="container" v-if="!isPickingEmp && !isPickingService">
+    <form
+      @submit.prevent="onSubmit"
+      id="container"
+      v-if="!isPickingEmp && !isPickingService"
+    >
       <div id="title">Editing</div>
       <div id="content" :style="{ backgroundColor: color }">
         <AppoEdit
@@ -23,7 +27,8 @@
       <button @click.prevent="onCancelEdit">Cancel</button>
       <button @click.prevent="onOpenEmpPicker">Pick Emp</button>
       <button @click.prevent="onOpenServicePicker">Pick Service</button>
-    </div>
+      <button>Save</button>
+    </form>
     <EmployeePicker
       v-if="isPickingEmp"
       :date="date"
@@ -43,8 +48,9 @@
 <script>
 // lib
 import { onMounted, ref, watch } from "vue";
-import fetchAppoDetails from "../../apis/fetchAppoDetails";
 import { useRoute } from "vue-router";
+import fetchAppoDetails from "../../apis/fetchAppoDetails";
+import updateAppo from "../../apis/updateAppo";
 // comps
 import AppoEdit from "./AppoEdit.vue";
 import EmployeePicker from "./EmployeePicker.vue";
@@ -62,6 +68,7 @@ export default {
     onCancelEdit: Function,
     onSelectAppo: Function,
     onHideMain: Function,
+    onDoneEdit: Function,
   },
   setup(props) {
     // lib
@@ -84,14 +91,28 @@ export default {
     const duration = ref(null);
     const note = ref("");
 
-    // payload setters
+    // SETTERS
+    const resetEmp = () => {
+      empAlias.value = "";
+      empId.value = null;
+      color.value = "white";
+    };
+
+    const resetService = () => {
+      serviceName.value = "";
+      serviceId.value = null;
+      category.value = "";
+      AOSOsText.value = [];
+      AOSOs.value = [];
+      color.value = "white";
+    };
+
     const setService = (newId, newName, newCate, newAOSOs, newAOSOsText) => {
       serviceId.value = newId;
       serviceName.value = newName;
       category.value = newCate;
       AOSOs.value = newAOSOs;
       AOSOsText.value = newAOSOsText;
-
       onStopPicking();
     };
 
@@ -99,6 +120,7 @@ export default {
       empId.value = newId;
       empAlias.value = newAlias;
       color.value = newColor;
+      console.log("empId", empId.value);
       onStopPicking();
     };
     const setDate = (value) => {
@@ -115,22 +137,7 @@ export default {
       console.log("new Note", value);
     };
 
-    // input handlers
-    const resetEmp = () => {
-      empAlias.value = "";
-      empId.value = null;
-      color.value = "white";
-    };
-
-    const resetService = () => {
-      serviceName.value = "";
-      serviceId.value = null;
-      category.value = "";
-      AOSOsText.value = [];
-      AOSOs.value = [];
-      color.value = "white";
-    };
-
+    // INPUT HANDLE
     const onOpenEmpPicker = () => {
       props.onHideMain(true);
       isPickingEmp.value = true;
@@ -147,7 +154,7 @@ export default {
       props.onHideMain(false);
     };
 
-    // apis
+    // APIS
     const fetchDetails = async () => {
       if (!props.appoId) return;
       const details = await fetchAppoDetails(props.appoId);
@@ -156,7 +163,8 @@ export default {
       // populate
       serviceName.value = String(details.serviceName);
       category.value = String(details.cateName);
-      AOSOsText.value = Object(details.AOSOs);
+      AOSOs.value = details.AOSOs;
+      AOSOsText.value = details.AOSOsText;
       empAlias.value = String(details.empAlias);
       serviceId.value = Number(details.serviceId);
       empId.value = Number(details.empId);
@@ -167,7 +175,23 @@ export default {
       color.value = details.color;
     };
 
-    // dependencies
+    const onSubmit = async () => {
+      const newAppoId = await updateAppo(
+        props.appoId,
+        serviceId.value,
+        AOSOs.value,
+        empId.value,
+        date.value,
+        start.value,
+        duration.value,
+        note.value
+      );
+      if (newAppoId) {
+        props.onDoneEdit(date.value, newAppoId);
+      }
+    };
+
+    // DEPENDENT
     watch(() => props.appoId, fetchDetails);
     watch(
       () => route.path,
@@ -177,7 +201,7 @@ export default {
       }
     );
 
-    // life cycle
+    // LIFECYCLE
     onMounted(fetchDetails);
 
     return {
@@ -200,6 +224,7 @@ export default {
       duration,
       note,
       color,
+      onSubmit,
       onOpenEmpPicker,
       onOpenServicePicker,
       onStopPicking,

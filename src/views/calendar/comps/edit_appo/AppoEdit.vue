@@ -32,13 +32,14 @@
             :value="parseUnixHours(start)"
             @change="onInputStart"
             required
-          />
+          /><br />
           <input
             type="date"
             :value="parseUT(date)"
             @change="onInputDate"
             required
           />
+          {{ getReminder() }}
         </td>
       </tr>
       <tr>
@@ -84,6 +85,7 @@ import parseUT from "@/lib/parseUT";
 import parseTime from "@/lib/parseTime";
 import parseUnixHours from "@/lib/parseUnixHours";
 import secsToHours from "@/lib/secsToHours";
+import unixTimeToReminder from "@/lib/unixTimeToReminder";
 
 export default {
   props: {
@@ -101,10 +103,7 @@ export default {
     setNote: Function,
   },
   setup(props) {
-    //  element ref
-    const TAref = ref(null);
-
-    // input
+    // HANDLERS
     const onInputStart = (event) => {
       const value = parseTime(event.target.value);
       props.setStart(value);
@@ -126,7 +125,7 @@ export default {
       expandNoteTA();
     };
 
-    // helpers
+    // FORMAT
     const formatOffset = (seconds) => {
       if (seconds === 0) return;
 
@@ -135,8 +134,16 @@ export default {
 
       return `(${sign}${mins} mins)`;
     };
+    const getReminder = () => {
+      const unixDate = props.date + 12 * 60 * 60;
+      const text = unixTimeToReminder(unixDate);
+      if (text) {
+        return `(${text})`;
+      }
+    };
 
-    // handler
+    // STYLES
+    const TAref = ref(null);
     const expandNoteTA = () => {
       nextTick(() => {
         const el = TAref.value;
@@ -147,7 +154,7 @@ export default {
       });
     };
 
-    // lifecycle
+    // LIFECYCLE
     onMounted(() => {
       expandNoteTA();
     });
@@ -162,6 +169,7 @@ export default {
       parseUT,
       parseUnixHours,
       secsToHours,
+      getReminder,
     };
   },
 };
@@ -192,7 +200,7 @@ td {
 }
 input[type="time"] {
   width: 100px;
-  margin-right: 10px;
+  margin-bottom: 5px;
 }
 input[type="number"] {
   width: 100px;

@@ -4,18 +4,25 @@ export default function unixTimeToReminder(unix) {
   const inputDate = DateTime.fromSeconds(unix).startOf("day");
   const today = DateTime.local().startOf("day");
 
+  const diff = inputDate.diff(today, "days").toObject();
+  const daysDiff = Math.round(diff.days);
+
   if (inputDate.equals(today)) {
-    return null;
+    return "Today";
+  }
+  if (daysDiff === 1) {
+    return "Tomorrow";
+  } else if (daysDiff === -1) {
+    return "Yesterday";
   }
 
-  const diff = inputDate.diff(today, ["days", "weeks", "months"]).toObject();
-  const isFuture = inputDate > today ? "next" : "last";
+  const isFuture = daysDiff > 0 ? "next" : "last";
 
-  if (Math.abs(diff.months) >= 1) {
-    return `${isFuture} ${Math.abs(Math.round(diff.months))}m`;
-  } else if (Math.abs(diff.weeks) >= 1) {
-    return `${isFuture} ${Math.abs(Math.round(diff.weeks))}w`;
+  if (Math.abs(daysDiff) >= 30) {
+    return `${isFuture} ${Math.abs(Math.round(daysDiff / 30))}m`;
+  } else if (Math.abs(daysDiff) >= 7) {
+    return `${isFuture} ${Math.abs(Math.round(daysDiff / 7))}w`;
   } else {
-    return `${isFuture} ${Math.abs(Math.round(diff.days))}d`;
+    return `${isFuture} ${Math.abs(daysDiff)}d`;
   }
 }

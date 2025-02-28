@@ -5,7 +5,7 @@
       <div
         id="service"
         :style="{ background: emp.color }"
-        @click="onSelectEmp(emp.id, emp.alias, emp.color)"
+        @click="onSelectEmp(emp.employee_id, emp.alias, emp.color)"
         v-if="!emp.last_date || date <= emp.last_date"
       >
         {{ emp.alias }}

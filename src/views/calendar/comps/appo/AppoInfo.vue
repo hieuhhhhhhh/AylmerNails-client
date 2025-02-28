@@ -14,7 +14,7 @@
         <td>
           {{ details.serviceName }} ({{ details.cateName }})
           <br />
-          <div id="AOS" v-for="(AOS, index) in details.AOSOs" :key="index">
+          <div id="AOS" v-for="(AOS, index) in details.AOSOsText" :key="index">
             {{ AOS.question }} ~ {{ AOS.answer }}
             {{ formatOffset(AOS.offset) }}
           </div>
