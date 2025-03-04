@@ -5,18 +5,17 @@
       id="container"
       v-if="!isPickingEmp && !isPickingService"
     >
-      <div id="title">Editing</div>
+      <div id="title">New Appointment</div>
       <div id="content" :style="{ backgroundColor: color }">
-        <AppoEdit
+        <AddForm
           :serviceName="serviceName"
           :AOSOs="AOSOsText"
           :category="category"
           :empAlias="empAlias"
-          :date="date"
+          :date="unixDate"
           :start="start"
           :duration="duration"
           :note="note"
-          :setDate="setDate"
           :setStart="setStart"
           :setDuration="setDuration"
           :setNote="setNote"
@@ -26,19 +25,19 @@
           :onOpenServicePicker="onOpenServicePicker"
         />
       </div>
-      <button @click.prevent="onCancelEdit">Cancel</button>
-      <button>Save</button>
+      <button @click.prevent="onCancelAdding">Cancel</button>
+      <button>Confirm</button>
     </form>
     <EmployeePicker
       v-if="isPickingEmp"
-      :date="date"
+      :date="unixDate"
       :setEmp="setEmp"
       :onStopPicking="onStopPicking"
     />
 
     <ServicePicker
       v-if="isPickingService"
-      :date="date"
+      :date="unixDate"
       :setService="setService"
       :onStopPicking="onStopPicking"
     />
@@ -47,26 +46,25 @@
 
 <script>
 // lib
-import { onMounted, ref, watch } from "vue";
+import { ref, watch } from "vue";
 import { useRoute } from "vue-router";
-import fetchAppoDetails from "../../apis/fetchAppoDetails";
-import updateAppo from "../../apis/updateAppo";
 import fetchAppoLength from "../../apis/fetchAppoLength";
+import addAppo from "../../apis/addAppo";
 // comps
-import AppoEdit from "./AppoEdit.vue";
-import EmployeePicker from "./EmployeePicker.vue";
-import ServicePicker from "./ServicePicker.vue";
+import AddForm from "./AddForm.vue";
+import EmployeePicker from "../edit_appo/EmployeePicker.vue";
+import ServicePicker from "../edit_appo/ServicePicker.vue";
 
 export default {
   name: "EditAppo",
   components: {
-    AppoEdit,
+    AddForm,
     EmployeePicker,
     ServicePicker,
   },
   props: {
-    appoId: Number,
-    onCancelEdit: Function,
+    unixDate: Number,
+    onCancelAdding: Function,
     onSelectAppo: Function,
     onHideMain: Function,
     onDoneEdit: Function,
@@ -82,12 +80,11 @@ export default {
     const category = ref("");
     const AOSOsText = ref([]);
     const empAlias = ref("");
-    const color = ref("");
+    const color = ref("white");
     // payload
     const serviceId = ref(null);
     const AOSOs = ref([]);
     const empId = ref(null);
-    const date = ref(null);
     const start = ref(null);
     const duration = ref(null);
     const note = ref("");
@@ -120,25 +117,19 @@ export default {
       category.value = newCate;
       AOSOs.value = newAOSOs;
       AOSOsText.value = newAOSOsText;
-      duration.value = await fetchAppoLength(
-        serviceId.value,
-        empId.value,
-        date.value,
-        AOSOs.value
-      );
+      await fetchDuration();
       onStopPicking();
     };
 
-    const setEmp = (newId, newAlias, newColor) => {
+    const setEmp = async (newId, newAlias, newColor) => {
       empId.value = newId;
       empAlias.value = newAlias;
       color.value = newColor;
       console.log("empId", empId.value);
+      await fetchDuration();
       onStopPicking();
     };
-    const setDate = (value) => {
-      date.value = value;
-    };
+
     const setStart = (value) => {
       start.value = value;
     };
@@ -168,44 +159,30 @@ export default {
     };
 
     // APIS
-    const fetchDetails = async () => {
-      if (!props.appoId) return;
-      const details = await fetchAppoDetails(props.appoId);
-      console.log("Fetched details:", details);
-
-      // populate
-      serviceName.value = String(details.serviceName);
-      category.value = String(details.cateName);
-      AOSOs.value = details.AOSOs;
-      AOSOsText.value = details.AOSOsText;
-      empAlias.value = String(details.empAlias);
-      serviceId.value = Number(details.serviceId);
-      empId.value = Number(details.empId);
-      date.value = Number(details.date);
-      start.value = Number(details.start);
-      duration.value = Number(details.end - details.start);
-      note.value = details.note;
-      color.value = details.color;
+    const fetchDuration = async () => {
+      duration.value = await fetchAppoLength(
+        serviceId.value,
+        empId.value,
+        props.unixDate,
+        AOSOs.value
+      );
     };
-
     const onSubmit = async () => {
-      const newAppoId = await updateAppo(
-        props.appoId,
+      const newId = await addAppo(
         serviceId.value,
         AOSOs.value,
         empId.value,
-        date.value,
+        props.unixDate,
         start.value,
         duration.value,
         note.value
       );
-      if (newAppoId) {
-        props.onDoneEdit(date.value, newAppoId);
+      if (newId) {
+        props.onDoneEdit(props.unixDate, newId);
       }
     };
 
     // DEPENDENT
-    watch(() => props.appoId, fetchDetails);
     watch(
       () => route.path,
       () => {
@@ -214,15 +191,11 @@ export default {
       }
     );
 
-    // LIFECYCLE
-    onMounted(fetchDetails);
-
     return {
       isPickingEmp,
       isPickingService,
       setService,
       setEmp,
-      setDate,
       setStart,
       setDuration,
       setNote,
@@ -232,7 +205,6 @@ export default {
       AOSOsText,
       category,
       empAlias,
-      date,
       start,
       duration,
       note,

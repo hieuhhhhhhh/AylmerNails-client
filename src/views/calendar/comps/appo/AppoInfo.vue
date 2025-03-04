@@ -33,13 +33,12 @@
         <td>{{ getDuration() + " mins" }} <br />(to {{ getEndTime() }})</td>
       </tr>
       <tr>
-        <th>Booker</th>
-        <td></td>
-      </tr>
-
-      <tr>
         <th>Note</th>
         <td>{{ details.note }}</td>
+      </tr>
+      <tr>
+        <th>Booker</th>
+        <td></td>
       </tr>
     </tbody>
   </table>

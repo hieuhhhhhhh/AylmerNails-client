@@ -12,7 +12,7 @@
       <tr>
         <th>Service</th>
         <td>
-          {{ serviceName }} ({{ category }})
+          {{ serviceName }} {{ getCate() }}
           <button @click.prevent="onOpenServicePicker">Select</button>
           <br />
           <div id="AOS" v-for="(AOS, index) in AOSOs" :key="index">
@@ -37,12 +37,7 @@
             @change="onInputStart"
             required
           /><br />
-          <input
-            type="date"
-            :value="parseUT(date)"
-            @change="onInputDate"
-            required
-          />
+          <input type="date" :value="parseUT(date)" disabled />
           {{ getReminder() }}
         </td>
       </tr>
@@ -57,7 +52,7 @@
             :min="5"
             step="1"
           />
-          (to {{ secsToHours(start + duration) }})
+          {{ getEndTime() }}
         </td>
       </tr>
 
@@ -85,7 +80,6 @@
 <script>
 // lib
 import { ref, onMounted, nextTick } from "vue";
-import parseDate from "@/lib/parseDate";
 import parseUT from "@/lib/parseUT";
 import parseTime from "@/lib/parseTime";
 import parseUnixHours from "@/lib/parseUnixHours";
@@ -116,11 +110,6 @@ export default {
       props.setStart(value);
     };
 
-    const onInputDate = (event) => {
-      const value = parseDate(event.target.value);
-      props.setDate(value);
-    };
-
     const onInputDuration = (event) => {
       const value = event.target.value * 60;
       props.setDuration(value);
@@ -142,11 +131,21 @@ export default {
       return `(${sign}${mins} mins)`;
     };
     const getReminder = () => {
+      if (!props.date) return;
       const unixDate = props.date + 12 * 60 * 60;
       const text = unixTimeToReminder(unixDate);
       if (text) {
         return `(${text})`;
       }
+    };
+    const getCate = () => {
+      const cate = props.category;
+      if (cate) return `(${cate})`;
+    };
+    const getEndTime = () => {
+      if (!props.start || !props.duration) return;
+      const end = props.start + props.duration;
+      return `(to ${secsToHours(end)})`;
     };
 
     // STYLES
@@ -169,7 +168,6 @@ export default {
     return {
       TAref,
       formatOffset,
-      onInputDate,
       onInputStart,
       onInputDuration,
       onInputNote,
@@ -177,6 +175,8 @@ export default {
       parseUnixHours,
       secsToHours,
       getReminder,
+      getCate,
+      getEndTime,
     };
   },
 };

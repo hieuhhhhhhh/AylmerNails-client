@@ -27,6 +27,9 @@
         :onCloseAppo="onCloseAppo"
         :onEditAppo="onEditAppo"
       />
+      <button v-if="!isAdding && !editId" @click="onOpenAdding">
+        Add Appo
+      </button>
     </div>
 
     <EditAppo
@@ -34,6 +37,13 @@
       v-if="editId"
       :appoId="editId"
       :onCancelEdit="onCancelEdit"
+      :onHideMain="onHideMain"
+      :onDoneEdit="onDoneEdit"
+    />
+    <AddAppo
+      v-if="isAdding"
+      :unixDate="unixDate"
+      :onCancelAdding="onCancelAdding"
       :onHideMain="onHideMain"
       :onDoneEdit="onDoneEdit"
     />
@@ -46,6 +56,7 @@ import DayInput from "./comps/DayInput.vue";
 import ScrollContent from "./comps/ScrollContent.vue";
 import AppoDetails from "./comps/appo/Parent.vue";
 import EditAppo from "./comps/edit_appo/Parent.vue";
+import AddAppo from "./comps/add_appo/Parent.vue";
 // lib
 import { ref, onMounted, onBeforeUnmount, nextTick, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
@@ -57,11 +68,13 @@ export default {
     ScrollContent,
     AppoDetails,
     EditAppo,
+    AddAppo,
   },
   setup() {
     // status
     const isCompacting = ref(true);
     const isHidingMain = ref(false);
+    const isAdding = ref(false);
     // resources
     const resetMain = ref(0);
     const unixDate = ref(null);
@@ -119,6 +132,7 @@ export default {
     const onEditAppo = (id) => {
       appoId.value = null;
       editId.value = id;
+      isAdding.value = false;
     };
 
     const onCancelEdit = () => {
@@ -129,9 +143,18 @@ export default {
     const onDoneEdit = (newDate, newAppoId) => {
       resetMain.value++; // reset component by increment its key
       editId.value = null;
+      isAdding.value = false;
       router.push(`/calendar/${newDate}/${newAppoId}`);
     };
 
+    const onOpenAdding = () => {
+      editId.value = null;
+      isAdding.value = true;
+    };
+
+    const onCancelAdding = () => {
+      isAdding.value = false;
+    };
     // DEPENDENT
     watch(editId, async (newVal) => {
       if (newVal) {
@@ -196,6 +219,7 @@ export default {
       editId,
       isCompacting,
       isHidingMain,
+      isAdding,
       onMoveRight,
       onMoveLeft,
       onInputDate,
@@ -206,6 +230,8 @@ export default {
       onCancelEdit,
       onDoneEdit,
       onHideMain,
+      onOpenAdding,
+      onCancelAdding,
     };
   },
 };
