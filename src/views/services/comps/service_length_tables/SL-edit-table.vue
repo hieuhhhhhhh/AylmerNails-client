@@ -18,7 +18,7 @@
       </tr>
       <tr>
         <th>Employee</th>
-        <th>Service Length (minutes)</th>
+        <th>Duration (minutes)</th>
       </tr>
     </thead>
     <tbody>

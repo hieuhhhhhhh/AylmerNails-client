@@ -132,7 +132,6 @@ export default {
   margin-left: 10px;
 }
 #note {
-  font-style: italic;
   color: rgb(184, 121, 3);
 }
 #title {

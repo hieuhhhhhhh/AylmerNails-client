@@ -54,7 +54,6 @@
           <td>
             <div v-for="employee in employees" :key="employee.employee_id">
               <input
-                v-if="employee.is_active"
                 id="check"
                 type="checkbox"
                 :value="employee.employee_id"
@@ -68,7 +67,7 @@
     </table>
     <br />
     <div id="addOn">
-      <b>Additional Options:</b>
+      <b>Questions:</b>
       <AOSsEdit
         :AOSs="AOSs"
         :editAOS="editAOS"

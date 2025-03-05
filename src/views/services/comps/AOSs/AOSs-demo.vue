@@ -1,12 +1,6 @@
 <template>
-  <div v-if="AOSs.length" id="note">
-    *Service's additional options are not editable
-  </div>
-
   <div v-for="(AOS, index) in AOSs" :key="index">
-    <div id="title">
-      <b>Question {{ index + 1 }} </b>: {{ AOS.prompt }}
-    </div>
+    <div id="title">{{ index + 1 }}. {{ AOS.prompt }}</div>
     <table border="1">
       <thead>
         <tr>
@@ -34,7 +28,6 @@ export default {
 
 <style scoped>
 #note {
-  font-style: italic;
   color: rgb(184, 121, 3);
 }
 #title {

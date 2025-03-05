@@ -6,7 +6,7 @@
           <td colspan="2">
             <div id="title">
               <span id="date"
-                >{{ formatDate(serviceLength.effective_from) }} ~</span
+                >From {{ formatDate(serviceLength.effective_from) }} ~</span
               >
               <button class="blueBtn" id="edit" @click="openEditTable">
                 <FontAwesomeIcon :icon="editIcon" /> Edit
@@ -16,7 +16,7 @@
         </tr>
         <tr>
           <th>Employee</th>
-          <th>Service Length (minutes)</th>
+          <th>Duration (minutes)</th>
         </tr>
       </thead>
       <tbody>

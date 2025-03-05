@@ -1,6 +1,6 @@
 <template>
   <div v-show="!isSelecting" id="flexBox">
-    <div id="note">*Use checkboxes to select technicians</div>
+    <div id="note">Use checkboxes to select technicians</div>
 
     <Service
       v-for="(service, index) in services"
@@ -114,7 +114,6 @@ export default {
 #note {
   padding: 10px;
   padding-top: 0px;
-  font-style: italic;
   color: rgb(184, 121, 3);
 }
 #rightBtn {

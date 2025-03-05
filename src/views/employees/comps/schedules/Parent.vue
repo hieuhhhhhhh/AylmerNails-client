@@ -58,7 +58,6 @@ export default {
 }
 #note {
   padding: 10px;
-  font-style: italic;
   color: rgb(184, 121, 3);
 }
 #highlight {

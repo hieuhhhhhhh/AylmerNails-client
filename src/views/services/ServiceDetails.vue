@@ -10,13 +10,7 @@
   <EmployeeChecker :serviceId="service_id" />
   <br />
 
-  <th>Additional Options</th>
-  <NA v-if="!AOSs.length && isFetched" />
-  <ServiceAOSs :AOSs="AOSs" />
-  <br />
-  <br />
-
-  <th>Length Settings</th>
+  <th>Duration Settings</th>
   <div id="highlight" v-if="currentLength && Object.keys(currentLength).length">
     <ServiceLengthTable
       :serviceLength="currentLength"
@@ -34,6 +28,11 @@
   <br />
 
   <AddServiceLength :serviceId="service_id" />
+  <th>Questions</th>
+  <NA v-if="!AOSs.length && isFetched" />
+  <ServiceAOSs :AOSs="AOSs" />
+  <br />
+  <br />
 </template>
 
 <script>

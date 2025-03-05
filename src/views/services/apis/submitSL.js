@@ -39,10 +39,7 @@ export default async function submitNewServiceLength(
       // return result
       return json.added_service_length_id;
     } else {
-      console.log(
-        "Failed to submit new service length, message: ",
-        json.message
-      );
+      console.log("Failed to submit new duration, message: ", json.message);
     }
   } catch (e) {
     console.error("Unexpected Error: ", e);

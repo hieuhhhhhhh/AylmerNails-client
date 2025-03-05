@@ -143,7 +143,6 @@ td {
 #note {
   padding: 10px;
   padding-top: 0px;
-  font-style: italic;
   color: rgb(184, 121, 3);
 }
 </style>

@@ -9,7 +9,7 @@
       <FontAwesomeIcon :icon="backIcon" /> Return
     </button>
   </div>
-  <div id="note">*Below are starting prices and minimal time taken</div>
+  <div id="note">Select a service (starting price, minimum duration)</div>
 
   <div v-if="isFetched" id="flexBox">
     <Category
@@ -103,7 +103,6 @@ export default {
 #note {
   padding: 10px;
   padding-top: 0px;
-  font-style: italic;
   color: rgb(184, 121, 3);
   text-align: center;
 }
