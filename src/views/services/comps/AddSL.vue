@@ -13,7 +13,7 @@
       />
     </div>
     <button v-if="!isAddingLength" class="blueBtn" @click="openLengthInput">
-      <FontAwesomeIcon :icon="plusIcon" /> Add New Length Setting
+      <FontAwesomeIcon :icon="plusIcon" /> Add New Duration Settings
     </button>
     <div v-else id="duo">
       <button class="redBtn" @click.prevent="closeLengthInput">

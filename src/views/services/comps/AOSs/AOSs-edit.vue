@@ -19,8 +19,8 @@
     <table border="1">
       <thead>
         <tr>
-          <th>Option</th>
-          <th>Length Increase (minutes) <br /></th>
+          <th>Answer</th>
+          <th>Duration Increase (minutes) <br /></th>
         </tr>
       </thead>
       <tbody>
@@ -68,7 +68,11 @@
       </tbody>
     </table>
     <div id="note">
-      *'Length Increase' can be negative to indicate decrement
+      *to indicate a decrement, input a negative value for "Duration Increase"
+    </div>
+    <div id="note">
+      *question list is immutable once created, recreate the service if you have
+      to change it
     </div>
     <br />
   </div>

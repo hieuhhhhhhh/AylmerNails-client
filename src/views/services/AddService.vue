@@ -53,13 +53,15 @@
           <th>Members:</th>
           <td>
             <div v-for="employee in employees" :key="employee.employee_id">
-              <input
-                id="check"
-                type="checkbox"
-                :value="employee.employee_id"
-                v-model="checkedEmp"
-              />
-              <label>{{ employee.alias }}</label>
+              <div v-if="employee.is_active">
+                <input
+                  id="check"
+                  type="checkbox"
+                  :value="employee.employee_id"
+                  v-model="checkedEmp"
+                />
+                <label>{{ employee.alias }}</label>
+              </div>
             </div>
           </td>
         </tr>
@@ -67,7 +69,7 @@
     </table>
     <br />
     <div id="addOn">
-      <b>Questions:</b>
+      <b>Question List:</b>
       <AOSsEdit
         :AOSs="AOSs"
         :editAOS="editAOS"

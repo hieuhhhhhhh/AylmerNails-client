@@ -4,7 +4,7 @@
     <table border="1">
       <thead>
         <tr>
-          <th>Option</th>
+          <th>Answer</th>
           <th>Length Increase (minutes) <br /></th>
         </tr>
       </thead>

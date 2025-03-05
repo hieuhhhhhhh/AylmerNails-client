@@ -10,6 +10,17 @@
   <EmployeeChecker :serviceId="service_id" />
   <br />
 
+  <th>Question List</th>
+  <NA v-if="!AOSs.length && isFetched" />
+  <ServiceAOSs :AOSs="AOSs" />
+  <div id="note">
+    *question list is immutable once created, recreate the service if you have
+    to change it
+  </div>
+
+  <br />
+  <br />
+
   <th>Duration Settings</th>
   <div id="highlight" v-if="currentLength && Object.keys(currentLength).length">
     <ServiceLengthTable
@@ -28,11 +39,6 @@
   <br />
 
   <AddServiceLength :serviceId="service_id" />
-  <th>Questions</th>
-  <NA v-if="!AOSs.length && isFetched" />
-  <ServiceAOSs :AOSs="AOSs" />
-  <br />
-  <br />
 </template>
 
 <script>
@@ -120,5 +126,10 @@ td {
 
   width: fit-content;
   height: fit-content;
+}
+#note {
+  padding: 10px;
+  padding-top: 0px;
+  color: rgb(184, 121, 3);
 }
 </style>
