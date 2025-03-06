@@ -28,6 +28,12 @@
             </select>
           </td>
         </tr>
+        <tr>
+          <th>Starting Date:</th>
+          <td id="flexBox">
+            <input type="date" id="datePicker" v-model="date" />
+          </td>
+        </tr>
 
         <tr>
           <th>
@@ -108,9 +114,10 @@ export default {
     return {
       // icons
       saveIcon: faCheck,
-      // products
+      // payload
       name: "",
       description: "",
+      date: null,
       length: null,
       categoryId: "null",
       AOSs: [],
@@ -156,6 +163,7 @@ export default {
         this.name,
         this.categoryId,
         this.description,
+        this.date,
         this.length * 60,
         this.AOSs,
         this.checkedEmp
@@ -208,5 +216,10 @@ td {
 #check {
   transform: scale(2);
   margin: 10px;
+}
+#datePicker {
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 5px;
 }
 </style>

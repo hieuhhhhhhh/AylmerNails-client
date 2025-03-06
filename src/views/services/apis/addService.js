@@ -1,19 +1,20 @@
-import getTodayUnixTime from "@/lib/getTodayUnixTime";
+import parseDate from "@/lib/parseDate";
 
 export default async function addService(
   name,
   categoryId,
   description,
-  length,
+  date,
+  duration,
   AOSs,
   employee_ids
 ) {
   try {
     // parse AOSs
-    const proAOSs = [];
+    const newAOSs = [];
     AOSs.forEach((AOS) => {
       // fetch question
-      proAOSs.push(AOS.prompt);
+      newAOSs.push(AOS.prompt);
 
       // fetch options
       const proOptions = [];
@@ -21,7 +22,7 @@ export default async function addService(
         proOptions.push(option.name);
         proOptions.push(option.length_offset);
       });
-      proAOSs.push(proOptions);
+      newAOSs.push(proOptions);
     });
 
     // get app path
@@ -37,11 +38,11 @@ export default async function addService(
       body: JSON.stringify({
         name: name,
         category_id: categoryId,
-        description: description,
-        date: getTodayUnixTime(),
-        length: length,
-        AOSs: proAOSs,
-        employee_ids: employee_ids,
+        description,
+        date: parseDate(date),
+        duration,
+        AOSs: newAOSs,
+        employee_ids,
       }),
     });
 
