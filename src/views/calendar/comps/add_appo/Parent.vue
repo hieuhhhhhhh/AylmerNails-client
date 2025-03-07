@@ -160,10 +160,11 @@ export default {
 
     // APIS
     const fetchDuration = async () => {
+      if (!serviceId.value) return;
+
       duration.value = await fetchAppoLength(
         serviceId.value,
         empId.value,
-        props.unixDate,
         AOSOs.value
       );
     };

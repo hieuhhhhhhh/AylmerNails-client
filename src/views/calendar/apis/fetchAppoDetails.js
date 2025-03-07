@@ -80,5 +80,6 @@ function parseApiRes(json) {
   }
 
   // return result
+  console.log("details", details);
   return details;
 }

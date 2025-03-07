@@ -1,5 +1,5 @@
 <template>
-  <div v-if="isFetched">
+  <div v-if="isFetched && dayEnd && dayStart">
     <div v-for="(emp, index) in employees" :key="index">
       <div id="relative">
         <div

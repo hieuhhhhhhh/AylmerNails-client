@@ -61,7 +61,7 @@ function parseApiRes(json) {
   // read data about appointments
   for (let appo of appos) {
     // unpack
-    const [id, empId, serviceId, AOSOs, date, start, end, serviceName] = appo;
+    const [id, empId, serviceId, AOSOs, date, , start, end, serviceName] = appo;
 
     // create new appointment
     const newAppo = {

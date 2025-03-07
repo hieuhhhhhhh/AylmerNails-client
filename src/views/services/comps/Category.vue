@@ -9,9 +9,6 @@
       @click="openServiceDetails(service.service_id)"
     >
       {{ service.service_name }}
-      <span v-if="!service.is_active" class="faded">
-        ended on {{ formatDate(service.last_date) }}
-      </span>
     </div>
 
     <div id="flexBox">

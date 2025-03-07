@@ -1,4 +1,4 @@
-export default async function fetchAppoLength(serviceId, empId, date, AOSOs) {
+export default async function fetchAppoLength(serviceId, empId, AOSOs) {
   try {
     // return if serviceId is not defined
     if (!serviceId) return;
@@ -16,7 +16,6 @@ export default async function fetchAppoLength(serviceId, empId, date, AOSOs) {
       body: JSON.stringify({
         service_id: serviceId,
         employee_id: empId,
-        date,
         AOSOs,
       }),
     });

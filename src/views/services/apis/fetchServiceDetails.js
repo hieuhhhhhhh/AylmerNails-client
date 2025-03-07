@@ -46,11 +46,11 @@ function getServiceDetails(json) {
 
   // fetch durations
   const tables = json.durations;
-  let emp_durations = [];
+  let empDurations = [];
 
   for (let row of tables) {
-    const [emp_id, alias, duration] = row;
-    emp_durations.push({ emp_id, alias, duration });
+    const [empId, alias, duration] = row;
+    empDurations.push({ empId, alias, duration });
   }
 
   //fetch AOSs
@@ -78,7 +78,7 @@ function getServiceDetails(json) {
     cate_id,
     cate_name,
     duration,
-    emp_durations,
+    empDurations,
     AOSs,
   };
 

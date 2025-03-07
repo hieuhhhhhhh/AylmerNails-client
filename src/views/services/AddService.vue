@@ -31,7 +31,7 @@
         <tr>
           <th>Starting Date:</th>
           <td id="flexBox">
-            <input type="date" id="datePicker" v-model="date" />
+            <input type="date" id="datePicker" v-model="date" required />
           </td>
         </tr>
 
@@ -190,7 +190,7 @@ export default {
 </script>
 
 <style scoped>
-input:not(#check),
+input:not(#check, #datePicker),
 textarea {
   width: 100%;
 }

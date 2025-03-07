@@ -120,20 +120,17 @@ export default {
       category.value = newCate;
       AOSOs.value = newAOSOs;
       AOSOsText.value = newAOSOsText;
-      duration.value = await fetchAppoLength(
-        serviceId.value,
-        empId.value,
-        date.value,
-        AOSOs.value
-      );
+      await fetchDuration();
       onStopPicking();
     };
 
-    const setEmp = (newId, newAlias, newColor) => {
+    const setEmp = async (newId, newAlias, newColor) => {
       empId.value = newId;
       empAlias.value = newAlias;
       color.value = newColor;
       console.log("empId", empId.value);
+      await fetchDuration();
+
       onStopPicking();
     };
     const setDate = (value) => {
@@ -168,6 +165,15 @@ export default {
     };
 
     // APIS
+    const fetchDuration = async () => {
+      if (!serviceId.value) return;
+      duration.value = await fetchAppoLength(
+        serviceId.value,
+        empId.value,
+        AOSOs.value
+      );
+    };
+
     const fetchDetails = async () => {
       if (!props.appoId) return;
       const details = await fetchAppoDetails(props.appoId);
