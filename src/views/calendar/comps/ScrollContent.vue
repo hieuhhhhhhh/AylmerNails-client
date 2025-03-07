@@ -1,5 +1,14 @@
 <template>
   <div v-if="isFetched && dayEnd && dayStart">
+    <div
+      :style="{
+        transform: `scale(${scaleValue})`,
+        transformOrigin: `top left`,
+      }"
+    >
+      <MarkingValues :dayEnd="dayEnd" :dayStart="dayStart" />
+    </div>
+
     <div v-for="(emp, index) in employees" :key="index">
       <div id="relative">
         <div
@@ -46,6 +55,15 @@
         {{ emp.alias }}
       </div>
     </div>
+
+    <div
+      :style="{
+        transform: `scale(${scaleValue})`,
+        transformOrigin: `top left`,
+      }"
+    >
+      <MarkingValues :dayEnd="dayEnd" :dayStart="dayStart" />
+    </div>
   </div>
 </template>
 
@@ -60,6 +78,8 @@ import getCompactScale from "../helpers/getCompactScale";
 import VerticalTimeMarks from "./VerticalTimeMarks.vue";
 import GrayPart from "./GrayPart.vue";
 
+import MarkingValues from "./MarkingValues.vue";
+
 export default {
   props: {
     unixDate: Number,
@@ -70,6 +90,7 @@ export default {
   components: {
     VerticalTimeMarks,
     GrayPart,
+    MarkingValues,
   },
   setup(props) {
     // status
@@ -172,5 +193,7 @@ export default {
 #transform {
   transform-origin: top left;
   height: 70px;
+  background: white;
+  width: fit-content;
 }
 </style>
