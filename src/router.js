@@ -101,6 +101,27 @@ const routes = [
 
   { path: "/calendar/:unixDate/:appoId?", component: Calendar },
 
+  {
+    path: "/conflicts",
+    children: [
+      {
+        path: "/service_ld/:serviceId",
+        component: Calendar,
+      },
+      {
+        path: "/service_duration/:serviceId",
+        component: Calendar,
+      },
+      {
+        path: "/employee_ld/:empId",
+        component: Calendar,
+      },
+      {
+        path: "/employee_duration/:empId",
+        component: Calendar,
+      },
+    ],
+  },
   // wildcard route for 404 - not found
   {
     path: "/:pathMatch(.*)*", // This matches any undefined route

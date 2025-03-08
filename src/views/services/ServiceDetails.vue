@@ -1,10 +1,17 @@
 <template>
+  <div class="warning" v-if="lastDateCC > 0">
+    Warning: Availability has {{ lastDateCC }}
+    <u>conflicting appointment(s)</u>
+  </div>
+  <div class="warning" v-if="durationCC > 0">
+    Warning: Duration settings has {{ durationCC }}
+    <u>conflicting appointment(s)</u>
+  </div>
   <ServiceInfo
     :isFetched="isFetched"
     :serviceInfo="serviceInfo"
     :serviceId="service_id"
   />
-  <br />
 
   <th>Members</th>
   <EmployeeChecker :serviceId="service_id" />
@@ -16,6 +23,7 @@
     :duration="duration"
     :empDurations="empDurations"
   />
+
   <br />
   <br />
 
@@ -58,6 +66,8 @@ export default {
       empDurations: [],
       isFetched: false,
       isAddingLength: false,
+      durationCC: 0,
+      lastDateCC: 0,
     };
   },
   methods: {
@@ -88,6 +98,10 @@ export default {
     this.duration = this.details.duration;
     this.empDurations = this.details.empDurations;
 
+    // fetch conflicts counts
+    this.durationCC = this.details.durationCC;
+    this.lastDateCC = this.details.lastDateCC;
+
     // set isFetched
     this.isFetched = true;
   },
@@ -114,5 +128,10 @@ td {
   padding: 10px;
   padding-top: 0px;
   color: rgb(184, 121, 3);
+}
+.warning {
+  font-size: 16px;
+  color: red;
+  cursor: pointer;
 }
 </style>

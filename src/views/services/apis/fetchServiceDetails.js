@@ -68,6 +68,10 @@ function getServiceDetails(json) {
   // convert to array
   AOSs = Object.values(AOSs);
 
+  // fetch conflicts
+  const durationCC = json.duration_conflicts;
+  const lastDateCC = json.ld_conflicts;
+
   // merge all data
   let details = {
     service_id,
@@ -80,6 +84,8 @@ function getServiceDetails(json) {
     duration,
     empDurations,
     AOSs,
+    durationCC,
+    lastDateCC,
   };
 
   console.log("detaills: ", details);
