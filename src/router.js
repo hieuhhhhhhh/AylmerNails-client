@@ -22,7 +22,8 @@ import EmployeeDetails from "./views/employees/EmployeeDetails.vue";
 import BookNow from "./views/book_now/Parent.vue";
 // calendar
 import Calendar from "./views/calendar/Calendar.vue";
-
+// conflicts
+import Conflicts from "./views/conflicts/Conflicts.vue";
 const routes = [
   {
     path: "/",
@@ -106,19 +107,19 @@ const routes = [
     children: [
       {
         path: "/service_ld/:serviceId",
-        component: Calendar,
+        component: Conflicts,
       },
       {
         path: "/service_duration/:serviceId",
-        component: Calendar,
+        component: Conflicts,
       },
       {
         path: "/employee_ld/:empId",
-        component: Calendar,
+        component: Conflicts,
       },
       {
         path: "/employee_duration/:empId",
-        component: Calendar,
+        component: Conflicts,
       },
     ],
   },

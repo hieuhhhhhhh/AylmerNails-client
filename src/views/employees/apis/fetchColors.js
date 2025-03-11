@@ -1,4 +1,4 @@
-export default async function fetchEmployees() {
+export default async function fetchColors() {
   try {
     // get app path
     const baseURL = process.env.VUE_APP_BASE_URL;
