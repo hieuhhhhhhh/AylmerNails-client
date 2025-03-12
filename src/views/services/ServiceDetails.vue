@@ -1,5 +1,5 @@
 <template>
-  <div class="warning" v-if="lastDateCC > 0">
+  <div class="warning" v-if="lastDateCC > 0" @click="toConflictPage">
     Warning: Availability has {{ lastDateCC }}
     <u>conflicting appointment(s)</u>
   </div>
@@ -73,6 +73,9 @@ export default {
   methods: {
     formatDate(unixTime) {
       return unixToReadable(unixTime);
+    },
+    toConflictPage() {
+      this.$router.push(`/conflicts/service_ld/${this.service_id}`);
     },
   },
   async created() {

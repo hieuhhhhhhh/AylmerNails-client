@@ -19,7 +19,35 @@ export default async function fetchServiceLdConflicts(serviceId) {
 
     // read status and process response
     if (res.ok) {
-      return json.conflicts;
+      // res holder
+      let conflicts = [];
+
+      const table = json.conflicts;
+      for (let row of table) {
+        const [
+          serviceId,
+          appoId,
+          appoDate,
+          appoDOW,
+          appoStart,
+          appoEnd,
+          empAlias,
+          serviceName,
+        ] = row;
+
+        conflicts.push({
+          serviceId,
+          appoId,
+          appoDate,
+          appoDOW,
+          appoStart,
+          appoEnd,
+          empAlias,
+          serviceName,
+        });
+      }
+
+      return conflicts;
     } else {
       console.log(
         "Failed to fetch service's last date conflicts, message: ",
