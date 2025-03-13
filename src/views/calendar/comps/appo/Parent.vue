@@ -9,6 +9,7 @@
 
       <div id="flexBox">
         <button class="btn" @click="onEditAppo(appoId)">Edit</button>
+        <DeleteBtn :appoId="details.id" />
       </div>
     </div>
   </div>
@@ -20,11 +21,13 @@ import { onMounted, ref, watch } from "vue";
 import fetchAppoDetails from "../../apis/fetchAppoDetails";
 // comp
 import AppoInfo from "./AppoInfo.vue";
+import DeleteBtn from "./DeleteBtn.vue";
 
 export default {
   name: "AppoDetails",
   components: {
     AppoInfo,
+    DeleteBtn,
   },
   props: {
     appoId: Number,
@@ -120,7 +123,7 @@ td {
 }
 #flexBox {
   display: flex;
-  gap: 5px;
+  gap: 50px;
   justify-content: center;
   margin-bottom: 10px;
 }
