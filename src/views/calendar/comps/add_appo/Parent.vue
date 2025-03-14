@@ -3,11 +3,14 @@
     <form
       @submit.prevent="onSubmit"
       id="container"
-      v-if="!isPickingEmp && !isPickingService"
+      v-if="!isPickingEmp && !isPickingService && !isPickingContact"
     >
       <div id="title">New Appointment</div>
       <div id="content" :style="{ backgroundColor: color }">
         <AddForm
+          :contactId="contactId"
+          :clientName="clientName"
+          :phoneNum="phoneNum"
           :serviceName="serviceName"
           :AOSOs="AOSOsText"
           :category="category"
@@ -23,6 +26,7 @@
           :resetService="resetService"
           :onOpenEmpPicker="onOpenEmpPicker"
           :onOpenServicePicker="onOpenServicePicker"
+          :onSelectContact="onSelectContact"
         />
       </div>
       <button @click.prevent="onCancelAdding">Cancel</button>
@@ -41,6 +45,12 @@
       :setService="setService"
       :onStopPicking="onStopPicking"
     />
+
+    <ContactPicker
+      v-if="isPickingContact"
+      :setContact="setContact"
+      :onStopPicking="onStopPicking"
+    />
   </div>
 </template>
 
@@ -54,6 +64,7 @@ import addAppo from "../../apis/addAppo";
 import AddForm from "./AddForm.vue";
 import EmployeePicker from "../edit_appo/EmployeePicker.vue";
 import ServicePicker from "../edit_appo/ServicePicker.vue";
+import ContactPicker from "../edit_appo/ContactPicker.vue";
 
 export default {
   name: "EditAppo",
@@ -61,6 +72,7 @@ export default {
     AddForm,
     EmployeePicker,
     ServicePicker,
+    ContactPicker,
   },
   props: {
     unixDate: Number,
@@ -75,12 +87,16 @@ export default {
     // status
     const isPickingEmp = ref(false);
     const isPickingService = ref(false);
+    const isPickingContact = ref(false);
     // outcomes
     const serviceName = ref("");
     const category = ref("");
     const AOSOsText = ref([]);
     const empAlias = ref("");
     const color = ref("white");
+    const contactId = ref(null);
+    const phoneNum = ref("");
+    const clientName = ref("");
     // payload
     const serviceId = ref(null);
     const AOSOs = ref([]);
@@ -103,6 +119,13 @@ export default {
       AOSOsText.value = [];
       AOSOs.value = [];
       color.value = "white";
+    };
+
+    const setContact = (newId, newPhoneNum, newName) => {
+      contactId.value = newId;
+      phoneNum.value = newPhoneNum;
+      clientName.value = newName;
+      onStopPicking();
     };
 
     const setService = async (
@@ -152,9 +175,15 @@ export default {
       isPickingService.value = true;
     };
 
+    const onSelectContact = () => {
+      props.onHideMain(true);
+      isPickingContact.value = true;
+    };
+
     const onStopPicking = () => {
       isPickingEmp.value = false;
       isPickingService.value = false;
+      isPickingContact.value = false;
       props.onHideMain(false);
     };
 
@@ -195,6 +224,8 @@ export default {
     return {
       isPickingEmp,
       isPickingService,
+      isPickingContact,
+      setContact,
       setService,
       setEmp,
       setStart,
@@ -202,6 +233,9 @@ export default {
       setNote,
       resetEmp,
       resetService,
+      contactId,
+      phoneNum,
+      clientName,
       serviceName,
       AOSOsText,
       category,
@@ -213,6 +247,7 @@ export default {
       onSubmit,
       onOpenEmpPicker,
       onOpenServicePicker,
+      onSelectContact,
       onStopPicking,
     };
   },

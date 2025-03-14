@@ -7,7 +7,12 @@
     <tbody>
       <tr>
         <th>Client</th>
-        <td></td>
+        <td>
+          {{ clientName }}
+          <button @click.prevent="onSelectContact">Select</button>
+          <br />
+          {{ phoneNum }}
+        </td>
       </tr>
       <tr>
         <th>Service</th>
@@ -88,6 +93,9 @@ import unixTimeToReminder from "@/lib/unixTimeToReminder";
 
 export default {
   props: {
+    contactId: Number,
+    clientName: String,
+    phoneNum: String,
     serviceName: String,
     category: String,
     AOSOs: Array,
@@ -102,6 +110,7 @@ export default {
     setNote: Function,
     onOpenEmpPicker: Function,
     onOpenServicePicker: Function,
+    onSelectContact: Function,
   },
   setup(props) {
     // HANDLERS
