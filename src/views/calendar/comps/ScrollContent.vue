@@ -36,6 +36,8 @@
             @click.stop="onSelectAppo(appo.id)"
           >
             {{ formatTime(appo.start) }}
+            <br />
+            {{ appo.contactName }}
             <div id="serviceName">
               {{ appo.serviceName }}
             </div>

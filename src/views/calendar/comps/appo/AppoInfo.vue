@@ -7,7 +7,11 @@
     <tbody>
       <tr>
         <th>Client</th>
-        <td></td>
+        <td>
+          {{ details.contactName }}
+          <br />
+          {{ formatPhone(details.phoneNum) }}
+        </td>
       </tr>
       <tr>
         <th>Service</th>
@@ -49,6 +53,7 @@
 import unixToReadable from "@/lib/unixToReadable";
 import secsToHours from "@/lib/secsToHours";
 import unixTimeToReminder from "@/lib/unixTimeToReminder";
+import formatPhone from "@/lib/formatPhone";
 
 export default {
   props: {
@@ -94,6 +99,7 @@ export default {
     };
     return {
       formatOffset,
+      formatPhone,
       getTime,
       getDate,
       getDuration,

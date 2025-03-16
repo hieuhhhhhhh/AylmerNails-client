@@ -8,17 +8,17 @@
         @input="onInputPhone"
         placeholder="Enter Phone Number"
         maxlength="15"
+        required
       />
     </div>
     <div>
-      <input type="text" v-model="name" placeholder="Enter Name" />
+      <input type="text" v-model="name" placeholder="Enter Name" required />
     </div>
     <button>Confirm</button>
   </form>
 </template>
 <script>
 // lib
-import addContact from "../../apis/addContact";
 import { ref } from "vue";
 
 export default {
@@ -32,8 +32,9 @@ export default {
     const name = ref("");
 
     const onSubmit = async () => {
-      const contactId = await addContact(phoneNum.value, name.value);
-      props.setContact(contactId, phoneNum, name);
+      // parse to real phone
+      const real = "+1" + phoneNum.value.replace(/\D/g, "");
+      props.setContact(real, name.value);
     };
 
     const onInputPhone = (event) => {

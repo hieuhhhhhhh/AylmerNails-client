@@ -1,5 +1,7 @@
 export default async function updateAppo(
   appoId,
+  phoneNum,
+  contactName,
   serviceId,
   AOSOs,
   empId,
@@ -21,6 +23,8 @@ export default async function updateAppo(
       },
       body: JSON.stringify({
         appo_id: appoId,
+        phone_num: phoneNum,
+        name: contactName,
         service_id: serviceId,
         AOSOs,
         emp_id: empId,

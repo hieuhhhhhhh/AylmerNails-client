@@ -7,7 +7,12 @@
     <tbody>
       <tr>
         <th>Client</th>
-        <td></td>
+        <td>
+          {{ contactName }}
+          <button @click.prevent="onSelectContact">Select</button>
+          <br />
+          {{ formatPhone(phoneNum) }}
+        </td>
       </tr>
       <tr>
         <th>Service</th>
@@ -91,9 +96,12 @@ import parseTime from "@/lib/parseTime";
 import parseUnixHours from "@/lib/parseUnixHours";
 import secsToHours from "@/lib/secsToHours";
 import unixTimeToReminder from "@/lib/unixTimeToReminder";
+import formatPhone from "@/lib/formatPhone";
 
 export default {
   props: {
+    contactName: String,
+    phoneNum: String,
     serviceName: String,
     category: String,
     AOSOs: Array,
@@ -108,6 +116,7 @@ export default {
     setNote: Function,
     onOpenEmpPicker: Function,
     onOpenServicePicker: Function,
+    onSelectContact: Function,
   },
   setup(props) {
     // HANDLERS
@@ -169,6 +178,7 @@ export default {
     return {
       TAref,
       formatOffset,
+      formatPhone,
       onInputDate,
       onInputStart,
       onInputDuration,

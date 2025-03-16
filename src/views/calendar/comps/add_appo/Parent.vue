@@ -8,7 +8,6 @@
       <div id="title">New Appointment</div>
       <div id="content" :style="{ backgroundColor: color }">
         <AddForm
-          :contactId="contactId"
           :clientName="clientName"
           :phoneNum="phoneNum"
           :serviceName="serviceName"
@@ -94,7 +93,6 @@ export default {
     const AOSOsText = ref([]);
     const empAlias = ref("");
     const color = ref("white");
-    const contactId = ref(null);
     const phoneNum = ref("");
     const clientName = ref("");
     // payload
@@ -121,8 +119,7 @@ export default {
       color.value = "white";
     };
 
-    const setContact = (newId, newPhoneNum, newName) => {
-      contactId.value = newId;
+    const setContact = (newPhoneNum, newName) => {
       phoneNum.value = newPhoneNum;
       clientName.value = newName;
       onStopPicking();
@@ -199,6 +196,8 @@ export default {
     };
     const onSubmit = async () => {
       const newId = await addAppo(
+        phoneNum.value,
+        clientName.value,
         serviceId.value,
         AOSOs.value,
         empId.value,
@@ -233,7 +232,6 @@ export default {
       setNote,
       resetEmp,
       resetService,
-      contactId,
       phoneNum,
       clientName,
       serviceName,

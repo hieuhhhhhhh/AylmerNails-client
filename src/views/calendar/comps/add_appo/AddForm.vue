@@ -11,7 +11,7 @@
           {{ clientName }}
           <button @click.prevent="onSelectContact">Select</button>
           <br />
-          {{ phoneNum }}
+          {{ formatPhone(phoneNum) }}
         </td>
       </tr>
       <tr>
@@ -90,10 +90,10 @@ import parseTime from "@/lib/parseTime";
 import parseUnixHours from "@/lib/parseUnixHours";
 import secsToHours from "@/lib/secsToHours";
 import unixTimeToReminder from "@/lib/unixTimeToReminder";
+import formatPhone from "@/lib/formatPhone";
 
 export default {
   props: {
-    contactId: Number,
     clientName: String,
     phoneNum: String,
     serviceName: String,
@@ -177,6 +177,7 @@ export default {
     return {
       TAref,
       formatOffset,
+      formatPhone,
       onInputStart,
       onInputDuration,
       onInputNote,

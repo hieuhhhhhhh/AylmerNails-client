@@ -1,4 +1,6 @@
 export default async function addAppo(
+  phoneNum,
+  contactName,
   serviceId,
   AOSOs,
   empId,
@@ -21,6 +23,8 @@ export default async function addAppo(
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
+          phone_num: phoneNum,
+          name: contactName,
           service_id: serviceId,
           AOSOs,
           emp_id: empId,

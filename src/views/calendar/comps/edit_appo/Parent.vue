@@ -3,11 +3,13 @@
     <form
       @submit.prevent="onSubmit"
       id="container"
-      v-if="!isPickingEmp && !isPickingService"
+      v-if="!isPickingEmp && !isPickingService && !isPickingContact"
     >
       <div id="title">Editing</div>
       <div id="content" :style="{ backgroundColor: color }">
         <AppoEdit
+          :contactName="contactName"
+          :phoneNum="phoneNum"
           :serviceName="serviceName"
           :AOSOs="AOSOsText"
           :category="category"
@@ -24,6 +26,7 @@
           :resetService="resetService"
           :onOpenEmpPicker="onOpenEmpPicker"
           :onOpenServicePicker="onOpenServicePicker"
+          :onSelectContact="onSelectContact"
         />
       </div>
       <button @click.prevent="onCancelEdit">Cancel</button>
@@ -42,6 +45,12 @@
       :setService="setService"
       :onStopPicking="onStopPicking"
     />
+
+    <ContactPicker
+      v-if="isPickingContact"
+      :setContact="setContact"
+      :onStopPicking="onStopPicking"
+    />
   </div>
 </template>
 
@@ -56,6 +65,7 @@ import fetchAppoLength from "../../apis/fetchAppoLength";
 import AppoEdit from "./AppoEdit.vue";
 import EmployeePicker from "./EmployeePicker.vue";
 import ServicePicker from "./ServicePicker.vue";
+import ContactPicker from "./ContactPicker.vue";
 
 export default {
   name: "EditAppo",
@@ -63,6 +73,7 @@ export default {
     AppoEdit,
     EmployeePicker,
     ServicePicker,
+    ContactPicker,
   },
   props: {
     appoId: Number,
@@ -77,12 +88,15 @@ export default {
     // status
     const isPickingEmp = ref(false);
     const isPickingService = ref(false);
+    const isPickingContact = ref(false);
     // outcomes
     const serviceName = ref("");
     const category = ref("");
     const AOSOsText = ref([]);
     const empAlias = ref("");
     const color = ref("");
+    const phoneNum = ref("");
+    const contactName = ref("");
     // payload
     const serviceId = ref(null);
     const AOSOs = ref([]);
@@ -106,6 +120,12 @@ export default {
       AOSOsText.value = [];
       AOSOs.value = [];
       color.value = "white";
+    };
+
+    const setContact = (newPhoneNum, newName) => {
+      phoneNum.value = newPhoneNum;
+      contactName.value = newName;
+      onStopPicking();
     };
 
     const setService = async (
@@ -148,6 +168,11 @@ export default {
     };
 
     // INPUT HANDLE
+    const onSelectContact = () => {
+      props.onHideMain(true);
+      isPickingContact.value = true;
+    };
+
     const onOpenEmpPicker = () => {
       props.onHideMain(true);
       isPickingEmp.value = true;
@@ -161,6 +186,7 @@ export default {
     const onStopPicking = () => {
       isPickingEmp.value = false;
       isPickingService.value = false;
+      isPickingContact.value = false;
       props.onHideMain(false);
     };
 
@@ -180,6 +206,8 @@ export default {
       console.log("Fetched details:", details);
 
       // populate
+      phoneNum.value = String(details.phoneNum);
+      contactName.value = String(details.contactName);
       serviceName.value = String(details.serviceName);
       category.value = String(details.cateName);
       AOSOs.value = details.AOSOs;
@@ -197,6 +225,8 @@ export default {
     const onSubmit = async () => {
       const newAppoId = await updateAppo(
         props.appoId,
+        phoneNum.value,
+        contactName.value,
         serviceId.value,
         AOSOs.value,
         empId.value,
@@ -226,6 +256,8 @@ export default {
     return {
       isPickingEmp,
       isPickingService,
+      isPickingContact,
+      setContact,
       setService,
       setEmp,
       setDate,
@@ -234,6 +266,8 @@ export default {
       setNote,
       resetEmp,
       resetService,
+      contactName,
+      phoneNum,
       serviceName,
       AOSOsText,
       category,
@@ -244,6 +278,7 @@ export default {
       note,
       color,
       onSubmit,
+      onSelectContact,
       onOpenEmpPicker,
       onOpenServicePicker,
       onStopPicking,
