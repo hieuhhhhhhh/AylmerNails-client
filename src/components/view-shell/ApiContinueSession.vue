@@ -28,12 +28,11 @@ export default {
           }
         );
 
-        // read status and process reponse
-        const data = await res.json();
-
         if (res.ok) {
           console.log("Session continued.");
         } else {
+          // read status and process reponse
+          const data = await res.json();
           console.log("Failed to use token, message: ", data.message);
         }
       } catch (e) {

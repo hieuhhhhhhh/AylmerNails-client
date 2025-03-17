@@ -30,7 +30,7 @@ export default {
   methods: {
     updateChecked(event) {
       const value = event.target.value;
-      if (event.target.checked) {
+      if (event.target.checked === true) {
         this.checkService(value);
       } else {
         this.uncheckService(value);

@@ -19,8 +19,8 @@
     <table border="1">
       <thead>
         <tr>
-          <th>Option</th>
-          <th>Length Increase (minutes) <br /></th>
+          <th>Answer</th>
+          <th>Duration Increase (minutes) <br /></th>
         </tr>
       </thead>
       <tbody>
@@ -50,6 +50,7 @@
               :value="option.length_offset / 60"
               @input="onInputLength(parentIndex, index, $event)"
               required
+              step="1"
             />
           </td>
         </tr>
@@ -67,7 +68,11 @@
       </tbody>
     </table>
     <div id="note">
-      *'Length Increase' can be negative to indicate decrement
+      *to indicate a decrement, input a negative value for "Duration Increase"
+    </div>
+    <div id="note">
+      *question list is immutable once created, recreate the service if you have
+      to change it
     </div>
     <br />
   </div>
@@ -131,7 +136,6 @@ export default {
   margin-left: 10px;
 }
 #note {
-  font-style: italic;
   color: rgb(184, 121, 3);
 }
 #title {

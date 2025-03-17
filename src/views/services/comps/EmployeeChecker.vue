@@ -35,7 +35,7 @@ import fetchServiceEmployees from "../apis/fetchSEs";
 import updateSEs from "../apis/updateSEs";
 export default {
   props: {
-    serviceId: String,
+    serviceId: Number,
   },
   components: {
     FontAwesomeIcon,
@@ -48,7 +48,7 @@ export default {
       saveIcon: faCheck,
       // status
       isEditing: false,
-      // states
+      // products
       employees: [],
       checked: [],
     };

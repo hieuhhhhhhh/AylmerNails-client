@@ -1,5 +1,5 @@
 export default function parseUnixHours(seconds) {
-  if (!seconds || seconds === 0) {
+  if (!seconds) {
     return null;
   }
 

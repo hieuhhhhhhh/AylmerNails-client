@@ -31,7 +31,7 @@ import submitNewServiceLength from "../apis/submitSL";
 
 export default {
   props: {
-    serviceId: String,
+    serviceId: Number,
     inputVariations: Object,
     effective_from: Number,
     inputLength: Number,
@@ -48,7 +48,7 @@ export default {
       cancelIcon: faCancel,
       saveIcon: faCheck,
 
-      // states
+      // products
       variations: [],
       defaultLength: null,
     };

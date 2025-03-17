@@ -1,40 +1,39 @@
 <template>
+  <div class="warning" v-if="lastDateCC > 0" @click="toConflictPage">
+    Warning: Availability has {{ lastDateCC }}
+    <u>conflicting appointment(s)</u>
+  </div>
+  <div class="warning" v-if="durationCC > 0">
+    Warning: Duration settings has {{ durationCC }}
+    <u>conflicting appointment(s)</u>
+  </div>
   <ServiceInfo
     :isFetched="isFetched"
     :serviceInfo="serviceInfo"
     :serviceId="service_id"
   />
-  <br />
 
   <th>Members</th>
   <EmployeeChecker :serviceId="service_id" />
   <br />
+  <th>Duration Settings</th>
+  <DurationDemo
+    v-if="isFetched"
+    :serviceId="service_id"
+    :duration="duration"
+    :empDurations="empDurations"
+  />
 
-  <th>Additional Options</th>
+  <br />
+  <br />
+
+  <th>Question List</th>
   <NA v-if="!AOSs.length && isFetched" />
   <ServiceAOSs :AOSs="AOSs" />
-  <br />
-  <br />
-
-  <th>Current Length Setting</th>
-  <ServiceLengthTable
-    v-if="currentLength && Object.keys(currentLength).length"
-    :serviceLength="currentLength"
-    :serviceId="service_id"
-  />
-  <td v-else-if="isFetched"><NA /></td>
-  <br />
-
-  <th>Future Length Settings</th>
-  <NA v-if="!futureLengths.length > 0 && isFetched" />
-
-  <ServiceLengthTable
-    v-for="(serviceLength, index) in futureLengths"
-    :key="index"
-    :serviceLength="serviceLength"
-    :serviceId="service_id"
-  />
-  <AddServiceLength :serviceId="service_id" />
+  <div id="note">
+    *question list can not be edited, recreate the service if you have to change
+    it
+  </div>
 </template>
 
 <script>
@@ -42,48 +41,53 @@
 import fetchServiceDetails from "./apis/fetchServiceDetails";
 import unixToReadable from "@/lib/unixToReadable";
 // comps
-import ServiceLengthTable from "./comps/service_length_tables/SL-demo-table.vue";
 import NA from "@/components/NotAvailable.vue";
-import AddServiceLength from "./comps/AddSL.vue";
 import ServiceInfo from "./comps/ServiceInfo.vue";
 import ServiceAOSs from "./comps/AOSs/AOSs-demo.vue";
 import EmployeeChecker from "./comps/EmployeeChecker.vue";
+import DurationDemo from "./comps/durations/DurationsDemo.vue";
 
 export default {
   components: {
-    ServiceLengthTable,
     NA,
-    AddServiceLength,
     ServiceInfo,
     ServiceAOSs,
     EmployeeChecker,
+    DurationDemo,
   },
   data() {
     return {
+      // outcomes
       service_id: null,
       details: {},
       AOSs: [],
       serviceInfo: {},
-      futureLengths: [],
-      currentLength: {},
+      duration: null,
+      empDurations: [],
       isFetched: false,
       isAddingLength: false,
+      durationCC: 0,
+      lastDateCC: 0,
     };
   },
   methods: {
     formatDate(unixTime) {
       return unixToReadable(unixTime);
     },
+    toConflictPage() {
+      this.$router.push(`/conflicts/service_ld/${this.service_id}`);
+    },
   },
   async created() {
-    this.service_id = this.$route.params.id;
+    this.service_id = Number(this.$route.params.id);
     this.details = await fetchServiceDetails(this.service_id);
-    console.log(this.details);
+
     // fetch info
     this.serviceInfo = {
       service_id: this.details.service_id,
       name: this.details.name,
       description: this.details.description,
+      first_date: this.details.first_date,
       last_date: this.details.last_date,
       cate_name: this.details.cate_name,
       cate_id: this.details.cate_id,
@@ -93,13 +97,13 @@ export default {
     this.AOSs = this.details.AOSs;
     console.log("AOSs: ", this.AOSs);
 
-    // fetch lengths
-    this.lengths = this.details.lengths;
-    console.log("first index:", this.lengths[0].effective_from);
+    // fetch durations
+    this.duration = this.details.duration;
+    this.empDurations = this.details.empDurations;
 
-    this.currentLength = this.lengths[0];
-
-    this.futureLengths = this.lengths.slice(1);
+    // fetch conflicts counts
+    this.durationCC = this.details.durationCC;
+    this.lastDateCC = this.details.lastDateCC;
 
     // set isFetched
     this.isFetched = true;
@@ -116,5 +120,21 @@ td {
   font-size: 19px;
   display: flex;
   text-align: left;
+}
+#highlight {
+  outline: 3px outset;
+
+  width: fit-content;
+  height: fit-content;
+}
+#note {
+  padding: 10px;
+  padding-top: 0px;
+  color: rgb(184, 121, 3);
+}
+.warning {
+  font-size: 16px;
+  color: red;
+  cursor: pointer;
 }
 </style>

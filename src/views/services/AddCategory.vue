@@ -37,7 +37,7 @@ export default {
     return {
       // icons
       saveIcon: faCheck,
-      // states
+      // products
       name: "",
     };
   },

@@ -28,6 +28,12 @@
             </select>
           </td>
         </tr>
+        <tr>
+          <th>Starting Date:</th>
+          <td id="flexBox">
+            <input type="date" id="datePicker" v-model="date" required />
+          </td>
+        </tr>
 
         <tr>
           <th>
@@ -35,7 +41,7 @@
             (minutes)
           </th>
           <td id="flexBox">
-            <input type="number" v-model="length" required :min="1" />
+            <input type="number" v-model="length" required :min="5" step="1" />
           </td>
         </tr>
         <tr>
@@ -53,14 +59,15 @@
           <th>Members:</th>
           <td>
             <div v-for="employee in employees" :key="employee.employee_id">
-              <input
-                v-if="employee.is_active"
-                id="check"
-                type="checkbox"
-                :value="employee.employee_id"
-                v-model="checkedEmp"
-              />
-              <label>{{ employee.alias }}</label>
+              <div v-if="employee.is_active">
+                <input
+                  id="check"
+                  type="checkbox"
+                  :value="employee.employee_id"
+                  v-model="checkedEmp"
+                />
+                <label>{{ employee.alias }}</label>
+              </div>
             </div>
           </td>
         </tr>
@@ -68,7 +75,7 @@
     </table>
     <br />
     <div id="addOn">
-      <b>Additional Options:</b>
+      <b>Question List:</b>
       <AOSsEdit
         :AOSs="AOSs"
         :editAOS="editAOS"
@@ -107,9 +114,10 @@ export default {
     return {
       // icons
       saveIcon: faCheck,
-      // states
+      // payload
       name: "",
       description: "",
+      date: null,
       length: null,
       categoryId: "null",
       AOSs: [],
@@ -155,6 +163,7 @@ export default {
         this.name,
         this.categoryId,
         this.description,
+        this.date,
         this.length * 60,
         this.AOSs,
         this.checkedEmp
@@ -181,7 +190,7 @@ export default {
 </script>
 
 <style scoped>
-input:not(#check),
+input:not(#check, #datePicker),
 textarea {
   width: 100%;
 }
@@ -207,5 +216,10 @@ td {
 #check {
   transform: scale(2);
   margin: 10px;
+}
+#datePicker {
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 5px;
 }
 </style>

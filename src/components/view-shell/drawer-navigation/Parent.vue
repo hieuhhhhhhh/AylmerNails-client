@@ -26,6 +26,11 @@ export default {
       this.drawerOpen = newState; // Update the drawerOpen state
     },
   },
+  watch: {
+    $route() {
+      this.drawerOpen = false; // Close the drawer when route changes
+    },
+  },
 };
 </script>
 

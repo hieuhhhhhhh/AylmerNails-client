@@ -1,7 +1,16 @@
-export default async function addEmployee(alias, key_intervals, service_ids) {
+export default async function addEmployee(
+  alias,
+  key_intervals,
+  intervalPercent,
+  colorId,
+  service_ids
+) {
   try {
     // get app path
     const baseURL = process.env.VUE_APP_BASE_URL;
+
+    // convert to secs
+    key_intervals = key_intervals.map((e) => e * 60);
 
     // start requesting server
     const res = await fetch(`${baseURL}/api/employees/add_employee`, {
@@ -13,6 +22,8 @@ export default async function addEmployee(alias, key_intervals, service_ids) {
       body: JSON.stringify({
         alias: alias,
         key_intervals: key_intervals,
+        interval_percent: intervalPercent,
+        color_id: colorId,
         service_ids: service_ids,
       }),
     });

@@ -73,9 +73,6 @@
       </table>
     </div>
   </form>
-  <br />
-  <br />
-  <br />
 </template>
 
 <script>
@@ -109,7 +106,7 @@ export default {
       // status
       isEditing: false,
       resetKey: 0,
-      // states
+      // products
       date: null,
       closings: [],
       openings: [],

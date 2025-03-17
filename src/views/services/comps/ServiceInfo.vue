@@ -14,6 +14,15 @@
           </td>
         </tr>
         <tr>
+          <th>Starting From:</th>
+          <td>
+            <div v-if="isFetched">
+              {{ formatDate(serviceInfo.first_date) }}
+            </div>
+            <NA v-else />
+          </td>
+        </tr>
+        <tr>
           <th>Available Until:</th>
           <td>
             <div v-if="serviceInfo.last_date && isFetched">
@@ -62,7 +71,7 @@ export default {
   props: {
     serviceInfo: Object,
     isFetched: Boolean,
-    serviceId: String,
+    serviceId: Number,
   },
   components: {
     NA,

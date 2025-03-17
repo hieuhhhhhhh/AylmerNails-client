@@ -79,7 +79,7 @@ import fetchCategories from "../apis/fetchCategories";
 export default {
   props: {
     onClose: Function,
-    serviceId: String,
+    serviceId: Number,
     iName: String,
     iDescription: String,
     iCategoryId: Number,
@@ -95,7 +95,7 @@ export default {
       cancelIcon: faCancel,
       saveIcon: faCheck,
 
-      // states
+      // products
       name: "",
       description: "",
       date: null,

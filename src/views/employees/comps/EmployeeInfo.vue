@@ -12,12 +12,21 @@
             <td>{{ alias }}</td>
           </tr>
           <tr>
+            <th>Color:</th>
+            <td :style="{ color: colorCode }">{{ colorName }}</td>
+          </tr>
+
+          <tr>
             <th>Available Until:</th>
             <td><NA v-if="!formattedDate" /> {{ formattedDate }}</td>
           </tr>
           <tr>
             <th>Ideal Lengths:<br />(minutes)</th>
             <td>{{ formattedIntervals(intervals) }}</td>
+          </tr>
+          <tr>
+            <th>Ideal Percentage:</th>
+            <td>{{ intervalPercent }}%</td>
           </tr>
           <tr>
             <th>Services:</th>
@@ -29,9 +38,13 @@
     <div v-else>
       <EditEmpInfo
         :alias="alias"
+        :colorId="colorId"
         :last_date="last_date"
+        :interval_percent="intervalPercent"
         :setAlias="setAlias"
+        :setColorId="setColorId"
         :setLastDate="setLastDate"
+        :setIntervalPercent="setIntervalPercent"
       />
     </div>
 
@@ -99,21 +112,51 @@ export default {
       resetCheckers: 0,
       // resources
       formattedDate: "",
-      // submit
+      colorName: "",
+      colorCode: null,
+      // outcome
       emp_id: null,
       categories: [],
       alias: "",
+      colorId: null,
       last_date: null,
       ESs: new Set(),
       intervals: [],
+      intervalPercent: null,
     };
   },
   methods: {
+    async fetchData() {
+      this.emp_id = this.$route.params.id;
+      // fetch resources
+      const [details, { categories, ES_ids }] = await Promise.all([
+        fetchEmpDetails(this.emp_id),
+        fetchEmployeeServices(this.emp_id),
+      ]);
+      this.categories = categories;
+      this.ESs = ES_ids;
+
+      // fetch state
+      this.alias = details.alias;
+      this.colorId = details.colorId;
+      this.colorName = details.colorName;
+      this.colorCode = details.colorCode;
+      this.last_date = parseUT(details.last_date);
+      this.formattedDate = unixToReadable(details.last_date);
+      this.intervals = details.key_intervals;
+      this.intervalPercent = details.interval_percent;
+
+      // update status
+      this.isFetched = true;
+      // reset checkers
+      this.resetCheckers++;
+    },
     checkService(serviceId) {
       this.ESs.add(serviceId);
     },
     uncheckService(serviceId) {
-      this.ESs.delete(serviceId);
+      this.ESs.delete(Number(serviceId));
+      console.log("ESs", this.ESs);
     },
     openEditForm() {
       this.isEditing = true;
@@ -137,40 +180,27 @@ export default {
     setAlias(value) {
       this.alias = value;
     },
+    setColorId(value) {
+      this.colorId = value;
+    },
     setLastDate(value) {
       this.last_date = value;
+    },
+    setIntervalPercent(value) {
+      this.intervalPercent = value;
     },
     async onSubmit() {
       const res = await updateEmpInfo(
         this.emp_id,
         this.alias,
+        this.colorId,
+        this.intervalPercent,
         parseDate(this.last_date),
-        this.ESs
+        [...this.ESs]
       );
       if (res) {
         this.$router.push("/employees/refresh");
       }
-    },
-    async fetchData() {
-      this.emp_id = this.$route.params.id;
-      // fetch resources
-      const [details, { categories, ES_ids }] = await Promise.all([
-        fetchEmpDetails(this.emp_id),
-        fetchEmployeeServices(this.emp_id),
-      ]);
-      this.categories = categories;
-      this.ESs = ES_ids;
-
-      // fetch state
-      this.alias = details.alias;
-      this.last_date = parseUT(details.last_date);
-      this.formattedDate = unixToReadable(details.last_date);
-      this.intervals = details.key_intervals;
-
-      // update status
-      this.isFetched = true;
-      // reset checkers
-      this.resetCheckers++;
     },
   },
   async created() {
