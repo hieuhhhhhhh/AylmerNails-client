@@ -8,16 +8,17 @@
       <tr>
         <th>Client</th>
         <td>
-          {{ contactName }}
+          {{ formatPhone(phoneNum) }}
+
           <button @click.prevent="onSelectContact">Select</button>
           <br />
-          {{ formatPhone(phoneNum) }}
+          {{ contactName }}
         </td>
       </tr>
       <tr>
         <th>Service</th>
         <td>
-          {{ serviceName }} ({{ category }})
+          <span v-if="serviceName">{{ serviceName }} ({{ category }})</span>
           <button @click.prevent="onOpenServicePicker">Select</button>
           <br />
           <div id="AOS" v-for="(AOS, index) in AOSOs" :key="index">

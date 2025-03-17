@@ -48,6 +48,8 @@
 
     <ContactPicker
       v-if="isPickingContact"
+      :_phoneNum="phoneNum"
+      :_name="contactName"
       :setContact="setContact"
       :onStopPicking="onStopPicking"
     />
@@ -206,18 +208,18 @@ export default {
       console.log("Fetched details:", details);
 
       // populate
-      phoneNum.value = String(details.phoneNum);
-      contactName.value = String(details.contactName);
-      serviceName.value = String(details.serviceName);
-      category.value = String(details.cateName);
+      phoneNum.value = details.phoneNum;
+      contactName.value = details.contactName;
+      serviceName.value = details.serviceName;
+      category.value = details.cateName;
       AOSOs.value = details.AOSOs;
       AOSOsText.value = details.AOSOsText;
-      empAlias.value = String(details.empAlias);
-      serviceId.value = Number(details.serviceId);
-      empId.value = Number(details.empId);
-      date.value = Number(details.date);
-      start.value = Number(details.start);
-      duration.value = Number(details.end - details.start);
+      empAlias.value = details.empAlias;
+      serviceId.value = details.serviceId;
+      empId.value = details.empId;
+      date.value = details.date;
+      start.value = details.start;
+      duration.value = details.end - details.start;
       note.value = details.note;
       color.value = details.color;
     };

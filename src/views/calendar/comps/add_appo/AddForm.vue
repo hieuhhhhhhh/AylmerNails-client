@@ -8,10 +8,10 @@
       <tr>
         <th>Client</th>
         <td>
-          {{ clientName }}
+          {{ formatPhone(phoneNum) }}
           <button @click.prevent="onSelectContact">Select</button>
           <br />
-          {{ formatPhone(phoneNum) }}
+          {{ clientName }}
         </td>
       </tr>
       <tr>

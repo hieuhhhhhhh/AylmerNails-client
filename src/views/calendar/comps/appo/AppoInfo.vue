@@ -8,15 +8,15 @@
       <tr>
         <th>Client</th>
         <td>
-          {{ details.contactName }}
-          <br />
           {{ formatPhone(details.phoneNum) }}
+          <br />
+          {{ details.contactName }}
         </td>
       </tr>
       <tr>
         <th>Service</th>
         <td>
-          {{ details.serviceName }} ({{ details.cateName }})
+          <span v-if="serviceName">{{ serviceName }} ({{ category }})</span>
           <br />
           <div id="AOS" v-for="(AOS, index) in details.AOSOsText" :key="index">
             {{ AOS.question }} ~ {{ AOS.answer }}
