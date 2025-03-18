@@ -2,24 +2,51 @@
   <div id="DrawerContent">
     <div><router-link to="/">Menu</router-link></div>
     <div><router-link to="/booknow">Book Now</router-link></div>
-    <div><router-link to="/profile">My Appointments</router-link></div>
+    <div>
+      <router-link to="/profile"
+        >Booking History
+        <span v-if="newAppoCount > 0">({{ newAppoCount }})</span></router-link
+      >
+    </div>
     <div><router-link to="/signup">Sign Up</router-link></div>
     <div><router-link to="/login">Log In</router-link></div>
     <div><router-link to="/services">Services</router-link></div>
     <div><router-link to="/employees">Employees</router-link></div>
     <div>
-      <router-link :to="`/calendar/${getToday()}`">Calendar</router-link>
+      <router-link :to="`/calendar/${getTodayUnixTime()}`"
+        >Calendar</router-link
+      >
     </div>
   </div>
 </template>
 <script>
+// lib
+import { watch } from "vue";
 import getTodayUnixTime from "@/lib/getTodayUnixTime";
+import updateNewAppoCount from "./apis/updateNewAppoCount";
+// pinina
+import { useNewAppoCount } from "@/stores/myProfile";
+import { useMyProfile } from "@/stores/myProfile";
 
 export default {
-  methods: {
-    getToday() {
-      return getTodayUnixTime();
-    },
+  setup() {
+    // pinia states
+    let store = useNewAppoCount();
+    const newAppoCount = store.newAppoCount;
+
+    // DEPENDENCIES
+    store = useMyProfile();
+    watch(
+      () => store.token,
+      () => {
+        updateNewAppoCount();
+      }
+    );
+
+    return {
+      getTodayUnixTime,
+      newAppoCount,
+    };
   },
 };
 </script>
