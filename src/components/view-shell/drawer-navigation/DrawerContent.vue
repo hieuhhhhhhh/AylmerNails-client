@@ -2,11 +2,13 @@
   <div id="DrawerContent">
     <div><router-link to="/">Menu</router-link></div>
     <div><router-link to="/booknow">Book Now</router-link></div>
-    <div>
+    <div class="relative">
       <router-link to="/profile"
-        >Booking History
-        <span v-if="newAppoCount > 0">({{ newAppoCount }})</span></router-link
-      >
+        ><div v-if="newAppoCount > 0" id="noti">
+          {{ newAppoCount }}
+        </div>
+        Booking History
+      </router-link>
     </div>
     <div><router-link to="/signup">Sign Up</router-link></div>
     <div><router-link to="/login">Log In</router-link></div>
@@ -21,25 +23,25 @@
 </template>
 <script>
 // lib
-import { watch } from "vue";
+import { watch, computed } from "vue";
 import getTodayUnixTime from "@/lib/getTodayUnixTime";
-import updateNewAppoCount from "./apis/updateNewAppoCount";
-// pinina
-import { useNewAppoCount } from "@/stores/myProfile";
-import { useMyProfile } from "@/stores/myProfile";
+import connectSocket from "./apis/connectSocket";
+// pinia
+import { useMyProfile, useNewAppoCount } from "@/stores/myProfile";
 
 export default {
   setup() {
     // pinia states
-    let store = useNewAppoCount();
-    const newAppoCount = store.newAppoCount;
+    const NACstore = useNewAppoCount();
+    const newAppoCount = computed(() => NACstore.newAppoCount);
 
     // DEPENDENCIES
-    store = useMyProfile();
+    const MPstore = useMyProfile();
     watch(
-      () => store.token,
+      () => MPstore.token,
       () => {
-        updateNewAppoCount();
+        // start connecting
+        connectSocket();
       }
     );
 
@@ -73,7 +75,8 @@ export default {
 }
 @media (orientation: portrait) {
   #DrawerContent a {
-    padding: 16px;
+    padding-top: 16px;
+    padding-bottom: 16px;
     font-size: 20px;
   }
 }
@@ -83,5 +86,21 @@ export default {
 }
 #DrawerContent a:active {
   background: var(--active);
+}
+#noti {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: red;
+  position: absolute;
+  font-size: 13px;
+  color: white;
+  aspect-ratio: 1;
+  border-radius: 10px;
+  margin-left: calc(90% - 20px);
+  width: 20px;
+}
+.relative {
+  position: relative;
 }
 </style>

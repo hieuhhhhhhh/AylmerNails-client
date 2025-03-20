@@ -50,7 +50,7 @@ export default {
 <style scoped>
 #grayPart {
   position: absolute;
-  background-color: rgb(193, 193, 193);
+  background-color: rgb(215, 215, 215);
   height: 100%;
 }
 </style>

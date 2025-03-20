@@ -244,7 +244,7 @@ export default {
   overflow-x: auto;
   overflow-y: hidden;
 
-  background-color: rgb(193, 193, 193);
+  background-color: rgb(215, 215, 215);
   color: black;
 }
 
