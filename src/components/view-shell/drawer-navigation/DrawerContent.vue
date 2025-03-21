@@ -3,11 +3,11 @@
     <div><router-link to="/">Menu</router-link></div>
     <div><router-link to="/booknow">Book Now</router-link></div>
     <div class="relative">
-      <router-link to="/profile"
+      <router-link to="/booking_history"
         ><div v-if="newAppoCount > 0" id="noti">
           {{ newAppoCount }}
         </div>
-        Booking History
+        Client Bookings
       </router-link>
     </div>
     <div><router-link to="/signup">Sign Up</router-link></div>
@@ -91,7 +91,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: red;
+  background: rgba(255, 0, 0, 0.8);
   position: absolute;
   font-size: 13px;
   color: white;

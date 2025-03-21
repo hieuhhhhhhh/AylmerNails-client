@@ -1,7 +1,7 @@
 // src/router.js
 import { createRouter, createWebHistory } from "vue-router";
 import Menu from "./views/Menu.vue";
-import Profile from "./views/Profile.vue";
+import Profile from "./views/profile/Profile.vue";
 import NotFound from "./views/NotFound.vue";
 import SignUp from "./views/authentication/SignUp.vue";
 import LogIn from "./views/authentication/LogIn.vue";
@@ -23,9 +23,10 @@ import BookNow from "./views/book_now/Parent.vue";
 // calendar
 import Calendar from "./views/calendar/Calendar.vue";
 // conflicts
-
 import ConflictsLayout from "./views/conflicts/Layout.vue";
 import ServiceLDconflicts from "./views/conflicts/ServiceLDconflicts.vue";
+// booking history
+import BookingHistory from "./views/booking_history/Layout.vue";
 const routes = [
   {
     path: "/",
@@ -38,6 +39,10 @@ const routes = [
   {
     path: "/profile",
     component: Profile,
+  },
+  {
+    path: "/booking_history",
+    component: BookingHistory,
   },
   {
     path: "/signup",
