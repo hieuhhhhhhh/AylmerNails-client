@@ -4,15 +4,17 @@ import { useMyProfile, useNewAppoCount } from "@/stores/myProfile";
 const validRoles = ["developer", "admin"];
 
 let socket;
+let role;
+let token;
 
-export default function connectSocket() {
+export function connectSocket() {
   // pinia store
   const MPstore = useMyProfile();
   const NACstore = useNewAppoCount();
 
   // get role and token from the store
-  const role = MPstore.role;
-  const token = MPstore.token;
+  role = MPstore.role;
+  token = MPstore.token;
 
   // if roles not valid, return
   if (!validRoles.includes(role)) return;
@@ -35,4 +37,9 @@ export default function connectSocket() {
   socket.emit("get_new_appo_count", { token });
 
   return socket;
+}
+
+export function fetchNewAppoCount() {
+  if (!socket) return;
+  socket.emit("get_new_appo_count", { token });
 }

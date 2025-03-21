@@ -6,6 +6,7 @@
     </colgroup>
     <tbody>
       <tr>
+        <th class="newCol"></th>
         <th>Booked on</th>
         <th>Client</th>
         <th>Service</th>
@@ -19,6 +20,11 @@
         :key="index"
         @click="toAppoDetails(appo.date, appo.appoId)"
       >
+        <td class="newCol">
+          <div class="flexBox">
+            <div class="newCell" v-if="appo.bookedTime > lastTracked">NEW</div>
+          </div>
+        </td>
         <td>
           {{ unixTimeToReminder(appo.bookedTime) }}
           <div>{{ unixToHours(appo.bookedTime) }}</div>
@@ -54,12 +60,14 @@ import parseUT from "@/lib/parseUT";
 import unixTimeToReminder from "@/lib/unixTimeToReminder";
 import secsToHours from "@/lib/secsToHours";
 import unixToHours from "@/lib/unixToHours";
+import { fetchNewAppoCount } from "@/components/view-shell/drawer-navigation/apis/connectSocket";
 
 export default {
   setup() {
     // resources
     const appos = ref([]);
     const limit = ref(50);
+    const lastTracked = ref(null);
     // lib
     const router = useRouter();
 
@@ -71,11 +79,18 @@ export default {
 
     // LIFECYCLE
     onMounted(async () => {
-      appos.value = await fetchBookingHistory(limit.value);
+      // call api
+      const [newAppos, newLT] = await fetchBookingHistory(limit.value);
+      appos.value = newAppos;
+      lastTracked.value = newLT;
+
+      // call api via socket
+      fetchNewAppoCount();
     });
 
     return {
       appos,
+      lastTracked,
       parseUT,
       unixTimeToReminder,
       secsToHours,
@@ -90,7 +105,7 @@ export default {
 table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 15px;
+  font-size: 14px;
 }
 th,
 td {
@@ -108,5 +123,20 @@ tr {
 }
 .row:active {
   background: var(--active);
+}
+.newCol {
+  padding: 0px;
+  font-size: 8px;
+}
+.flexBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.newCell {
+  padding: 2px;
+  background: var(--trans-red);
+  color: white;
+  border-radius: 2px;
 }
 </style>

@@ -25,7 +25,7 @@
 // lib
 import { watch, computed } from "vue";
 import getTodayUnixTime from "@/lib/getTodayUnixTime";
-import connectSocket from "./apis/connectSocket";
+import { connectSocket } from "./apis/connectSocket";
 // pinia
 import { useMyProfile, useNewAppoCount } from "@/stores/myProfile";
 
@@ -91,7 +91,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(255, 0, 0, 0.8);
+  background: var(--trans-red);
   position: absolute;
   font-size: 13px;
   color: white;

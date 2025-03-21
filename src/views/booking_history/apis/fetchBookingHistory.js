@@ -21,6 +21,7 @@ export default async function fetchBookingHistory(limit) {
     if (res.ok) {
       // res holder
       const appos = [];
+      const lastTracked = json.last_tracked;
 
       // unpack
       const tables = json.appos;
@@ -62,7 +63,7 @@ export default async function fetchBookingHistory(limit) {
       }
 
       //  return results
-      return appos;
+      return [appos, lastTracked];
     } else {
       console.log("Failed to fetch booking history, message: ", json.message);
     }
