@@ -1,7 +1,6 @@
 // src/router.js
 import { createRouter, createWebHistory } from "vue-router";
 import Menu from "./views/Menu.vue";
-import Profile from "./views/profile/Profile.vue";
 import NotFound from "./views/NotFound.vue";
 import SignUp from "./views/authentication/SignUp.vue";
 import LogIn from "./views/authentication/LogIn.vue";
@@ -27,6 +26,9 @@ import ConflictsLayout from "./views/conflicts/Layout.vue";
 import ServiceLDconflicts from "./views/conflicts/ServiceLDconflicts.vue";
 // booking history
 import BookingHistory from "./views/booking_history/Layout.vue";
+// profile
+import Profile from "./views/profile/Layout.vue";
+
 const routes = [
   {
     path: "/",
@@ -37,7 +39,7 @@ const routes = [
     component: BookNow,
   },
   {
-    path: "/profile",
+    path: "/profiles/:userId?",
     component: Profile,
   },
   {
