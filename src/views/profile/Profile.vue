@@ -1,6 +1,5 @@
 <template>
-  <h1>This is profile</h1>
-  <div>{{ userInfo }}</div>
+  <ProfileInfo :userInfo="userInfo" />
   <div>{{ appos }}</div>
 </template>
 
@@ -10,9 +9,14 @@ import { useRoute } from "vue-router";
 import { ref, onMounted } from "vue";
 import fetchMyProfile from "./apis/fetchMyProfile";
 import fetchProfile from "./apis/fetchProfile";
+// comp
+import ProfileInfo from "./comps/ProfileInfo.vue";
 
 export default {
   name: "Profile-",
+  components: {
+    ProfileInfo,
+  },
   setup() {
     // lib
     const route = useRoute();
