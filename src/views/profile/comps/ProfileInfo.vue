@@ -33,6 +33,7 @@
     v-if="isEditingName"
     :userInfo="userInfo"
     :onCancel="onNotEditName"
+    :onFinish="onNameUpdated"
   />
 </template>
 
@@ -42,6 +43,7 @@ import { ref } from "vue";
 // comp
 import Drawer from "./Drawer.vue";
 import NameEdit from "./NameEdit.vue";
+import { useRouter } from "vue-router";
 
 export default {
   props: {
@@ -52,12 +54,19 @@ export default {
     NameEdit,
   },
   setup() {
+    // lib
+    const router = useRouter();
     // status
     const isEditingName = ref(false);
 
     // INPUT
     const onEditName = () => {
       isEditingName.value = true;
+    };
+
+    const onNameUpdated = () => {
+      isEditingName.value = false;
+      router.push("/refresh");
     };
 
     const onNotEditName = () => {
@@ -68,6 +77,7 @@ export default {
       isEditingName,
       onEditName,
       onNotEditName,
+      onNameUpdated,
     };
   },
 };

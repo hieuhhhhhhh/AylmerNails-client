@@ -35,16 +35,26 @@
 <script>
 // lib
 import { onMounted, ref } from "vue";
+import updateMyProfile from "../apis/updateProfile";
 
 export default {
   props: {
     userInfo: Object,
     onCancel: Function,
+    onFinish: Function,
   },
   setup(props) {
     // payload
     const firstName = ref(null);
     const lastName = ref(null);
+
+    // APIS
+    const onSubmit = async () => {
+      const res = await updateMyProfile(firstName.value, lastName.value);
+      if (res) {
+        props.onFinish();
+      }
+    };
 
     // LIFECYCLE
     onMounted(() => {
@@ -55,6 +65,7 @@ export default {
     return {
       firstName,
       lastName,
+      onSubmit,
     };
   },
 };

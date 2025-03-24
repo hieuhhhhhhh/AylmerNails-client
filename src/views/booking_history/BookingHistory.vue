@@ -31,7 +31,7 @@
         </td>
         <td>
           <div>{{ appo.contactName }}</div>
-          {{ appo.phoneNum }}
+          {{ formatPhone(appo.phoneNum) }}
         </td>
         <td>
           {{ appo.serviceName }}
@@ -61,6 +61,7 @@ import unixTimeToReminder from "@/lib/unixTimeToReminder";
 import secsToHours from "@/lib/secsToHours";
 import unixToHours from "@/lib/unixToHours";
 import { fetchNewAppoCount } from "@/components/view-shell/drawer-navigation/apis/connectSocket";
+import formatPhone from "@/lib/formatPhone";
 
 export default {
   setup() {
@@ -96,6 +97,7 @@ export default {
       secsToHours,
       toAppoDetails,
       unixToHours,
+      formatPhone,
     };
   },
 };

@@ -35,6 +35,10 @@ const routes = [
     component: Menu,
   },
   {
+    path: "/refresh",
+    component: Refresh,
+  },
+  {
     path: "/booknow",
     component: BookNow,
   },
