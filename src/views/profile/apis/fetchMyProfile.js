@@ -33,8 +33,9 @@ export default async function fetchMyProfile() {
       // read user's appointments
       const appos = [];
       const tables = json.appos;
-      for (let row in tables) {
+      for (let row of tables) {
         const [
+          appoId,
           empId,
           empAlias,
           color,
@@ -46,6 +47,7 @@ export default async function fetchMyProfile() {
           end,
         ] = row;
         const appo = {
+          appoId,
           empId,
           empAlias,
           color,

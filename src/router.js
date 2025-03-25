@@ -43,7 +43,7 @@ const routes = [
     component: BookNow,
   },
   {
-    path: "/profiles/:userId?",
+    path: "/profile",
     component: Profile,
   },
   {

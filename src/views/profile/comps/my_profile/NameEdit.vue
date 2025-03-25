@@ -35,7 +35,7 @@
 <script>
 // lib
 import { onMounted, ref } from "vue";
-import updateMyProfile from "../apis/updateProfile";
+import updateMyProfile from "../../apis/updateProfile";
 
 export default {
   props: {
