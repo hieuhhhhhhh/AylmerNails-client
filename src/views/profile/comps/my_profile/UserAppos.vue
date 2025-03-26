@@ -1,5 +1,6 @@
 <template>
   <div id="title">My Appointments</div>
+  <AppoModal v-if="appo" :appo="appo" :onCancel="onCancel" />
   <table>
     <tbody>
       <tr>
@@ -13,7 +14,7 @@
         class="row"
         v-for="(appo, index) in appos"
         :key="index"
-        @click="toAppoDetails(appo.date, appo.appoId)"
+        @click="onOpenAppo(appo)"
       >
         <td>
           {{ appo.serviceName }}
@@ -36,37 +37,39 @@
 
 <script>
 // lib
-import { computed } from "vue";
+import { ref } from "vue";
 import unixToReadable from "@/lib/unixToReadable";
 import unixTimeToReminder from "@/lib/unixTimeToReminder";
 import secsToHours from "@/lib/secsToHours";
-import { useRouter } from "vue-router";
-// pinia
-import { useMyProfile } from "@/stores/myProfile";
+import AppoModal from "./appo/Parent.vue";
 
 export default {
+  components: {
+    AppoModal,
+  },
   props: {
     appos: Array,
   },
   setup() {
-    // lib
-    const router = useRouter();
-    // pinia states
-    const MPstore = useMyProfile();
-    const role = computed(() => MPstore.role);
-    const validRoles = ["admin", "developer"];
-    const isRoleValid = computed(() => validRoles.includes(role.value));
+    // resources
+    const appo = ref(null);
 
-    const toAppoDetails = (date, appoId) => {
-      router.push(`/calendar/${date}/${appoId}`);
+    // INPUT
+    const onOpenAppo = (selected) => {
+      appo.value = selected;
+    };
+
+    const onCancel = () => {
+      appo.value = null;
     };
 
     return {
+      appo,
       unixTimeToReminder,
       unixToReadable,
       secsToHours,
-      toAppoDetails,
-      isRoleValid,
+      onOpenAppo,
+      onCancel,
     };
   },
 };

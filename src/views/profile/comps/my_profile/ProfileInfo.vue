@@ -2,10 +2,14 @@
   <table>
     <tbody>
       <tr>
-        <th id="title" colspan="2">
-          {{ userInfo.firstName }} {{ userInfo.lastName }}
+        <th colspan="2">
+          <div id="title">
+            <div>{{ userInfo.firstName }} {{ userInfo.lastName }}</div>
+            <div>
+              <Drawer :onEditName="onEditName" />
+            </div>
+          </div>
         </th>
-        <Drawer :onEditName="onEditName" />
       </tr>
       <tr>
         <th>Contact Name:</th>
@@ -13,12 +17,12 @@
       </tr>
       <tr>
         <th>Phone Number:</th>
-        <td>{{ userInfo.phoneNum }}</td>
+        <td>{{ formatPhone(userInfo.phoneNum) }}</td>
       </tr>
       <tr>
         <th>Joined on:</th>
         <td>
-          {{ userInfo.birth }}
+          {{ unixToReadable(userInfo.birth) }}
         </td>
       </tr>
       <tr>
@@ -40,8 +44,11 @@
 <script>
 // lib
 import { ref } from "vue";
+import unixToReadable from "@/lib/unixToReadable";
+import formatPhone from "@/lib/formatPhone";
+
 // comp
-import Drawer from "./Drawer.vue";
+import Drawer from "./drawer/Parent.vue";
 import NameEdit from "./NameEdit.vue";
 import { useRouter } from "vue-router";
 
@@ -78,6 +85,8 @@ export default {
       onEditName,
       onNotEditName,
       onNameUpdated,
+      unixToReadable,
+      formatPhone,
     };
   },
 };
@@ -90,6 +99,8 @@ td {
   text-align: left;
 }
 #title {
+  display: flex;
   font-size: 30px;
+  gap: 60px;
 }
 </style>

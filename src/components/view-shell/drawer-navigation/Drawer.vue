@@ -29,10 +29,12 @@ export default {
   left: -300px; /* initial position */
   width: 300px;
   max-width: 75vw;
-  height: 100%;
+  height: 100vh;
   background: var(--background-i2);
   padding-top: 60px;
   transition: left 0.15s ease-out; /* add transition effect */
+  overflow: auto;
+  box-sizing: border-box;
 }
 
 #Drawer.open {
