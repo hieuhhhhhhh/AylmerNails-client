@@ -7,6 +7,9 @@
 </template>
 
 <script>
+// pinia
+import { useMyProfile } from "@/stores/myProfile";
+
 export default {
   data() {
     return {
@@ -43,8 +46,18 @@ export default {
           }
         );
 
+        // read json
+        const json = await res.json();
+
         // read status and process reponse
         if (res.ok) {
+          // update pinia states
+          const store = useMyProfile();
+
+          store.setMyProfile({
+            token: json.token,
+            role: json.user_role,
+          });
           this.$router.push("/");
         } else {
           const data = await res.json();

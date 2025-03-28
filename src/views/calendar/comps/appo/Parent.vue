@@ -5,11 +5,7 @@
       <button @click="onCloseAppo" id="closeBtn" class="redBtn">X</button>
       <div id="content">
         <AppoInfo :details="details" />
-      </div>
-
-      <div id="flexBox">
-        <button class="btn" @click="onEditAppo(appoId)">Edit</button>
-        <DeleteBtn :appoId="details.id" />
+        <DeleteBtn :appoId="details.id" :onEditAppo="onEditAppo" />
       </div>
     </div>
   </div>
@@ -120,12 +116,6 @@ td {
   background-color: white;
   padding: 2px;
   padding-inline: 10px;
-}
-#flexBox {
-  display: flex;
-  gap: 50px;
-  justify-content: center;
-  margin-bottom: 10px;
 }
 
 #saveBtn {

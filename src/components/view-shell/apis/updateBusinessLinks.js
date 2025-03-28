@@ -1,18 +1,20 @@
-export default async function removeAppo(appoId) {
+export default async function fetchBusinessLinks(links) {
   try {
     // get app path
     const baseURL = process.env.VUE_APP_BASE_URL;
 
     // start requesting server
     const res = await fetch(
-      `${baseURL}/api/appointments/admin_remove_appointment`,
+      `${baseURL}/api/business_links/update_business_links`,
       {
         method: "POST",
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ appo_id: appoId }),
+        body: JSON.stringify({
+          links,
+        }),
       }
     );
 
@@ -23,7 +25,7 @@ export default async function removeAppo(appoId) {
       // fetch json
       const json = await res.json();
 
-      console.log("Failed to remove appointment, message: ", json.message);
+      console.log("Failed to update business links, message: ", json.message);
     }
   } catch (e) {
     console.error("Unexpected Error: ", e);

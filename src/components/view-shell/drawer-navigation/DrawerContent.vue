@@ -2,24 +2,54 @@
   <div id="DrawerContent">
     <div><router-link to="/">Menu</router-link></div>
     <div><router-link to="/booknow">Book Now</router-link></div>
+    <div class="relative">
+      <router-link to="/booking_history"
+        ><div v-if="newAppoCount > 0" id="noti">
+          {{ newAppoCount }}
+        </div>
+        Client Bookings
+      </router-link>
+    </div>
     <div><router-link to="/profile">My Appointments</router-link></div>
     <div><router-link to="/signup">Sign Up</router-link></div>
     <div><router-link to="/login">Log In</router-link></div>
     <div><router-link to="/services">Services</router-link></div>
     <div><router-link to="/employees">Employees</router-link></div>
     <div>
-      <router-link :to="`/calendar/${getToday()}`">Calendar</router-link>
+      <router-link :to="`/calendar/${getTodayUnixTime()}`"
+        >Calendar</router-link
+      >
     </div>
   </div>
 </template>
 <script>
+// lib
+import { watch, computed } from "vue";
 import getTodayUnixTime from "@/lib/getTodayUnixTime";
+import { connectSocket } from "./apis/connectSocket";
+// pinia
+import { useMyProfile, useNewAppoCount } from "@/stores/myProfile";
 
 export default {
-  methods: {
-    getToday() {
-      return getTodayUnixTime();
-    },
+  setup() {
+    // pinia states
+    const NACstore = useNewAppoCount();
+    const newAppoCount = computed(() => NACstore.newAppoCount);
+
+    // DEPENDENCIES
+    const MPstore = useMyProfile();
+    watch(
+      () => MPstore.token,
+      () => {
+        // start connecting
+        connectSocket();
+      }
+    );
+
+    return {
+      getTodayUnixTime,
+      newAppoCount,
+    };
   },
 };
 </script>
@@ -46,7 +76,8 @@ export default {
 }
 @media (orientation: portrait) {
   #DrawerContent a {
-    padding: 16px;
+    padding-top: 16px;
+    padding-bottom: 16px;
     font-size: 20px;
   }
 }
@@ -56,5 +87,21 @@ export default {
 }
 #DrawerContent a:active {
   background: var(--active);
+}
+#noti {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--trans-red);
+  position: absolute;
+  font-size: 13px;
+  color: white;
+  aspect-ratio: 1;
+  border-radius: 10px;
+  margin-left: calc(90% - 20px);
+  width: 20px;
+}
+.relative {
+  position: relative;
 }
 </style>

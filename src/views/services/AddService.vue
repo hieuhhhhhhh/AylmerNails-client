@@ -171,7 +171,7 @@ export default {
 
       // navigate to that new service
       if (service_id) {
-        this.$router.push(`/services/details/${service_id}`);
+        this.$router.push(`/services/all`);
       }
     },
   },

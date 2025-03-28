@@ -3,6 +3,7 @@
   --background-i1: rgb(245, 245, 245);
   --background-i2: white;
 
+  --trans-red: rgba(255, 0, 0, 0.8);
   --foreground: #333;
   --xtrans-gray: rgba(150, 150, 150, 0.1);
   --shadow-color: rgba(0, 0, 0, 0.2);
@@ -19,7 +20,7 @@
     --background-i2: #2b2b2b;
 
     --foreground: rgb(230, 230, 230);
-    --shadow-color: rgba(0, 0, 0, 0.4);
+    --shadow-color: rgba(0, 0, 0, 0.6);
     --hover: rgb(27, 27, 27);
     --active: rgb(21, 21, 21);
   }
@@ -44,7 +45,8 @@ body {
   cursor: pointer;
   border-radius: 3px;
   font-size: 15px;
-  padding: 8px;
+  padding: 6px;
+  padding-inline: 8px;
   border: 1px rgba(0, 0, 0, 0.4) solid;
   transition: background-color 0.05s ease-in-out;
 }
@@ -58,7 +60,8 @@ body {
   cursor: pointer;
   border-radius: 3px;
   font-size: 15px;
-  padding: 8px;
+  padding: 6px;
+  padding-inline: 8px;
   border: 1px rgba(0, 0, 0, 0.4) solid;
   transition: background-color 0.05s ease-in-out;
 }
@@ -72,7 +75,8 @@ body {
   cursor: pointer;
   border-radius: 3px;
   font-size: 15px;
-  padding: 8px;
+  padding: 6px;
+  padding-inline: 8px;
   border: 1px rgba(0, 0, 0, 0.4) solid;
   transition: background-color 0.05s ease-in-out;
 }

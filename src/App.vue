@@ -12,7 +12,7 @@
 
 <script>
 import Header from "./components/view-shell/Header.vue";
-import Footer from "./components/view-shell/Footer.vue";
+import Footer from "./components/view-shell/footer/Footer.vue";
 import DrawerNav from "./components/view-shell/drawer-navigation/Parent.vue";
 import ApiContinueSession from "./components/view-shell/ApiContinueSession.vue";
 

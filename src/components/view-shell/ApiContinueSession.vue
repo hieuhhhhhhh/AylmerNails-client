@@ -1,22 +1,21 @@
-// an api caller where it send the server its cookies to continue a session
-// the server will read the TOKEN cookie and allow if it is valid
-
 <template>
   <div></div>
 </template>
 
 <script>
+// global states
+import { useMyProfile } from "@/stores/myProfile";
+
 export default {
   async created() {
     await this.requestContinueSession();
   },
   methods: {
     async requestContinueSession() {
+      const store = useMyProfile(); // Access Pinia store
       try {
-        // get app path
         const baseURL = process.env.VUE_APP_BASE_URL;
 
-        // start requesting server
         const res = await fetch(
           `${baseURL}/api/authentication/request_continue_session`,
           {
@@ -28,12 +27,17 @@ export default {
           }
         );
 
+        // read json
+        const json = await res.json();
+
         if (res.ok) {
-          console.log("Session continued.");
+          console.log("Session Continued.");
+          store.setMyProfile({
+            token: json.token,
+            role: json.user_role,
+          });
         } else {
-          // read status and process reponse
-          const data = await res.json();
-          console.log("Failed to use token, message: ", data.message);
+          console.log("Failed to use token, message: ", json.message);
         }
       } catch (e) {
         console.error("Unexpected Error: ", e);

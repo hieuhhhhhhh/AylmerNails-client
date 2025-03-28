@@ -1,16 +1,36 @@
 <template>
-  <button class="btn" @click="removeAppo(appoId)">Delete</button>
+  <div v-if="!isDeletingAppo" id="flexBox">
+    <button class="btn" @click="onEditAppo(appoId)">Edit</button>
+    <button class="btn" @click="onDelete">Delete</button>
+  </div>
+  <ConfirmDelete v-else :appoId="appoId" />
 </template>
 <script>
-import removeAppo from "../../apis/removeAppo";
+// lib
+import { ref } from "vue";
+// comps
+import ConfirmDelete from "./ConfirmDelete.vue";
 
 export default {
+  components: {
+    ConfirmDelete,
+  },
   props: {
     appoId: Number,
+    onEditAppo: Function,
   },
   setup() {
+    // status
+    const isDeletingAppo = ref(false);
+
+    // INPUT
+    const onDelete = () => {
+      isDeletingAppo.value = true;
+    };
+
     return {
-      removeAppo,
+      isDeletingAppo,
+      onDelete,
     };
   },
 };
@@ -21,5 +41,11 @@ export default {
   background-color: white;
   padding: 2px;
   padding-inline: 10px;
+}
+#flexBox {
+  display: flex;
+  gap: 50px;
+  justify-content: center;
+  margin-top: 15px;
 }
 </style>
