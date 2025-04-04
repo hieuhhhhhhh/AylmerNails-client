@@ -58,6 +58,7 @@ import unixToReadable from "@/lib/unixToReadable";
 import unixTimeToReminder from "@/lib/unixTimeToReminder";
 import secsToHours from "@/lib/secsToHours";
 import unixToHours from "@/lib/unixToHours";
+
 import formatPhone from "@/lib/formatPhone";
 
 export default {
@@ -86,8 +87,8 @@ export default {
       lastTracked,
       unixToReadable,
       unixTimeToReminder,
-      secsToHours,
       unixToHours,
+      secsToHours,
       formatPhone,
       onSearchCanceled,
     };

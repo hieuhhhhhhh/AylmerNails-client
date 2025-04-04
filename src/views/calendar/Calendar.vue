@@ -17,6 +17,8 @@
             :isCompacting="isCompacting"
             :width="scrollWidth"
             :onSelectAppo="onSelectAppo"
+            :NAMvisible="editId == null || !isAdding"
+            :onSelectNAM="onSelectNAM"
           />
         </div>
       </div>
@@ -39,6 +41,7 @@
       :onCancelEdit="onCancelEdit"
       :onHideMain="onHideMain"
       :onDoneEdit="onDoneEdit"
+      :NAMvalue="NAMvalue"
     />
     <AddAppo
       v-if="isAdding"
@@ -46,6 +49,7 @@
       :onCancelAdding="onCancelAdding"
       :onHideMain="onHideMain"
       :onDoneEdit="onDoneEdit"
+      :NAMvalue="NAMvalue"
     />
   </div>
 </template>
@@ -82,6 +86,7 @@ export default {
     const appoId = ref(null);
     const editId = ref(null);
     const lastScroll = ref(0);
+    const NAMvalue = ref(0);
     // lib
     const router = useRouter();
     const route = useRoute();
@@ -124,6 +129,10 @@ export default {
       console.log("appoId", id);
       router.push(`/calendar/${unixDate.value}/${id}`);
       appoId.value = id;
+    };
+
+    const onSelectNAM = (seconds) => {
+      NAMvalue.value = seconds;
     };
 
     const onCloseAppo = () => {
@@ -215,6 +224,7 @@ export default {
     });
 
     return {
+      NAMvalue,
       resetMain,
       unixDate,
       scrollWidth,
@@ -228,6 +238,7 @@ export default {
       onInputDate,
       onCompact,
       onSelectAppo,
+      onSelectNAM,
       onCloseAppo,
       onEditAppo,
       onCancelEdit,

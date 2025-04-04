@@ -28,8 +28,8 @@
             unixTimeToReminder(conflict.appoDate)
           }})
           <div>
-            {{ unixToHours(conflict.appoStart) }} -
-            {{ unixToHours(conflict.appoEnd) }}
+            {{ secsToHours(conflict.appoStart) }} -
+            {{ secsToHours(conflict.appoEnd) }}
           </div>
         </td>
       </tr>
@@ -46,7 +46,7 @@ import fetchDurationConflicts from "./apis/fetchDurationConflicts";
 import formatPhone from "@/lib/formatPhone";
 import unixToReadable from "@/lib/unixToReadable";
 import unixTimeToReminder from "@/lib/unixTimeToReminder";
-import unixToHours from "@/lib/unixToHours";
+import secsToHours from "@/lib/secsToHours";
 
 export default {
   setup() {
@@ -74,7 +74,7 @@ export default {
       conflicts,
       toAppoDetails,
       unixTimeToReminder,
-      unixToHours,
+      secsToHours,
       unixToReadable,
       formatPhone,
     };

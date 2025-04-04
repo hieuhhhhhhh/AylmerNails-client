@@ -43,7 +43,12 @@
             </div>
           </div>
 
-          <VerticalTimeMarks :dayStart="dayStart" :dayEnd="dayEnd" />
+          <VerticalTimeMarks
+            :dayStart="dayStart"
+            :dayEnd="dayEnd"
+            :NAMvisible="NAMvisible"
+            :onSelectNAM="onSelectNAM"
+          />
         </div>
       </div>
       <div
@@ -88,6 +93,8 @@ export default {
     isCompacting: Boolean,
     width: Number,
     onSelectAppo: Function,
+    NAMvisible: Boolean,
+    onSelectNAM: Function,
   },
   components: {
     VerticalTimeMarks,
@@ -184,6 +191,11 @@ export default {
   cursor: pointer;
   border: 1px solid black;
   box-sizing: border-box;
+  border-radius: 4px;
+  overflow: hidden;
+}
+#appo:active {
+  border: 2px solid black;
 }
 #relative {
   position: relative;
