@@ -12,7 +12,7 @@
         </th>
       </tr>
       <tr>
-        <th>Contact Name:</th>
+        <th>Client Name:</th>
         <td>{{ userInfo.contactName }}</td>
       </tr>
       <tr>

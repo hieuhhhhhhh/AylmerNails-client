@@ -3,8 +3,8 @@
     Warning: Availability has {{ lastDateCC }}
     <u>conflicting appointment(s)</u>
   </div>
-  <div class="warning" v-if="durationCC > 0">
-    Warning: Duration settings has {{ durationCC }}
+  <div class="warning" v-if="durationCC > 0" @click="toDurationConflictPage">
+    Warning: Duration settings have {{ durationCC }}
     <u>conflicting appointment(s)</u>
   </div>
   <ServiceInfo
@@ -76,6 +76,9 @@ export default {
     },
     toConflictPage() {
       this.$router.push(`/conflicts/service_ld/${this.service_id}`);
+    },
+    toDurationConflictPage() {
+      this.$router.push(`/conflicts/service_duration/${this.service_id}`);
     },
   },
   async created() {

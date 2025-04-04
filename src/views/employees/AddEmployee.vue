@@ -158,7 +158,7 @@ export default {
       );
 
       if (res) {
-        this.$router.push(`/employees/all`);
+        this.$router.push(`/employees/details/${res}`);
       }
     },
   },

@@ -1,11 +1,11 @@
-export default async function fetchServiceLdConflicts(serviceId) {
+export default async function fetchScheduleConflicts(empId) {
   try {
     // get app path
     const baseURL = process.env.VUE_APP_BASE_URL;
 
     // start requesting server
     const res = await fetch(
-      `${baseURL}/api/services/get_service_ld_conflicts/${serviceId}`,
+      `${baseURL}/api/employees/get_schedule_conflicts/${empId}`,
       {
         method: "GET",
         credentials: "include",
@@ -19,13 +19,12 @@ export default async function fetchServiceLdConflicts(serviceId) {
 
     // read status and process response
     if (res.ok) {
-      // res holder
       let conflicts = [];
 
       const table = json.conflicts;
       for (let row of table) {
         const [
-          serviceId,
+          empId,
           appoId,
           appoDate,
           appoDOW,
@@ -33,14 +32,16 @@ export default async function fetchServiceLdConflicts(serviceId) {
           appoEnd,
           empAlias,
           serviceName,
+          category,
           contactName,
           phoneNumId,
           phoneNum,
-          color,
+          opening,
+          closing,
         ] = row;
 
         conflicts.push({
-          serviceId,
+          empId,
           appoId,
           appoDate,
           appoDOW,
@@ -48,17 +49,19 @@ export default async function fetchServiceLdConflicts(serviceId) {
           appoEnd,
           empAlias,
           serviceName,
+          category,
           contactName,
           phoneNumId,
           phoneNum,
-          color,
+          opening,
+          closing,
         });
       }
 
       return conflicts;
     } else {
       console.log(
-        "Failed to fetch service's last date conflicts, message: ",
+        "Failed to fetch schedule conflicts, message: ",
         json.message
       );
     }

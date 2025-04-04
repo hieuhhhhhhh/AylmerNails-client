@@ -76,10 +76,12 @@ export default {
   align-items: center;
   box-shadow: 0 0 5px var(--shadow-color);
   background: var(--background-i1);
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 #title {
-  padding-top: 10px;
   font-size: 20px;
+  margin-bottom: 10px;
 }
 #editCont {
   display: flex;
@@ -87,11 +89,11 @@ export default {
   justify-content: flex-end;
 }
 #edit {
-  margin-top: 10px;
   font-size: 12px;
   padding: 4px;
   background: var(--background-i2);
   color: var(--foreground);
   cursor: pointer;
+  margin-bottom: -10px;
 }
 </style>

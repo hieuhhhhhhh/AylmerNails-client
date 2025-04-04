@@ -16,7 +16,7 @@
       </colgroup>
       <tbody v-if="contacts.length">
         <tr>
-          <th>Contact Name</th>
+          <th>Client Name</th>
 
           <th>Phone Number</th>
           <th>Last Used</th>

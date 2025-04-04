@@ -1,49 +1,45 @@
 <template>
   <input
     id="search"
-    placeholder="Search..."
     type="text"
+    placeholder="Search..."
     v-model="query"
-    @input="onSearchBookings"
+    @input="onSearchCanceled"
   />
   <table>
-    <colgroup>
-      <col style="width: auto" />
-      <col style="width: auto" />
-    </colgroup>
     <tbody>
       <tr>
         <th class="newCol"></th>
-        <th>Booked by</th>
-        <th>Booked on</th>
+        <th>Canceled by</th>
+        <th>Canceled on</th>
         <th>Service</th>
         <th>Employee</th>
+        <th>Client</th>
         <th>Booked for</th>
       </tr>
-      <tr
-        class="row"
-        v-for="(appo, index) in appos"
-        :key="index"
-        @click="toAppoDetails(appo.date, appo.appoId)"
-      >
+      <tr v-for="(appo, index) in appos" :key="index">
         <td class="newCol">
           <div class="flexBox">
-            <div class="newCell" v-if="appo.bookedTime > lastTracked">NEW</div>
+            <div class="newCell" v-if="appo.cancelTime > lastTracked">NEW</div>
           </div>
         </td>
         <td>
-          <div>{{ appo.contactName }}</div>
-          {{ formatPhone(appo.phoneNum) }}
+          <div>{{ appo.canceler.firstName }} {{ appo.canceler.lastName }}</div>
+          {{ formatPhone(appo.canceler.phoneNum) }}
         </td>
         <td>
-          {{ unixTimeToReminder(appo.bookedTime) }}
-          <div>{{ unixToHours(appo.bookedTime) }}</div>
+          {{ unixTimeToReminder(appo.cancelTime) }}
+          <div>{{ unixToHours(appo.cancelTime) }}</div>
         </td>
         <td>
           {{ appo.serviceName }}
           <div>{{ appo.category }}</div>
         </td>
         <td :style="{ color: appo.color }">{{ appo.empAlias }}</td>
+        <td>
+          {{ appo.contactName }}
+          <div>{{ formatPhone(appo.phoneNumber) }}</div>
+        </td>
         <td>
           {{ unixToReadable(appo.date) }}
           ({{ unixTimeToReminder(appo.date) }})
@@ -53,48 +49,35 @@
     </tbody>
   </table>
 </template>
-
 <script>
 // lib
-import { useRouter } from "vue-router";
-import { ref, onMounted } from "vue";
+import { onMounted, ref } from "vue";
+import searchCanceledAppos from "./apis/searchCanceledAppos";
+import fetchLastTracked from "./apis/fetchLastTracked";
 import unixToReadable from "@/lib/unixToReadable";
 import unixTimeToReminder from "@/lib/unixTimeToReminder";
 import secsToHours from "@/lib/secsToHours";
 import unixToHours from "@/lib/unixToHours";
-import { fetchNewAppoCount } from "@/components/view-shell/drawer-navigation/apis/connectSocket";
 import formatPhone from "@/lib/formatPhone";
-import searhBookings from "./apis/searchBookings";
-import fetchLastTracked from "./apis/fetchLastTracked";
 
 export default {
+  name: "CanceledAppos",
   setup() {
-    // resources
+    // resoures
     const query = ref("");
     const appos = ref([]);
-    const limit = ref(50);
     const lastTracked = ref(null);
-    // lib
-    const router = useRouter();
+    const limit = ref(50);
 
     // INPUT
-    const onSearchBookings = async () => {
-      appos.value = await searhBookings(query.value, limit.value);
-    };
-
-    const toAppoDetails = (date, appoId) => {
-      console.log("date, appoId", date, appoId);
-      router.push(`/calendar/${date}/${appoId}`);
+    const onSearchCanceled = async () => {
+      appos.value = await searchCanceledAppos(query.value, limit.value);
     };
 
     // LIFECYCLE
     onMounted(async () => {
-      // call api
       lastTracked.value = await fetchLastTracked();
-      await onSearchBookings();
-
-      // call api via socket
-      fetchNewAppoCount();
+      await onSearchCanceled();
     });
 
     return {
@@ -106,8 +89,7 @@ export default {
       secsToHours,
       unixToHours,
       formatPhone,
-      toAppoDetails,
-      onSearchBookings,
+      onSearchCanceled,
     };
   },
 };
@@ -128,15 +110,6 @@ td {
 }
 tr {
   border: 1px solid;
-}
-.row {
-  cursor: pointer;
-}
-.row:hover {
-  background: var(--hover);
-}
-.row:active {
-  background: var(--active);
 }
 .newCol {
   padding: 0px;

@@ -9,7 +9,13 @@
       <FontAwesomeIcon :icon="backIcon" /> Return
     </button>
   </div>
-  <div id="note">Select a service (starting price, minimum duration)</div>
+  <div id="note">
+    Please note that our website is intended for individual appointments
+    <br />
+    Contact us for multiple people appointments
+    <br />
+    Step 1: Select your service
+  </div>
 
   <div v-if="isFetched" id="flexBox">
     <Category

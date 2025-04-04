@@ -1,9 +1,9 @@
 <template>
   <div id="layout">
-    <div v-show="page == 1">
+    <div v-show="page == 1 || page == 0">
       <Services
         :getServices="getServices"
-        :onNavigateNext="navigateSelectTime"
+        :onNavigateNext="onNavigateNext"
         :resetPage2="resetPage2"
       />
     </div>
@@ -21,10 +21,11 @@
 </template>
 
 <script>
-// comps
+import { ref, watch } from "vue";
 import Services from "./comps/Services.vue";
 import SelectTime from "./comps/SelectTime.vue";
 import FinalPreview from "./comps/FinalPreview.vue";
+import { onBeforeRouteLeave, useRoute, useRouter } from "vue-router";
 
 export default {
   name: "BookNowParent",
@@ -33,48 +34,102 @@ export default {
     SelectTime,
     FinalPreview,
   },
-  data() {
-    return {
-      // resources
-      services: {},
-      // status
-      page: 1,
-      page2trigger: 0,
-      page3trigger: 0,
-      // payload
-      chain: {},
-      date: null,
+  setup() {
+    // lib
+    const router = useRouter();
+    const route = useRoute();
+    // Reactive state
+    const services = ref({});
+    const page = ref(1);
+    const page2trigger = ref(0);
+    const page3trigger = ref(0);
+    const chain = ref({});
+    const date = ref(null);
+
+    // Methods
+
+    const getServices = () => services.value;
+
+    const updateURL = () => {
+      router.push(`/booknow/${page.value}`);
     };
-  },
-  methods: {
-    getServices() {
-      return this.services;
-    },
-    navigateSelectTime() {
-      this.page++;
-      console.log(this.services);
-    },
-    resetPage2() {
-      this.page2trigger++;
-    },
-    onReturn() {
-      this.page--;
-    },
-    onSelectChain(chain, date) {
-      console.log("date", date);
-      this.date = date;
-      this.chain = chain;
-      this.page3trigger++;
-      this.page++;
-    },
-  },
-  beforeRouteLeave(to, from, next) {
-    const answer = confirm("Your progress won't be saved. Proceed to leave?");
-    if (answer) {
-      next(); // Proceed with navigation
-    } else {
-      next(false); // Prevent navigation
-    }
+
+    const onNavigateNext = () => {
+      page.value++;
+      updateURL();
+    };
+
+    const resetPage2 = () => {
+      page2trigger.value++;
+    };
+
+    const onReturn = () => {
+      router.back();
+    };
+
+    const onSelectChain = (selectedChain, selectedDate) => {
+      console.log("date", selectedDate);
+      date.value = selectedDate;
+      chain.value = selectedChain;
+      page3trigger.value++;
+      onNavigateNext();
+    };
+
+    // DEPENDENCIES
+
+    watch(
+      () => route.params.page,
+      (value) => {
+        if (page.value == value) {
+          return;
+        }
+
+        if (value != 0 && value != 1 && Object.keys(chain).length === 0) {
+          page.value = 1;
+          updateURL();
+          return;
+        }
+
+        page.value = value;
+      }
+    );
+
+    // Route guard before leaving
+    onBeforeRouteLeave((to, from, next) => {
+      if (to.fullPath.startsWith("/booknow")) {
+        next();
+        return;
+      }
+
+      if (Object.keys(services.value).length === 0) {
+        next();
+        return;
+      }
+
+      const answer = confirm(
+        "Current selections won't be saved. Proceed to leave?"
+      );
+      if (answer) {
+        next(); // Proceed with navigation
+      } else {
+        next(false); // Prevent navigation
+      }
+    });
+
+    // Return to template
+    return {
+      services,
+      page,
+      page2trigger,
+      page3trigger,
+      chain,
+      date,
+      getServices,
+      onNavigateNext,
+      resetPage2,
+      onReturn,
+      onSelectChain,
+    };
   },
 };
 </script>

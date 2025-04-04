@@ -33,7 +33,7 @@ export default {
       if (text.value.trim().toLowerCase() === "yes") {
         const res = await removeAppo(props.appoId);
         if (res) {
-          router.push("/refresh");
+          router.push("/canceled");
         }
       }
     };

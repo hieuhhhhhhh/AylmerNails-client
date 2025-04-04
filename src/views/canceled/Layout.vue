@@ -1,12 +1,18 @@
 <template>
   <div id="layout">
-    <router-view />
+    <div id="title">Canceled Appointments</div>
+    <Canceled />
   </div>
 </template>
 
 <script>
+import Canceled from "./Canceled.vue";
+
 export default {
   name: "Layout-",
+  components: {
+    Canceled,
+  },
 };
 </script>
 
@@ -19,5 +25,9 @@ export default {
   margin-inline: auto;
   flex-grow: 1;
   box-sizing: border-box;
+}
+#title {
+  font-size: 25px;
+  padding: 10px;
 }
 </style>

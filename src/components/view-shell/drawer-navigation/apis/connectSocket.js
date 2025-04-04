@@ -1,5 +1,5 @@
 import { io } from "socket.io-client";
-import { useMyProfile, useNewAppoCount } from "@/stores/myProfile";
+import { useMyProfile, useNotificationCount } from "@/stores/myProfile";
 
 const validRoles = ["developer", "admin"];
 
@@ -12,7 +12,7 @@ export function connectSocket() {
 
   // pinia store
   const MPstore = useMyProfile();
-  const NACstore = useNewAppoCount();
+  const NCstore = useNotificationCount();
 
   // get role and token from the store
   role = MPstore.role;
@@ -25,10 +25,10 @@ export function connectSocket() {
   const baseURL = process.env.VUE_APP_BASE_URL;
   socket = io(baseURL);
 
+  // NEW BOOKING
   socket.on("new_appo_count", (data) => {
     // update the count into the store
-    NACstore.setNewAppoCount(data.count);
-
+    NCstore.setNewAppoCount(data.count);
     console.log("new appo count", data.count);
   });
 
@@ -36,7 +36,32 @@ export function connectSocket() {
     socket.emit("get_new_appo_count", { token });
   });
 
+  // NEW CANCELING
+  socket.on("new_canceled_count", (data) => {
+    // update the count into the store
+    NCstore.setNewCanceledAppoCount(data.count);
+    console.log("new canceled count", data.count);
+  });
+
+  socket.on("new_appo_canceled", () => {
+    socket.emit("get_new_canceled_count", { token });
+    socket.emit("get_new_appo_count", { token });
+  });
+
+  // NEW USERS
+  socket.on("new_user_count", (data) => {
+    // update the count into the store
+    NCstore.setNewUserCount(data.count);
+  });
+
+  socket.on("new_user_created", () => {
+    socket.emit("get_new_user_count", { token });
+  });
+
+  // fetch data when start connecting
   socket.emit("get_new_appo_count", { token });
+  socket.emit("get_new_canceled_count", { token });
+  socket.emit("get_new_user_count", { token });
 
   return socket;
 }
@@ -44,4 +69,14 @@ export function connectSocket() {
 export function fetchNewAppoCount() {
   if (!socket) return;
   socket.emit("get_new_appo_count", { token });
+}
+
+export function fetchNewCanceledCount() {
+  if (!socket) return;
+  socket.emit("get_new_canceled_count", { token });
+}
+
+export function fetchNewUserCount() {
+  if (!socket) return;
+  socket.emit("get_new_user_count", { token });
 }

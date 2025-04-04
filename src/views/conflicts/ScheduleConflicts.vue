@@ -9,8 +9,9 @@
     <tbody>
       <tr>
         <th>Client</th>
-        <th>Employee</th>
+        <th>Service</th>
         <th>Time</th>
+        <th>Opening Hours</th>
       </tr>
       <tr
         class="row"
@@ -22,7 +23,10 @@
           {{ conflict.contactName }}
           <div>{{ formatPhone(conflict.phoneNum) }}</div>
         </td>
-        <td :style="{ color: conflict.color }">{{ conflict.empAlias }}</td>
+        <td>
+          {{ conflict.serviceName }}
+          <div>{{ conflict.category }}</div>
+        </td>
         <td>
           {{ unixToReadable(conflict.appoDate) }} ({{
             unixTimeToReminder(conflict.appoDate)
@@ -31,6 +35,14 @@
             {{ unixToHours(conflict.appoStart) }} -
             {{ unixToHours(conflict.appoEnd) }}
           </div>
+        </td>
+        <td>
+          {{ conflict.appoDOW }}
+          <div v-if="conflict.opening && conflict.closing">
+            {{ unixToHours(conflict.opening) }} -
+            {{ unixToHours(conflict.closing) }}
+          </div>
+          <div v-else :style="{ color: 'red' }">closed</div>
         </td>
       </tr>
     </tbody>
@@ -41,7 +53,7 @@
 // lib
 import { useRoute, useRouter } from "vue-router";
 import { onMounted, ref } from "vue";
-import fetchServiceLdConflicts from "./apis/fetchServiceLdConflicts";
+import fetchScheduleConflicts from "./apis/fetchScheduleConflicts";
 
 import formatPhone from "@/lib/formatPhone";
 import unixToReadable from "@/lib/unixToReadable";
@@ -52,7 +64,7 @@ export default {
   setup() {
     // param from URL
     const route = useRoute();
-    const serviceId = route.params.serviceId;
+    const empId = route.params.empId;
     // router
     const router = useRouter();
     // resources
@@ -67,10 +79,10 @@ export default {
     // LIFECYCLE
     onMounted(async () => {
       // fetch resources
-      conflicts.value = await fetchServiceLdConflicts(serviceId);
+      conflicts.value = await fetchScheduleConflicts(empId);
     });
     return {
-      serviceId,
+      empId,
       conflicts,
       toAppoDetails,
       unixTimeToReminder,

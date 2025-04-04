@@ -1,16 +1,32 @@
 <template>
   <div id="DrawerContent">
     <div><router-link to="/">Menu</router-link></div>
-    <div><router-link to="/booknow">Book Now</router-link></div>
+    <div><router-link to="/booknow/1">Book Now</router-link></div>
+    <div><router-link to="/profile">My Appointments</router-link></div>
     <div class="relative">
-      <router-link to="/booking_history"
-        ><div v-if="newAppoCount > 0" id="noti">
+      <router-link to="/booking_history">
+        <div v-if="newAppoCount > 0" id="noti">
           {{ newAppoCount }}
         </div>
         Client Bookings
       </router-link>
     </div>
-    <div><router-link to="/profile">My Appointments</router-link></div>
+    <div>
+      <router-link to="/canceled">
+        <div v-if="newCanceledCount > 0" id="noti">
+          {{ newCanceledCount }}
+        </div>
+        Canceled</router-link
+      >
+    </div>
+    <div>
+      <router-link to="/users">
+        <div v-if="newUserCount > 0" id="noti">
+          {{ newUserCount }}
+        </div>
+        Users</router-link
+      >
+    </div>
     <div><router-link to="/signup">Sign Up</router-link></div>
     <div><router-link to="/login">Log In</router-link></div>
     <div><router-link to="/services">Services</router-link></div>
@@ -28,13 +44,15 @@ import { watch, computed } from "vue";
 import getTodayUnixTime from "@/lib/getTodayUnixTime";
 import { connectSocket } from "./apis/connectSocket";
 // pinia
-import { useMyProfile, useNewAppoCount } from "@/stores/myProfile";
+import { useMyProfile, useNotificationCount } from "@/stores/myProfile";
 
 export default {
   setup() {
     // pinia states
-    const NACstore = useNewAppoCount();
-    const newAppoCount = computed(() => NACstore.newAppoCount);
+    const NCstore = useNotificationCount();
+    const newAppoCount = computed(() => NCstore.newAppoCount);
+    const newCanceledCount = computed(() => NCstore.newCanceledAppoCount);
+    const newUserCount = computed(() => NCstore.newUserCount);
 
     // DEPENDENCIES
     const MPstore = useMyProfile();
@@ -49,6 +67,8 @@ export default {
     return {
       getTodayUnixTime,
       newAppoCount,
+      newCanceledCount,
+      newUserCount,
     };
   },
 };

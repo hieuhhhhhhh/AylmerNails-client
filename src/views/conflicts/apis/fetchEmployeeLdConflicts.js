@@ -1,11 +1,11 @@
-export default async function fetchServiceLdConflicts(serviceId) {
+export default async function fetchEmployeeLdConflicts(empId) {
   try {
     // get app path
     const baseURL = process.env.VUE_APP_BASE_URL;
 
     // start requesting server
     const res = await fetch(
-      `${baseURL}/api/services/get_service_ld_conflicts/${serviceId}`,
+      `${baseURL}/api/employees/get_employee_ld_conflicts/${empId}`,
       {
         method: "GET",
         credentials: "include",
@@ -23,6 +23,7 @@ export default async function fetchServiceLdConflicts(serviceId) {
       let conflicts = [];
 
       const table = json.conflicts;
+      console.log("table", table);
       for (let row of table) {
         const [
           serviceId,
@@ -36,7 +37,7 @@ export default async function fetchServiceLdConflicts(serviceId) {
           contactName,
           phoneNumId,
           phoneNum,
-          color,
+          category,
         ] = row;
 
         conflicts.push({
@@ -51,14 +52,14 @@ export default async function fetchServiceLdConflicts(serviceId) {
           contactName,
           phoneNumId,
           phoneNum,
-          color,
+          category,
         });
       }
 
       return conflicts;
     } else {
       console.log(
-        "Failed to fetch service's last date conflicts, message: ",
+        "Failed to fetch employee's last date conflicts, message: ",
         json.message
       );
     }

@@ -122,10 +122,12 @@ export default {
 
     const onSelectAppo = (id) => {
       console.log("appoId", id);
+      router.push(`/calendar/${unixDate.value}/${id}`);
       appoId.value = id;
     };
 
     const onCloseAppo = () => {
+      router.push(`/calendar/${unixDate.value}`);
       appoId.value = null;
     };
 
@@ -133,6 +135,7 @@ export default {
       appoId.value = null;
       editId.value = id;
       isAdding.value = false;
+      router.push(`/calendar/${unixDate.value}`);
     };
 
     const onCancelEdit = () => {

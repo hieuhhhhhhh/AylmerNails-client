@@ -17,13 +17,21 @@ export const useMyProfile = defineStore("myProfile", {
   },
 });
 
-export const useNewAppoCount = defineStore("newAppoCount", {
+export const useNotificationCount = defineStore("NotificationCount", {
   state: () => ({
     newAppoCount: 0,
+    newCanceledAppoCount: 0,
+    newUserCount: 0,
   }),
   actions: {
     setNewAppoCount(count) {
       this.newAppoCount = count;
+    },
+    setNewCanceledAppoCount(count) {
+      this.newCanceledAppoCount = count;
+    },
+    setNewUserCount(count) {
+      this.newUserCount = count;
     },
   },
 });

@@ -1,6 +1,6 @@
 <template>
   <div v-show="!isSelecting" id="flexBox">
-    <div id="note">Use checkboxes to select technicians</div>
+    <div id="note">Step 2: Use checkboxes to select technicians</div>
 
     <Service
       v-for="(service, index) in services"
@@ -32,6 +32,7 @@
 </template>
 
 <script>
+import { ref, onMounted, watch } from "vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {
   faPlus,
@@ -41,6 +42,7 @@ import {
 // comps
 import SelectService from "./SelectService.vue";
 import Service from "./Service.vue";
+import { useRoute, useRouter } from "vue-router";
 
 export default {
   name: "BookNowParent",
@@ -54,54 +56,90 @@ export default {
     onNavigateNext: Function,
     resetPage2: Function,
   },
-  data() {
-    return {
-      // icons
-      addIcon: faPlus,
-      backIcon: faLeftLong,
-      continueIcon: faRightLong,
-      // status
-      isSelecting: false,
-      isReturnable: false,
-      // resources
-      services: {},
-    };
-  },
-  methods: {
-    onInputService(id, AOSOs) {
-      if (!this.services[id]) {
-        this.services[id] = { serviceId: id, empIds: [], AOSOs: AOSOs };
+  setup(props) {
+    const addIcon = faPlus;
+    const backIcon = faLeftLong;
+    const continueIcon = faRightLong;
+    const router = useRouter();
+    const route = useRoute();
+
+    const isSelecting = ref(false);
+    const isReturnable = ref(false);
+    const services = ref({});
+
+    const onInputService = (id, AOSOs) => {
+      if (!services.value[id]) {
+        services.value[id] = { serviceId: id, empIds: [], AOSOs: AOSOs };
       }
-      this.isReturnable = true;
-      this.isSelecting = false;
-      this.resetPage2();
-    },
-    openSelect() {
-      this.isSelecting = true;
-    },
-    closeSelect() {
-      this.isSelecting = false;
-    },
-    onRemoveService(id) {
-      delete this.services[id];
-      this.resetPage2();
-    },
-    onInputEmpIds(serviceId, value) {
-      this.services[serviceId].empIds = value;
-      this.resetPage2();
-    },
-    onSubmit() {
-      this.onNavigateNext();
-    },
-  },
-  created() {
-    this.services = this.getServices();
-    if (!Object.keys(this.services).length) {
-      this.isSelecting = true;
-    }
+      isReturnable.value = true;
+
+      isSelecting.value = false;
+      router.push(`/booknow/1`);
+      props.resetPage2();
+    };
+
+    const openSelect = () => {
+      isSelecting.value = true;
+      router.push(`/booknow/0`);
+    };
+
+    const closeSelect = () => {
+      router.back();
+    };
+
+    const onRemoveService = (id) => {
+      delete services.value[id];
+      props.resetPage2();
+    };
+
+    const onInputEmpIds = (serviceId, value) => {
+      services.value[serviceId].empIds = value;
+      props.resetPage2();
+    };
+
+    const onSubmit = () => {
+      props.onNavigateNext();
+    };
+
+    onMounted(() => {
+      services.value = props.getServices();
+      if (!Object.keys(services.value).length) {
+        isSelecting.value = true;
+      }
+    });
+
+    watch(
+      () => route.params.page,
+      (value) => {
+        if (value == 1) {
+          isSelecting.value = false;
+          return;
+        }
+
+        if (value == 0) {
+          isSelecting.value = true;
+          return;
+        }
+      }
+    );
+    return {
+      addIcon,
+      backIcon,
+      continueIcon,
+      isSelecting,
+      isReturnable,
+      services,
+      onInputService,
+      openSelect,
+      closeSelect,
+      onRemoveService,
+      onInputEmpIds,
+      onSubmit,
+    };
   },
 };
 </script>
+
 <style scoped>
 #flexBox {
   display: flex;

@@ -1,6 +1,6 @@
 <template>
   <div id="main">
-    <div class="column" v-if="details.phoneNum.visible">
+    <div class="column" v-if="details.phoneNum?.visible">
       <div class="iconCont">
         <FontAwesomeIcon
           class="icon"
@@ -11,7 +11,7 @@
 
       {{ details.phoneNum.value }}
     </div>
-    <div class="column" v-if="details.address.visible">
+    <div class="column" v-if="details.address?.visible">
       <div class="iconCont">
         <FontAwesomeIcon
           class="icon"
@@ -21,7 +21,7 @@
       </div>
       {{ details.address.value }}
     </div>
-    <div class="column" v-if="details.instagram.visible">
+    <div class="column" v-if="details.instagram?.visible">
       <div class="iconCont">
         <FontAwesomeIcon
           class="icon"
@@ -31,7 +31,7 @@
       </div>
       {{ details.instagram.value }}
     </div>
-    <div class="column" v-if="details.email.visible">
+    <div class="column" v-if="details.email?.visible">
       <div class="iconCont">
         <FontAwesomeIcon
           class="icon"

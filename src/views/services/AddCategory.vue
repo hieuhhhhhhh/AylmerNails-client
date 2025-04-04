@@ -10,7 +10,12 @@
           <th>Name:</th>
           <td>
             <div id="flexBox">
-              <input type="text" v-model="name" required />
+              <input
+                type="text"
+                v-model="name"
+                required
+                @input="name = $event.target.value.toUpperCase()"
+              />
             </div>
           </td>
         </tr>

@@ -3,10 +3,9 @@
     <div id="title">Schedules:</div>
 
     <div v-if="schedules.length">
-      <div id="note">*Press on the right clock icon to select time</div>
+      <!-- <div id="note">*Press on the right clock icon to select time</div> -->
       <div id="highlight"><Schedule :schedule="schedules[0]" /></div>
     </div>
-    <div v-else id="note">*Warning: employee has no schedules</div>
 
     <div>
       <Schedule
@@ -30,6 +29,9 @@ export default {
     AddSchedule,
     Schedule,
   },
+  props: {
+    showScheduleWarning: Function,
+  },
   name: "SchedulesParent",
   data() {
     return {
@@ -42,6 +44,10 @@ export default {
   async created() {
     const empId = this.$route.params.id;
     this.schedules = await fetchSchedules(empId);
+    if (!this.schedules.length) {
+      this.showScheduleWarning();
+    }
+
     console.log("schedules: ", this.schedules);
     this.isFetched = true;
   },
@@ -56,10 +62,7 @@ export default {
   font-weight: bold;
   border-top: 3px var(--xtrans-gray) solid;
 }
-#note {
-  padding: 10px;
-  color: rgb(184, 121, 3);
-}
+
 #highlight {
   outline: 3px outset;
   width: fit-content;

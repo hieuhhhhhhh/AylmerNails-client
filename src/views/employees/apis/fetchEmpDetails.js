@@ -41,6 +41,10 @@ export default async function fetchEmpDetails(emp_id) {
 
       const key_intervals = [si[1] / 60, (si[2] - si[1]) / 60];
 
+      // fetch conflicts count
+      const scheduleCC = json.schedule_conflicts;
+      const lastDateCC = json.ld_conflicts;
+
       // create and return result
       const details = {
         emp_id,
@@ -51,6 +55,8 @@ export default async function fetchEmpDetails(emp_id) {
         key_intervals,
         interval_percent,
         last_date,
+        scheduleCC,
+        lastDateCC,
       };
       console.log("details: ", details);
       return details;

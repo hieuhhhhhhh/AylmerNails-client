@@ -24,13 +24,22 @@ import Calendar from "./views/calendar/Calendar.vue";
 // conflicts
 import ConflictsLayout from "./views/conflicts/Layout.vue";
 import ServiceLDconflicts from "./views/conflicts/ServiceLDconflicts.vue";
+import DurationConflicts from "./views/conflicts/DurationConflicts.vue";
+import EmployeeLDconflicts from "./views/conflicts/EmployeeLDconflicts.vue";
+import ScheduleConflicts from "./views/conflicts/ScheduleConflicts.vue";
+
 // booking history
 import BookingHistory from "./views/booking_history/Layout.vue";
 // profile
 import Profile from "./views/profile/Layout.vue";
 // business links
 import BusinessLinks from "./views/business_links/Layout.vue";
-
+// users
+import UsersLayout from "./views/users/Layout.vue";
+import Users from "./views/users/Users.vue";
+import User from "./views/users/User.vue";
+// canceled
+import Canceled from "./views/canceled/Layout.vue";
 const routes = [
   {
     path: "/",
@@ -41,12 +50,30 @@ const routes = [
     component: Refresh,
   },
   {
-    path: "/booknow",
+    path: "/booknow/:page?",
     component: BookNow,
   },
   {
     path: "/profile",
     component: Profile,
+  },
+  {
+    path: "/users",
+    component: UsersLayout,
+    children: [
+      {
+        path: "",
+        component: Users,
+      },
+      {
+        path: ":userId",
+        component: User,
+      },
+    ],
+  },
+  {
+    path: "/canceled",
+    component: Canceled,
   },
   {
     path: "/business_links",
@@ -119,7 +146,11 @@ const routes = [
     ],
   },
 
-  { path: "/calendar/:unixDate/:appoId?", component: Calendar },
+  {
+    path: "/calendar/:unixDate/:appoId?",
+    component: Calendar,
+    children: [{ path: "selecting" }],
+  },
 
   {
     path: "/conflicts",
@@ -131,15 +162,15 @@ const routes = [
       },
       {
         path: "service_duration/:serviceId",
-        component: ServiceLDconflicts,
+        component: DurationConflicts,
       },
       {
         path: "employee_ld/:empId",
-        component: ServiceLDconflicts,
+        component: EmployeeLDconflicts,
       },
       {
-        path: "employee_duration/:empId",
-        component: ServiceLDconflicts,
+        path: "schedule/:empId",
+        component: ScheduleConflicts,
       },
     ],
   },

@@ -19,7 +19,42 @@ export default async function fetchDurationConflicts(serviceId) {
 
     // read status and process response
     if (res.ok) {
-      return json.conflicts;
+      let conflicts = [];
+
+      const table = json.conflicts;
+      for (let row of table) {
+        const [
+          serviceId,
+          appoId,
+          appoDate,
+          appoDOW,
+          appoStart,
+          appoEnd,
+          empAlias,
+          serviceName,
+          contactName,
+          phoneNumId,
+          phoneNum,
+          color,
+        ] = row;
+
+        conflicts.push({
+          serviceId,
+          appoId,
+          appoDate,
+          appoDOW,
+          appoStart,
+          appoEnd,
+          empAlias,
+          serviceName,
+          contactName,
+          phoneNumId,
+          phoneNum,
+          color,
+        });
+      }
+
+      return conflicts;
     } else {
       console.log(
         "Failed to fetch duration conflicts, message: ",

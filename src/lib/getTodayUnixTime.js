@@ -8,6 +8,8 @@ export default function getTodayUnixTime() {
   // Get the start of today in Toronto time zone (00:00:00)
   const startOfToday = DateTime.now().setZone(timezone).startOf("day");
 
+  console.log("start of today:", startOfToday);
+
   // Return the Unix timestamp
   console.log("get to day", startOfToday.toUnixInteger());
   return startOfToday.toUnixInteger();

@@ -13,7 +13,7 @@ export default function unixToReadable(unixTimestamp) {
 
   // Format the date with short weekday and month (e.g., "Mon, Jan 20, 2025")
   return dateTime.toLocaleString({
-    weekday: "long",
+    weekday: "short",
     month: "short",
     day: "numeric",
     year: "numeric",

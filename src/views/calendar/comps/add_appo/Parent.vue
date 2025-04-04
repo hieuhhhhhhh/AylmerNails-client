@@ -56,7 +56,7 @@
 <script>
 // lib
 import { ref, watch } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import fetchAppoLength from "../../apis/fetchAppoLength";
 import addAppo from "../../apis/addAppo";
 // comps
@@ -83,6 +83,7 @@ export default {
   setup(props) {
     // lib
     const route = useRoute();
+    const router = useRouter();
     // status
     const isPickingEmp = ref(false);
     const isPickingService = ref(false);
@@ -162,26 +163,38 @@ export default {
     };
 
     // INPUT HANDLE
+    const updateURL = () => {
+      router.push(`/calendar/${route.params.unixDate}/selecting`);
+    };
+
     const onOpenEmpPicker = () => {
       props.onHideMain(true);
       isPickingEmp.value = true;
+      updateURL();
     };
 
     const onOpenServicePicker = () => {
       props.onHideMain(true);
       isPickingService.value = true;
+      updateURL();
     };
 
     const onSelectContact = () => {
       props.onHideMain(true);
       isPickingContact.value = true;
+      updateURL();
     };
 
-    const onStopPicking = () => {
+    const onReset = () => {
       isPickingEmp.value = false;
       isPickingService.value = false;
       isPickingContact.value = false;
       props.onHideMain(false);
+    };
+
+    const onStopPicking = () => {
+      onReset();
+      router.push(`/calendar/${route.params.unixDate}`);
     };
 
     // APIS
@@ -212,11 +225,13 @@ export default {
     };
 
     // DEPENDENT
+
     watch(
       () => route.path,
-      () => {
-        onStopPicking();
-        props.onHideMain(false);
+      (value) => {
+        if (!value.endsWith("selecting")) {
+          onReset();
+        }
       }
     );
 

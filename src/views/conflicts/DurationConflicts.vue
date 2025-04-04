@@ -1,5 +1,5 @@
 <template>
-  <div id="title">Service Availability Warnings</div>
+  <div id="title">Service Duration Warnings</div>
 
   <table>
     <colgroup>
@@ -41,7 +41,7 @@
 // lib
 import { useRoute, useRouter } from "vue-router";
 import { onMounted, ref } from "vue";
-import fetchServiceLdConflicts from "./apis/fetchServiceLdConflicts";
+import fetchDurationConflicts from "./apis/fetchDurationConflicts";
 
 import formatPhone from "@/lib/formatPhone";
 import unixToReadable from "@/lib/unixToReadable";
@@ -67,7 +67,7 @@ export default {
     // LIFECYCLE
     onMounted(async () => {
       // fetch resources
-      conflicts.value = await fetchServiceLdConflicts(serviceId);
+      conflicts.value = await fetchDurationConflicts(serviceId);
     });
     return {
       serviceId,

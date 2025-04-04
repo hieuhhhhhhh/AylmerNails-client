@@ -1,4 +1,12 @@
 <template>
+  <div class="warning" v-if="lastDateCC > 0" @click="toConflictPage">
+    Warning: Availability has {{ lastDateCC }}
+    <u>conflicting appointment(s)</u>
+  </div>
+  <div class="warning" v-if="scheduleCC > 0" @click="toScheduleConflictPage">
+    Warning: Schedule(s) have {{ scheduleCC }}
+    <u>conflicting appointment(s)</u>
+  </div>
   <form @submit.prevent="onSubmit" v-if="isFetched">
     <div v-if="!isEditing">
       <table>
@@ -123,6 +131,8 @@ export default {
       ESs: new Set(),
       intervals: [],
       intervalPercent: null,
+      lastDateCC: 0,
+      scheduleCC: 0,
     };
   },
   methods: {
@@ -145,11 +155,19 @@ export default {
       this.formattedDate = unixToReadable(details.last_date);
       this.intervals = details.key_intervals;
       this.intervalPercent = details.interval_percent;
+      this.lastDateCC = details.lastDateCC;
+      this.scheduleCC = details.scheduleCC;
 
       // update status
       this.isFetched = true;
       // reset checkers
       this.resetCheckers++;
+    },
+    toConflictPage() {
+      this.$router.push(`/conflicts/employee_ld/${this.emp_id}`);
+    },
+    toScheduleConflictPage() {
+      this.$router.push(`/conflicts/schedule/${this.emp_id}`);
     },
     checkService(serviceId) {
       this.ESs.add(serviceId);
@@ -221,5 +239,10 @@ td {
 #duo {
   display: flex;
   gap: 15px;
+}
+.warning {
+  font-size: 16px;
+  color: red;
+  cursor: pointer;
 }
 </style>

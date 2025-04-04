@@ -1,5 +1,5 @@
 <template>
-  <div id="title">Service Availability Warnings</div>
+  <div id="title">Employee Availability Warnings</div>
 
   <table>
     <colgroup>
@@ -9,7 +9,7 @@
     <tbody>
       <tr>
         <th>Client</th>
-        <th>Employee</th>
+        <th>Service</th>
         <th>Time</th>
       </tr>
       <tr
@@ -22,7 +22,10 @@
           {{ conflict.contactName }}
           <div>{{ formatPhone(conflict.phoneNum) }}</div>
         </td>
-        <td :style="{ color: conflict.color }">{{ conflict.empAlias }}</td>
+        <td>
+          {{ conflict.serviceName }}
+          <div>{{ conflict.category }}</div>
+        </td>
         <td>
           {{ unixToReadable(conflict.appoDate) }} ({{
             unixTimeToReminder(conflict.appoDate)
@@ -41,7 +44,7 @@
 // lib
 import { useRoute, useRouter } from "vue-router";
 import { onMounted, ref } from "vue";
-import fetchServiceLdConflicts from "./apis/fetchServiceLdConflicts";
+import fetchEmployeeLdConflicts from "./apis/fetchEmployeeLdConflicts";
 
 import formatPhone from "@/lib/formatPhone";
 import unixToReadable from "@/lib/unixToReadable";
@@ -52,7 +55,7 @@ export default {
   setup() {
     // param from URL
     const route = useRoute();
-    const serviceId = route.params.serviceId;
+    const empId = route.params.empId;
     // router
     const router = useRouter();
     // resources
@@ -67,10 +70,10 @@ export default {
     // LIFECYCLE
     onMounted(async () => {
       // fetch resources
-      conflicts.value = await fetchServiceLdConflicts(serviceId);
+      conflicts.value = await fetchEmployeeLdConflicts(empId);
     });
     return {
-      serviceId,
+      empId,
       conflicts,
       toAppoDetails,
       unixTimeToReminder,
