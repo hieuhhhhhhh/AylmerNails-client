@@ -18,7 +18,7 @@
       <tr>
         <th>Service</th>
         <td>
-          <span v-if="serviceName">{{ serviceName }} ({{ category }})</span>
+          <span v-if="serviceName">{{ serviceName }} - {{ category }}</span>
           <button @click.prevent="onOpenServicePicker">Select</button>
           <br />
           <div id="AOS" v-for="(AOS, index) in AOSOs" :key="index">

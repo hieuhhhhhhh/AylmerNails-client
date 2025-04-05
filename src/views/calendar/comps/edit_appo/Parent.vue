@@ -84,6 +84,7 @@ export default {
     onHideMain: Function,
     onDoneEdit: Function,
     NAMvalue: Object,
+    setEZstates: Function,
   },
   setup(props) {
     // lib
@@ -156,19 +157,27 @@ export default {
       await fetchDuration();
 
       onStopPicking();
+      updateEZstates();
     };
     const setDate = (value) => {
       date.value = value;
+      updateEZstates();
     };
     const setStart = (value) => {
       start.value = value;
+      updateEZstates();
     };
     const setDuration = (value) => {
       duration.value = value;
+      updateEZstates();
     };
     const setNote = (value) => {
       note.value = value;
       console.log("new Note", value);
+    };
+
+    const updateEZstates = () => {
+      props.setEZstates(date.value, empId.value, start.value, duration.value);
     };
 
     // INPUT HANDLE
@@ -236,6 +245,7 @@ export default {
       duration.value = details.end - details.start;
       note.value = details.note;
       color.value = details.color;
+      updateEZstates();
     };
 
     const onSubmit = async () => {
@@ -271,6 +281,7 @@ export default {
       (value) => {
         start.value = value.start;
         setEmp(value.empId, value.empAlias, value.color);
+        setDate(value.date);
       }
     );
 

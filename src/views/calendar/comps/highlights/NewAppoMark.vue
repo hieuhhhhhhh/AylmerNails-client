@@ -19,7 +19,7 @@
 // lib
 import { defineProps, nextTick, ref, watch } from "vue";
 import { computed } from "vue";
-import secsToLength from "../helpers/secsToLength";
+import secsToLength from "../../helpers/secsToLength";
 import secsToHours from "@/lib/secsToHours";
 
 // PARAMS
@@ -60,10 +60,10 @@ export default {};
 
 <style scoped>
 #content {
+  position: absolute;
   display: flex;
   text-align: center;
   align-items: center;
-  position: absolute;
   box-sizing: border-box;
   border: 1px solid black;
   border-radius: 4px;

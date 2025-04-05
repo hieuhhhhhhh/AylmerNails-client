@@ -25,7 +25,7 @@ import { computed, onMounted, defineProps, ref } from "vue";
 import secsToLength from "../helpers/secsToLength";
 import lengthToSecs from "../helpers/lengthToSecs";
 // comps
-import NewAppoMark from "./NewAppoMark.vue";
+import NewAppoMark from "./highlights/NewAppoMark.vue";
 
 // resources
 const slTime = ref(0); // seconds
@@ -36,6 +36,7 @@ const props = defineProps({
   dayEnd: Number,
   NAMvisible: Boolean,
   onSelectNAM: Function,
+  EZvisible: Boolean,
 });
 
 function onSelectOffset(event, hour) {
@@ -55,9 +56,7 @@ onMounted(() => {
 
 <script>
 export default {
-  components: {
-    NewAppoMark,
-  },
+  components: { NewAppoMark },
 };
 </script>
 

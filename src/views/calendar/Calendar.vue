@@ -19,6 +19,7 @@
             :onSelectAppo="onSelectAppo"
             :NAMvisible="editId == null || !isAdding"
             :onSelectNAM="onSelectNAM"
+            :EZstates="EZstates"
           />
         </div>
       </div>
@@ -42,6 +43,7 @@
       :onHideMain="onHideMain"
       :onDoneEdit="onDoneEdit"
       :NAMvalue="NAMvalue"
+      :setEZstates="setEZstates"
     />
     <AddAppo
       v-if="isAdding"
@@ -87,9 +89,19 @@ export default {
     const editId = ref(null);
     const lastScroll = ref(0);
     const NAMvalue = ref({});
+    const EZstates = ref(null);
+
     // lib
     const router = useRouter();
     const route = useRoute();
+
+    // SETTERS
+    const resetEZstates = () => {
+      EZstates.value = null;
+    };
+    const setEZstates = (date, empId, start, duration) => {
+      EZstates.value = { date, empId, start, duration };
+    };
 
     // INPUT HANDLERS
     const onMoveRight = () => {
@@ -131,12 +143,12 @@ export default {
       appoId.value = id;
     };
 
-    const onSelectNAM = (start, empId, empAlias, color) => {
+    const onSelectNAM = (start, empId, empAlias, color, date) => {
       if (!editId.value) {
         isAdding.value = true;
       }
       nextTick(() => {
-        NAMvalue.value = { start, empId, empAlias, color };
+        NAMvalue.value = { start, empId, empAlias, color, date };
       });
     };
 
@@ -155,6 +167,7 @@ export default {
     const onCancelEdit = () => {
       isHidingMain.value = false;
       editId.value = null;
+      resetEZstates();
     };
 
     const onDoneEdit = (newDate, newAppoId) => {
@@ -162,6 +175,7 @@ export default {
       editId.value = null;
       isAdding.value = false;
       router.push(`/calendar/${newDate}/${newAppoId}`);
+      resetEZstates();
     };
 
     const onOpenAdding = () => {
@@ -238,6 +252,8 @@ export default {
       isCompacting,
       isHidingMain,
       isAdding,
+      EZstates,
+      setEZstates,
       onMoveRight,
       onMoveLeft,
       onInputDate,

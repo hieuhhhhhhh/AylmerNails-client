@@ -42,14 +42,20 @@
               {{ appo.serviceName }}
             </div>
           </div>
-
+          <EditingZone
+            v-if="EZstates != null"
+            :empId="emp.id"
+            :date="unixDate"
+            :dayStart="dayStart"
+            :EZstates="EZstates"
+          />
           <VerticalTimeMarks
             :dayStart="dayStart"
             :dayEnd="dayEnd"
             :NAMvisible="NAMvisible"
             :onSelectNAM="
               (start) => {
-                onSelectNAM(start, emp.id, emp.alias, emp.colorCode);
+                onSelectNAM(start, emp.id, emp.alias, emp.colorCode, unixDate);
               }
             "
           />
@@ -88,8 +94,8 @@ import getCompactScale from "../helpers/getCompactScale";
 // comps
 import VerticalTimeMarks from "./VerticalTimeMarks.vue";
 import GrayPart from "./GrayPart.vue";
-
 import MarkingValues from "./MarkingValues.vue";
+import EditingZone from "./highlights/EditingZone.vue";
 
 export default {
   props: {
@@ -99,11 +105,13 @@ export default {
     onSelectAppo: Function,
     NAMvisible: Boolean,
     onSelectNAM: Function,
+    EZstates: Object,
   },
   components: {
     VerticalTimeMarks,
     GrayPart,
     MarkingValues,
+    EditingZone,
   },
   setup(props) {
     // status

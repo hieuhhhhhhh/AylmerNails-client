@@ -16,7 +16,9 @@
       <tr>
         <th>Service</th>
         <td>
-          <span v-if="serviceName">{{ serviceName }} ({{ category }})</span>
+          <span v-if="details.serviceName"
+            >{{ details.serviceName }} - {{ details.cateName }}</span
+          >
           <br />
           <div id="AOS" v-for="(AOS, index) in details.AOSOsText" :key="index">
             {{ AOS.question }} ~ {{ AOS.answer }}
