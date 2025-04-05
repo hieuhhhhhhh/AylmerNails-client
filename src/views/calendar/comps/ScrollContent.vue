@@ -47,7 +47,11 @@
             :dayStart="dayStart"
             :dayEnd="dayEnd"
             :NAMvisible="NAMvisible"
-            :onSelectNAM="onSelectNAM"
+            :onSelectNAM="
+              (start) => {
+                onSelectNAM(start, emp.id, emp.alias, emp.colorCode);
+              }
+            "
           />
         </div>
       </div>

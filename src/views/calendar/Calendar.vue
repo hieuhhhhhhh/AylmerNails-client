@@ -86,7 +86,7 @@ export default {
     const appoId = ref(null);
     const editId = ref(null);
     const lastScroll = ref(0);
-    const NAMvalue = ref(0);
+    const NAMvalue = ref({});
     // lib
     const router = useRouter();
     const route = useRoute();
@@ -131,8 +131,13 @@ export default {
       appoId.value = id;
     };
 
-    const onSelectNAM = (seconds) => {
-      NAMvalue.value = seconds;
+    const onSelectNAM = (start, empId, empAlias, color) => {
+      if (!editId.value) {
+        isAdding.value = true;
+      }
+      nextTick(() => {
+        NAMvalue.value = { start, empId, empAlias, color };
+      });
     };
 
     const onCloseAppo = () => {

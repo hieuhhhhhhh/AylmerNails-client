@@ -83,6 +83,7 @@ export default {
     onSelectAppo: Function,
     onHideMain: Function,
     onDoneEdit: Function,
+    NAMvalue: Object,
   },
   setup(props) {
     // lib
@@ -263,6 +264,13 @@ export default {
         if (!value.endsWith("selecting")) {
           onReset();
         }
+      }
+    );
+    watch(
+      () => props.NAMvalue,
+      (value) => {
+        start.value = value.start;
+        setEmp(value.empId, value.empAlias, value.color);
       }
     );
 
