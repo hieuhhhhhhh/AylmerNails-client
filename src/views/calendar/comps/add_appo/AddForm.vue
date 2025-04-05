@@ -6,15 +6,6 @@
     </colgroup>
     <tbody>
       <tr>
-        <th>Client</th>
-        <td>
-          {{ formatPhone(phoneNum) }}
-          <button @click.prevent="onSelectContact">Select</button>
-          <br />
-          {{ clientName }}
-        </td>
-      </tr>
-      <tr>
         <th>Service</th>
         <td>
           {{ serviceName }} {{ getCate() }}
@@ -24,6 +15,15 @@
             {{ AOS.question }} ~ {{ AOS.answer }}
             {{ formatOffset(AOS.offset) }}
           </div>
+        </td>
+      </tr>
+      <tr>
+        <th>Client</th>
+        <td>
+          {{ formatPhone(phoneNum) }}
+          <button @click.prevent="onSelectContact">Select</button>
+          <br />
+          {{ clientName }}
         </td>
       </tr>
       <tr>
@@ -53,6 +53,11 @@
             type="number"
             :value="duration / 60"
             @input="onInputDuration"
+            @focus="
+              (event) => {
+                event.target.select();
+              }
+            "
             required
             :min="5"
             step="1"

@@ -157,19 +157,15 @@ export default {
       await fetchDuration();
 
       onStopPicking();
-      updateEZstates();
     };
     const setDate = (value) => {
       date.value = value;
-      updateEZstates();
     };
     const setStart = (value) => {
       start.value = value;
-      updateEZstates();
     };
     const setDuration = (value) => {
       duration.value = value;
-      updateEZstates();
     };
     const setNote = (value) => {
       note.value = value;
@@ -245,7 +241,6 @@ export default {
       duration.value = details.end - details.start;
       note.value = details.note;
       color.value = details.color;
-      updateEZstates();
     };
 
     const onSubmit = async () => {
@@ -284,6 +279,10 @@ export default {
         setDate(value.date);
       }
     );
+
+    watch([date, empId, start, duration], () => {
+      updateEZstates();
+    });
 
     // LIFECYCLE
     onMounted(fetchDetails);

@@ -80,6 +80,7 @@ export default {
     onHideMain: Function,
     onDoneEdit: Function,
     NAMvalue: Object,
+    setEZstates: Function,
   },
   setup(props) {
     // lib
@@ -163,6 +164,15 @@ export default {
       console.log("new Note", value);
     };
 
+    const updateEZstates = () => {
+      props.setEZstates(
+        props.unixDate,
+        empId.value,
+        start.value,
+        duration.value
+      );
+    };
+
     // INPUT HANDLE
     const updateURL = () => {
       router.push(`/calendar/${route.params.unixDate}/selecting`);
@@ -242,6 +252,10 @@ export default {
         setEmp(value.empId, value.empAlias, value.color);
       }
     );
+
+    watch([() => props.unixDate, empId, start, duration], () => {
+      updateEZstates();
+    });
 
     return {
       isPickingEmp,

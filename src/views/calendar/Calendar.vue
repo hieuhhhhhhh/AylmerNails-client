@@ -52,6 +52,7 @@
       :onHideMain="onHideMain"
       :onDoneEdit="onDoneEdit"
       :NAMvalue="NAMvalue"
+      :setEZstates="setEZstates"
     />
   </div>
 </template>
@@ -185,6 +186,7 @@ export default {
 
     const onCancelAdding = () => {
       isAdding.value = false;
+      resetEZstates();
     };
     // DEPENDENT
     watch(editId, async (newVal) => {

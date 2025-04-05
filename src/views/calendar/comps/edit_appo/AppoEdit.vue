@@ -6,16 +6,6 @@
     </colgroup>
     <tbody>
       <tr>
-        <th>Client</th>
-        <td>
-          {{ formatPhone(phoneNum) }}
-
-          <button @click.prevent="onSelectContact">Select</button>
-          <br />
-          {{ contactName }}
-        </td>
-      </tr>
-      <tr>
         <th>Service</th>
         <td>
           <span v-if="serviceName">{{ serviceName }} - {{ category }}</span>
@@ -25,6 +15,16 @@
             {{ AOS.question }} ~ {{ AOS.answer }}
             {{ formatOffset(AOS.offset) }}
           </div>
+        </td>
+      </tr>
+      <tr>
+        <th>Client</th>
+        <td>
+          {{ formatPhone(phoneNum) }}
+
+          <button @click.prevent="onSelectContact">Select</button>
+          <br />
+          {{ contactName }}
         </td>
       </tr>
       <tr>
