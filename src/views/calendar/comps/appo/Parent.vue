@@ -85,7 +85,6 @@ export default {
   background-color: var(--background-i2);
   overflow-y: auto;
   max-height: 80%;
-  border: 1px solid black;
 }
 #content {
   padding: 20px;
@@ -99,6 +98,7 @@ export default {
   height: 30px;
   padding: 0;
   border-radius: 0;
+  border: none;
 }
 table {
   text-align: left;

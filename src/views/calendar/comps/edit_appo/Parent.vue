@@ -5,34 +5,45 @@
       id="container"
       v-if="!isPickingEmp && !isPickingService && !isPickingContact"
     >
-      <div id="title">Editing</div>
-      <div id="content" :style="{ backgroundColor: color }">
-        <AppoEdit
-          :contactName="contactName"
-          :phoneNum="phoneNum"
-          :serviceName="serviceName"
-          :AOSOs="AOSOsText"
-          :category="category"
-          :empAlias="empAlias"
-          :date="date"
-          :start="start"
-          :duration="duration"
-          :note="note"
-          :setDate="setDate"
-          :setStart="setStart"
-          :setDuration="setDuration"
-          :setNote="setNote"
-          :resetEmp="resetEmp"
-          :resetService="resetService"
-          :onOpenEmpPicker="onOpenEmpPicker"
-          :onOpenServicePicker="onOpenServicePicker"
-          :onSelectContact="onSelectContact"
-          :onClearContact="onClearContact"
-          :onClearService="onClearService"
-        />
+      <div class="flexBox">
+        <div id="box">
+          <div id="closeBox">
+            <button class="redBtn" @click.prevent="onCancelEdit">X</button>
+          </div>
+          <div id="top">
+            <div id="title">Editing</div>
+          </div>
+
+          <div id="content" :style="{ backgroundColor: color }">
+            <AppoEdit
+              :contactName="contactName"
+              :phoneNum="phoneNum"
+              :serviceName="serviceName"
+              :AOSOs="AOSOsText"
+              :category="category"
+              :empAlias="empAlias"
+              :date="date"
+              :start="start"
+              :duration="duration"
+              :note="note"
+              :setDate="setDate"
+              :setStart="setStart"
+              :setDuration="setDuration"
+              :setNote="setNote"
+              :resetEmp="resetEmp"
+              :resetService="resetService"
+              :onOpenEmpPicker="onOpenEmpPicker"
+              :onOpenServicePicker="onOpenServicePicker"
+              :onSelectContact="onSelectContact"
+              :onClearContact="onClearContact"
+              :onClearService="onClearService"
+            />
+          </div>
+          <div class="flexBox">
+            <button class="greenBtn">Save Changes</button>
+          </div>
+        </div>
       </div>
-      <button @click.prevent="onCancelEdit">Cancel</button>
-      <button>Save</button>
     </form>
     <EmployeePicker
       v-if="isPickingEmp"
@@ -340,16 +351,37 @@ export default {
   margin-bottom: 5px;
 }
 #container {
-  padding: 20px;
-  width: 500px;
-  max-width: 100%;
   box-sizing: border-box;
 }
 #content {
+  max-width: 100%;
+  width: 500px;
   color: black;
 }
-#flexBox {
+.flexBox {
   display: flex;
   justify-content: center;
+  margin: 5px;
+}
+#top {
+  display: flex;
+  justify-content: center;
+  margin-top: -20px;
+}
+#closeBox {
+  display: flex;
+  justify-content: flex-end;
+}
+.redBtn {
+  border-radius: 0px;
+  width: 34px;
+  aspect-ratio: 1;
+  border: none;
+}
+#box {
+  background: var(--background-i2);
+  box-shadow: 0 0 10px var(--shadow-color);
+  margin: 10px;
+  max-width: 100%;
 }
 </style>

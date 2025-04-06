@@ -10,9 +10,9 @@
     </button>
   </div>
   <div id="note">
-    Please note that our website is intended for individual appointments
-    <br />
-    Contact us for multiple people appointments
+    Please note that the website is intended for individual appointments
+    <!-- <br /> -->
+    <!-- Contact us for multiple people appointments -->
     <br />
     Step 1: Select your service
   </div>
