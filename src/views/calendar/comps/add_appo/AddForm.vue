@@ -8,29 +8,39 @@
       <tr>
         <th>Service</th>
         <td>
-          {{ serviceName }} {{ getCate() }}
-          <button @click.prevent="onOpenServicePicker">Select</button>
-          <br />
-          <div id="AOS" v-for="(AOS, index) in AOSOs" :key="index">
-            {{ AOS.question }} ~ {{ AOS.answer }}
-            {{ formatOffset(AOS.offset) }}
+          <div class="duo">
+            <div>
+              {{ serviceName }} {{ getCate() }}
+              <div id="AOS" v-for="(AOS, index) in AOSOs" :key="index">
+                {{ AOS.question }} ~ {{ AOS.answer }}
+                {{ formatOffset(AOS.offset) }}
+              </div>
+            </div>
+            <button @click.prevent="onOpenServicePicker">Select</button>
           </div>
         </td>
       </tr>
       <tr>
         <th>Client</th>
         <td>
-          {{ formatPhone(phoneNum) }}
-          <button @click.prevent="onSelectContact">Select</button>
-          <br />
-          {{ clientName }}
+          <div class="duo">
+            <div>
+              {{ formatPhone(phoneNum) }}
+              {{ clientName }}
+            </div>
+            <button @click.prevent="onSelectContact">Select</button>
+          </div>
         </td>
       </tr>
       <tr>
         <th>Employee</th>
         <td>
-          {{ empAlias }}
-          <button @click.prevent="onOpenEmpPicker">Select</button>
+          <div class="duo">
+            <div>
+              {{ empAlias }}
+            </div>
+            <button @click.prevent="onOpenEmpPicker">Select</button>
+          </div>
         </td>
       </tr>
       <tr>
@@ -234,6 +244,11 @@ textarea {
   overflow-y: hidden;
 }
 button {
-  border-radius: 0;
+  border-radius: 3px;
+  height: 23px;
+}
+.duo {
+  display: flex;
+  justify-content: space-between;
 }
 </style>

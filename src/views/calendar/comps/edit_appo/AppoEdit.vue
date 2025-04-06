@@ -8,9 +8,12 @@
       <tr>
         <th>Service</th>
         <td>
-          <span v-if="serviceName">{{ serviceName }} - {{ category }}</span>
-          <button @click.prevent="onOpenServicePicker">Select</button>
-          <br />
+          <div class="duo">
+            <div v-if="serviceName">{{ serviceName }} - {{ category }}</div>
+            <div>
+              <button @click.prevent="onOpenServicePicker">Select</button>
+            </div>
+          </div>
           <div id="AOS" v-for="(AOS, index) in AOSOs" :key="index">
             {{ AOS.question }} ~ {{ AOS.answer }}
             {{ formatOffset(AOS.offset) }}
@@ -20,18 +23,28 @@
       <tr>
         <th>Client</th>
         <td>
-          {{ formatPhone(phoneNum) }}
-
-          <button @click.prevent="onSelectContact">Select</button>
-          <br />
-          {{ contactName }}
+          <div class="duo">
+            <div>
+              {{ formatPhone(phoneNum) }}
+              <div>
+                {{ contactName }}
+              </div>
+            </div>
+            <div>
+              <button @click.prevent="onSelectContact">Select</button>
+            </div>
+          </div>
         </td>
       </tr>
       <tr>
         <th>Employee</th>
         <td>
-          {{ empAlias }}
-          <button @click.prevent="onOpenEmpPicker">Select</button>
+          <div class="duo">
+            {{ empAlias }}
+            <div>
+              <button @click.prevent="onOpenEmpPicker">Select</button>
+            </div>
+          </div>
         </td>
       </tr>
       <tr>
@@ -230,6 +243,11 @@ textarea {
   overflow-y: hidden;
 }
 button {
-  border-radius: 0;
+  border-radius: 3px;
+  height: 23px;
+}
+.duo {
+  display: flex;
+  justify-content: space-between;
 }
 </style>

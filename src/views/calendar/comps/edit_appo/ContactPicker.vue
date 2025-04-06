@@ -8,7 +8,6 @@
         @input="onInputPhone"
         placeholder="Enter Phone Number"
         maxlength="15"
-        required
       />
     </div>
     <div>
@@ -17,7 +16,6 @@
         v-model="name"
         placeholder="Enter Name"
         @input="onInputName"
-        required
       />
     </div>
     <button>Confirm</button>

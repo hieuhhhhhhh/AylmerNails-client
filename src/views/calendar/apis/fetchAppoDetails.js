@@ -50,6 +50,7 @@ function parseApiRes(json) {
     phoneNumId,
     phoneNum,
     contactName,
+    userId,
   ] = json.appo_details;
 
   // append results
@@ -69,6 +70,7 @@ function parseApiRes(json) {
     phoneNumId,
     phoneNum,
     contactName,
+    userId,
     AOSOsText: [],
   };
 
