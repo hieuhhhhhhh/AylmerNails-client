@@ -16,7 +16,12 @@
                 {{ formatOffset(AOS.offset) }}
               </div>
             </div>
-            <button @click.prevent="onOpenServicePicker">Select</button>
+            <div>
+              <button v-if="serviceName" @click.prevent="onClearService">
+                X
+              </button>
+              <button @click.prevent="onOpenServicePicker">Select</button>
+            </div>
           </div>
         </td>
       </tr>
@@ -26,9 +31,14 @@
           <div class="duo">
             <div>
               {{ formatPhone(phoneNum) }}
-              {{ clientName }}
+              <div>
+                {{ clientName }}
+              </div>
             </div>
-            <button @click.prevent="onSelectContact">Select</button>
+            <div>
+              <button v-if="phoneNum" @click.prevent="onClearContact">X</button>
+              <button @click.prevent="onSelectContact">Select</button>
+            </div>
           </div>
         </td>
       </tr>
@@ -44,35 +54,61 @@
         </td>
       </tr>
       <tr>
-        <th>Date Time</th>
+        <th>Date</th>
         <td>
-          <input
-            type="time"
-            :value="parseUnixHours(start)"
-            @change="onInputStart"
-            required
-          /><br />
-          <input type="date" :value="parseUT(date)" disabled />
-          {{ getReminder() }}
+          <div class="center">
+            <div>
+              {{ getReminder() }}
+            </div>
+            <div>
+              <input type="date" :value="parseUT(date)" disabled />
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <th>Time</th>
+        <td>
+          <div class="center">
+            <div>
+              <button @click.prevent="onIncreaseTime(false)">-</button>
+              <input
+                type="time"
+                :value="parseUnixHours(start)"
+                @change="onInputStart"
+                required
+              />
+              <button @click.prevent="onIncreaseTime(true)">+</button>
+            </div>
+          </div>
         </td>
       </tr>
       <tr>
         <th>Duration (mins)</th>
         <td>
-          <input
-            type="number"
-            :value="duration / 60"
-            @input="onInputDuration"
-            @focus="
-              (event) => {
-                event.target.select();
-              }
-            "
-            required
-            :min="5"
-            step="1"
-          />
-          {{ getEndTime() }}
+          <div class="center">
+            <div>
+              <button @click.prevent="onIncreaseDuration(false)">-</button>
+
+              <input
+                type="number"
+                :value="duration / 60"
+                @input="onInputDuration"
+                @focus="
+                  (event) => {
+                    event.target.select();
+                  }
+                "
+                required
+                :min="5"
+                step="1"
+              />
+              <button @click.prevent="onIncreaseDuration(true)">+</button>
+            </div>
+            <div>
+              {{ getEndTime() }}
+            </div>
+          </div>
         </td>
       </tr>
 
@@ -119,16 +155,17 @@ export default {
     start: Number,
     duration: Number,
     note: String,
-    setDate: Function,
     setStart: Function,
     setDuration: Function,
     setNote: Function,
     onOpenEmpPicker: Function,
     onOpenServicePicker: Function,
     onSelectContact: Function,
+    onClearService: Function,
+    onClearContact: Function,
   },
   setup(props) {
-    // HANDLERS
+    // INPUT
     const onInputStart = (event) => {
       const value = parseTime(event.target.value);
       props.setStart(value);
@@ -145,6 +182,17 @@ export default {
       expandNoteTA();
     };
 
+    const onIncreaseTime = (boolean) => {
+      const change = boolean ? 15 * 60 : -15 * 60;
+      props.setStart(props.start + change);
+    };
+
+    const onIncreaseDuration = (boolean) => {
+      const change = boolean ? 15 * 60 : -15 * 60;
+
+      props.setDuration(props.duration + change);
+    };
+
     // FORMAT
     const formatOffset = (seconds) => {
       if (seconds === 0) return;
@@ -159,7 +207,7 @@ export default {
       const unixDate = props.date + 12 * 60 * 60;
       const text = unixTimeToReminder(unixDate);
       if (text) {
-        return `(${text})`;
+        return `${text}`;
       }
     };
     const getCate = () => {
@@ -169,7 +217,7 @@ export default {
     const getEndTime = () => {
       if (!props.start || !props.duration) return;
       const end = props.start + props.duration;
-      return `(to ${secsToHours(end)})`;
+      return `to ${secsToHours(end)}`;
     };
 
     // STYLES
@@ -202,6 +250,8 @@ export default {
       getReminder,
       getCate,
       getEndTime,
+      onIncreaseDuration,
+      onIncreaseTime,
     };
   },
 };
@@ -246,9 +296,18 @@ textarea {
 button {
   border-radius: 3px;
   height: 23px;
+  aspect-ratio: 1;
+  margin-inline: 2px;
+  user-select: none;
 }
 .duo {
   display: flex;
   justify-content: space-between;
+}
+.center {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
 }
 </style>

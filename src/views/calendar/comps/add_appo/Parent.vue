@@ -26,6 +26,8 @@
           :onOpenEmpPicker="onOpenEmpPicker"
           :onOpenServicePicker="onOpenServicePicker"
           :onSelectContact="onSelectContact"
+          :onClearContact="onClearContact"
+          :onClearService="onClearService"
         />
       </div>
       <button @click.prevent="onCancelAdding">Cancel</button>
@@ -208,6 +210,14 @@ export default {
       router.push(`/calendar/${route.params.unixDate}`);
     };
 
+    const onClearContact = () => {
+      setContact(null, null);
+    };
+
+    const onClearService = () => {
+      setService(null, "", "", [], []);
+    };
+
     // APIS
     const fetchDuration = async () => {
       if (!serviceId.value) return;
@@ -284,6 +294,8 @@ export default {
       onOpenServicePicker,
       onSelectContact,
       onStopPicking,
+      onClearContact,
+      onClearService,
     };
   },
 };

@@ -54,35 +54,67 @@
         </td>
       </tr>
       <tr>
-        <th>Date Time</th>
+        <th>Date</th>
         <td>
-          <input
-            type="time"
-            :value="parseUnixHours(start)"
-            @change="onInputStart"
-            required
-          /><br />
-          <input
-            type="date"
-            :value="parseUT(date)"
-            @change="onInputDate"
-            required
-          />
-          {{ getReminder() }}
+          <div class="center">
+            <div>
+              <button @click.prevent="onIncreaseDate(false)">-</button>
+
+              <input
+                type="date"
+                :value="parseUT(date)"
+                @change="onInputDate"
+                required
+              />
+              <button @click.prevent="onIncreaseDate(true)">+</button>
+            </div>
+            {{ getReminder() }}
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <th>Time</th>
+        <td>
+          <div class="center">
+            <div>
+              <button @click.prevent="onIncreaseTime(false)">-</button>
+
+              <input
+                type="time"
+                :value="parseUnixHours(start)"
+                @change="onInputStart"
+                required
+              />
+              <button @click.prevent="onIncreaseTime(true)">+</button>
+            </div>
+          </div>
         </td>
       </tr>
       <tr>
         <th>Duration (mins)</th>
         <td>
-          <input
-            type="number"
-            :value="duration / 60"
-            @input="onInputDuration"
-            required
-            :min="5"
-            step="1"
-          />
-          (to {{ secsToHours(start + duration) }})
+          <div class="center">
+            <div>
+              <button @click.prevent="onIncreaseDuration(false)">-</button>
+
+              <input
+                type="number"
+                :value="duration / 60"
+                @input="onInputDuration"
+                @focus="
+                  (event) => {
+                    event.target.select();
+                  }
+                "
+                required
+                :min="5"
+                step="1"
+              />
+              <button @click.prevent="onIncreaseDuration(true)">+</button>
+            </div>
+            to {{ secsToHours(start + duration) }}
+          </div>
         </td>
       </tr>
 
@@ -141,7 +173,7 @@ export default {
     onClearContact: Function,
   },
   setup(props) {
-    // HANDLERS
+    // INPUT
     const onInputStart = (event) => {
       const value = parseTime(event.target.value);
       props.setStart(value);
@@ -163,6 +195,22 @@ export default {
       expandNoteTA();
     };
 
+    const onIncreaseTime = (boolean) => {
+      const change = boolean ? 15 * 60 : -15 * 60;
+      props.setStart(props.start + change);
+    };
+
+    const onIncreaseDuration = (boolean) => {
+      const change = boolean ? 15 * 60 : -15 * 60;
+
+      props.setDuration(props.duration + change);
+    };
+
+    const onIncreaseDate = (boolean) => {
+      const change = boolean ? 24 * 60 * 60 : -24 * 60 * 60;
+      props.setDate(props.date + change);
+    };
+
     // FORMAT
     const formatOffset = (seconds) => {
       if (seconds === 0) return;
@@ -176,7 +224,7 @@ export default {
       const unixDate = props.date + 12 * 60 * 60;
       const text = unixTimeToReminder(unixDate);
       if (text) {
-        return `(${text})`;
+        return `${text}`;
       }
     };
 
@@ -209,6 +257,9 @@ export default {
       parseUnixHours,
       secsToHours,
       getReminder,
+      onIncreaseDuration,
+      onIncreaseTime,
+      onIncreaseDate,
     };
   },
 };
@@ -253,10 +304,18 @@ textarea {
 button {
   border-radius: 3px;
   height: 23px;
-  margin-left: 2px;
+  aspect-ratio: 1;
+  margin-inline: 2px;
+  user-select: none;
 }
 .duo {
   display: flex;
   justify-content: space-between;
+}
+.center {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
 }
 </style>
