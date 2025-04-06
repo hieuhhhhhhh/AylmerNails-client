@@ -1,5 +1,7 @@
 <template>
-  <button @click="onStopPicking">Back</button>
+  <button @click="onStopPicking" class="orangeBtn">
+    <FontAwesomeIcon :icon="faLeftLong" /> Back
+  </button>
   <div id="flexBox">
     <Category
       v-for="(category, index) in categories"
@@ -22,13 +24,16 @@ import { ref, onMounted } from "vue";
 import fetchActiveServices from "../../apis/fetchActiveServices";
 // comps
 import Category from "./Category.vue";
-
 import SelectAOSOs from "./SelectAOSOs.vue";
+// icon
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faLeftLong } from "@fortawesome/free-solid-svg-icons";
 
 export default {
   components: {
     Category,
     SelectAOSOs,
+    FontAwesomeIcon,
   },
   props: {
     date: Number,
@@ -79,6 +84,7 @@ export default {
       onInputService,
       onInputAOSOs,
       onCancelAOSs,
+      faLeftLong,
     };
   },
 };
@@ -90,5 +96,13 @@ export default {
   flex-wrap: wrap;
   justify-content: center;
   gap: 10px;
+}
+.orangeBtn {
+  margin-bottom: 10px;
+  font-size: 22px;
+  position: sticky;
+  top: 10px;
+  left: 10px;
+  z-index: 10;
 }
 </style>

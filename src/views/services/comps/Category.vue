@@ -92,7 +92,7 @@ export default {
   padding: 10px;
   text-align: center;
   font-weight: bold;
-  font-size: 23px;
+  font-size: 15px;
   box-sizing: border-box;
 }
 #service {

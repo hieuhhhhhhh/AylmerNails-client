@@ -6,7 +6,7 @@
       id="backBtn"
       @click="closeSelect"
     >
-      <FontAwesomeIcon :icon="backIcon" /> Return
+      <FontAwesomeIcon :icon="backIcon" /> Back
     </button>
   </div>
   <div id="note">
