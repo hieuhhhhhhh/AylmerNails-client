@@ -49,7 +49,10 @@ export default {
     // INPUT
     const onSubmit = async () => {
       // parse to real phone
-      const real = "+1" + phoneNum.value.replace(/\D/g, "");
+      let real = null;
+      if (phoneNum.value.trim() !== "") {
+        real = "+1" + phoneNum.value.replace(/\D/g, "");
+      }
       props.setContact(real, name.value);
     };
 

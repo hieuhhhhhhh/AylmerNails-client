@@ -9,8 +9,13 @@
         <th>Service</th>
         <td>
           <div class="duo">
-            <div v-if="serviceName">{{ serviceName }} - {{ category }}</div>
             <div>
+              <div v-if="serviceName">{{ serviceName }} - {{ category }}</div>
+            </div>
+            <div>
+              <button v-if="serviceName" @click.prevent="onClearService">
+                X
+              </button>
               <button @click.prevent="onOpenServicePicker">Select</button>
             </div>
           </div>
@@ -31,6 +36,7 @@
               </div>
             </div>
             <div>
+              <button v-if="phoneNum" @click.prevent="onClearContact">X</button>
               <button @click.prevent="onSelectContact">Select</button>
             </div>
           </div>
@@ -131,6 +137,8 @@ export default {
     onOpenEmpPicker: Function,
     onOpenServicePicker: Function,
     onSelectContact: Function,
+    onClearService: Function,
+    onClearContact: Function,
   },
   setup(props) {
     // HANDLERS
@@ -245,6 +253,7 @@ textarea {
 button {
   border-radius: 3px;
   height: 23px;
+  margin-left: 2px;
 }
 .duo {
   display: flex;

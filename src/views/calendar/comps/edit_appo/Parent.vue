@@ -27,6 +27,8 @@
           :onOpenEmpPicker="onOpenEmpPicker"
           :onOpenServicePicker="onOpenServicePicker"
           :onSelectContact="onSelectContact"
+          :onClearContact="onClearContact"
+          :onClearService="onClearService"
         />
       </div>
       <button @click.prevent="onCancelEdit">Cancel</button>
@@ -211,6 +213,14 @@ export default {
       props.onHideMain(false);
     };
 
+    const onClearContact = () => {
+      setContact(null, null);
+    };
+
+    const onClearService = () => {
+      setService(null, "", "", [], []);
+    };
+
     // APIS
     const fetchDuration = async () => {
       if (!serviceId.value) return;
@@ -316,6 +326,8 @@ export default {
       onOpenEmpPicker,
       onOpenServicePicker,
       onStopPicking,
+      onClearContact,
+      onClearService,
     };
   },
 };
