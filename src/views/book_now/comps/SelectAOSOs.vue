@@ -107,7 +107,7 @@ export default {
   position: relative;
   z-index: 20;
   width: 500px;
-  max-width: 100%;
+  max-width: 90%;
   background-color: var(--background-i2);
   overflow-y: auto;
   max-height: 80%;
@@ -123,6 +123,8 @@ export default {
   aspect-ratio: 1;
   height: 30px;
   padding: 0;
+  border: none;
+  border-radius: 0px;
 }
 #btnBox {
   display: flex;

@@ -30,6 +30,8 @@ import ScheduleConflicts from "./views/conflicts/ScheduleConflicts.vue";
 
 // booking history
 import BookingHistory from "./views/booking_history/Layout.vue";
+// notification
+import Notifications from "./views/notifications/Layout.vue";
 // profile
 import Profile from "./views/profile/Layout.vue";
 // business links
@@ -83,6 +85,11 @@ const routes = [
     path: "/booking_history",
     component: BookingHistory,
   },
+  {
+    path: "/notifications",
+    component: Notifications,
+  },
+
   {
     path: "/signup",
     component: SignUp,

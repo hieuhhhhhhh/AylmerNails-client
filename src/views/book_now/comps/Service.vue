@@ -118,10 +118,12 @@ export default {
   color: rgb(184, 121, 3);
 }
 #remove {
-  margin: 5px;
+  margin-left: 5px;
+  box-sizing: border-box;
 }
 #bar {
   display: flex;
+  max-width: 100%;
 }
 #card {
   box-shadow: 0 0 5px var(--shadow-color);

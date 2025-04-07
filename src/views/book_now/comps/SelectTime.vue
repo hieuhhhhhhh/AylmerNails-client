@@ -1,13 +1,37 @@
 <template>
-  <div>
-    <input id="date" type="date" :value="date" @change="onInputDate" />
+  <div id="note">Step 3: Select a time</div>
+  <div class="flexBox">
+    <div class="top">
+      <button class="dayBtn" @click="onMoveDate(-1)">
+        <FontAwesomeIcon :icon="faMinus" />
+      </button>
+      <div>
+        <input
+          id="date"
+          type="date"
+          :value="date"
+          @change="onInputDate($event.target.value)"
+        />
+      </div>
+      <button class="dayBtn" @click="onMoveDate(1)">
+        <FontAwesomeIcon :icon="faPlus" />
+      </button>
+    </div>
+    <div v-if="unixDate">
+      {{ unixToReadable(unixDate) }}
+    </div>
+    <div v-if="unixDate">
+      {{ unixTimeToReminder(unixDate) }}
+    </div>
   </div>
-
-  <div v-for="(opening, index) in sortedOpenings" :key="index">
-    <button @click="onChooseOpening(opening)">select opening</button>
-    <div>{{ formatTime(opening.start) }}</div>
+  <div id="openingBox">
+    <div v-for="(opening, index) in sortedOpenings" :key="index">
+      <button class="openings" @click="onChooseOpening(opening)">
+        <div>{{ formatTime(opening.start) }}</div>
+      </button>
+    </div>
   </div>
-  <div v-if="msg">{{ msg }}</div>
+  <div id="msg" v-if="msg">{{ msg }}</div>
   <div id="duo">
     <button class="orangeBtn" id="leftBtn" @click="onBack">
       <FontAwesomeIcon :icon="backIcon" /> Back
@@ -20,12 +44,19 @@
 <script>
 // icons
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faLeftLong, faRightLong } from "@fortawesome/free-solid-svg-icons";
+import {
+  faLeftLong,
+  faRightLong,
+  faPlus,
+  faMinus,
+} from "@fortawesome/free-solid-svg-icons";
 // lib
 import getTodayUnixTime from "@/lib/getTodayUnixTime";
 import fetchAvailability from "../apis/fetchAvailability";
 import secondsToClock from "../apis/secondsToClock";
 import parseDate from "@/lib/parseDate";
+import unixTimeToReminder from "@/lib/unixTimeToReminder";
+import unixToReadable from "@/lib/unixToReadable";
 
 export default {
   props: {
@@ -42,6 +73,8 @@ export default {
       // icons
       backIcon: faLeftLong,
       continueIcon: faRightLong,
+      faPlus,
+      faMinus,
       // resources
       msg: "",
       chains: [],
@@ -59,7 +92,7 @@ export default {
     },
     onContinue() {
       if (!this.unixDate) {
-        this.msg = "Please select a date!";
+        this.msg = "Please select a date and time";
         return;
       }
       if (!this.chain) {
@@ -79,6 +112,7 @@ export default {
       const max = opening.chains.length;
       const random = Math.floor(Math.random() * max);
       this.chain = opening.chains[random];
+      this.onContinue();
     },
     isInThePast(value) {
       const today = getTodayUnixTime();
@@ -95,14 +129,12 @@ export default {
       this.chain = null;
       this.unixDate = null;
     },
-    async onInputDate(event) {
+    async onInputDate(value) {
       // reset data
       this.resetData();
-      // read from event
-      const value = event.target.value;
       // if user select day in the past do nothing
       if (this.isInThePast(value)) {
-        this.msg = "Please select a valid date!";
+        this.msg = "Please select a valid date";
         return;
       }
 
@@ -110,6 +142,19 @@ export default {
       this.unixDate = parseDate(value);
       console.log("unix date: ", this.unixDate);
       await this.fetchData();
+    },
+    async onMoveDate(direction) {
+      let current;
+      if (this.date) {
+        current = new Date(this.date);
+      } else {
+        const now = new Date();
+        const offset = now.getTimezoneOffset();
+        current = new Date(now.getTime() - offset * 60 * 1000);
+      }
+      current.setDate(current.getDate() + direction);
+      const newDate = current.toISOString().slice(0, 10);
+      await this.onInputDate(newDate);
     },
     async fetchData() {
       const res = await fetchAvailability(this.unixDate, this.services);
@@ -144,6 +189,8 @@ export default {
       const newOpenings = Object.values(this.openings);
       this.sortedOpenings = newOpenings.sort((a, b) => a.start - b.start);
     },
+    unixTimeToReminder,
+    unixToReadable,
   },
 };
 </script>
@@ -165,5 +212,51 @@ export default {
   font-size: 23px;
   border-top-left-radius: 30px;
   border-bottom-left-radius: 30px;
+}
+.flexBox {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  font-size: 20px;
+}
+input[type="date"] {
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 5px;
+}
+#note {
+  padding: 10px;
+  padding-top: 0px;
+  color: rgb(184, 121, 3);
+  text-align: center;
+}
+.top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+}
+.dayBtn {
+  font-size: 30px;
+  height: fit-content;
+  border-radius: 50%;
+}
+.openings {
+  padding: 5px;
+  padding-inline: 10px;
+  font-size: 18px;
+}
+#openingBox {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  flex-wrap: wrap;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-top: 10px;
+  background: var(--background-i2);
+}
+#msg {
+  text-align: center;
 }
 </style>
