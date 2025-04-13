@@ -1,5 +1,4 @@
 <template>
-  <div id="title">Users</div>
   <input
     type="text"
     id="search"

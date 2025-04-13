@@ -28,20 +28,22 @@ import DurationConflicts from "./views/conflicts/DurationConflicts.vue";
 import EmployeeLDconflicts from "./views/conflicts/EmployeeLDconflicts.vue";
 import ScheduleConflicts from "./views/conflicts/ScheduleConflicts.vue";
 
-// booking history
-import BookingHistory from "./views/booking_history/Layout.vue";
 // profile
 import Profile from "./views/profile/Layout.vue";
 // business links
 import BusinessLinks from "./views/business_links/Layout.vue";
 // users
 import UsersLayout from "./views/users/Layout.vue";
-// import Users from "./views/users/Users.vue";
-// import User from "./views/users/User.vue";
+import Users from "./views/users/Users.vue";
+import User from "./views/users/User.vue";
+import Blacklist from "./views/users/Blacklist.vue";
+import Clients from "./views/users/Clients.vue";
+
 // activities
 import Activities from "./views/activities/Layout.vue";
 import Booking from "./views/activities/Booking.vue";
 import Canceled from "./views/activities/Canceled.vue";
+import Saved from "./views/activities/Saved.vue";
 
 const routes = [
   {
@@ -64,6 +66,10 @@ const routes = [
         path: "canceled",
         component: Canceled,
       },
+      {
+        path: "saved",
+        component: Saved,
+      },
     ],
   },
 
@@ -78,32 +84,28 @@ const routes = [
   {
     path: "/users",
     component: UsersLayout,
-  },
-  // {
-  //   path: "/accounts",
-  //   component: UsersLayout,
-  //   children: [
-  //     {
-  //       path: "",
-  //       component: Users,
-  //     },
-  //     {
-  //       path: ":userId",
-  //       component: User,
-  //     },
-  //   ],
-  // },
-  {
-    path: "/canceled",
-    component: Canceled,
+    children: [
+      {
+        path: "accounts",
+        component: Users,
+      },
+      {
+        path: ":userId",
+        component: User,
+      },
+      {
+        path: "clients",
+        component: Clients,
+      },
+      {
+        path: "blacklist",
+        component: Blacklist,
+      },
+    ],
   },
   {
     path: "/business_links",
     component: BusinessLinks,
-  },
-  {
-    path: "/booking_history",
-    component: BookingHistory,
   },
   {
     path: "/signup",

@@ -17,7 +17,12 @@
         <th>Client</th>
         <th>Booked for</th>
       </tr>
-      <tr v-for="(appo, index) in appos" :key="index">
+      <tr
+        v-for="(appo, index) in appos"
+        class="row"
+        :key="index"
+        @click="toDate(appo.date)"
+      >
         <td class="newCol">
           <div class="flexBox">
             <div class="newCell" v-if="appo.cancelTime > lastTracked">NEW</div>
@@ -60,6 +65,7 @@ import secsToHours from "@/lib/secsToHours";
 import unixToHours from "@/lib/unixToHours";
 
 import formatPhone from "@/lib/formatPhone";
+import { useRouter } from "vue-router";
 
 export default {
   name: "CanceledAppos",
@@ -69,10 +75,16 @@ export default {
     const appos = ref([]);
     const lastTracked = ref(null);
     const limit = ref(50);
+    // lib
+    const router = useRouter();
 
     // INPUT
     const onSearchCanceled = async () => {
       appos.value = await searchCanceledAppos(query.value, limit.value);
+    };
+
+    const toDate = (date) => {
+      router.push(`/calendar/${date}`);
     };
 
     // LIFECYCLE
@@ -91,6 +103,7 @@ export default {
       secsToHours,
       formatPhone,
       onSearchCanceled,
+      toDate,
     };
   },
 };
@@ -129,5 +142,14 @@ tr {
 }
 #search {
   margin-bottom: 10px;
+}
+.row:hover {
+  background: var(--hover);
+}
+.row:active {
+  background: var(--active);
+}
+.row {
+  cursor: pointer;
 }
 </style>

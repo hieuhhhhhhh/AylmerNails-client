@@ -4,16 +4,29 @@
       <router-link
         to="/activities/booking"
         class="btn"
-        :class="{ selected: $route.path === '/activities/booking' }"
+        active-class="btn selected"
       >
         Booking
+        <div v-if="bookingCount > 0" class="noti">
+          {{ bookingCount }}
+        </div>
       </router-link>
       <router-link
         to="/activities/canceled"
         class="btn"
-        :class="{ selected: $route.path === '/activities/canceled' }"
+        active-class="btn selected"
       >
         Canceled
+        <div v-if="canceledCount > 0" class="noti">
+          {{ canceledCount }}
+        </div>
+      </router-link>
+      <router-link
+        to="/activities/saved"
+        class="btn"
+        active-class="btn selected"
+      >
+        Saved
       </router-link>
     </div>
     <router-view />
@@ -21,7 +34,13 @@
 </template>
 
 <script setup>
-// Nothing needed here for now
+// pinia
+import { useNotificationCount } from "@/stores/myProfile";
+import { computed } from "vue";
+
+const NCstore = useNotificationCount();
+const bookingCount = computed(() => NCstore.newAppoCount);
+const canceledCount = computed(() => NCstore.newCanceledAppoCount);
 </script>
 
 <script>
@@ -59,7 +78,8 @@ export default {
   color: var(--foreground);
   cursor: pointer;
   text-decoration: none;
-  display: inline-block;
+  display: flex;
+  gap: 6px;
 }
 .btn.selected {
   color: var(--background-i0);
@@ -67,5 +87,19 @@ export default {
 }
 .btn:active {
   background: gray;
+}
+.noti {
+  background: var(--trans-red);
+  color: white;
+  /* aspect-ratio: 1; */
+  min-width: 16px;
+  padding: 0px;
+  border-radius: 50%;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: -2px;
+  /* font-weight: bold; */
 }
 </style>

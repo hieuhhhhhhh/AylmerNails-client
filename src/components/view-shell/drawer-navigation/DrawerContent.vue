@@ -1,26 +1,17 @@
 <template>
   <div id="DrawerContent">
-    <div><router-link to="/activities/booking">Activities</router-link></div>
     <div><router-link to="/booknow/1">Book Now</router-link></div>
     <div><router-link to="/profile">My Appointments</router-link></div>
-    <div class="relative">
-      <router-link to="/booking_history">
-        <div v-if="newAppoCount > 0" id="noti">
-          {{ newAppoCount }}
-        </div>
-        Client Bookings
-      </router-link>
-    </div>
     <div>
-      <router-link to="/canceled">
-        <div v-if="newCanceledCount > 0" id="noti">
-          {{ newCanceledCount }}
+      <router-link to="/activities/booking">
+        <div v-if="newActCount > 0" id="noti">
+          {{ newActCount }}
         </div>
-        Canceled</router-link
+        Activities</router-link
       >
     </div>
     <div>
-      <router-link to="/users">
+      <router-link to="/users/accounts">
         <div v-if="newUserCount > 0" id="noti">
           {{ newUserCount }}
         </div>
@@ -50,8 +41,9 @@ export default {
   setup() {
     // pinia states
     const NCstore = useNotificationCount();
-    const newAppoCount = computed(() => NCstore.newAppoCount);
-    const newCanceledCount = computed(() => NCstore.newCanceledAppoCount);
+    const newActCount = computed(
+      () => NCstore.newAppoCount + NCstore.newCanceledAppoCount
+    );
     const newUserCount = computed(() => NCstore.newUserCount);
 
     // DEPENDENCIES
@@ -66,8 +58,7 @@ export default {
 
     return {
       getTodayUnixTime,
-      newAppoCount,
-      newCanceledCount,
+      newActCount,
       newUserCount,
     };
   },
@@ -120,6 +111,7 @@ export default {
   border-radius: 10px;
   margin-left: calc(90% - 20px);
   width: 20px;
+  /* font-weight: bold; */
 }
 .relative {
   position: relative;
