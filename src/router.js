@@ -30,18 +30,20 @@ import ScheduleConflicts from "./views/conflicts/ScheduleConflicts.vue";
 
 // booking history
 import BookingHistory from "./views/booking_history/Layout.vue";
-// notification
-import Notifications from "./views/notifications/Layout.vue";
 // profile
 import Profile from "./views/profile/Layout.vue";
 // business links
 import BusinessLinks from "./views/business_links/Layout.vue";
 // users
 import UsersLayout from "./views/users/Layout.vue";
-import Users from "./views/users/Users.vue";
-import User from "./views/users/User.vue";
+// import Users from "./views/users/Users.vue";
+// import User from "./views/users/User.vue";
 // canceled
 import Canceled from "./views/canceled/Layout.vue";
+// activities
+import Activities from "./views/activities/Layout.vue";
+import Booking from "./views/activities/Booking.vue";
+
 const routes = [
   {
     path: "/",
@@ -51,6 +53,21 @@ const routes = [
     path: "/refresh",
     component: Refresh,
   },
+  {
+    path: "/activities",
+    component: Activities,
+    children: [
+      {
+        path: "booking",
+        component: Booking,
+      },
+      {
+        path: "canceled",
+        component: Canceled,
+      },
+    ],
+  },
+
   {
     path: "/booknow/:page?",
     component: BookNow,
@@ -62,17 +79,21 @@ const routes = [
   {
     path: "/users",
     component: UsersLayout,
-    children: [
-      {
-        path: "",
-        component: Users,
-      },
-      {
-        path: ":userId",
-        component: User,
-      },
-    ],
   },
+  // {
+  //   path: "/accounts",
+  //   component: UsersLayout,
+  //   children: [
+  //     {
+  //       path: "",
+  //       component: Users,
+  //     },
+  //     {
+  //       path: ":userId",
+  //       component: User,
+  //     },
+  //   ],
+  // },
   {
     path: "/canceled",
     component: Canceled,
@@ -85,11 +106,6 @@ const routes = [
     path: "/booking_history",
     component: BookingHistory,
   },
-  {
-    path: "/notifications",
-    component: Notifications,
-  },
-
   {
     path: "/signup",
     component: SignUp,

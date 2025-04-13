@@ -1,6 +1,6 @@
 <template>
   <div id="DrawerContent">
-    <div><router-link to="/notifications">Notifications</router-link></div>
+    <div><router-link to="/activities/booking">Activities</router-link></div>
     <div><router-link to="/booknow/1">Book Now</router-link></div>
     <div><router-link to="/profile">My Appointments</router-link></div>
     <div class="relative">
