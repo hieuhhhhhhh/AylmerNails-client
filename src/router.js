@@ -38,11 +38,10 @@ import BusinessLinks from "./views/business_links/Layout.vue";
 import UsersLayout from "./views/users/Layout.vue";
 // import Users from "./views/users/Users.vue";
 // import User from "./views/users/User.vue";
-// canceled
-import Canceled from "./views/canceled/Layout.vue";
 // activities
 import Activities from "./views/activities/Layout.vue";
 import Booking from "./views/activities/Booking.vue";
+import Canceled from "./views/activities/Canceled.vue";
 
 const routes = [
   {

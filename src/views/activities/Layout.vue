@@ -16,6 +16,7 @@
         Canceled
       </router-link>
     </div>
+    <router-view />
   </div>
 </template>
 
@@ -46,6 +47,7 @@ export default {
 #bar {
   display: flex;
   gap: 5px;
+  margin-bottom: 10px;
 }
 
 .btn {
