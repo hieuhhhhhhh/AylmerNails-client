@@ -27,6 +27,9 @@
         active-class="btn selected"
       >
         Saved
+        <div v-if="savedCount > 0" class="noti">
+          {{ savedCount }}
+        </div>
       </router-link>
     </div>
     <router-view />
@@ -41,6 +44,7 @@ import { computed } from "vue";
 const NCstore = useNotificationCount();
 const bookingCount = computed(() => NCstore.newAppoCount);
 const canceledCount = computed(() => NCstore.newCanceledAppoCount);
+const savedCount = computed(() => NCstore.newSavedCount);
 </script>
 
 <script>

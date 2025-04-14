@@ -5,7 +5,11 @@
       <button @click="onCloseAppo" id="closeBtn" class="redBtn">X</button>
       <div id="content">
         <AppoInfo :details="details" />
-        <DeleteBtn :appoId="details.id" :onEditAppo="onEditAppo" />
+        <DeleteBtn
+          :appoId="details.id"
+          :onEditAppo="onEditAppo"
+          :savedOn="details.savedOn"
+        />
       </div>
     </div>
   </div>

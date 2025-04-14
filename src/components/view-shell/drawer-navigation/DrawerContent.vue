@@ -42,7 +42,10 @@ export default {
     // pinia states
     const NCstore = useNotificationCount();
     const newActCount = computed(
-      () => NCstore.newAppoCount + NCstore.newCanceledAppoCount
+      () =>
+        NCstore.newAppoCount +
+        NCstore.newCanceledAppoCount +
+        NCstore.newSavedCount
     );
     const newUserCount = computed(() => NCstore.newUserCount);
 

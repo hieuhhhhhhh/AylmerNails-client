@@ -1,16 +1,19 @@
-export default async function fetchLastTracked() {
+export default async function fetchSavedLastTracked() {
   try {
     // get app path
     const baseURL = process.env.VUE_APP_BASE_URL;
 
     // start requesting server
-    const res = await fetch(`${baseURL}/api/appointments/get_last_tracked`, {
-      method: "GET",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+    const res = await fetch(
+      `${baseURL}/api/appointments/get_saved_last_tracked`,
+      {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
     // fetch json
     const json = await res.json();
 
@@ -23,7 +26,7 @@ export default async function fetchLastTracked() {
       return lastTracked;
     } else {
       console.log(
-        "Failed to last tracked on bookings, message: ",
+        "Failed to last tracked on saved appointments, message: ",
         json.message
       );
     }

@@ -1,20 +1,23 @@
-export default async function searchBookings(query, limit) {
+export default async function searchSavedAppos(query, limit) {
   try {
     // get app path
     const baseURL = process.env.VUE_APP_BASE_URL;
 
     // start requesting server
-    const res = await fetch(`${baseURL}/api/appointments/search_bookings`, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        query: query.trim(),
-        limit,
-      }),
-    });
+    const res = await fetch(
+      `${baseURL}/api/appointments/search_saved_appointments`,
+      {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          query: query.trim(),
+          limit,
+        }),
+      }
+    );
     // fetch json
     const json = await res.json();
 
@@ -25,10 +28,12 @@ export default async function searchBookings(query, limit) {
 
       // unpack
       const tables = json.appos;
+
+      console.log("tables", tables);
       for (let row of tables) {
         const [
           appoId,
-          bookedTime,
+          savedOn,
           empId,
           empAlias,
           color,
@@ -37,8 +42,7 @@ export default async function searchBookings(query, limit) {
           category,
           phoneNumId,
           phoneNum,
-          firstName,
-          lastName,
+          contactName,
           date,
           start,
           end,
@@ -46,7 +50,7 @@ export default async function searchBookings(query, limit) {
 
         const appo = {
           appoId,
-          bookedTime,
+          savedOn,
           empId,
           empAlias,
           color,
@@ -55,7 +59,7 @@ export default async function searchBookings(query, limit) {
           category,
           phoneNumId,
           phoneNum,
-          contactName: `${firstName} ${lastName}`,
+          contactName,
           date,
           start,
           end,
@@ -66,7 +70,10 @@ export default async function searchBookings(query, limit) {
       //  return results
       return appos;
     } else {
-      console.log("Failed to search booking history, message: ", json.message);
+      console.log(
+        "Failed to search saved appointments, message: ",
+        json.message
+      );
     }
   } catch (e) {
     console.error("Unexpected Error: ", e);
