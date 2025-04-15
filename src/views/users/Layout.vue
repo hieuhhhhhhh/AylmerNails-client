@@ -16,6 +16,9 @@
         active-class="btn selected"
       >
         Blacklist
+        <div v-if="blacklistCount > 0" class="noti">
+          {{ blacklistCount }}
+        </div>
       </router-link>
     </div>
     <router-view />
@@ -28,6 +31,7 @@ import { useNotificationCount } from "@/stores/myProfile";
 import { computed } from "vue";
 const NCstore = useNotificationCount();
 const accountCount = computed(() => NCstore.newUserCount);
+const blacklistCount = computed(() => NCstore.newBlacklistCount);
 </script>
 
 <script>

@@ -17,8 +17,16 @@ export default async function fetchUsers(userId) {
     // read status and process response
     if (res.ok) {
       // unpack
-      const [role, birth, phoneNum, firstName, lastName, notes, contactName] =
-        json.info;
+      const [
+        role,
+        birth,
+        phoneNum,
+        firstName,
+        lastName,
+        notes,
+        contactName,
+        bannedOn,
+      ] = json.info;
 
       // append
       const info = {
@@ -29,6 +37,7 @@ export default async function fetchUsers(userId) {
         lastName,
         notes,
         contactName,
+        bannedOn,
       };
 
       // unpack

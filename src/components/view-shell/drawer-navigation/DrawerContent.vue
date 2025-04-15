@@ -47,7 +47,9 @@ export default {
         NCstore.newCanceledAppoCount +
         NCstore.newSavedCount
     );
-    const newUserCount = computed(() => NCstore.newUserCount);
+    const newUserCount = computed(
+      () => NCstore.newUserCount + NCstore.newBlacklistCount
+    );
 
     // DEPENDENCIES
     const MPstore = useMyProfile();
