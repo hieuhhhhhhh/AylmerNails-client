@@ -36,7 +36,7 @@
         <td>
           {{ unixTimeToReminder(appo.cancelTime) }}
           <div>
-            {{ unixToReadable(appo.date) }}
+            {{ unixToReadable(appo.cancelTime) }}
           </div>
           <div>{{ unixToHours(appo.cancelTime) }}</div>
         </td>

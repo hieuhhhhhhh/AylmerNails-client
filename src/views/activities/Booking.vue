@@ -39,7 +39,7 @@
         <td>
           {{ unixTimeToReminder(appo.bookedTime) }}
           <div>
-            {{ unixToReadable(appo.date) }}
+            {{ unixToReadable(appo.bookedTime) }}
           </div>
           <div>{{ unixToHours(appo.bookedTime) }}</div>
         </td>

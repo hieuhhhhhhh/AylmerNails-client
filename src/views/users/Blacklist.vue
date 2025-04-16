@@ -8,11 +8,7 @@
       @input="onSearch"
     />
     <div>
-      <button class="orangeBtn" id="unsave">
-        <FontAwesomeIcon :icon="faPlus" />
-
-        Add Phone Number
-      </button>
+      <AddBlacklistBtn />
     </div>
   </div>
   <table>
@@ -64,14 +60,13 @@ import banUnbanPhoneNum from "./apis/banUnbanPhoneNum";
 import { onBeforeRouteLeave, useRouter } from "vue-router";
 import { fetchNewBlacklistCount } from "@/components/view-shell/drawer-navigation/apis/connectSocket";
 // icon
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import getTodayUnixTime from "@/lib/getTodayUnixTime";
+import AddBlacklistBtn from "./comps/AddBlacklistBtn.vue";
 
 export default {
   name: "CanceledAppos",
   components: {
-    FontAwesomeIcon,
+    AddBlacklistBtn,
   },
   setup() {
     // resoures
@@ -116,7 +111,6 @@ export default {
       unixToReadable,
       unixToHours,
       onUnban,
-      faPlus,
     };
   },
 };
@@ -169,9 +163,6 @@ button {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-}
-#unsave {
-  font-size: 13px;
 }
 .todayCell {
   padding: 2px;

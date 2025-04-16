@@ -1,56 +1,49 @@
 <template>
-  <button class="orangeBtn" id="unsave" @click="onOpenModal">
-    <FontAwesomeIcon :icon="faBookmark" />
-    Unsave All
+  <button id="unsave" class="greenBtn" @click="onOpenModal">
+    <FontAwesomeIcon :icon="faPen" />
+    Add / Update Client
   </button>
 
-  <div id="parent" v-if="isUnsaving">
+  <div id="parent" v-if="isAdding">
     <div id="background" @click="onCloseModal" />
     <div id="window">
       <button @click="onCloseModal" id="closeBtn" class="redBtn">X</button>
-      <div id="content">Unsave All Appointments?</div>
+      <div id="content">Adding</div>
       <div id="flexBox">
-        <button class="redBtn" @click="onUnsave">Yes</button>
+        <button class="greenBtn" @click="onSubmit">Add / Update</button>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-// lib
-import { useRouter } from "vue-router";
-// apis
-import unsaveAllAppos from "../apis/unsaveAllAppos";
 // icon
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faBookmark } from "@fortawesome/free-regular-svg-icons";
+import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { ref } from "vue";
+// apis
 
-// lib
-const router = useRouter();
 // status
-const isUnsaving = ref(false);
+const isAdding = ref(false);
 
 // INPUT
-function onOpenModal() {
-  isUnsaving.value = true;
-}
-
 function onCloseModal() {
-  isUnsaving.value = false;
+  isAdding.value = false;
 }
 
-async function onUnsave() {
-  const res = await unsaveAllAppos();
-  if (res) {
-    router.push("/refresh");
-  }
+function onOpenModal() {
+  isAdding.value = true;
 }
 </script>
 
-
+<script>
+export default {};
+</script>
 
 <style scoped>
+#unsave {
+  font-size: 13px;
+}
 #parent {
   z-index: 15;
   position: fixed;
