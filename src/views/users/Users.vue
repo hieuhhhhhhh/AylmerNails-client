@@ -42,9 +42,10 @@
 import { onMounted, ref } from "vue";
 import unixToReadable from "@/lib/unixToReadable";
 import formatPhone from "@/lib/formatPhone";
-import { useRouter } from "vue-router";
+import { onBeforeRouteLeave, useRouter } from "vue-router";
 import searchUsers from "./apis/searchUsers";
 import fetchLastTracked from "./apis/fetchLastTracked";
+import { fetchNewUserCount } from "@/components/view-shell/drawer-navigation/apis/connectSocket";
 
 export default {
   name: "Users-",
@@ -70,6 +71,11 @@ export default {
     onMounted(async () => {
       lastTracked.value = await fetchLastTracked();
       await onSearchUsers();
+    });
+
+    onBeforeRouteLeave((to, from, next) => {
+      fetchNewUserCount();
+      next();
     });
 
     return {

@@ -4,16 +4,13 @@ export default async function fetchLastTracked() {
     const baseURL = process.env.VUE_APP_BASE_URL;
 
     // start requesting server
-    const res = await fetch(
-      `${baseURL}/api/appointments/get_canceled_last_tracked`,
-      {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const res = await fetch(`${baseURL}/api/appointments/get_last_tracked`, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     // fetch json
     const json = await res.json();
 

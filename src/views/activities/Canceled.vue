@@ -57,15 +57,16 @@
 <script>
 // lib
 import { onMounted, ref } from "vue";
-import searchCanceledAppos from "./apis/searchCanceledAppos";
-import fetchLastTracked from "./apis/fetchLastTracked";
 import unixToReadable from "@/lib/unixToReadable";
 import unixTimeToReminder from "@/lib/unixTimeToReminder";
 import secsToHours from "@/lib/secsToHours";
 import unixToHours from "@/lib/unixToHours";
-
+import { onBeforeRouteLeave, useRouter } from "vue-router";
 import formatPhone from "@/lib/formatPhone";
-import { useRouter } from "vue-router";
+// apis
+import searchCanceledAppos from "./apis/searchCanceledAppos";
+import fetchLastTracked from "./apis/fetchCanceledLastTracked";
+import { fetchNewCanceledCount } from "@/components/view-shell/drawer-navigation/apis/connectSocket";
 
 export default {
   name: "CanceledAppos",
@@ -91,6 +92,11 @@ export default {
     onMounted(async () => {
       lastTracked.value = await fetchLastTracked();
       await onSearchCanceled();
+    });
+
+    onBeforeRouteLeave((to, from, next) => {
+      fetchNewCanceledCount();
+      next();
     });
 
     return {

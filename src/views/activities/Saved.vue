@@ -1,11 +1,16 @@
 <template>
-  <input
-    id="search"
-    type="text"
-    placeholder="Search..."
-    v-model="query"
-    @input="onSearch"
-  />
+  <div id="topBox">
+    <input
+      id="search"
+      type="text"
+      placeholder="Search..."
+      v-model="query"
+      @input="onSearch"
+    />
+    <div>
+      <button class="orangeBtn" id="unsave">Unsave All</button>
+    </div>
+  </div>
   <table>
     <tbody>
       <tr>
@@ -47,15 +52,16 @@
 <script>
 // lib
 import { onMounted, ref } from "vue";
-import searchSavedAppos from "./apis/searchSavedAppos";
-import fetchSavedLastTracked from "./apis/fetchSavedLastTracked";
 import unixToReadable from "@/lib/unixToReadable";
 import unixTimeToReminder from "@/lib/unixTimeToReminder";
 import secsToHours from "@/lib/secsToHours";
 import unixToHours from "@/lib/unixToHours";
-
 import formatPhone from "@/lib/formatPhone";
-import { useRouter } from "vue-router";
+import { onBeforeRouteLeave, useRouter } from "vue-router";
+// apis
+import searchSavedAppos from "./apis/searchSavedAppos";
+import fetchSavedLastTracked from "./apis/fetchSavedLastTracked";
+import { fetchNewSavedCount } from "@/components/view-shell/drawer-navigation/apis/connectSocket";
 
 export default {
   name: "CanceledAppos",
@@ -81,6 +87,11 @@ export default {
     onMounted(async () => {
       lastTracked.value = await fetchSavedLastTracked();
       await onSearch();
+    });
+
+    onBeforeRouteLeave((to, from, next) => {
+      fetchNewSavedCount();
+      next();
     });
 
     return {
@@ -141,5 +152,13 @@ tr {
 }
 .row {
   cursor: pointer;
+}
+#topBox {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+#unsave {
+  font-size: 13px;
 }
 </style>

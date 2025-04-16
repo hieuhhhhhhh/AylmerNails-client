@@ -1,12 +1,16 @@
 <template>
-  <input
-    id="search"
-    type="text"
-    placeholder="Search..."
-    v-model="query"
-    @input="onSearch"
-  />
-
+  <div id="topBox">
+    <input
+      id="search"
+      type="text"
+      placeholder="Search..."
+      v-model="query"
+      @input="onSearch"
+    />
+    <div>
+      <button class="orangeBtn" id="unsave">Add Phone Number</button>
+    </div>
+  </div>
   <table>
     <tbody>
       <tr>
@@ -52,7 +56,8 @@ import unixToHours from "@/lib/unixToHours";
 import searchBlacklist from "./apis/searchBlacklist";
 import fetchBlacklistLastTracked from "./apis/fetchBlacklistLastTracked";
 import banUnbanPhoneNum from "./apis/banUnbanPhoneNum";
-import { useRouter } from "vue-router";
+import { onBeforeRouteLeave, useRouter } from "vue-router";
+import { fetchNewBlacklistCount } from "@/components/view-shell/drawer-navigation/apis/connectSocket";
 
 export default {
   name: "CanceledAppos",
@@ -81,6 +86,11 @@ export default {
     onMounted(async () => {
       lastTracked.value = await fetchBlacklistLastTracked();
       await onSearch();
+    });
+
+    onBeforeRouteLeave((to, from, next) => {
+      fetchNewBlacklistCount();
+      next();
     });
 
     return {
@@ -136,7 +146,14 @@ tr {
   width: 20px;
 }
 button {
-  border-radius: 40px;
+  font-size: 12px;
+}
+#topBox {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+#unsave {
   font-size: 13px;
 }
 </style>

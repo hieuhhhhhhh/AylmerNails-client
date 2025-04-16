@@ -56,17 +56,17 @@
 
 <script>
 // lib
-import { useRouter } from "vue-router";
+import { onBeforeRouteLeave, useRouter } from "vue-router";
 import { ref, onMounted } from "vue";
 import unixToReadable from "@/lib/unixToReadable";
 import unixTimeToReminder from "@/lib/unixTimeToReminder";
 import secsToHours from "@/lib/secsToHours";
 import unixToHours from "@/lib/unixToHours";
-
-import { fetchNewAppoCount } from "@/components/view-shell/drawer-navigation/apis/connectSocket";
 import formatPhone from "@/lib/formatPhone";
+// apis
 import searhBookings from "./apis/searchBookings";
 import fetchLastTracked from "./apis/fetchLastTracked";
+import { fetchNewAppoCount } from "@/components/view-shell/drawer-navigation/apis/connectSocket";
 
 export default {
   name: "Booking-",
@@ -94,9 +94,11 @@ export default {
       // call api
       lastTracked.value = await fetchLastTracked();
       await onSearchBookings();
+    });
 
-      // call api via socket
+    onBeforeRouteLeave((to, from, next) => {
       fetchNewAppoCount();
+      next();
     });
 
     return {

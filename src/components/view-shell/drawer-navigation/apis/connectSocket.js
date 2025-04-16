@@ -102,3 +102,13 @@ export function fetchNewUserCount() {
   if (!socket) return;
   socket.emit("get_new_user_count", { token });
 }
+
+export function fetchNewSavedCount() {
+  if (!socket) return;
+  socket.emit("get_new_saved_count", { token });
+}
+
+export function fetchNewBlacklistCount() {
+  if (!socket) return;
+  socket.emit("get_new_blacklist_count", { token });
+}
