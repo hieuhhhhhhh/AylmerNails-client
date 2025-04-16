@@ -72,6 +72,7 @@ export function connectSocket() {
   socket.on("new_blacklist_count", (data) => {
     // update the count into the store
     NCstore.setNewBlacklistCount(data.count);
+    console.log("new blacklist count", data.count);
   });
 
   socket.on("new_phone_num_banned", () => {

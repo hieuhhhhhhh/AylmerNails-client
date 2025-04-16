@@ -6,13 +6,32 @@
 
   <div id="parent" v-if="isAdding">
     <div id="background" @click="onCloseModal" />
-    <div id="window">
-      <button @click="onCloseModal" id="closeBtn" class="redBtn">X</button>
-      <div id="content">Adding</div>
-      <div id="flexBox">
-        <button class="greenBtn" @click="onSubmit">Add / Update</button>
+    <form @submit.prevent="onSubmit" id="window">
+      <button type="button" @click="onCloseModal" id="closeBtn" class="redBtn">
+        X
+      </button>
+      <div id="content">
+        <label>
+          Phone Number
+          <input
+            type="tel"
+            placeholder="Enter Phone Number"
+            v-model="phoneNum"
+            @input="onPhoneInput"
+            required
+          />
+        </label>
+
+        <label>
+          Name
+          <div></div>
+          <input type="text" placeholder="Enter Name" v-model="name" required />
+        </label>
       </div>
-    </div>
+      <div id="flexBox">
+        <button class="greenBtn">Add / Update</button>
+      </div>
+    </form>
   </div>
 </template>
 
@@ -22,6 +41,14 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
 import { ref } from "vue";
 // apis
+import updateContact from "../apis/updateContact";
+import { useRouter } from "vue-router";
+
+// lib
+const router = useRouter();
+// payload
+const phoneNum = ref("");
+const name = ref("");
 
 // status
 const isAdding = ref(false);
@@ -33,6 +60,36 @@ function onCloseModal() {
 
 function onOpenModal() {
   isAdding.value = true;
+}
+
+function onPhoneInput(event) {
+  // Get the raw phone number input value
+  let rawPhone = event.target.value.replace(/\D/g, ""); // Remove non-digit characters
+
+  // Format the phone number (XXX XXX XXXX)
+  let formatted = "";
+
+  if (rawPhone.length <= 3) {
+    formatted = rawPhone;
+  } else if (rawPhone.length <= 6) {
+    formatted = `${rawPhone.slice(0, 3)} ${rawPhone.slice(3)}`;
+  } else {
+    formatted = `${rawPhone.slice(0, 3)} ${rawPhone.slice(
+      3,
+      6
+    )} ${rawPhone.slice(6)}`;
+  }
+
+  phoneNum.value = formatted;
+}
+
+// APIS
+async function onSubmit() {
+  const realPN = "+1" + phoneNum.value.replace(/\D/g, "");
+  const res = await updateContact(realPN, name.value);
+  if (res) {
+    router.push("/refresh");
+  }
 }
 </script>
 
@@ -74,8 +131,10 @@ export default {};
 }
 #content {
   padding: 20px;
-  text-align: center;
   margin-top: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 #closeBtn {
   position: absolute;
@@ -95,5 +154,9 @@ export default {};
   justify-content: center;
   align-items: center;
   padding: 10px;
+}
+input {
+  width: 100%;
+  box-sizing: border-box;
 }
 </style>

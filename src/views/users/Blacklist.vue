@@ -97,6 +97,7 @@ export default {
     });
 
     onBeforeRouteLeave((to, from, next) => {
+      console.log("leaving");
       fetchNewBlacklistCount();
       next();
     });

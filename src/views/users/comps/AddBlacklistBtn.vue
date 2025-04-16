@@ -6,13 +6,26 @@
 
   <div id="parent" v-if="isAdding">
     <div id="background" @click="onCloseModal" />
-    <div id="window">
-      <button @click="onCloseModal" id="closeBtn" class="redBtn">X</button>
-      <div id="content">Adding</div>
-      <div id="flexBox">
-        <button class="redBtn" @click="onSubmit">Add to Blacklist</button>
+    <form @submit.prevent="onSubmit" id="window">
+      <button type="button" @click="onCloseModal" id="closeBtn" class="redBtn">
+        X
+      </button>
+      <div id="content">
+        <label>
+          Phone Number
+          <input
+            type="tel"
+            placeholder="Enter Phone Number"
+            v-model="phoneNum"
+            @input="onPhoneInput"
+            required
+          />
+        </label>
       </div>
-    </div>
+      <div id="flexBox">
+        <button class="redBtn">Add to Blacklist</button>
+      </div>
+    </form>
   </div>
 </template>
 
@@ -22,7 +35,13 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import { ref } from "vue";
 // apis
+import banUnbanPhoneNum from "../apis/banUnbanPhoneNum";
+import { useRouter } from "vue-router";
 
+// lib
+const router = useRouter();
+// resources
+const phoneNum = ref("");
 // status
 const isAdding = ref(false);
 
@@ -31,8 +50,38 @@ function onCloseModal() {
   isAdding.value = false;
 }
 
+function onPhoneInput(event) {
+  // Get the raw phone number input value
+  let rawPhone = event.target.value.replace(/\D/g, ""); // Remove non-digit characters
+
+  // Format the phone number (XXX XXX XXXX)
+  let formatted = "";
+
+  if (rawPhone.length <= 3) {
+    formatted = rawPhone;
+  } else if (rawPhone.length <= 6) {
+    formatted = `${rawPhone.slice(0, 3)} ${rawPhone.slice(3)}`;
+  } else {
+    formatted = `${rawPhone.slice(0, 3)} ${rawPhone.slice(
+      3,
+      6
+    )} ${rawPhone.slice(6)}`;
+  }
+
+  phoneNum.value = formatted;
+}
+
 function onOpenModal() {
   isAdding.value = true;
+}
+
+// APIS
+async function onSubmit() {
+  const realPN = "+1" + phoneNum.value.replace(/\D/g, "");
+  const res = await banUnbanPhoneNum(realPN, true);
+  if (res) {
+    router.push("/refresh");
+  }
 }
 </script>
 
@@ -74,8 +123,11 @@ export default {};
 }
 #content {
   padding: 20px;
-  text-align: center;
   margin-top: 15px;
+}
+input {
+  width: 100%;
+  box-sizing: border-box;
 }
 #closeBtn {
   position: absolute;
