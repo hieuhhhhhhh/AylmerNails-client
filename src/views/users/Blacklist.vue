@@ -8,7 +8,11 @@
       @input="onSearch"
     />
     <div>
-      <button class="orangeBtn" id="unsave">Add Phone Number</button>
+      <button class="orangeBtn" id="unsave">
+        <FontAwesomeIcon :icon="faPlus" />
+
+        Add Phone Number
+      </button>
     </div>
   </div>
   <table>
@@ -24,6 +28,7 @@
         <td class="newCol">
           <div class="flexBox">
             <div class="newCell" v-if="row.bannedOn > lastTracked">NEW</div>
+            <div class="todayCell" v-if="row.bannedOn >= today">TODAY</div>
           </div>
         </td>
         <td>
@@ -58,15 +63,23 @@ import fetchBlacklistLastTracked from "./apis/fetchBlacklistLastTracked";
 import banUnbanPhoneNum from "./apis/banUnbanPhoneNum";
 import { onBeforeRouteLeave, useRouter } from "vue-router";
 import { fetchNewBlacklistCount } from "@/components/view-shell/drawer-navigation/apis/connectSocket";
+// icon
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
+import getTodayUnixTime from "@/lib/getTodayUnixTime";
 
 export default {
   name: "CanceledAppos",
+  components: {
+    FontAwesomeIcon,
+  },
   setup() {
     // resoures
     const query = ref("");
     const rows = ref([]);
     const lastTracked = ref(null);
     const limit = ref(50);
+    const today = getTodayUnixTime();
     // lib
     const router = useRouter();
 
@@ -94,6 +107,7 @@ export default {
     });
 
     return {
+      today,
       query,
       rows,
       lastTracked,
@@ -102,6 +116,7 @@ export default {
       unixToReadable,
       unixToHours,
       onUnban,
+      faPlus,
     };
   },
 };
@@ -129,6 +144,8 @@ tr {
 }
 .flexBox {
   display: flex;
+  flex-direction: column;
+  gap: 5px;
   justify-content: center;
   align-items: center;
 }
@@ -155,6 +172,12 @@ button {
 }
 #unsave {
   font-size: 13px;
+}
+.todayCell {
+  padding: 2px;
+  background: var(--trans-blue);
+  color: white;
+  border-radius: 2px;
 }
 </style>
 

@@ -8,7 +8,11 @@
       @input="onSearch"
     />
     <div>
-      <button class="orangeBtn" id="unsave">Unsave All</button>
+      <button class="orangeBtn" id="unsave" @click="onUnsave">
+        <FontAwesomeIcon :icon="faBookmark" />
+
+        Unsave All
+      </button>
     </div>
   </div>
   <table>
@@ -62,9 +66,16 @@ import { onBeforeRouteLeave, useRouter } from "vue-router";
 import searchSavedAppos from "./apis/searchSavedAppos";
 import fetchSavedLastTracked from "./apis/fetchSavedLastTracked";
 import { fetchNewSavedCount } from "@/components/view-shell/drawer-navigation/apis/connectSocket";
+import unsaveAllAppos from "./apis/unsaveAllAppos";
+// icon
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faBookmark } from "@fortawesome/free-regular-svg-icons";
 
 export default {
   name: "CanceledAppos",
+  components: {
+    FontAwesomeIcon,
+  },
   setup() {
     // resoures
     const query = ref("");
@@ -77,6 +88,13 @@ export default {
     // INPUT
     const onSearch = async () => {
       appos.value = await searchSavedAppos(query.value, limit.value);
+    };
+
+    const onUnsave = async () => {
+      const res = await unsaveAllAppos();
+      if (res) {
+        router.push("/refresh");
+      }
     };
 
     const toAppo = (date, appoId) => {
@@ -105,6 +123,8 @@ export default {
       formatPhone,
       onSearch,
       toAppo,
+      faBookmark,
+      onUnsave,
     };
   },
 };

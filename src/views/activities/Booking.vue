@@ -29,6 +29,7 @@
         <td class="newCol">
           <div class="flexBox">
             <div class="newCell" v-if="appo.bookedTime > lastTracked">NEW</div>
+            <div class="todayCell" v-if="appo.bookedTime >= today">TODAY</div>
           </div>
         </td>
         <td>
@@ -37,6 +38,9 @@
         </td>
         <td>
           {{ unixTimeToReminder(appo.bookedTime) }}
+          <div>
+            {{ unixToReadable(appo.date) }}
+          </div>
           <div>{{ unixToHours(appo.bookedTime) }}</div>
         </td>
         <td>
@@ -45,8 +49,8 @@
         </td>
         <td :style="{ color: appo.color }">{{ appo.empAlias }}</td>
         <td>
+          <div>{{ unixTimeToReminder(appo.date) }}</div>
           {{ unixToReadable(appo.date) }}
-          ({{ unixTimeToReminder(appo.date) }})
           <div>{{ secsToHours(appo.start) }} - {{ secsToHours(appo.end) }}</div>
         </td>
       </tr>
@@ -63,6 +67,7 @@ import unixTimeToReminder from "@/lib/unixTimeToReminder";
 import secsToHours from "@/lib/secsToHours";
 import unixToHours from "@/lib/unixToHours";
 import formatPhone from "@/lib/formatPhone";
+import getTodayUnixTime from "@/lib/getTodayUnixTime";
 // apis
 import searhBookings from "./apis/searchBookings";
 import fetchLastTracked from "./apis/fetchLastTracked";
@@ -76,6 +81,7 @@ export default {
     const appos = ref([]);
     const limit = ref(50);
     const lastTracked = ref(null);
+    const today = getTodayUnixTime();
     // lib
     const router = useRouter();
 
@@ -102,6 +108,7 @@ export default {
     });
 
     return {
+      today,
       query,
       appos,
       lastTracked,
@@ -148,12 +155,20 @@ tr {
 }
 .flexBox {
   display: flex;
+  flex-direction: column;
+  gap: 5px;
   justify-content: center;
   align-items: center;
 }
 .newCell {
   padding: 2px;
   background: var(--trans-red);
+  color: white;
+  border-radius: 2px;
+}
+.todayCell {
+  padding: 2px;
+  background: var(--trans-blue);
   color: white;
   border-radius: 2px;
 }

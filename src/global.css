@@ -4,6 +4,8 @@
   --background-i2: white;
 
   --trans-red: rgba(255, 0, 0, 0.8);
+  --trans-blue: rgba(0, 72, 255, 0.8);
+
   --foreground: #333;
   --xtrans-gray: rgba(150, 150, 150, 0.1);
   --shadow-color: rgba(0, 0, 0, 0.2);

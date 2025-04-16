@@ -26,6 +26,7 @@
         <td class="newCol">
           <div class="flexBox">
             <div class="newCell" v-if="appo.cancelTime > lastTracked">NEW</div>
+            <div class="todayCell" v-if="appo.cancelTime >= today">TODAY</div>
           </div>
         </td>
         <td>
@@ -34,6 +35,9 @@
         </td>
         <td>
           {{ unixTimeToReminder(appo.cancelTime) }}
+          <div>
+            {{ unixToReadable(appo.date) }}
+          </div>
           <div>{{ unixToHours(appo.cancelTime) }}</div>
         </td>
         <td>
@@ -46,8 +50,10 @@
           <div>{{ formatPhone(appo.phoneNumber) }}</div>
         </td>
         <td>
-          {{ unixToReadable(appo.date) }}
-          ({{ unixTimeToReminder(appo.date) }})
+          {{ unixTimeToReminder(appo.date) }}
+          <div>
+            {{ unixToReadable(appo.date) }}
+          </div>
           <div>{{ secsToHours(appo.start) }} - {{ secsToHours(appo.end) }}</div>
         </td>
       </tr>
@@ -63,6 +69,7 @@ import secsToHours from "@/lib/secsToHours";
 import unixToHours from "@/lib/unixToHours";
 import { onBeforeRouteLeave, useRouter } from "vue-router";
 import formatPhone from "@/lib/formatPhone";
+import getTodayUnixTime from "@/lib/getTodayUnixTime";
 // apis
 import searchCanceledAppos from "./apis/searchCanceledAppos";
 import fetchLastTracked from "./apis/fetchCanceledLastTracked";
@@ -76,6 +83,7 @@ export default {
     const appos = ref([]);
     const lastTracked = ref(null);
     const limit = ref(50);
+    const today = getTodayUnixTime();
     // lib
     const router = useRouter();
 
@@ -100,6 +108,7 @@ export default {
     });
 
     return {
+      today,
       query,
       appos,
       lastTracked,
@@ -137,6 +146,8 @@ tr {
 }
 .flexBox {
   display: flex;
+  flex-direction: column;
+  gap: 5px;
   justify-content: center;
   align-items: center;
 }
@@ -157,5 +168,11 @@ tr {
 }
 .row {
   cursor: pointer;
+}
+.todayCell {
+  padding: 2px;
+  background: var(--trans-blue);
+  color: white;
+  border-radius: 2px;
 }
 </style>
