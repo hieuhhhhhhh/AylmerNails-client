@@ -8,11 +8,7 @@
       @input="onSearch"
     />
     <div>
-      <button class="orangeBtn" id="unsave" @click="onUnsave">
-        <FontAwesomeIcon :icon="faBookmark" />
-
-        Unsave All
-      </button>
+      <UnsaveAllBtn />
     </div>
   </div>
   <table>
@@ -67,14 +63,13 @@ import searchSavedAppos from "./apis/searchSavedAppos";
 import fetchSavedLastTracked from "./apis/fetchSavedLastTracked";
 import { fetchNewSavedCount } from "@/components/view-shell/drawer-navigation/apis/connectSocket";
 import unsaveAllAppos from "./apis/unsaveAllAppos";
-// icon
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faBookmark } from "@fortawesome/free-regular-svg-icons";
+// comps
+import UnsaveAllBtn from "./comps/UnsaveAllBtn.vue";
 
 export default {
   name: "CanceledAppos",
   components: {
-    FontAwesomeIcon,
+    UnsaveAllBtn,
   },
   setup() {
     // resoures
@@ -123,7 +118,6 @@ export default {
       formatPhone,
       onSearch,
       toAppo,
-      faBookmark,
       onUnsave,
     };
   },
@@ -177,8 +171,5 @@ tr {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-}
-#unsave {
-  font-size: 13px;
 }
 </style>
