@@ -5,7 +5,11 @@
       <button @click="onCloseAppo" id="closeBtn" class="redBtn">X</button>
       <div id="content">
         <AppoInfo :details="details" />
-        <DeleteBtn :appoId="details.id" :onEditAppo="onEditAppo" />
+        <DeleteBtn
+          :appoId="details.id"
+          :onEditAppo="onEditAppo"
+          :savedOn="details.savedOn"
+        />
       </div>
     </div>
   </div>
@@ -85,7 +89,6 @@ export default {
   background-color: var(--background-i2);
   overflow-y: auto;
   max-height: 80%;
-  border: 1px solid black;
 }
 #content {
   padding: 20px;
@@ -99,6 +102,7 @@ export default {
   height: 30px;
   padding: 0;
   border-radius: 0;
+  border: none;
 }
 table {
   text-align: left;

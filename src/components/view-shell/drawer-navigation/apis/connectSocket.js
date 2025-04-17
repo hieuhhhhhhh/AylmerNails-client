@@ -58,10 +58,33 @@ export function connectSocket() {
     socket.emit("get_new_user_count", { token });
   });
 
+  // NEW SAVED APPOS
+  socket.on("new_saved_count", (data) => {
+    // update the count into the store
+    NCstore.setNewSavedCount(data.count);
+  });
+
+  socket.on("new_appo_saved", () => {
+    socket.emit("get_new_saved_count", { token });
+  });
+
+  // NEW BLACKLIST
+  socket.on("new_blacklist_count", (data) => {
+    // update the count into the store
+    NCstore.setNewBlacklistCount(data.count);
+    console.log("new blacklist count", data.count);
+  });
+
+  socket.on("new_phone_num_banned", () => {
+    socket.emit("get_new_blacklist_count", { token });
+  });
+
   // fetch data when start connecting
   socket.emit("get_new_appo_count", { token });
   socket.emit("get_new_canceled_count", { token });
   socket.emit("get_new_user_count", { token });
+  socket.emit("get_new_saved_count", { token });
+  socket.emit("get_new_blacklist_count", { token });
 
   return socket;
 }
@@ -79,4 +102,14 @@ export function fetchNewCanceledCount() {
 export function fetchNewUserCount() {
   if (!socket) return;
   socket.emit("get_new_user_count", { token });
+}
+
+export function fetchNewSavedCount() {
+  if (!socket) return;
+  socket.emit("get_new_saved_count", { token });
+}
+
+export function fetchNewBlacklistCount() {
+  if (!socket) return;
+  socket.emit("get_new_blacklist_count", { token });
 }

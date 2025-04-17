@@ -1,23 +1,34 @@
 <template>
   <div id="layout">
     <div id="bar">
-      <router-link to="/users/accounts" class="btn" active-class="btn selected">
-        Accounts
-        <div v-if="accountCount > 0" class="noti">
-          {{ accountCount }}
-        </div>
-      </router-link>
-      <router-link to="/users/clients" class="btn" active-class="btn selected">
-        Clients
-      </router-link>
       <router-link
-        to="/users/blacklist"
+        to="/activities/booking"
         class="btn"
         active-class="btn selected"
       >
-        Blacklist
-        <div v-if="blacklistCount > 0" class="noti">
-          {{ blacklistCount }}
+        Booking
+        <div v-if="bookingCount > 0" class="noti">
+          {{ bookingCount }}
+        </div>
+      </router-link>
+      <router-link
+        to="/activities/canceled"
+        class="btn"
+        active-class="btn selected"
+      >
+        Canceled
+        <div v-if="canceledCount > 0" class="noti">
+          {{ canceledCount }}
+        </div>
+      </router-link>
+      <router-link
+        to="/activities/saved"
+        class="btn"
+        active-class="btn selected"
+      >
+        Saved
+        <div v-if="savedCount > 0" class="noti">
+          {{ savedCount }}
         </div>
       </router-link>
     </div>
@@ -29,9 +40,11 @@
 // pinia
 import { useNotificationCount } from "@/stores/myProfile";
 import { computed } from "vue";
+
 const NCstore = useNotificationCount();
-const accountCount = computed(() => NCstore.newUserCount);
-const blacklistCount = computed(() => NCstore.newBlacklistCount);
+const bookingCount = computed(() => NCstore.newAppoCount);
+const canceledCount = computed(() => NCstore.newCanceledAppoCount);
+const savedCount = computed(() => NCstore.newSavedCount);
 </script>
 
 <script>
@@ -82,13 +95,15 @@ export default {
 .noti {
   background: var(--trans-red);
   color: white;
-  aspect-ratio: 1;
-  width: 16px;
+  /* aspect-ratio: 1; */
+  min-width: 16px;
+  padding: 0px;
   border-radius: 50%;
-  font-size: 10px;
+  font-size: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
   margin-right: -2px;
+  /* font-weight: bold; */
 }
 </style>

@@ -1,5 +1,7 @@
 <template>
-  <button @click="onStopPicking">Back</button>
+  <button @click="onStopPicking" class="orangeBtn">
+    <FontAwesomeIcon :icon="faLeftLong" /> Back
+  </button>
   <div id="category">
     <div v-for="(emp, index) in employees" :key="index">
       <div
@@ -17,9 +19,15 @@
 <script>
 import { ref, onMounted } from "vue";
 import fetchEmployees from "@/views/employees/apis/fetchEmployees";
+// icon
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faLeftLong } from "@fortawesome/free-solid-svg-icons";
 
 export default {
   name: "Employees-",
+  components: {
+    FontAwesomeIcon,
+  },
   props: {
     date: Number,
     setEmp: Function,
@@ -40,6 +48,7 @@ export default {
     return {
       employees,
       onSelectEmp,
+      faLeftLong,
     };
   },
 };
@@ -88,5 +97,13 @@ export default {
   #service {
     padding: 13px;
   }
+}
+.orangeBtn {
+  margin-bottom: 10px;
+  font-size: 22px;
+  position: sticky;
+  top: 10px;
+  left: 10px;
+  z-index: 10;
 }
 </style>

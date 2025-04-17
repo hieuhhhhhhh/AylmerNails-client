@@ -116,6 +116,7 @@ export default {
   height: 30px;
   padding: 0;
   border-radius: 0;
+  border: none;
 }
 #duo {
   display: flex;

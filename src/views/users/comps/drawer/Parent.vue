@@ -5,8 +5,9 @@
     </button>
     <Drawer
       v-if="isDrawerOpen"
-      :onEditName="onEditName"
       :onToogleDrawer="onToogleDrawer"
+      :phoneNum="phoneNum"
+      :bannedOn="bannedOn"
     />
   </div>
 </template>
@@ -24,6 +25,8 @@ export default {
   name: "DrawerParent",
   props: {
     onEditName: Function,
+    phoneNum: String,
+    bannedOn: Number,
   },
   components: {
     Drawer,

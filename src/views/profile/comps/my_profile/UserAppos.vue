@@ -9,10 +9,15 @@
         <th>Time</th>
         <th>Duration</th>
       </tr>
+      <tr v-if="futureAppos.length === 0">
+        <td colspan="4" style="text-align: center">
+          No upcomming appointments
+        </td>
+      </tr>
 
       <tr
         class="row"
-        v-for="(appo, index) in appos"
+        v-for="(appo, index) in futureAppos"
         :key="index"
         @click="onOpenAppo(appo)"
       >
@@ -37,11 +42,12 @@
 
 <script>
 // lib
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import unixToReadable from "@/lib/unixToReadable";
 import unixTimeToReminder from "@/lib/unixTimeToReminder";
 import secsToHours from "@/lib/secsToHours";
 import AppoModal from "./appo/Parent.vue";
+import getTodayUnixTime from "@/lib/getTodayUnixTime";
 
 export default {
   components: {
@@ -50,9 +56,13 @@ export default {
   props: {
     appos: Array,
   },
-  setup() {
+  setup(props) {
     // resources
     const appo = ref(null);
+    const today = getTodayUnixTime();
+    const futureAppos = computed(() =>
+      props.appos.filter((appo) => appo.date >= today)
+    );
 
     // INPUT
     const onOpenAppo = (selected) => {
@@ -65,6 +75,7 @@ export default {
 
     return {
       appo,
+      futureAppos,
       unixTimeToReminder,
       unixToReadable,
       secsToHours,

@@ -1,5 +1,4 @@
 <template>
-  <div id="title">Users</div>
   <input
     type="text"
     id="search"
@@ -26,6 +25,7 @@
         <td class="newCol">
           <div class="flexBox">
             <div class="newCell" v-if="user.joinedOn > lastTracked">NEW</div>
+            <div class="todayCell" v-if="user.joinedOn >= today">TODAY</div>
           </div>
         </td>
 
@@ -43,9 +43,11 @@
 import { onMounted, ref } from "vue";
 import unixToReadable from "@/lib/unixToReadable";
 import formatPhone from "@/lib/formatPhone";
-import { useRouter } from "vue-router";
+import { onBeforeRouteLeave, useRouter } from "vue-router";
 import searchUsers from "./apis/searchUsers";
 import fetchLastTracked from "./apis/fetchLastTracked";
+import { fetchNewUserCount } from "@/components/view-shell/drawer-navigation/apis/connectSocket";
+import getTodayUnixTime from "@/lib/getTodayUnixTime";
 
 export default {
   name: "Users-",
@@ -57,7 +59,7 @@ export default {
     const users = ref([]);
     const lastTracked = ref(null);
     const limit = ref(50);
-
+    const today = getTodayUnixTime();
     // INPUT
     const toUser = (userId) => {
       router.push(`/users/${userId}`);
@@ -73,7 +75,13 @@ export default {
       await onSearchUsers();
     });
 
+    onBeforeRouteLeave((to, from, next) => {
+      fetchNewUserCount();
+      next();
+    });
+
     return {
+      today,
       query,
       users,
       lastTracked,
@@ -132,5 +140,11 @@ tr {
 }
 #search {
   margin-bottom: 10px;
+}
+.todayCell {
+  padding: 2px;
+  background: var(--trans-blue);
+  color: white;
+  border-radius: 2px;
 }
 </style>

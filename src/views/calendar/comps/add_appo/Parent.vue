@@ -5,31 +5,44 @@
       id="container"
       v-if="!isPickingEmp && !isPickingService && !isPickingContact"
     >
-      <div id="title">New Appointment</div>
-      <div id="content" :style="{ backgroundColor: color }">
-        <AddForm
-          :clientName="clientName"
-          :phoneNum="phoneNum"
-          :serviceName="serviceName"
-          :AOSOs="AOSOsText"
-          :category="category"
-          :empAlias="empAlias"
-          :date="unixDate"
-          :start="start"
-          :duration="duration"
-          :note="note"
-          :setStart="setStart"
-          :setDuration="setDuration"
-          :setNote="setNote"
-          :resetEmp="resetEmp"
-          :resetService="resetService"
-          :onOpenEmpPicker="onOpenEmpPicker"
-          :onOpenServicePicker="onOpenServicePicker"
-          :onSelectContact="onSelectContact"
-        />
+      <div class="flexBox">
+        <div id="box">
+          <div id="closeBox">
+            <button class="redBtn" @click.prevent="onCancelAdding">X</button>
+          </div>
+          <div id="top">
+            <div id="title">New Appointment</div>
+          </div>
+
+          <div id="content" :style="{ backgroundColor: color }">
+            <AddForm
+              :clientName="clientName"
+              :phoneNum="phoneNum"
+              :serviceName="serviceName"
+              :AOSOs="AOSOsText"
+              :category="category"
+              :empAlias="empAlias"
+              :date="unixDate"
+              :start="start"
+              :duration="duration"
+              :note="note"
+              :setStart="setStart"
+              :setDuration="setDuration"
+              :setNote="setNote"
+              :resetEmp="resetEmp"
+              :resetService="resetService"
+              :onOpenEmpPicker="onOpenEmpPicker"
+              :onOpenServicePicker="onOpenServicePicker"
+              :onSelectContact="onSelectContact"
+              :onClearContact="onClearContact"
+              :onClearService="onClearService"
+            />
+          </div>
+          <div class="flexBox">
+            <button class="greenBtn">Create</button>
+          </div>
+        </div>
       </div>
-      <button @click.prevent="onCancelAdding">Cancel</button>
-      <button>Confirm</button>
     </form>
     <EmployeePicker
       v-if="isPickingEmp"
@@ -79,6 +92,8 @@ export default {
     onSelectAppo: Function,
     onHideMain: Function,
     onDoneEdit: Function,
+    NAMvalue: Object,
+    setEZstates: Function,
   },
   setup(props) {
     // lib
@@ -162,6 +177,15 @@ export default {
       console.log("new Note", value);
     };
 
+    const updateEZstates = () => {
+      props.setEZstates(
+        props.unixDate,
+        empId.value,
+        start.value,
+        duration.value
+      );
+    };
+
     // INPUT HANDLE
     const updateURL = () => {
       router.push(`/calendar/${route.params.unixDate}/selecting`);
@@ -197,6 +221,14 @@ export default {
       router.push(`/calendar/${route.params.unixDate}`);
     };
 
+    const onClearContact = () => {
+      setContact(null, null);
+    };
+
+    const onClearService = () => {
+      setService(null, "", "", [], []);
+    };
+
     // APIS
     const fetchDuration = async () => {
       if (!serviceId.value) return;
@@ -225,7 +257,6 @@ export default {
     };
 
     // DEPENDENT
-
     watch(
       () => route.path,
       (value) => {
@@ -234,6 +265,18 @@ export default {
         }
       }
     );
+
+    watch(
+      () => props.NAMvalue,
+      (value) => {
+        start.value = value.start;
+        setEmp(value.empId, value.empAlias, value.color);
+      }
+    );
+
+    watch([() => props.unixDate, empId, start, duration], () => {
+      updateEZstates();
+    });
 
     return {
       isPickingEmp,
@@ -262,6 +305,8 @@ export default {
       onOpenServicePicker,
       onSelectContact,
       onStopPicking,
+      onClearContact,
+      onClearService,
     };
   },
 };
@@ -269,21 +314,42 @@ export default {
 
 <style scoped>
 #title {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 #container {
-  padding: 20px;
-  width: 500px;
-  max-width: 100%;
   box-sizing: border-box;
 }
 #content {
+  max-width: 100%;
+  width: 500px;
   color: black;
 }
-#flexBox {
+.flexBox {
   display: flex;
   justify-content: center;
+  margin: 5px;
+}
+#top {
+  display: flex;
+  justify-content: center;
+  margin-top: -20px;
+}
+#closeBox {
+  display: flex;
+  justify-content: flex-end;
+}
+.redBtn {
+  border-radius: 0px;
+  width: 34px;
+  aspect-ratio: 1;
+  border: none;
+}
+#box {
+  background: var(--background-i2);
+  max-width: 100%;
+  box-shadow: 0 0 10px var(--shadow-color);
+  margin: 10px;
 }
 </style>

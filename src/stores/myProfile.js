@@ -22,6 +22,8 @@ export const useNotificationCount = defineStore("NotificationCount", {
     newAppoCount: 0,
     newCanceledAppoCount: 0,
     newUserCount: 0,
+    newSavedCount: 0,
+    newBlacklistCount: 0,
   }),
   actions: {
     setNewAppoCount(count) {
@@ -32,6 +34,12 @@ export const useNotificationCount = defineStore("NotificationCount", {
     },
     setNewUserCount(count) {
       this.newUserCount = count;
+    },
+    setNewSavedCount(count) {
+      this.newSavedCount = count;
+    },
+    setNewBlacklistCount(count) {
+      this.newBlacklistCount = count;
     },
   },
 });

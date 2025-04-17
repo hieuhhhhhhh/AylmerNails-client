@@ -1,6 +1,15 @@
 <template>
   <div id="flexBox">
-    <input type="date" id="datePicker" :value="date" @change="onSelect" />
+    <div>
+      <input type="date" id="datePicker" :value="date" @change="onSelect" />
+    </div>
+
+    <div>
+      {{ unixToReadable(unixDate) }}
+    </div>
+    <div>
+      {{ unixTimeToReminder(unixDate) }}
+    </div>
   </div>
   <div id="main">
     <button @click="moveDay(-1)">
@@ -39,6 +48,8 @@ import {
 import parseDate from "@/lib/parseDate";
 import parseUT from "@/lib/parseUT";
 import { ref, watch } from "vue";
+import unixToReadable from "@/lib/unixToReadable";
+import unixTimeToReminder from "@/lib/unixTimeToReminder";
 
 export default {
   components: {
@@ -105,6 +116,8 @@ export default {
       leftIcon: faAngleLeft,
       rightIcon: faAngleRight,
       expandIcon: faExpand,
+      unixTimeToReminder,
+      unixToReadable,
     };
   },
 };
@@ -113,8 +126,10 @@ export default {
 <style scoped>
 #flexBox {
   display: flex;
-  justify-content: center;
+  align-items: center;
   margin-bottom: 10px;
+  flex-direction: column;
+  font-size: 20px;
 }
 #main {
   display: flex;

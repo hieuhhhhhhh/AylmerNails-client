@@ -119,12 +119,7 @@ export default {
 
 @media (max-width: 500px) {
   #main {
-    flex-direction: column;
-    align-items: center;
-  }
-  .column {
-    max-width: 100%;
-    margin-bottom: 15px;
+    font-size: 9px;
   }
 }
 </style>

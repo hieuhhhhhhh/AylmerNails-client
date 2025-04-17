@@ -8,9 +8,15 @@
         <th>Date & Time</th>
       </tr>
 
+      <tr v-if="futureAppos.length === 0">
+        <td colspan="3" style="text-align: center">
+          No upcomming appointments
+        </td>
+      </tr>
+
       <tr
         class="row"
-        v-for="(appo, index) in appos"
+        v-for="(appo, index) in futureAppos"
         :key="index"
         @click="toAppoDetails(appo.date, appo.appoId)"
       >
@@ -40,29 +46,37 @@ import unixToReadable from "@/lib/unixToReadable";
 import unixTimeToReminder from "@/lib/unixTimeToReminder";
 import secsToHours from "@/lib/secsToHours";
 import { useRouter } from "vue-router";
+import getTodayUnixTime from "@/lib/getTodayUnixTime";
+import { computed } from "vue";
 
 export default {
   props: {
     appos: Array,
     name: String,
   },
-  setup() {
-    // lib
+  setup(props) {
     const router = useRouter();
+    const today = getTodayUnixTime();
 
     const toAppoDetails = (date, appoId) => {
       router.push(`/calendar/${date}/${appoId}`);
     };
+
+    const futureAppos = computed(() =>
+      props.appos.filter((appo) => appo.date >= today)
+    );
+
     return {
+      today,
       unixTimeToReminder,
       unixToReadable,
       secsToHours,
       toAppoDetails,
+      futureAppos,
     };
   },
 };
 </script>
-
 
 <style scoped>
 table {
@@ -74,7 +88,6 @@ th,
 td {
   padding-top: 10px;
   padding-bottom: 10px;
-
   text-align: center;
 }
 tr {

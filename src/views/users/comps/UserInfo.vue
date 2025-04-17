@@ -6,7 +6,7 @@
           <div id="title">
             <div>{{ info.firstName }} {{ info.lastName }}</div>
             <div>
-              <Drawer :onEditName="onEditName" />
+              <Drawer :phoneNum="info.phoneNum" :bannedOn="info.bannedOn" />
             </div>
           </div>
         </th>

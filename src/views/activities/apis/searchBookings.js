@@ -11,7 +11,7 @@ export default async function searchBookings(query, limit) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        query: query.replace(/\s+/g, ""),
+        query: query.trim(),
         limit,
       }),
     });

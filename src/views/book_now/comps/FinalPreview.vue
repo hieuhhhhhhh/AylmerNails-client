@@ -5,7 +5,7 @@
     <button class="orangeBtn" id="leftBtn" @click="onBack">
       <FontAwesomeIcon :icon="backIcon" /> Back
     </button>
-    <button class="blueBtn" id="rightBtn" @click="onSubmit">
+    <button class="greenBtn" id="rightBtn" @click="onSubmit">
       Finish <FontAwesomeIcon :icon="continueIcon" />
     </button>
   </div>
@@ -14,7 +14,7 @@
 <script>
 // icons
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faLeftLong, faRightLong } from "@fortawesome/free-solid-svg-icons";
+import { faLeftLong, faCheck } from "@fortawesome/free-solid-svg-icons";
 // lib
 import submitAppoChain from "../apis/submitAppoChain";
 
@@ -31,7 +31,7 @@ export default {
     return {
       // icons
       backIcon: faLeftLong,
-      continueIcon: faRightLong,
+      continueIcon: faCheck,
     };
   },
   methods: {
@@ -56,8 +56,6 @@ export default {
 #rightBtn {
   padding: 10px;
   font-size: 25px;
-  border-top-right-radius: 30px;
-  border-bottom-right-radius: 30px;
 }
 #leftBtn {
   font-size: 23px;
