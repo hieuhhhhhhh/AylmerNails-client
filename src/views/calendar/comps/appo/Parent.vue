@@ -88,9 +88,9 @@ export default {
   max-height: 100%;
   background-color: var(--background-i2);
   overflow-y: auto;
-  max-height: 80%;
 }
 #content {
+  font-size: 10px;
   padding: 20px;
   margin-top: 15px;
 }

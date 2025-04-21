@@ -82,7 +82,14 @@ function chainToNewSlots(chain) {
     const random = Math.floor(Math.random() * topEmpIds.length);
 
     // create new slot
-    const newSlot = { start, end, empId: topEmpIds[random], serviceId, AOSOs };
+    const newSlot = {
+      start,
+      end,
+      empId: topEmpIds[random],
+      serviceId,
+      AOSOs,
+      empIds,
+    };
 
     newSlots.push(newSlot);
   }

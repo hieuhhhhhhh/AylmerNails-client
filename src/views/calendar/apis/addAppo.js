@@ -7,6 +7,7 @@ export default async function addAppo(
   date,
   start,
   duration,
+  message,
   note
 ) {
   try {
@@ -31,6 +32,7 @@ export default async function addAppo(
           date,
           start,
           end: start + duration,
+          message,
           note,
         }),
       }

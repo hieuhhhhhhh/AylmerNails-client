@@ -8,6 +8,8 @@ export default async function updateAppo(
   date,
   start,
   duration,
+  empIds,
+  message,
   note
 ) {
   try {
@@ -31,6 +33,8 @@ export default async function updateAppo(
         date,
         start,
         end: start + duration,
+        selected_emps: empIds,
+        message,
         note,
       }),
     });

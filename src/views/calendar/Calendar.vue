@@ -30,9 +30,12 @@
         :onCloseAppo="onCloseAppo"
         :onEditAppo="onEditAppo"
       />
-      <button v-if="!isAdding && !editId" @click="onOpenAdding">
-        Add Appo
-      </button>
+      <div id="flexBox">
+        <button v-if="!isAdding && !editId" @click="onOpenAdding">
+          <FontAwesomeIcon :icon="faPlus" />
+          New
+        </button>
+      </div>
     </div>
 
     <EditAppo
@@ -67,10 +70,14 @@ import AddAppo from "./comps/add_appo/Parent.vue";
 // lib
 import { ref, onMounted, onBeforeUnmount, nextTick, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
+// icon
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 export default {
   name: "Calendar-",
   components: {
+    FontAwesomeIcon,
     DayInput,
     ScrollContent,
     AppoDetails,
@@ -245,6 +252,7 @@ export default {
     });
 
     return {
+      faPlus,
       NAMvalue,
       resetMain,
       unixDate,
@@ -298,5 +306,14 @@ export default {
 #relative {
   position: relative;
   z-index: 0;
+}
+#flexBox {
+  padding: 10px 0px;
+  display: flex;
+  justify-content: end;
+}
+button {
+  padding: 3px 15px;
+  font-size: 15px;
 }
 </style>

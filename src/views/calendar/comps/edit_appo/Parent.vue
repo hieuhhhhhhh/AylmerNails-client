@@ -22,6 +22,7 @@
               :AOSOs="AOSOsText"
               :category="category"
               :empAlias="empAlias"
+              :selectedEmps="selectedEmps"
               :date="date"
               :start="start"
               :duration="duration"
@@ -40,7 +41,10 @@
             />
           </div>
           <div class="flexBox">
-            <button class="greenBtn">Save Changes</button>
+            <button id="save">
+              <FontAwesomeIcon :icon="faCheck" />
+              Finish
+            </button>
           </div>
         </div>
       </div>
@@ -73,6 +77,7 @@
 // lib
 import { onMounted, ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
+// apis
 import fetchAppoDetails from "../../apis/fetchAppoDetails";
 import updateAppo from "../../apis/updateAppo";
 import fetchAppoLength from "../../apis/fetchAppoLength";
@@ -81,10 +86,14 @@ import AppoEdit from "./AppoEdit.vue";
 import EmployeePicker from "./EmployeePicker.vue";
 import ServicePicker from "./ServicePicker.vue";
 import ContactPicker from "./ContactPicker.vue";
+// icon
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
 export default {
   name: "EditAppo",
   components: {
+    FontAwesomeIcon,
     AppoEdit,
     EmployeePicker,
     ServicePicker,
@@ -112,6 +121,7 @@ export default {
     const category = ref("");
     const AOSOsText = ref([]);
     const empAlias = ref("");
+    const selectedEmps = ref([]);
     const color = ref("");
     const phoneNum = ref("");
     const contactName = ref("");
@@ -257,6 +267,7 @@ export default {
       empAlias.value = details.empAlias;
       serviceId.value = details.serviceId;
       empId.value = details.empId;
+      selectedEmps.value = details.selectedEmps;
       date.value = details.date;
       start.value = details.start;
       duration.value = details.end - details.start;
@@ -275,6 +286,7 @@ export default {
         date.value,
         start.value,
         duration.value,
+        selectedEmps.value.map((emp) => emp.empId),
         note.value
       );
       if (newAppoId) {
@@ -309,6 +321,7 @@ export default {
     onMounted(fetchDetails);
 
     return {
+      faCheck,
       isPickingEmp,
       isPickingService,
       isPickingContact,
@@ -327,6 +340,7 @@ export default {
       AOSOsText,
       category,
       empAlias,
+      selectedEmps,
       date,
       start,
       duration,
@@ -383,5 +397,11 @@ export default {
   box-shadow: 0 0 10px var(--shadow-color);
   margin: 10px;
   max-width: 100%;
+}
+#save {
+  padding: 5px;
+  padding-inline: 15px;
+  /* font-weight: bold; */
+  font-size: 15px;
 }
 </style>

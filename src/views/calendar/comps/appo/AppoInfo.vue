@@ -36,6 +36,15 @@
           </div>
         </td>
       </tr>
+
+      <tr>
+        <th>Date Time</th>
+        <td>{{ getTime() }}<br />{{ getDate() }} {{ getReminder() }}</td>
+      </tr>
+      <tr>
+        <th>Duration</th>
+        <td>{{ getDuration() + " mins" }} <br />(to {{ getEndTime() }})</td>
+      </tr>
       <tr>
         <th>Employee</th>
         <td>
@@ -48,12 +57,10 @@
         </td>
       </tr>
       <tr>
-        <th>Date Time</th>
-        <td>{{ getTime() }}<br />{{ getDate() }} {{ getReminder() }}</td>
-      </tr>
-      <tr>
-        <th>Duration</th>
-        <td>{{ getDuration() + " mins" }} <br />(to {{ getEndTime() }})</td>
+        <th>Preferred</th>
+        <td>
+          {{ details.selectedEmps?.map((emp) => emp.empAlias).join(", ") }}
+        </td>
       </tr>
       <tr>
         <th>Note</th>
@@ -169,7 +176,7 @@ table {
   text-align: left;
   border-collapse: collapse;
   width: 100%;
-  font-size: 14px;
+  font-size: 12px;
 }
 th,
 td {
@@ -183,6 +190,7 @@ td {
 }
 .duo {
   display: flex;
+  align-items: center;
   justify-content: space-between;
 }
 .infoBtn {

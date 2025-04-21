@@ -43,17 +43,6 @@
         </td>
       </tr>
       <tr>
-        <th>Employee</th>
-        <td>
-          <div class="duo">
-            {{ empAlias }}
-            <div>
-              <button @click.prevent="onOpenEmpPicker">Select</button>
-            </div>
-          </div>
-        </td>
-      </tr>
-      <tr>
         <th>Date</th>
         <td>
           <div class="center">
@@ -119,6 +108,25 @@
       </tr>
 
       <tr>
+        <th>Employee</th>
+        <td>
+          <div class="duo">
+            {{ empAlias }}
+            <div>
+              <button @click.prevent="onOpenEmpPicker">Select</button>
+            </div>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <th>Preferred</th>
+        <td>
+          {{ selectedEmps?.map((emp) => emp.empAlias).join(", ") }}
+        </td>
+      </tr>
+
+      <tr>
         <th>Note</th>
         <td>
           <textarea
@@ -158,6 +166,7 @@ export default {
     category: String,
     AOSOs: Array,
     empAlias: String,
+    selectedEmps: Array,
     date: Number,
     start: Number,
     duration: Number,
@@ -310,6 +319,7 @@ button {
 }
 .duo {
   display: flex;
+  align-items: center;
   justify-content: space-between;
 }
 .center {

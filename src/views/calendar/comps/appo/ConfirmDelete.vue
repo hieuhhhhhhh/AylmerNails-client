@@ -61,11 +61,11 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-size: 15px;
+  font-size: 13px;
 }
 #title {
   text-align: center;
-  font-size: 20px;
-  margin-bottom: 20px;
+  font-size: 18px;
+  margin-bottom: 5px;
 }
 </style>

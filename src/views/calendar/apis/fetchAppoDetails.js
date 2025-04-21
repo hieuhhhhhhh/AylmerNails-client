@@ -33,7 +33,7 @@ function parseApiRes(json) {
   // res holder
   let details = {};
 
-  // unpack
+  // unpack appo info
   const [
     id,
     empId,
@@ -54,7 +54,7 @@ function parseApiRes(json) {
     savedOn,
   ] = json.appo_details;
 
-  // append results
+  // append info
   details = {
     id,
     empId,
@@ -74,7 +74,18 @@ function parseApiRes(json) {
     userId,
     savedOn,
     AOSOsText: [],
+    selectedEmps: [],
   };
+
+  // read selected employees
+  const table = json.appo_emps;
+  for (let row of table) {
+    const [empId, empAlias] = row;
+
+    // append next employee
+    const employee = { empId, empAlias };
+    details.selectedEmps.push(employee);
+  }
 
   // read AOSOs
   const AOSOsText = json.AOSOs;

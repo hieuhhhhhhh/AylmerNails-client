@@ -43,17 +43,6 @@
         </td>
       </tr>
       <tr>
-        <th>Employee</th>
-        <td>
-          <div class="duo">
-            <div>
-              {{ empAlias }}
-            </div>
-            <button @click.prevent="onOpenEmpPicker">Select</button>
-          </div>
-        </td>
-      </tr>
-      <tr>
         <th>Date</th>
         <td>
           <div class="center">
@@ -108,6 +97,18 @@
             <div>
               {{ getEndTime() }}
             </div>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <th>Employee</th>
+        <td>
+          <div class="duo">
+            <div>
+              {{ empAlias }}
+            </div>
+            <button @click.prevent="onOpenEmpPicker">Select</button>
           </div>
         </td>
       </tr>
