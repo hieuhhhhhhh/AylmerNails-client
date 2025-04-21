@@ -28,7 +28,7 @@
           </div>
         </div>
         <div v-if="msg" id="msg">{{ msg }}</div>
-        <div id="btnBox"><button class="blueBtn">Submit</button></div>
+        <div id="btnBox"><button class="blueBtn">Confirm</button></div>
       </form>
     </div>
   </div>

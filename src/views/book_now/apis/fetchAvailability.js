@@ -1,5 +1,7 @@
 export default async function fetchAvailability(date, services) {
   try {
+    console.log("services", services);
+
     // parse input to payload
     const DELAs_requests = Object.values(services).map(
       ({ empIds, serviceId, AOSOs }) => ({
@@ -33,11 +35,13 @@ export default async function fetchAvailability(date, services) {
 
     // read status and process response
     if (res.ok) {
+      console.log("json.DELAs_list: ", json.DELAs_list);
+
       const serviceSlots = getServiceSlots(json.DELAs_list);
-      console.log("serviceSlots 1: ", serviceSlots);
+      console.log("serviceSlots: ", serviceSlots);
 
       const chains = getChains(serviceSlots, services);
-      console.log("chains 1: ", chains);
+      console.log("chains: ", chains);
 
       return removeShortChains(chains, DELAs_requests.length);
     } else {
@@ -120,6 +124,8 @@ function getChains(serviceSlots, services) {
       slots.forEach((slot) => {
         slot.serviceId = serviceId;
         slot.AOSOs = services[serviceId].AOSOs;
+        slot.serviceName = services[serviceId].serviceName;
+        slot.empAliases = services[serviceId].empAliases;
       });
 
       // create sub array excluding current element
@@ -129,7 +135,7 @@ function getChains(serviceSlots, services) {
       ];
 
       // fetch chains from recursion
-      let childChains = getChains(others);
+      let childChains = getChains(others, services);
 
       // append the child with current slots
       childChains = chainsAppend(childChains, slots);
@@ -146,6 +152,8 @@ function getChains(serviceSlots, services) {
   slots.forEach((e) => {
     e.serviceId = serviceId;
     e.AOSOs = services[serviceId].AOSOs;
+    e.serviceName = services[serviceId].serviceName;
+    e.empAliases = services[serviceId].empAliases;
 
     // create new chain
     let chain = {

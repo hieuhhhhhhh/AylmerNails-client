@@ -16,7 +16,7 @@
           <input
             id="check"
             type="checkbox"
-            :value="employee.employee_id"
+            :value="{ id: employee.employee_id, alias: employee.alias }"
             v-model="checked"
             @change="onCheckEmp"
           />
@@ -79,7 +79,11 @@ export default {
       this.onRemoveService(serviceId);
     },
     onCheckEmp() {
-      this.onInputEmpIds(this.service.serviceId, this.checked);
+      this.onInputEmpIds(
+        this.service.serviceId,
+        this.checked.map((e) => e.id),
+        this.checked.map((e) => e.alias)
+      );
     },
   },
   async created() {
@@ -97,7 +101,10 @@ export default {
     this.SEs = employees;
     this.max = employees.length;
 
-    this.checked = employees.map((e) => e.employee_id);
+    this.checked = employees.map((e) => ({
+      id: e.employee_id,
+      alias: e.alias,
+    }));
     this.onCheckEmp();
   },
 };

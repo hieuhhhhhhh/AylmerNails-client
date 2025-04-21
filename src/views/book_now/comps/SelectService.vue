@@ -10,7 +10,7 @@
     </button>
   </div>
   <div id="note">
-    Please note that the website is intended for individual appointments
+    Note: this website is intended for individual appointments
     <!-- <br /> -->
     <!-- Contact us for multiple people appointments -->
     <br />
@@ -67,21 +67,23 @@ export default {
       categories: [],
       // outcome
       serviceId: null,
+      serviceName: "",
     };
   },
   methods: {
     closeSelect() {
       this.onClose();
     },
-    onInputServiceId(serviceId) {
+    onInputServiceId(serviceId, name) {
       this.serviceId = serviceId;
+      this.serviceName = name;
       this.openAOSs = true;
     },
     closeAOSOs() {
       this.openAOSs = false;
     },
     onInputAOSOs(AOSOs) {
-      this.onInputService(this.serviceId, AOSOs);
+      this.onInputService(this.serviceId, AOSOs, this.serviceName);
     },
   },
   async created() {

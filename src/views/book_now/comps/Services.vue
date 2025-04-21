@@ -67,9 +67,14 @@ export default {
     const isReturnable = ref(false);
     const services = ref({});
 
-    const onInputService = (id, AOSOs) => {
+    const onInputService = (id, AOSOs, name) => {
       if (!services.value[id]) {
-        services.value[id] = { serviceId: id, empIds: [], AOSOs: AOSOs };
+        services.value[id] = {
+          serviceId: id,
+          empIds: [],
+          AOSOs: AOSOs,
+          serviceName: name,
+        };
       }
       isReturnable.value = true;
 
@@ -92,8 +97,10 @@ export default {
       props.resetPage2();
     };
 
-    const onInputEmpIds = (serviceId, value) => {
-      services.value[serviceId].empIds = value;
+    const onInputEmpIds = (serviceId, ids, aliases) => {
+      services.value[serviceId].empIds = ids;
+      services.value[serviceId].empAliases = aliases;
+
       props.resetPage2();
     };
 

@@ -5,7 +5,7 @@
       id="service"
       v-for="(service, index) in category.services"
       :key="index"
-      @click="onSelectService(service.service_id)"
+      @click="onSelectService(service.service_id, service.service_name)"
     >
       {{ service.service_name }}
     </div>
@@ -26,8 +26,8 @@ export default {
     formatDate(unixTime) {
       return unixToReadable(unixTime);
     },
-    onSelectService(id) {
-      this.onInputServiceId(id);
+    onSelectService(id, name) {
+      this.onInputServiceId(id, name);
     },
   },
 };

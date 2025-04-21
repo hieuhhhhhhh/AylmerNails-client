@@ -52,11 +52,12 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 // lib
 import getTodayUnixTime from "@/lib/getTodayUnixTime";
-import fetchAvailability from "../apis/fetchAvailability";
 import secondsToClock from "../apis/secondsToClock";
 import parseDate from "@/lib/parseDate";
 import unixTimeToReminder from "@/lib/unixTimeToReminder";
 import unixToReadable from "@/lib/unixToReadable";
+// apis
+import fetchAvailability from "../apis/fetchAvailability";
 
 export default {
   props: {

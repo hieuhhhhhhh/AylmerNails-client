@@ -24,7 +24,7 @@
 import { ref, watch } from "vue";
 import Services from "./comps/Services.vue";
 import SelectTime from "./comps/SelectTime.vue";
-import FinalPreview from "./comps/FinalPreview.vue";
+import FinalPreview from "./comps/final_preview/Parent.vue";
 import { onBeforeRouteLeave, useRoute, useRouter } from "vue-router";
 
 export default {

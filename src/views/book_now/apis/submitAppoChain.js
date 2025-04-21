@@ -57,7 +57,7 @@ function chainToNewSlots(chain) {
   // create new array of slots
   const newSlots = [];
   for (const slot of slots) {
-    const { start, end, empIds, serviceId, AOSOs } = slot;
+    const { start, end, empIds, serviceId, AOSOs, message } = slot;
 
     empIds.sort((a, b) => -(empCount[a] - empCount[b]));
 
@@ -89,6 +89,7 @@ function chainToNewSlots(chain) {
       serviceId,
       AOSOs,
       empIds,
+      message,
     };
 
     newSlots.push(newSlot);

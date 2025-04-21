@@ -1,6 +1,10 @@
 import { DateTime } from "luxon";
 
 export default function unixTimeToReminder(unix) {
+  if (!unix) {
+    return;
+  }
+
   const inputDate = DateTime.fromSeconds(unix).startOf("day");
   const today = DateTime.local().startOf("day");
 
