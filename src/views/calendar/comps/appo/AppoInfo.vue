@@ -54,24 +54,32 @@
               i
             </button>
           </div>
+          <div class="selected" v-if="details.selectedEmps">
+            (client selected:
+            {{ details.selectedEmps?.map((emp) => emp.empAlias).join(", ") }})
+          </div>
         </td>
       </tr>
-      <tr>
-        <th>Preferred</th>
-        <td>
-          {{ details.selectedEmps?.map((emp) => emp.empAlias).join(", ") }}
-        </td>
-      </tr>
-      <tr>
-        <th>Note</th>
-        <td>{{ details.note }}</td>
-      </tr>
+
       <tr>
         <th>Booker</th>
         <td></td>
       </tr>
+
+      <tr v-if="details.message">
+        <th>Message</th>
+        <td>
+          <textarea id="message" :value="details.message" rows="3" disabled />
+        </td>
+      </tr>
     </tbody>
   </table>
+  <textarea
+    id="note"
+    type="text"
+    rows="3"
+    placeholder="Note (not visible to client)"
+  />
 </template>
 
 <script>
@@ -176,13 +184,13 @@ table {
   text-align: left;
   border-collapse: collapse;
   width: 100%;
-  font-size: 12px;
+  font-size: 13px;
 }
 th,
 td {
   border: 1px solid black;
 
-  padding: 5px;
+  padding: 5px 10px;
   text-align: left;
 }
 #AOS {
@@ -200,5 +208,19 @@ td {
   width: 23px;
   padding: 0px;
   font-weight: bold;
+}
+.selected {
+  font-size: 11px;
+}
+#message {
+  font-size: 10px;
+}
+textarea {
+  width: 100%;
+  box-sizing: border-box;
+}
+#note {
+  margin-top: 10px;
+  /* text-align: center; */
 }
 </style>

@@ -26,6 +26,7 @@
               :date="date"
               :start="start"
               :duration="duration"
+              :message="message"
               :note="note"
               :setDate="setDate"
               :setStart="setStart"
@@ -125,6 +126,7 @@ export default {
     const color = ref("");
     const phoneNum = ref("");
     const contactName = ref("");
+    const message = ref("");
     // payload
     const serviceId = ref(null);
     const AOSOs = ref([]);
@@ -271,6 +273,7 @@ export default {
       date.value = details.date;
       start.value = details.start;
       duration.value = details.end - details.start;
+      message.value = details.message;
       note.value = details.note;
       color.value = details.color;
     };
@@ -287,6 +290,7 @@ export default {
         start.value,
         duration.value,
         selectedEmps.value.map((emp) => emp.empId),
+        message.value,
         note.value
       );
       if (newAppoId) {
@@ -344,6 +348,7 @@ export default {
       date,
       start,
       duration,
+      message,
       note,
       color,
       onSubmit,

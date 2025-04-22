@@ -116,33 +116,21 @@
               <button @click.prevent="onOpenEmpPicker">Select</button>
             </div>
           </div>
+          <div class="selected" v-if="selectedEmps">
+            (client selected:
+            {{ selectedEmps?.map((emp) => emp.empAlias).join(", ") }})
+          </div>
         </td>
       </tr>
-
-      <tr>
-        <th>Preferred</th>
-        <td>
-          {{ selectedEmps?.map((emp) => emp.empAlias).join(", ") }}
-        </td>
-      </tr>
-
-      <tr>
-        <th>Note</th>
-        <td>
-          <textarea
-            type="text"
-            rows="3"
-            placeholder="write a note... (not visible to client)"
-            :value="note"
-            ref="TAref"
-            @input="onInputNote"
-          />
-        </td>
-      </tr>
-
       <tr>
         <th>Booker</th>
         <td></td>
+      </tr>
+      <tr v-if="message">
+        <th>Message</th>
+        <td>
+          <textarea id="message" :value="message" rows="3" disabled />
+        </td>
       </tr>
     </tbody>
   </table>
@@ -170,6 +158,7 @@ export default {
     date: Number,
     start: Number,
     duration: Number,
+    message: String,
     note: String,
     setDate: Function,
     setStart: Function,
@@ -328,4 +317,13 @@ button {
   flex-direction: column;
   align-items: center;
 }
+#message {
+  font-size: 10px;
+}
+textarea {
+  width: 100%;
+  box-sizing: border-box;
+}
 </style>
+
+

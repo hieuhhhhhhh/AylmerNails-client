@@ -15,7 +15,12 @@
       />
     </div>
     <div v-show="page == 3" :key="page3trigger">
-      <FinalPreview :chain="chain" :date="date" :onReturn="onReturn" />
+      <FinalPreview
+        :chain="chain"
+        :date="date"
+        :onInputMessage="onInputMessage"
+        :onReturn="onReturn"
+      />
     </div>
   </div>
 </template>
@@ -75,6 +80,10 @@ export default {
       onNavigateNext();
     };
 
+    const onInputMessage = (index, value) => {
+      chain.value.slots[index].message = value;
+    };
+
     // DEPENDENCIES
 
     watch(
@@ -129,6 +138,7 @@ export default {
       resetPage2,
       onReturn,
       onSelectChain,
+      onInputMessage,
     };
   },
 };
