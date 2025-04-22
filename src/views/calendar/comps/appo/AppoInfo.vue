@@ -54,7 +54,7 @@
               i
             </button>
           </div>
-          <div class="selected" v-if="details.selectedEmps">
+          <div class="selected" v-if="details.selectedEmps?.length">
             (client selected:
             {{ details.selectedEmps?.map((emp) => emp.empAlias).join(", ") }})
           </div>
@@ -78,6 +78,7 @@
     id="note"
     type="text"
     rows="3"
+    v-model="note"
     placeholder="Note (not visible to client)"
   />
 </template>
@@ -89,6 +90,7 @@ import secsToHours from "@/lib/secsToHours";
 import unixTimeToReminder from "@/lib/unixTimeToReminder";
 import formatPhone from "@/lib/formatPhone";
 import { useRouter } from "vue-router";
+import { ref } from "vue";
 // icon
 // import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 // import { faInfo } from "@fortawesome/free-solid-svg-icons";
@@ -103,6 +105,8 @@ export default {
   setup(props) {
     // lib
     const router = useRouter();
+    // payload
+    const note = ref(props.details.note);
 
     // helpers
     const formatOffset = (seconds) => {
@@ -157,6 +161,7 @@ export default {
 
     return {
       // faInfo,
+      note,
       formatOffset,
       formatPhone,
       getTime,

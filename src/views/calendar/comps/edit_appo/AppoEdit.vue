@@ -116,7 +116,7 @@
               <button @click.prevent="onOpenEmpPicker">Select</button>
             </div>
           </div>
-          <div class="selected" v-if="selectedEmps">
+          <div class="selected" v-if="selectedEmps?.length">
             (client selected:
             {{ selectedEmps?.map((emp) => emp.empAlias).join(", ") }})
           </div>

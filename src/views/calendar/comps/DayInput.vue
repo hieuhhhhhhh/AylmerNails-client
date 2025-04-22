@@ -1,14 +1,12 @@
 <template>
   <div id="flexBox">
+    <input type="date" id="datePicker" :value="date" @change="onSelect" />
+    {{ unixToReadable(unixDate) }} ({{ unixTimeToReminder(unixDate) }})
+    <!-- <button id="addNote">
+      <FontAwesomeIcon :icon="faPen" />
+    </button> -->
     <div>
-      <input type="date" id="datePicker" :value="date" @change="onSelect" />
-    </div>
-
-    <div>
-      {{ unixToReadable(unixDate) }}
-    </div>
-    <div>
-      {{ unixTimeToReminder(unixDate) }}
+      <textarea rows="10" placeholder="Note"></textarea>
     </div>
   </div>
   <div id="main">
@@ -42,6 +40,7 @@ import {
   faAngleRight,
   faAngleLeft,
   faExpand,
+  faPen,
 } from "@fortawesome/free-solid-svg-icons";
 
 // lib
@@ -116,6 +115,7 @@ export default {
       leftIcon: faAngleLeft,
       rightIcon: faAngleRight,
       expandIcon: faExpand,
+      faPen,
       unixTimeToReminder,
       unixToReadable,
     };
@@ -132,18 +132,34 @@ export default {
   font-size: 20px;
 }
 #main {
+  margin-top: 10px;
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
   margin-bottom: 5px;
 }
 #datePicker {
-  font-size: 16px;
-  padding: 10px;
+  font-size: 18px;
+  padding: 5px 15px;
   border-radius: 5px;
 }
 button {
   font-size: 30px;
   height: fit-content;
+}
+#addNote {
+  font-size: 15px;
+  padding: 0px;
+  width: 25px;
+  aspect-ratio: 1;
+}
+textarea {
+  width: 400px;
+  max-width: 100%;
+  /* text-align: center; */
+  background: unset;
+  color: var(--foreground);
+  margin: 5px;
+  font-size: 10px;
 }
 </style>
