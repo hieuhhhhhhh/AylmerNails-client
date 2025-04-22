@@ -41,7 +41,9 @@ export default {
     // apis
     const fetchDetails = async () => {
       details.value = await fetchAppoDetails(props.appoId);
-      console.log("details.value", details.value);
+      if (!details.value) {
+        props.onCloseAppo();
+      }
     };
 
     // lifecycle

@@ -40,6 +40,8 @@
           </div>
           <div id="note">
             <textarea
+              ref="noteRef"
+              v-model="note"
               type="text"
               rows="3"
               placeholder="Note (not visible to client)"
@@ -132,6 +134,7 @@ export default {
     const start = ref(null);
     const duration = ref(null);
     const note = ref("");
+    const noteRef = ref(null);
 
     // SETTERS
     const resetEmp = () => {
@@ -243,6 +246,13 @@ export default {
       setService(null, "", "", [], []);
     };
 
+    const autoResize = () => {
+      if (noteRef.value) {
+        noteRef.value.style.height = "auto";
+        noteRef.value.style.height = `${noteRef.value.scrollHeight + 2}px`; // Set to scrollHeight
+      }
+    };
+
     // APIS
     const fetchDuration = async () => {
       if (!serviceId.value) return;
@@ -254,6 +264,7 @@ export default {
       );
     };
     const onSubmit = async () => {
+      console.log("note", note.value);
       const newId = await addAppo(
         phoneNum.value,
         clientName.value,
@@ -292,6 +303,10 @@ export default {
       updateEZstates();
     });
 
+    watch(note, () => {
+      autoResize();
+    });
+
     return {
       faCheck,
       isPickingEmp,
@@ -314,6 +329,7 @@ export default {
       start,
       duration,
       note,
+      noteRef,
       color,
       onSubmit,
       onOpenEmpPicker,

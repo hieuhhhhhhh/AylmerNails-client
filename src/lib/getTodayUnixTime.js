@@ -2,6 +2,8 @@ import { DateTime } from "luxon";
 import getTimezone from "./getTimeZone";
 
 export default function getTodayUnixTime() {
+  console.log("calling");
+
   // Define the Toronto time zone
   const timezone = getTimezone();
 

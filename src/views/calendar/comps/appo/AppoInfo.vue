@@ -40,11 +40,11 @@
 
       <tr>
         <th>Date Time</th>
-        <td>{{ getTime() }}<br />{{ getDate() }} {{ getReminder() }}</td>
+        <td>{{ getTime }}<br />{{ getDate }} {{ getReminder }}</td>
       </tr>
       <tr>
         <th>Duration</th>
-        <td>{{ getDuration() + " mins" }} <br />(to {{ getEndTime() }})</td>
+        <td>{{ getDuration + " mins" }} <br />(to {{ getEndTime }})</td>
       </tr>
       <tr>
         <th>Employee</th>
@@ -70,13 +70,16 @@
       <tr v-if="details.message">
         <th>Message</th>
         <td>
-          <textarea id="message" :value="details.message" rows="3" disabled />
+          <div id="message">
+            {{ details.message }}
+          </div>
         </td>
       </tr>
     </tbody>
   </table>
   <textarea
     id="note"
+    ref="noteRef"
     type="text"
     rows="3"
     v-model="note"
@@ -92,7 +95,7 @@ import secsToHours from "@/lib/secsToHours";
 import unixTimeToReminder from "@/lib/unixTimeToReminder";
 import formatPhone from "@/lib/formatPhone";
 import { useRouter } from "vue-router";
-import { ref, watch } from "vue";
+import { computed, nextTick, ref, watch } from "vue";
 
 // apis
 import writeAppoNote from "../../apis/writeAppoNote";
@@ -109,6 +112,7 @@ export default {
     const router = useRouter();
     // payload
     const note = ref("");
+    const noteRef = ref(null);
 
     // helpers
     const formatOffset = (seconds) => {
@@ -120,33 +124,33 @@ export default {
       return `(${sign}${absMinutes} mins)`;
     };
 
-    const getTime = () => {
-      const seconds = props.details.start;
-      return secsToHours(seconds);
-    };
+    const getTime = computed(() => {
+      return secsToHours(props.details.start);
+    });
 
-    const getDate = () => {
+    const getDate = computed(() => {
       const unixDate = props.details.date + 12 * 60 * 60;
       return unixToReadable(unixDate);
-    };
+    });
 
-    const getReminder = () => {
+    const getReminder = computed(() => {
       const unixDate = props.details.date + 12 * 60 * 60;
       const text = unixTimeToReminder(unixDate);
       if (text) {
         return `(${text})`;
       }
-    };
+      return "";
+    });
 
-    const getDuration = () => {
+    const getDuration = computed(() => {
       const gap = props.details.end - props.details.start;
       return gap / 60;
-    };
+    });
 
-    const getEndTime = () => {
+    const getEndTime = computed(() => {
       const seconds = props.details.end;
       return secsToHours(seconds);
-    };
+    });
 
     // INPUT
     const toService = () => {
@@ -165,17 +169,32 @@ export default {
       writeAppoNote(props.details.id, note.value);
     };
 
+    const autoResize = () => {
+      if (noteRef.value) {
+        noteRef.value.style.height = "auto";
+        noteRef.value.style.height = `${noteRef.value.scrollHeight + 2}px`; // Set to scrollHeight
+      }
+    };
+
     // DEPENDENCIES
     watch(
       () => props.details.note,
       (newVal) => {
         note.value = newVal;
+        nextTick(() => {
+          autoResize();
+        });
       }
     );
+
+    watch(note, () => {
+      autoResize();
+    });
 
     return {
       // faInfo,
       note,
+      noteRef,
       formatOffset,
       formatPhone,
       getTime,
@@ -204,13 +223,13 @@ table {
   text-align: left;
   border-collapse: collapse;
   width: 100%;
-  font-size: 13px;
+  font-size: 14px;
 }
 th,
 td {
   border: 1px solid black;
 
-  padding: 5px 10px;
+  padding: 3px 10px;
   text-align: left;
 }
 #AOS {
@@ -233,7 +252,13 @@ td {
   font-size: 11px;
 }
 #message {
-  font-size: 10px;
+  /* font-size: 12px; */
+  white-space: pre-wrap;
+  max-height: 80px;
+  overflow-y: auto;
+  background: rgba(255, 255, 255, 0.3);
+  padding: 5px 10px;
+  margin: -3px -10px;
 }
 textarea {
   width: 100%;

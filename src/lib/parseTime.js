@@ -1,6 +1,8 @@
 import { DateTime } from "luxon";
 
 export default function parseTime(timeInput) {
+  console.log("calling");
+
   if (!timeInput) {
     return 0;
   }

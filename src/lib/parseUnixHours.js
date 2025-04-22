@@ -1,4 +1,6 @@
 export default function parseUnixHours(seconds) {
+  console.log("calling");
+
   if (!seconds) {
     return null;
   }

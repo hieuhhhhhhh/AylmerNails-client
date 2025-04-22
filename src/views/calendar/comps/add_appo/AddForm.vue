@@ -10,7 +10,7 @@
         <td>
           <div class="duo">
             <div>
-              {{ serviceName }} {{ getCate() }}
+              {{ serviceName }} {{ getCate }}
               <div id="AOS" v-for="(AOS, index) in AOSOs" :key="index">
                 {{ AOS.question }} ~ {{ AOS.answer }}
                 {{ formatOffset(AOS.offset) }}
@@ -47,7 +47,7 @@
         <td>
           <div class="center">
             <div>
-              {{ getReminder() }}
+              {{ getReminder }}
             </div>
             <div>
               <input type="date" :value="parseUT(date)" disabled />
@@ -95,7 +95,7 @@
               <button @click.prevent="onIncreaseDuration(true)">+</button>
             </div>
             <div>
-              {{ getEndTime() }}
+              {{ getEndTime }}
             </div>
           </div>
         </td>
@@ -117,7 +117,7 @@
 </template>
 <script>
 // lib
-import { ref, onMounted, nextTick } from "vue";
+import { ref, onMounted, nextTick, computed } from "vue";
 import parseUT from "@/lib/parseUT";
 import parseTime from "@/lib/parseTime";
 import parseUnixHours from "@/lib/parseUnixHours";
@@ -175,7 +175,7 @@ export default {
       props.setDuration(props.duration + change);
     };
 
-    // FORMAT
+    // GETTERS
     const formatOffset = (seconds) => {
       if (seconds === 0) return;
 
@@ -184,23 +184,25 @@ export default {
 
       return `(${sign}${mins} mins)`;
     };
-    const getReminder = () => {
+
+    const getReminder = computed(() => {
       if (!props.date) return;
       const unixDate = props.date + 12 * 60 * 60;
       const text = unixTimeToReminder(unixDate);
-      if (text) {
-        return `${text}`;
-      }
-    };
-    const getCate = () => {
+      return `${text}`;
+    });
+
+    const getCate = computed(() => {
       const cate = props.category;
       if (cate) return `(${cate})`;
-    };
-    const getEndTime = () => {
+      return "";
+    });
+
+    const getEndTime = computed(() => {
       if (!props.start || !props.duration) return;
       const end = props.start + props.duration;
       return `to ${secsToHours(end)}`;
-    };
+    });
 
     // STYLES
     const TAref = ref(null);

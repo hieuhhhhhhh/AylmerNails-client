@@ -1,6 +1,8 @@
 import { DateTime } from "luxon";
 
 export default function unixTimeToReminder(unix) {
+  console.log("calling");
+
   if (!unix) {
     return;
   }

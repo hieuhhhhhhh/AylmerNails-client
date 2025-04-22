@@ -57,7 +57,7 @@
               />
               <button @click.prevent="onIncreaseDate(true)">+</button>
             </div>
-            {{ getReminder() }}
+            {{ getReminder }}
           </div>
         </td>
       </tr>
@@ -137,7 +137,7 @@
 </template>
 <script>
 // lib
-import { ref, onMounted, nextTick } from "vue";
+import { ref, onMounted, nextTick, computed } from "vue";
 import parseDate from "@/lib/parseDate";
 import parseUT from "@/lib/parseUT";
 import parseTime from "@/lib/parseTime";
@@ -218,13 +218,11 @@ export default {
 
       return `(${sign}${mins} mins)`;
     };
-    const getReminder = () => {
+    const getReminder = computed(() => {
       const unixDate = props.date + 12 * 60 * 60;
       const text = unixTimeToReminder(unixDate);
-      if (text) {
-        return `${text}`;
-      }
-    };
+      return `${text}`;
+    });
 
     // STYLES
     const TAref = ref(null);

@@ -7,10 +7,10 @@
     </button>
     <div v-if="note != null">
       <textarea
-        ref="noteTA"
+        ref="noteRef"
         type="text"
         v-model="note"
-        rows="5"
+        rows="3"
         placeholder="Note"
         @change="onInputMessage"
       />
@@ -75,7 +75,7 @@ export default {
   setup(props) {
     // resources
     const date = ref(null);
-    const noteTA = ref(null);
+    const noteRef = ref(null);
     // payload
     const note = ref(null);
 
@@ -112,9 +112,17 @@ export default {
     const onOpenNote = () => {
       note.value = "";
       nextTick(() => {
-        noteTA.value?.focus();
+        noteRef.value?.focus();
       });
     };
+
+    const autoResize = () => {
+      if (noteRef.value) {
+        noteRef.value.style.height = "auto";
+        noteRef.value.style.height = `${noteRef.value.scrollHeight + 2}px`; // Set to scrollHeight
+      }
+    };
+
     // DEPENDENCIES
     date.value = parseUT(props.unixDate);
 
@@ -123,13 +131,20 @@ export default {
       async (newVal) => {
         date.value = parseUT(newVal);
         note.value = await fetchDailyNote(newVal);
+        nextTick(() => {
+          autoResize();
+        });
       }
     );
+
+    watch(note, () => {
+      autoResize();
+    });
 
     return {
       date,
       note,
-      noteTA,
+      noteRef,
       onSelect,
       moveDay,
       moveLeft,
@@ -145,6 +160,7 @@ export default {
       unixToReadable,
       onInputMessage,
       onOpenNote,
+      autoResize,
     };
   },
 };
@@ -183,13 +199,13 @@ button {
 textarea {
   width: 400px;
   max-width: 100%;
-  /* text-align: center; */
   background: unset;
   color: var(--foreground);
-  margin: 5px;
-  font-size: 13px;
+  margin-top: 5px;
   border-radius: 5px;
-  padding: 6px;
+  padding: 6px 8px;
+  resize: none;
+  box-sizing: border-box;
 }
 #duo {
   display: flex;

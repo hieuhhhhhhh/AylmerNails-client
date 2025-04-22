@@ -7,10 +7,10 @@ export default async function addAppo(
   date,
   start,
   duration,
-  message,
   note
 ) {
   try {
+    console.log("note", note);
     // get app path
     const baseURL = process.env.VUE_APP_BASE_URL;
 
@@ -32,7 +32,6 @@ export default async function addAppo(
           date,
           start,
           end: start + duration,
-          message,
           note,
         }),
       }

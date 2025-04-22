@@ -2,6 +2,8 @@ import { DateTime } from "luxon";
 import getTimezone from "./getTimeZone";
 
 export default function unixToHours(unix) {
+  console.log("calling");
+
   // Create a Luxon DateTime instance from the Unix timestamp (seconds)
   const dt = DateTime.fromSeconds(unix);
 

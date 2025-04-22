@@ -16,6 +16,7 @@
       </div>
       <div>
         <textarea
+          :ref="'textareas'"
           rows="3"
           placeholder="(Optional) Message to technician..."
           @input="onTypeMessage(index, $event)"
@@ -78,10 +79,18 @@ export default {
       const value = event.target.value;
       if (!value.length) return;
       this.onInputMessage(index, value);
+      this.autoResize(index);
     },
     async onSubmit() {
       const res = await submitAppoChain(this.chain, this.date);
       console.log(res);
+    },
+    autoResize(index) {
+      const textarea = this.$refs.textareas?.[index];
+      if (textarea) {
+        textarea.style.height = "auto";
+        textarea.style.height = textarea.scrollHeight + 2 + "px"; // grow
+      }
     },
     unixToReadable,
     unixTimeToReminder,
