@@ -1,5 +1,10 @@
 export default async function writeDailyNote(date, note) {
   try {
+    // parse
+    if (!date.length) {
+      date = null;
+    }
+
     // get app path
     const baseURL = process.env.VUE_APP_BASE_URL;
 

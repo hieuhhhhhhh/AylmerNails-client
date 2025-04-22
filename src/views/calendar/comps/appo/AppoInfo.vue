@@ -4,6 +4,7 @@
       <col style="width: auto" />
       <col style="width: 80%" />
     </colgroup>
+
     <tbody>
       <tr>
         <th>Service</th>
@@ -79,6 +80,7 @@
     type="text"
     rows="3"
     v-model="note"
+    @change="onInputNote"
     placeholder="Note (not visible to client)"
   />
 </template>
@@ -90,10 +92,10 @@ import secsToHours from "@/lib/secsToHours";
 import unixTimeToReminder from "@/lib/unixTimeToReminder";
 import formatPhone from "@/lib/formatPhone";
 import { useRouter } from "vue-router";
-import { ref } from "vue";
-// icon
-// import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-// import { faInfo } from "@fortawesome/free-solid-svg-icons";
+import { ref, watch } from "vue";
+
+// apis
+import writeAppoNote from "../../apis/writeAppoNote";
 
 export default {
   props: {
@@ -106,7 +108,7 @@ export default {
     // lib
     const router = useRouter();
     // payload
-    const note = ref(props.details.note);
+    const note = ref("");
 
     // helpers
     const formatOffset = (seconds) => {
@@ -159,6 +161,18 @@ export default {
       router.push(`/users/${props.details.userId}`);
     };
 
+    const onInputNote = () => {
+      writeAppoNote(props.details.id, note.value);
+    };
+
+    // DEPENDENCIES
+    watch(
+      () => props.details.note,
+      (newVal) => {
+        note.value = newVal;
+      }
+    );
+
     return {
       // faInfo,
       note,
@@ -172,6 +186,7 @@ export default {
       toService,
       toEmployee,
       toUser,
+      onInputNote,
     };
   },
 };
