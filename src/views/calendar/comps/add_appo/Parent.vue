@@ -38,6 +38,13 @@
               :onClearService="onClearService"
             />
           </div>
+          <div id="note">
+            <textarea
+              type="text"
+              rows="3"
+              placeholder="Note (not visible to client)"
+            />
+          </div>
           <div class="flexBox">
             <button id="save">
               <FontAwesomeIcon :icon="faCheck" />
@@ -365,5 +372,14 @@ export default {
   padding-inline: 15px;
   /* font-weight: bold; */
   font-size: 15px;
+}
+textarea {
+  width: 95%;
+  box-sizing: border-box;
+}
+#note {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
 }
 </style>

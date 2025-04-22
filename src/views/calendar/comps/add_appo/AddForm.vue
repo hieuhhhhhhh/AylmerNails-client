@@ -112,25 +112,6 @@
           </div>
         </td>
       </tr>
-
-      <tr>
-        <th>Note</th>
-        <td>
-          <textarea
-            type="text"
-            rows="3"
-            placeholder="write a note... (not visible to client)"
-            :value="note"
-            ref="TAref"
-            @input="onInputNote"
-          />
-        </td>
-      </tr>
-
-      <tr>
-        <th>Booker</th>
-        <td></td>
-      </tr>
     </tbody>
   </table>
 </template>
