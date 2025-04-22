@@ -2,11 +2,18 @@
   <div id="flexBox">
     <input type="date" id="datePicker" :value="date" @change="onSelect" />
     {{ unixToReadable(unixDate) }} ({{ unixTimeToReminder(unixDate) }})
-    <!-- <button id="addNote">
+    <button v-if="note == null" id="addNote" @click="onOpenNote">
       <FontAwesomeIcon :icon="faPen" />
-    </button> -->
-    <div>
-      <textarea rows="10" placeholder="Note"></textarea>
+    </button>
+    <div v-if="note != null">
+      <textarea
+        ref="noteTA"
+        type="text"
+        v-model="note"
+        rows="5"
+        placeholder="Note"
+        @change="onInputMessage"
+      />
     </div>
   </div>
   <div id="main">
@@ -46,9 +53,12 @@ import {
 // lib
 import parseDate from "@/lib/parseDate";
 import parseUT from "@/lib/parseUT";
-import { ref, watch } from "vue";
+import { nextTick, ref, watch } from "vue";
 import unixToReadable from "@/lib/unixToReadable";
 import unixTimeToReminder from "@/lib/unixTimeToReminder";
+// apis
+import writeDailyAppo from "../apis/writeDailyNote";
+import fetchDailyNote from "../apis/fetchDailyNote";
 
 export default {
   components: {
@@ -63,18 +73,13 @@ export default {
     onCompact: Function,
   },
   setup(props) {
-    // Define reactive variables
+    // resources
     const date = ref(null);
+    const noteTA = ref(null);
+    // payload
+    const note = ref(null);
 
-    // Watch for changes in props.unixDate
-    watch(
-      () => props.unixDate,
-      (newVal) => {
-        date.value = parseUT(newVal); // Ensure it's properly parsed
-      }
-    );
-
-    // Methods
+    // INPUT
     const onSelect = (event) => {
       date.value = event.target.value;
       props.onInputDate(parseDate(date.value));
@@ -100,11 +105,31 @@ export default {
       props.onCompact();
     };
 
-    // Initialize date when the component is created
+    const onInputMessage = () => {
+      writeDailyAppo(props.unixDate, note.value);
+    };
+
+    const onOpenNote = () => {
+      note.value = "";
+      nextTick(() => {
+        noteTA.value?.focus();
+      });
+    };
+    // DEPENDENCIES
     date.value = parseUT(props.unixDate);
+
+    watch(
+      () => props.unixDate,
+      async (newVal) => {
+        date.value = parseUT(newVal);
+        note.value = await fetchDailyNote(newVal);
+      }
+    );
 
     return {
       date,
+      note,
+      noteTA,
       onSelect,
       moveDay,
       moveLeft,
@@ -118,6 +143,8 @@ export default {
       faPen,
       unixTimeToReminder,
       unixToReadable,
+      onInputMessage,
+      onOpenNote,
     };
   },
 };
@@ -160,6 +187,13 @@ textarea {
   background: unset;
   color: var(--foreground);
   margin: 5px;
-  font-size: 10px;
+  font-size: 13px;
+  border-radius: 5px;
+  padding: 6px;
+}
+#duo {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
 }
 </style>

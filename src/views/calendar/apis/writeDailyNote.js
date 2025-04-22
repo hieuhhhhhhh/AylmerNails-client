@@ -1,8 +1,8 @@
 export default async function writeDailyNote(date, note) {
   try {
     // parse
-    if (!date.length) {
-      date = null;
+    if (!note.length) {
+      note = null;
     }
 
     // get app path

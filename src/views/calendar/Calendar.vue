@@ -297,7 +297,7 @@ export default {
   background-color: var(--background-i1);
   padding: 10px;
   width: 900px;
-  max-width: 100vw;
+  max-width: 100%;
   margin-inline: auto;
   flex-grow: 1;
   box-sizing: border-box;
