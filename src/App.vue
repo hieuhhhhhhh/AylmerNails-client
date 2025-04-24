@@ -2,6 +2,7 @@
   <div id="app">
     <DrawerNav />
     <Header />
+    <ReqErrorModal />
     <ApiContinueSession />
     <div id="content">
       <router-view />
@@ -15,9 +16,10 @@ import Header from "./components/view-shell/Header.vue";
 import Footer from "./components/view-shell/footer/Footer.vue";
 import DrawerNav from "./components/view-shell/drawer-navigation/Parent.vue";
 import ApiContinueSession from "./components/view-shell/ApiContinueSession.vue";
+import ReqErrorModal from "./components/view-shell/ReqErrorModal.vue";
 
 export default {
-  components: { Header, Footer, DrawerNav, ApiContinueSession },
+  components: { Header, Footer, DrawerNav, ApiContinueSession, ReqErrorModal },
   created() {
     document.title = "Aylmer Nails & Spa";
   },

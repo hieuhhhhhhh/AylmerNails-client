@@ -75,7 +75,7 @@ function parseApiRes(json) {
     };
 
     // append new appointment to employee
-    newEmployees[empId].appos.push(newAppo);
+    newEmployees[empId]?.appos.push(newAppo);
   }
   console.log("appos", appos);
 

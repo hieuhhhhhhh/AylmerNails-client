@@ -26,7 +26,7 @@ export default {
     onMounted(async () => {
       // call api
       let apiRes = await fetchMyProfile();
-
+      if (!apiRes) return;
       userInfo.value = apiRes.userInfo;
       appos.value = apiRes.appos;
     });

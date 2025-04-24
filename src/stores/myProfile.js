@@ -54,3 +54,17 @@ export const useFooterReact = defineStore("footerReact", {
     },
   },
 });
+
+export const useRequestError = defineStore("requestError", {
+  state: () => ({
+    msg: "",
+  }),
+  actions: {
+    setMessage(value) {
+      this.msg = value;
+    },
+    reset() {
+      this.msg = "";
+    },
+  },
+});
