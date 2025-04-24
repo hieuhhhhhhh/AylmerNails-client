@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function fetchLastTracked() {
   try {
     // get app path
@@ -22,6 +24,7 @@ export default async function fetchLastTracked() {
 
       return lastTracked;
     } else {
+      notifyReqError(json.message);
       console.log("Failed to last tracked on users, message: ", json.message);
     }
   } catch (e) {

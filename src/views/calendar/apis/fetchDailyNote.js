@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function fetchDailyNote(date) {
   try {
     // get app path
@@ -22,6 +24,7 @@ export default async function fetchDailyNote(date) {
     if (res.ok) {
       return json.note;
     } else {
+      notifyReqError(json.message);
       console.log("Failed to fetch daily note, message: ", json.message);
     }
   } catch (e) {

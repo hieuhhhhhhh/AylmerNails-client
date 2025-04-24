@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function fetchSavedLastTracked() {
   try {
     // get app path
@@ -25,6 +27,7 @@ export default async function fetchSavedLastTracked() {
 
       return lastTracked;
     } else {
+      notifyReqError(json.message);
       console.log(
         "Failed to last tracked on saved appointments, message: ",
         json.message

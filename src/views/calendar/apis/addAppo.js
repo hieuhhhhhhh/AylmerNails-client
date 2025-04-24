@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function addAppo(
   phoneNum,
   contactName,
@@ -44,6 +46,7 @@ export default async function addAppo(
     if (res.ok) {
       return json.appo_id;
     } else {
+      notifyReqError(json.message);
       console.log("Failed to add appointment, message: ", json.message);
     }
   } catch (e) {

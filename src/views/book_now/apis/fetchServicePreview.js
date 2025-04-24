@@ -1,4 +1,5 @@
 import getTodayUnixTime from "@/lib/getTodayUnixTime";
+import notifyReqError from "@/stores/notifyReqError";
 
 export default async function fetchServicePreview(serviceId) {
   try {
@@ -31,6 +32,7 @@ export default async function fetchServicePreview(serviceId) {
       // return formatted result
       return preview;
     } else {
+      notifyReqError(json.message);
       console.log("Failed to fetch service preview, message: ", json.message);
     }
   } catch (e) {

@@ -84,6 +84,7 @@ export default {
   async created() {
     this.service_id = Number(this.$route.params.id);
     this.details = await fetchServiceDetails(this.service_id);
+    if (!this.details) return;
 
     // fetch info
     this.serviceInfo = {

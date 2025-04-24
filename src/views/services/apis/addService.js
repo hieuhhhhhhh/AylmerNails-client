@@ -1,4 +1,5 @@
 import parseDate from "@/lib/parseDate";
+import notifyReqError from "@/stores/notifyReqError";
 
 export default async function addService(
   name,
@@ -53,6 +54,7 @@ export default async function addService(
     if (res.ok) {
       return json.added_service_id;
     } else {
+      notifyReqError(json.message);
       console.log("Failed to add service, message: ", json.message);
     }
   } catch (e) {

@@ -1,4 +1,5 @@
 import getTodayUnixTime from "@/lib/getTodayUnixTime";
+import notifyReqError from "@/stores/notifyReqError";
 
 export default async function fetchEmployeeServices(employeeId) {
   try {
@@ -29,6 +30,7 @@ export default async function fetchEmployeeServices(employeeId) {
       console.log("ES_ids: ", ES_ids);
       return { categories, ES_ids };
     } else {
+      notifyReqError(json.message);
       console.log(
         "Failed to fetch employee's services, message: ",
         json.message

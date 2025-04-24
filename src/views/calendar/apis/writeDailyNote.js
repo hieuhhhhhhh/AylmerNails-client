@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function writeDailyNote(date, note) {
   try {
     // parse
@@ -25,6 +27,7 @@ export default async function writeDailyNote(date, note) {
       // fetch json
       const json = await res.json();
 
+      notifyReqError(json.message);
       console.log("Failed to write daily note, message: ", json.message);
     }
   } catch (e) {

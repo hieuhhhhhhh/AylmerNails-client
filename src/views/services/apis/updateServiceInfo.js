@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function updateServiceInfo(
   serviceId,
   name,
@@ -33,6 +35,7 @@ export default async function updateServiceInfo(
       return true;
     }
 
+    notifyReqError(json.message);
     console.log(
       "Failed to update service information, message: ",
       json.message

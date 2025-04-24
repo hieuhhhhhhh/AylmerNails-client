@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function fetchEmpDetails(emp_id) {
   try {
     // get app path
@@ -61,6 +63,7 @@ export default async function fetchEmpDetails(emp_id) {
       console.log("details: ", details);
       return details;
     } else {
+      notifyReqError(json.message);
       console.log("Failed to fetch employee details, message: ", json.message);
     }
   } catch (e) {

@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function fetchDailyAppos(date) {
   try {
     // get app path
@@ -22,6 +24,7 @@ export default async function fetchDailyAppos(date) {
     if (res.ok) {
       return parseApiRes(json);
     } else {
+      notifyReqError(json.message);
       console.log(
         "Failed to fetch daily appointments, message: ",
         json.message

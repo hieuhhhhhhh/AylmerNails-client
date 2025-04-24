@@ -61,6 +61,7 @@ export default {};
 }
 #content {
   padding: 10px 20px;
+  text-align: center;
 }
 #closeBtn {
   position: absolute;
@@ -74,6 +75,5 @@ export default {};
 }
 #title {
   font-size: 20px;
-  text-align: center;
 }
 </style>

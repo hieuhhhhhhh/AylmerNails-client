@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function updateAppo(
   appoId,
   phoneNum,
@@ -46,6 +48,7 @@ export default async function updateAppo(
     if (res.ok) {
       return json.appo_id;
     } else {
+      notifyReqError(json.message);
       console.log("Failed to update appointment, message: ", json.message);
       console.log(json.start);
       console.log(json.end);

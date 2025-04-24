@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function searchContacts(query) {
   try {
     // get app path
@@ -35,6 +37,7 @@ export default async function searchContacts(query) {
 
       return contacts;
     } else {
+      notifyReqError(json.message);
       console.log("Failed to search contacts, message: ", json.message);
     }
   } catch (e) {

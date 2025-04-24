@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function writeAppoNote(appoId, note) {
   try {
     // parse
@@ -28,6 +30,7 @@ export default async function writeAppoNote(appoId, note) {
       // fetch json
       const json = await res.json();
 
+      notifyReqError(json.message);
       console.log("Failed to write appo note, message: ", json.message);
     }
   } catch (e) {

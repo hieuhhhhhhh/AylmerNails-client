@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function searchUsers(query, limit) {
   try {
     // get app path
@@ -55,6 +57,7 @@ export default async function searchUsers(query, limit) {
       //  return results
       return users;
     } else {
+      notifyReqError(json.message);
       console.log("Failed to search users, message: ", json.message);
     }
   } catch (e) {

@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function fetchAppoLength(serviceId, empId, AOSOs) {
   try {
     // return if serviceId is not defined
@@ -27,6 +29,7 @@ export default async function fetchAppoLength(serviceId, empId, AOSOs) {
     if (res.ok) {
       return json.length;
     } else {
+      notifyReqError(json.message);
       console.log(
         "Failed to fetch appointment length, message: ",
         json.message

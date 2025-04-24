@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function searchSavedAppos(query, limit) {
   try {
     // get app path
@@ -70,6 +72,7 @@ export default async function searchSavedAppos(query, limit) {
       //  return results
       return appos;
     } else {
+      notifyReqError(json.message);
       console.log(
         "Failed to search saved appointments, message: ",
         json.message

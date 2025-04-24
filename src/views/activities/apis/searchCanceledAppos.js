@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function searchCanceledAppos(query, limit) {
   try {
     // get app path
@@ -43,6 +45,7 @@ export default async function searchCanceledAppos(query, limit) {
       //  return results
       return appos;
     } else {
+      notifyReqError(json.message);
       console.log(
         "Failed to search canceled appointments, message: ",
         json.message

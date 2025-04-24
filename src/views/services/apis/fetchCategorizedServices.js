@@ -1,4 +1,5 @@
 import getTodayUnixTime from "@/lib/getTodayUnixTime";
+import notifyReqError from "@/stores/notifyReqError";
 
 export default async function fetchCategorizedServices() {
   try {
@@ -26,6 +27,7 @@ export default async function fetchCategorizedServices() {
 
       return categories;
     } else {
+      notifyReqError(json.message);
       console.log("Failed to fetch employee list, message: ", json.message);
     }
   } catch (e) {

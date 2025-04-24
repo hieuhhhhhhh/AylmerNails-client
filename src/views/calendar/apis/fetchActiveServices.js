@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function fetchActiveServices(unixDate) {
   try {
     // get app path
@@ -24,6 +26,7 @@ export default async function fetchActiveServices(unixDate) {
 
       return categories;
     } else {
+      notifyReqError(json.message);
       console.log("Failed to fetch employee list, message: ", json.message);
     }
   } catch (e) {

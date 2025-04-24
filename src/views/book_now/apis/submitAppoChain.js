@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function submitAppoChain(chain, date) {
   try {
     // count of presentation of every employee in the chain
@@ -28,6 +30,7 @@ export default async function submitAppoChain(chain, date) {
     if (res.ok) {
       return true;
     } else {
+      notifyReqError(json.message);
       console.log(
         "Failed to add appointments by chain, message: ",
         json.message

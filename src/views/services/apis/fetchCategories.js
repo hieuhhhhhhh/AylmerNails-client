@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function fetchCategories() {
   try {
     // get app path
@@ -31,6 +33,7 @@ export default async function fetchCategories() {
       // return result
       return cates;
     } else {
+      notifyReqError(json.message);
       console.log("Failed to fetch categories list, message: ", json.message);
     }
   } catch (e) {

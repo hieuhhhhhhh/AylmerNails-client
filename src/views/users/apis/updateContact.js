@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function updateContact(phoneNum, name) {
   try {
     // get app path
@@ -22,6 +24,7 @@ export default async function updateContact(phoneNum, name) {
     if (res.ok) {
       return json.contactId;
     } else {
+      notifyReqError(json.message);
       console.log("Failed to update contact, message: ", json.message);
     }
   } catch (e) {

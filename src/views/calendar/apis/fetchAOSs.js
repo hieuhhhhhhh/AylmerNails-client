@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function fetchAOSs(serviceId) {
   try {
     // get app path
@@ -25,6 +27,7 @@ export default async function fetchAOSs(serviceId) {
       // return formatted result
       return rawToQuestions(raw);
     } else {
+      notifyReqError(json.message);
       console.log("Failed to fetch add-on services, message: ", json.message);
     }
   } catch (e) {

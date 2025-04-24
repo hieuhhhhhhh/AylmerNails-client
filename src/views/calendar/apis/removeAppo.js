@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function removeAppo(appoId) {
   try {
     // get app path
@@ -22,6 +24,7 @@ export default async function removeAppo(appoId) {
     } else {
       // fetch json
       const json = await res.json();
+      notifyReqError(json.message);
 
       console.log("Failed to remove appointment, message: ", json.message);
     }

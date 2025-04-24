@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function fetchAppoDetails(appoId) {
   try {
     // get app path
@@ -22,6 +24,7 @@ export default async function fetchAppoDetails(appoId) {
     if (res.ok) {
       return parseApiRes(json);
     } else {
+      notifyReqError(json.message);
       console.log("Failed to fetch appo details, message: ", json.message);
     }
   } catch (e) {

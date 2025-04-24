@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function fetchAvailability(date, services) {
   try {
     console.log("services", services);
@@ -45,6 +47,7 @@ export default async function fetchAvailability(date, services) {
 
       return removeShortChains(chains, DELAs_requests.length);
     } else {
+      notifyReqError(json.message);
       console.log("Failed to fetch availabilities, message: ", json.message);
     }
   } catch (e) {

@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function fetchBookingHistory(limit) {
   try {
     // get app path
@@ -65,6 +67,7 @@ export default async function fetchBookingHistory(limit) {
       //  return results
       return [appos, lastTracked];
     } else {
+      notifyReqError(json.message);
       console.log("Failed to fetch booking history, message: ", json.message);
     }
   } catch (e) {
