@@ -20,6 +20,7 @@
     </div>
     <div><router-link to="/signup">Sign Up</router-link></div>
     <div><router-link to="/login">Log In</router-link></div>
+    <div><router-link to="" @click="logOut">Log Out</router-link></div>
     <div><router-link to="/services">Services</router-link></div>
     <div><router-link to="/employees">Employees</router-link></div>
     <div>
@@ -33,7 +34,9 @@
 // lib
 import { watch, computed } from "vue";
 import getTodayUnixTime from "@/lib/getTodayUnixTime";
+// apis
 import { connectSocket } from "./apis/connectSocket";
+import logOut from "./apis/logOut";
 // pinia
 import { useMyProfile, useNotificationCount } from "@/stores/myProfile";
 
@@ -65,6 +68,7 @@ export default {
       getTodayUnixTime,
       newActCount,
       newUserCount,
+      logOut,
     };
   },
 };
