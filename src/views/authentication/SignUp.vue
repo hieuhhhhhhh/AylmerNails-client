@@ -9,7 +9,7 @@
           id="phone"
           v-model="phone"
           @input="formatPhone"
-          placeholder="Enter your phone number"
+          placeholder="Enter your phonenumber"
           required
         />
       </div>

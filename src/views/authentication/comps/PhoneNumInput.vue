@@ -6,7 +6,7 @@
       id="phone"
       :value="phone"
       @input="onPhoneInput"
-      placeholder="Enter your phone number"
+      placeholder="North Americam number"
       required
     />
   </div>

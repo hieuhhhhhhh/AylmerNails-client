@@ -143,7 +143,7 @@ export default {
         fetchEmpDetails(this.emp_id),
         fetchEmployeeServices(this.emp_id),
       ]);
-      if (!this.details) return;
+      if (!details) return;
       this.categories = categories;
       this.ESs = ES_ids;
 

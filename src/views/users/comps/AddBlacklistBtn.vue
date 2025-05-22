@@ -15,7 +15,7 @@
           Phone Number
           <input
             type="tel"
-            placeholder="Enter Phone Number"
+            placeholder="North American number"
             v-model="phoneNum"
             @input="onPhoneInput"
             required

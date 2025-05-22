@@ -115,6 +115,7 @@ export default {
       }
     });
 
+    // DEPENDENCIES
     watch(
       () => route.params.page,
       (value) => {
