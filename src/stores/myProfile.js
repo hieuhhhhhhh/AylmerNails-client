@@ -4,15 +4,18 @@ export const useMyProfile = defineStore("myProfile", {
   state: () => ({
     token: null,
     role: null,
+    isFetched: false,
   }),
   actions: {
     setMyProfile({ token, role }) {
       this.token = token;
       this.role = role;
+      this.isFetched = true;
     },
     clearMyProfile() {
       this.token = null;
       this.role = null;
+      this.isFetched = true;
     },
   },
 });

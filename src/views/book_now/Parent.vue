@@ -1,5 +1,6 @@
 <template>
   <div id="layout">
+    <WelcomeModal />
     <div v-show="page == 1 || page == 0">
       <Services
         :getServices="getServices"
@@ -26,11 +27,14 @@
 </template>
 
 <script>
+// lib
 import { ref, watch } from "vue";
+import { onBeforeRouteLeave, useRoute, useRouter } from "vue-router";
+// comps
 import Services from "./comps/Services.vue";
 import SelectTime from "./comps/SelectTime.vue";
 import FinalPreview from "./comps/final_preview/Parent.vue";
-import { onBeforeRouteLeave, useRoute, useRouter } from "vue-router";
+import WelcomeModal from "./comps/WelcomeModal.vue";
 
 export default {
   name: "BookNowParent",
@@ -38,6 +42,7 @@ export default {
     Services,
     SelectTime,
     FinalPreview,
+    WelcomeModal,
   },
   setup() {
     // lib

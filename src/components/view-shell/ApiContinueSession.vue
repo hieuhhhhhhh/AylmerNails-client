@@ -37,6 +37,7 @@ export default {
             role: json.user_role,
           });
         } else {
+          store.clearMyProfile();
           console.log("Failed to use token, message: ", json.message);
         }
       } catch (e) {
