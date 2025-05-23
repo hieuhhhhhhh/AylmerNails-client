@@ -3,20 +3,9 @@
     <div id="background" />
     <div id="window">
       <button @click.prevent="onClose" id="closeBtn" class="redBtn">X</button>
-
       <div id="content">
         <div>Welcome to Online Booking!</div>
-        <label>
-          Phone Number
-          <input type="text" />
-        </label>
-
-        <label>
-          Password
-          <input type="text" />
-        </label>
-
-        <button>Log in</button>
+        <LogInForm :closeModal="onClose" />
         <button>Forgot password</button>
         <button>Create an account</button>
         <button @click="onClose">Book without logging in</button>
@@ -29,6 +18,8 @@
 import { computed, ref } from "vue";
 // pinia
 import { useMyProfile } from "@/stores/myProfile";
+// comps
+import LogInForm from "./LogInForm.vue";
 
 // STATUS
 const isOpen = ref(true);

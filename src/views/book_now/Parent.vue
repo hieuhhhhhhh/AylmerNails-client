@@ -34,7 +34,7 @@ import { onBeforeRouteLeave, useRoute, useRouter } from "vue-router";
 import Services from "./comps/Services.vue";
 import SelectTime from "./comps/SelectTime.vue";
 import FinalPreview from "./comps/final_preview/Parent.vue";
-import WelcomeModal from "./comps/WelcomeModal.vue";
+import WelcomeModal from "./comps/welcome_modal/WelcomeModal.vue";
 
 export default {
   name: "BookNowParent",
