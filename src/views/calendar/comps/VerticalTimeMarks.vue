@@ -21,7 +21,7 @@
 
 <script setup>
 // lib
-import { computed, onMounted, defineProps, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import secsToLength from "../helpers/secsToLength";
 import lengthToSecs from "../helpers/lengthToSecs";
 // comps

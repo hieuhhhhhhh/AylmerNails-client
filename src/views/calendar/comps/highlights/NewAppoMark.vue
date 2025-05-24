@@ -17,7 +17,7 @@
 
 <script setup>
 // lib
-import { defineProps, nextTick, ref, watch } from "vue";
+import { nextTick, ref, watch } from "vue";
 import { computed } from "vue";
 import secsToLength from "../../helpers/secsToLength";
 import secsToHours from "@/lib/secsToHours";

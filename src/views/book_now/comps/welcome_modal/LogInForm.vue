@@ -19,7 +19,6 @@
 
 <script setup>
 import { ref } from "vue";
-import { defineProps } from "vue";
 // apis
 import logIn from "./apis/logIn";
 

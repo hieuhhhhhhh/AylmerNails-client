@@ -19,13 +19,14 @@
           :ref="'textareas'"
           rows="3"
           placeholder="(Optional) Message to technician..."
+          :value="slot.message"
           @input="onTypeMessage(index, $event)"
         ></textarea>
       </div>
     </div>
   </div>
   <div id="duo">
-    <button class="orangeBtn" id="leftBtn" @click="onBack">
+    <button class="orangeBtn" id="leftBtn" @click="onReturn">
       <FontAwesomeIcon :icon="backIcon" /> Back
     </button>
     <button class="greenBtn" id="rightBtn" @click="onSubmit">
@@ -34,7 +35,7 @@
   </div>
 </template>
 
-<script>
+<script setup>
 // icons
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {
@@ -43,6 +44,7 @@ import {
   faClock,
 } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-regular-svg-icons";
+
 // lib
 import unixToReadable from "@/lib/unixToReadable";
 import unixTimeToReminder from "@/lib/unixTimeToReminder";
@@ -51,53 +53,49 @@ import secsToHours from "@/lib/secsToHours";
 // apis
 import submitAppoChain from "../../apis/submitAppoChain";
 
-export default {
-  name: "FinalPreview",
-  props: {
-    chain: Object,
-    date: Number,
-    onInputMessage: Function,
-    onReturn: Function,
-  },
-  components: {
-    FontAwesomeIcon,
-  },
-  data() {
-    return {
-      // icons
-      backIcon: faLeftLong,
-      continueIcon: faCheck,
-      faClock,
-      faUser,
-    };
-  },
-  methods: {
-    onBack() {
-      this.onReturn();
-    },
-    onTypeMessage(index, event) {
-      const value = event.target.value;
-      if (!value.length) return;
-      this.onInputMessage(index, value);
-      this.autoResize(index);
-    },
-    async onSubmit() {
-      const res = await submitAppoChain(this.chain, this.date);
-      console.log(res);
-    },
-    autoResize(index) {
-      const textarea = this.$refs.textareas?.[index];
-      if (textarea) {
-        textarea.style.height = "auto";
-        textarea.style.height = textarea.scrollHeight + 2 + "px"; // grow
-      }
-    },
-    unixToReadable,
-    unixTimeToReminder,
-    secsToHours,
-  },
-};
+// props
+const props = defineProps({
+  chain: Object,
+  date: Number,
+  onInputMessage: Function,
+  onReturn: Function,
+});
+
+// refs
+import { ref } from "vue";
+const textareas = ref([]);
+
+// icons
+const backIcon = faLeftLong;
+const continueIcon = faCheck;
+
+// HANDLERS
+
+function onTypeMessage(index, event) {
+  const value = event.target.value;
+  if (!value.length) return;
+  props.onInputMessage(index, value);
+  autoResize(index);
+}
+
+async function onSubmit() {
+  const res = await submitAppoChain(props.chain, props.date);
+  console.log(res);
+}
+
+function autoResize(index) {
+  const textarea = textareas.value?.[index];
+  if (textarea) {
+    textarea.style.height = "auto";
+    textarea.style.height = textarea.scrollHeight + 2 + "px";
+  }
+}
 </script>
+
+<script>
+export default { name: "FinalPreview" };
+</script>
+
 <style scoped>
 #duo {
   margin-top: 15px;

@@ -43,7 +43,10 @@
     "parserOptions": {
       "parser": "@babel/eslint-parser"
     },
-    "rules": {}
+    "rules": {},
+    "globals": {
+      "defineProps": "readonly"
+    }
   },
   "browserslist": [
     "> 1%",
