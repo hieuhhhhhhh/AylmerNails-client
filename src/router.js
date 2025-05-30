@@ -2,7 +2,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import Menu from "./views/Menu.vue";
 import NotFound from "./views/NotFound.vue";
-import SignUp from "./views/authentication/SignUp.vue";
+import SignUp from "./views/authentication/sign_up/SignUp.vue";
 import LogIn from "./views/authentication/LogIn.vue";
 import Refresh from "./components/Refresh.vue";
 import Draft from "./templates/Draft.vue";
