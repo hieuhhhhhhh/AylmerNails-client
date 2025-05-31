@@ -12,7 +12,7 @@
         <input type="text" v-model="password" />
       </label>
     </div>
-
+    <div>{{ msg }}</div>
     <button>Sign up</button>
   </form>
 </template>

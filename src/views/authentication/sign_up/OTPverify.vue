@@ -3,7 +3,7 @@
     <div>
       <input type="text" v-model="code" placeholder="Enter Code" />
     </div>
-
+    <div>{{ msg }}</div>
     <button>Verify</button>
   </form>
 </template>
@@ -29,7 +29,7 @@ const router = useRouter();
 async function onSubmit() {
   const message = await signUp(
     props.codeId,
-    code,
+    code.value,
     props.phoneNum,
     props.password
   );
