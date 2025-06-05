@@ -1,16 +1,31 @@
 <template>
   <form @submit.prevent="onSubmit">
     <div>
-      <label>
-        Phone Number
-        <input type="tel" v-model="phoneNum" />
-      </label>
+      <input
+        type="text"
+        v-model="firstName"
+        placeholder="First Name"
+        required
+      />
     </div>
     <div>
-      <label>
-        Password
-        <input type="text" v-model="password" />
-      </label>
+      <input type="text" v-model="lastName" placeholder="Last Name" required />
+    </div>
+    <div>
+      <input
+        type="tel"
+        v-model="phoneNum"
+        placeholder="Phone Number"
+        required
+      />
+    </div>
+    <div>
+      <input
+        type="text"
+        v-model="password"
+        placeholder="New Password"
+        required
+      />
     </div>
     <div>{{ msg }}</div>
     <button>Sign up</button>
@@ -30,12 +45,19 @@ const props = defineProps({
 // PAYLOAD
 const phoneNum = ref("");
 const password = ref("");
+const firstName = ref("");
+const lastName = ref("");
+
 // OUTPUT
 const msg = ref("");
 
 // APIS
 async function onSubmit() {
-  const { codeId, message } = await requestSignUp(phoneNum.value);
+  const { codeId, message } = await requestSignUp(
+    phoneNum.value,
+    firstName.value,
+    lastName.value
+  );
 
   //   if fail
   if (!codeId) {
@@ -44,7 +66,13 @@ async function onSubmit() {
   }
 
   // if succesful
-  props.onNext(codeId, phoneNum.value, password.value);
+  props.onNext(
+    codeId,
+    phoneNum.value,
+    password.value,
+    firstName.value,
+    lastName.value
+  );
 }
 </script>
 

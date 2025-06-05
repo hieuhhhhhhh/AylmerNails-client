@@ -1,7 +1,7 @@
 <template>
   <form @submit.prevent="onSubmit">
     <div>
-      <input type="text" v-model="code" placeholder="Enter Code" />
+      <input type="text" v-model="code" placeholder="Verification Code" />
     </div>
     <div>{{ msg }}</div>
     <button>Verify</button>
@@ -18,6 +18,8 @@ const props = defineProps({
   codeId: Number,
   phoneNum: String,
   password: String,
+  firstName: String,
+  lastName: String,
 });
 
 // payload
@@ -31,12 +33,15 @@ async function onSubmit() {
     props.codeId,
     code.value,
     props.phoneNum,
-    props.password
+    props.password,
+    props.firstName,
+    props.lastName
   );
 
   //   if fail
   if (message) {
     msg.value = message;
+    code.value = "";
     return;
   }
 

@@ -47,7 +47,7 @@
               >
                 {{ cate.name }}
               </option>
-              <option :value="'null'">*empty</option>
+              <option :value="'null'">none</option>
             </select>
           </td>
         </tr>

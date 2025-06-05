@@ -1,6 +1,6 @@
 import { parsePhoneNumberFromString } from "libphonenumber-js";
 
-export default async function requestSignUp(phoneNum) {
+export default async function requestSignUp(phoneNum, firstName, lastName) {
   try {
     // parse phone number to E.164
     phoneNum = parsePhoneNumberFromString(phoneNum, "CA").number; // E.164 format
@@ -15,7 +15,11 @@ export default async function requestSignUp(phoneNum) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ phone_num: phoneNum }),
+      body: JSON.stringify({
+        phone_num: phoneNum,
+        first_name: firstName,
+        last_name: lastName,
+      }),
     });
 
     // fetch json return message
@@ -27,6 +31,6 @@ export default async function requestSignUp(phoneNum) {
     return { codeId, message };
   } catch (e) {
     console.error("Unexpected Error: ", e);
-    return;
+    return { message: "Unexpected Error" };
   }
 }

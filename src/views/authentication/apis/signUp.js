@@ -1,6 +1,13 @@
 import logIn from "@/views/book_now/comps/welcome_modal/apis/logIn";
 
-export default async function signUp(codeId, code, phoneNum, password) {
+export default async function signUp(
+  codeId,
+  code,
+  phoneNum,
+  password,
+  firstName,
+  lastName
+) {
   try {
     // get app path
     const baseURL = process.env.VUE_APP_BASE_URL;
@@ -12,7 +19,13 @@ export default async function signUp(codeId, code, phoneNum, password) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ code_id: codeId, code, password }),
+      body: JSON.stringify({
+        code_id: codeId,
+        code,
+        password,
+        first_name: firstName,
+        last_name: lastName,
+      }),
     });
 
     // read status and process response

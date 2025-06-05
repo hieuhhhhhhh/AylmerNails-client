@@ -34,7 +34,7 @@
         </tr>
 
         <tr>
-          <th>Ideal Length:<br />(minutes)</th>
+          <th>Favorite Length:<br />(minutes)</th>
           <td id="flexBox">
             <input
               type="number"
@@ -47,7 +47,7 @@
         </tr>
         <tr>
           <th>
-            Another Ideal Length:<br />
+            Second Favorite Length:<br />
             (Optional)
           </th>
           <td id="flexBox">

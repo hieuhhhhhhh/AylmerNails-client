@@ -3,15 +3,19 @@ import { parsePhoneNumberFromString } from "libphonenumber-js";
 
 export default async function logIn(phoneNum, password) {
   try {
-    // parse phone number to E.164
-    phoneNum = parsePhoneNumberFromString(phoneNum, "CA").number; // E.164 format
-    console.log("phoneNum: ", phoneNum);
+    try {
+      // parse phone number to E.164
+      phoneNum = parsePhoneNumberFromString(phoneNum, "CA").number; // E.164 format
+      console.log("phoneNum: ", phoneNum);
+    } catch (e) {
+      throw new Error("Invalid Phone Number");
+    }
 
     // get app path
     const baseURL = process.env.VUE_APP_BASE_URL;
 
     // start requesting server
-    const res = await fetch(`${baseURL}/api/authentication/request_log_in`, {
+    const res = await fetch(`${baseURL}/api/authentication/log_in`, {
       method: "POST",
       credentials: "include",
       headers: {
@@ -39,8 +43,10 @@ export default async function logIn(phoneNum, password) {
       return true;
     } else {
       console.log("Failed to log in, message: ", json.message);
+      return { message: json.message };
     }
   } catch (e) {
     console.error("Unexpected Error: ", e);
+    return { message: e.message };
   }
 }

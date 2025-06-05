@@ -1,59 +1,51 @@
-// a log in page allow user to input phone num and password with a submit button
-
 <template>
-  <div id="app">
-    <h1>Welcome to Log In!</h1>
-    <form @submit.prevent="onSubmit">
-      <!-- prompt user phone number -->
-      <PhoneNumInput
-        :phone="phone"
-        :setPhone="
-          (input) => {
-            this.phone = input;
-          }
-        "
-      />
+  <form @submit.prevent="onSubmit">
+    <div>
+      <label>
+        Phone Number
+        <input type="tel" v-model="phoneNum" />
+      </label>
+    </div>
+    <div>
+      <label>
+        Password
+        <input type="text" v-model="password" />
+      </label>
+    </div>
+    <div>{{ msg }}</div>
 
-      <!-- prompt user password -->
-      <PasswordInput
-        :password="password"
-        :setPassword="
-          (input) => {
-            this.password = input;
-          }
-        "
-      />
-
-      <!-- take phone num an password and call api -->
-      <LoginSubmitter
-        ref="LoginSubmitter"
-        :phone="phone"
-        :password="password"
-      />
-
-      <button type="submit">Log In</button>
-    </form>
-  </div>
+    <button>Log in</button>
+  </form>
 </template>
 
-<script>
-import LoginSubmitter from "./apis/LoginSubmitter.vue";
-import PhoneNumInput from "./comps/PhoneNumInput.vue";
-import PasswordInput from "./comps/PasswordInput.vue";
+<script setup>
+import { ref } from "vue";
+// apis
+import logIn from "./apis/logIn";
+import { useRouter } from "vue-router";
 
-export default {
-  components: { LoginSubmitter, PhoneNumInput, PasswordInput },
-  data() {
-    return {
-      phone: "",
-      password: "",
-    };
-  },
-  methods: {
-    onSubmit() {
-      // Call printToConsole method of LoginSubmitter component via ref
-      this.$refs.LoginSubmitter.submitCredentials();
-    },
-  },
-};
+// RESOURCES
+const router = useRouter();
+// PAYLOAD
+const phoneNum = ref("");
+const password = ref("");
+const msg = ref("");
+
+// APIS
+async function onSubmit() {
+  const { message } = await logIn(phoneNum.value, password.value);
+  if (message) {
+    msg.value = message;
+    return;
+  }
+
+  // if succesful
+  router.push("/");
+}
+</script>
+
+
+
+<script>
+export default {};
 </script>
