@@ -1,11 +1,13 @@
-// src/router.js
 import { createRouter, createWebHistory } from "vue-router";
+
 import Menu from "./views/Menu.vue";
 import NotFound from "./views/NotFound.vue";
-import SignUp from "./views/authentication/sign_up/SignUp.vue";
-import LogIn from "./views/authentication/LogIn.vue";
-import Refresh from "./components/Refresh.vue";
 import Draft from "./templates/Draft.vue";
+import Refresh from "./components/Refresh.vue";
+// authentication
+import SignUp from "./views/authentication/sign_up/SignUp.vue";
+import ForgotPassword from "./views/authentication/forgot_password/ForgotPassword.vue";
+import LogIn from "./views/authentication/LogIn.vue";
 // services
 import ServicesLayout from "./views/services/Layout.vue";
 import Services from "./views/services/Services.vue";
@@ -110,6 +112,10 @@ const routes = [
   {
     path: "/signup",
     component: SignUp,
+  },
+  {
+    path: "/forgot_password",
+    component: ForgotPassword,
   },
   {
     path: "/login",

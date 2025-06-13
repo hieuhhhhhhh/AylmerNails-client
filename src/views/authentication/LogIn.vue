@@ -9,13 +9,14 @@
     <div>
       <label>
         Password
-        <input type="text" v-model="password" />
+        <input type="password" v-model="password" />
       </label>
     </div>
     <div>{{ msg }}</div>
 
     <button>Log in</button>
   </form>
+  <div><router-link to="/forgot_password">Forgot Password</router-link></div>
 </template>
 
 <script setup>
@@ -36,6 +37,7 @@ async function onSubmit() {
   const { message } = await logIn(phoneNum.value, password.value);
   if (message) {
     msg.value = message;
+    password.value = "";
     return;
   }
 

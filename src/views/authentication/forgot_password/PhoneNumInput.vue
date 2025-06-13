@@ -2,17 +2,6 @@
   <form @submit.prevent="onSubmit">
     <div>
       <input
-        type="text"
-        v-model="firstName"
-        placeholder="First Name"
-        required
-      />
-    </div>
-    <div>
-      <input type="text" v-model="lastName" placeholder="Last Name" required />
-    </div>
-    <div>
-      <input
         type="tel"
         v-model="phoneNum"
         placeholder="Phone Number"
@@ -28,14 +17,14 @@
       />
     </div>
     <div>{{ msg }}</div>
-    <button>Sign up</button>
+    <button>Renew Password</button>
   </form>
 </template>
 
 <script setup>
 import { ref } from "vue";
 // apis
-import requestSignUp from "../apis/requestSignUp";
+import requestForgotPW from "../apis/requestForgotPW";
 
 // PROPS
 const props = defineProps({
@@ -45,19 +34,13 @@ const props = defineProps({
 // PAYLOAD
 const phoneNum = ref("");
 const password = ref("");
-const firstName = ref("");
-const lastName = ref("");
 
 // OUTPUT
 const msg = ref("");
 
 // APIS
 async function onSubmit() {
-  const { codeId, message } = await requestSignUp(
-    phoneNum.value,
-    firstName.value,
-    lastName.value
-  );
+  const { codeId, message } = await requestForgotPW(phoneNum.value);
 
   //   if fail
   if (!codeId) {
@@ -66,17 +49,8 @@ async function onSubmit() {
   }
 
   // if succesful
-  props.onNext(
-    codeId,
-    phoneNum.value,
-    password.value,
-    firstName.value,
-    lastName.value
-  );
+  props.onNext(codeId, phoneNum.value, password.value);
 }
 </script>
 
 
-<script>
-export default { name: "Credentials-" };
-</script>

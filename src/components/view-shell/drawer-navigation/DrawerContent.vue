@@ -20,7 +20,7 @@
     </div>
     <div><router-link to="/signup">Sign Up</router-link></div>
     <div><router-link to="/login">Log In</router-link></div>
-    <div><router-link to="" @click="logOut">Log Out</router-link></div>
+    <div><router-link to="/" @click="logOut">Log Out</router-link></div>
     <div><router-link to="/services">Services</router-link></div>
     <div><router-link to="/employees">Employees</router-link></div>
     <div>
