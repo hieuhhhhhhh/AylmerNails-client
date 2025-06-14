@@ -32,7 +32,7 @@ export default {
     const MPstore = useMyProfile();
     const FRstore = useFooterReact();
     const role = computed(() => MPstore.role);
-    const validRoles = ["admin", "developer"];
+    const validRoles = ["admin", "owner"];
     const isRoleValid = computed(() => validRoles.includes(role.value));
     // resources
     const details = ref(null);

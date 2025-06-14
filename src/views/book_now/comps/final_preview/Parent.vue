@@ -51,7 +51,7 @@ import unixTimeToReminder from "@/lib/unixTimeToReminder";
 import secsToHours from "@/lib/secsToHours";
 
 // apis
-import submitAppoChain from "../../apis/submitAppoChain";
+import clientAddAppo from "../../apis/clientAddAppo";
 
 // props
 const props = defineProps({
@@ -79,7 +79,7 @@ function onTypeMessage(index, event) {
 }
 
 async function onSubmit() {
-  const res = await submitAppoChain(props.chain, props.date);
+  const res = await clientAddAppo(props.chain, props.date);
   console.log(res);
 }
 

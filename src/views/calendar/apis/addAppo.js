@@ -17,27 +17,24 @@ export default async function addAppo(
     const baseURL = process.env.VUE_APP_BASE_URL;
 
     // start requesting server
-    const res = await fetch(
-      `${baseURL}/api/appointments/add_appointment_manually`,
-      {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          phone_num: phoneNum,
-          name: contactName,
-          service_id: serviceId,
-          AOSOs,
-          emp_id: empId,
-          date,
-          start,
-          end: start + duration,
-          note,
-        }),
-      }
-    );
+    const res = await fetch(`${baseURL}/api/appointments/admin_add_appo`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        phone_num: phoneNum,
+        name: contactName,
+        service_id: serviceId,
+        AOSOs,
+        emp_id: empId,
+        date,
+        start,
+        end: start + duration,
+        note,
+      }),
+    });
 
     // fetch json
     const json = await res.json();

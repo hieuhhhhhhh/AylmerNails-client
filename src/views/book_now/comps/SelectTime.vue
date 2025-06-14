@@ -1,5 +1,5 @@
 <template>
-  <div id="note">Step 3: Select a time</div>
+  <div id="note">Step 3: Select a date and time</div>
   <div class="flexBox">
     <div class="top">
       <button class="dayBtn" @click="onMoveDate(-1)">
@@ -9,6 +9,7 @@
         <input
           id="date"
           type="date"
+          ref="dateInput"
           :value="date"
           @change="onInputDate($event.target.value)"
         />
@@ -25,6 +26,9 @@
     </div>
   </div>
   <div id="openingBox">
+    <div v-if="fetched && !sortedOpenings.length">
+      No open slots on this date🥲
+    </div>
     <div v-for="(opening, index) in sortedOpenings" :key="index">
       <button class="openings" @click="onChooseOpening(opening)">
         <div>{{ formatTime(opening.start) }}</div>
@@ -76,6 +80,8 @@ export default {
       continueIcon: faRightLong,
       faPlus,
       faMinus,
+      // status
+      fetched: false,
       // resources
       msg: "",
       chains: [],
@@ -87,6 +93,9 @@ export default {
       unixDate: null,
     };
   },
+  mounted() {
+    this.onMoveDate(1);
+  },
   methods: {
     onBack() {
       this.onReturn();
@@ -97,7 +106,7 @@ export default {
         return;
       }
       if (!this.chain) {
-        this.msg = "Please select a time stamp for your appointment!";
+        this.msg = "You haven't chosen a time slot for your appointment";
         return;
       }
       this.onSelectChain(this.chain, this.unixDate);
@@ -131,6 +140,9 @@ export default {
       this.unixDate = null;
     },
     async onInputDate(value) {
+      // update status
+      this.fetched = false;
+
       // reset data
       this.resetData();
       // if user select day in the past do nothing
@@ -158,6 +170,8 @@ export default {
       await this.onInputDate(newDate);
     },
     async fetchData() {
+      if (!this.services) return;
+
       const res = await fetchAvailability(this.unixDate, this.services);
 
       // if no result -> error occured -> do nothing
@@ -189,6 +203,9 @@ export default {
       // convert to array
       const newOpenings = Object.values(this.openings);
       this.sortedOpenings = newOpenings.sort((a, b) => a.start - b.start);
+
+      // update status
+      this.fetched = true;
     },
     unixTimeToReminder,
     unixToReadable,
@@ -259,5 +276,6 @@ input[type="date"] {
 }
 #msg {
   text-align: center;
+  color: red;
 }
 </style>

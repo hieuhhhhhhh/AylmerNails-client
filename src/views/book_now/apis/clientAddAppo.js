@@ -1,6 +1,6 @@
 import notifyReqError from "@/stores/notifyReqError";
 
-export default async function submitAppoChain(chain, date) {
+export default async function clientAddAppo(chain, date) {
   try {
     // count of presentation of every employee in the chain
     const newSlots = chainToNewSlots(chain);
@@ -11,7 +11,7 @@ export default async function submitAppoChain(chain, date) {
     const baseURL = process.env.VUE_APP_BASE_URL;
 
     // start requesting server
-    const res = await fetch(`${baseURL}/api/appointments/add_appo_by_chain`, {
+    const res = await fetch(`${baseURL}/api/appointments/client_add_appo`, {
       method: "POST",
       credentials: "include",
       headers: {

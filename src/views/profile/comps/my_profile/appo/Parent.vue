@@ -53,7 +53,7 @@ export default {
     // pinia
     const MPstore = useMyProfile();
     const role = computed(() => MPstore.role);
-    const validRoles = ["admin", "developer"];
+    const validRoles = ["admin", "owner"];
     const isRoleValid = computed(() => validRoles.includes(role.value));
 
     // INPUT
