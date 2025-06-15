@@ -20,6 +20,7 @@ export function connectSocket() {
   if (!validRoles.includes(role)) return;
 
   // start connecting
+  console.log("start connecting");
   const baseURL = process.env.VUE_APP_BASE_URL;
   socket = io(baseURL);
 

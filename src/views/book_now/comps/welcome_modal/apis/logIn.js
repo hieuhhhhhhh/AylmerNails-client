@@ -11,7 +11,7 @@ export default async function logIn(phoneNum, password) {
     const baseURL = process.env.VUE_APP_BASE_URL;
 
     // start requesting server
-    const res = await fetch(`${baseURL}/api/authentication/request_log_in`, {
+    const res = await fetch(`${baseURL}/api/authentication/log_in`, {
       method: "POST",
       credentials: "include",
       headers: {

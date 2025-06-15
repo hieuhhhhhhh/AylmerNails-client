@@ -1,6 +1,6 @@
 <template>
   <div id="flexBox">
-    <div id="note">Step 4: review your submission</div>
+    <div id="note">Step 4: Review your selection</div>
     <div id="date">
       {{ unixToReadable(date) }} ({{ unixTimeToReminder(date) }})
     </div>
@@ -30,7 +30,7 @@
       <FontAwesomeIcon :icon="backIcon" /> Back
     </button>
     <button class="greenBtn" id="rightBtn" @click="onSubmit">
-      Finish <FontAwesomeIcon :icon="continueIcon" />
+      Submit <FontAwesomeIcon :icon="continueIcon" />
     </button>
   </div>
 </template>
@@ -106,11 +106,12 @@ export default { name: "FinalPreview" };
 }
 
 #rightBtn {
-  padding: 10px;
-  font-size: 25px;
+  padding: 0px 20px;
+  font-size: 20px;
 }
+
 #leftBtn {
-  font-size: 23px;
+  font-size: 20px;
   border-top-left-radius: 30px;
   border-bottom-left-radius: 30px;
 }
@@ -126,6 +127,7 @@ export default { name: "FinalPreview" };
 }
 #date {
   font-size: 23px;
+  margin: 8px;
 }
 .slot {
   box-shadow: 0 0 5px var(--shadow-color);

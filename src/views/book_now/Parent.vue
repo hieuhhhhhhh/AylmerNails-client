@@ -10,6 +10,7 @@
     </div>
     <div v-show="page == 2" :key="page2trigger">
       <SelectTime
+        :isReady="page == 2"
         :services="services"
         :onSelectChain="onSelectChain"
         :onReturn="onReturn"

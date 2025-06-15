@@ -17,7 +17,7 @@
 
     <div id="duo">
       <button class="blueBtn" id="rightBtn" @click="onSubmit">
-        Next <FontAwesomeIcon :icon="continueIcon" />
+        Continue <FontAwesomeIcon :icon="continueIcon" />
       </button>
     </div>
   </div>
@@ -105,6 +105,10 @@ export default {
     };
 
     const onSubmit = () => {
+      if (!Object.keys(services.value).length) {
+        isSelecting.value = true;
+        return;
+      }
       props.onNavigateNext();
     };
 
@@ -163,8 +167,8 @@ export default {
   color: rgb(184, 121, 3);
 }
 #rightBtn {
-  padding: 10px;
-  font-size: 25px;
+  padding-inline: 15px;
+  font-size: 20px;
   border-top-right-radius: 30px;
   border-bottom-right-radius: 30px;
 }

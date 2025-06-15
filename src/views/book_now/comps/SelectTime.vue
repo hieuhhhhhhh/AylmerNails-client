@@ -1,5 +1,5 @@
 <template>
-  <div id="note">Step 3: Select a date and time</div>
+  <div id="note">Step 3: Select date and time</div>
   <div class="flexBox">
     <div class="top">
       <button class="dayBtn" @click="onMoveDate(-1)">
@@ -26,6 +26,7 @@
     </div>
   </div>
   <div id="openingBox">
+    <div v-if="!date">Input a date to continue</div>
     <div v-if="fetched && !sortedOpenings.length">
       No open slots on this date🥲
     </div>
@@ -41,7 +42,7 @@
       <FontAwesomeIcon :icon="backIcon" /> Back
     </button>
     <button class="blueBtn" id="rightBtn" @click="onContinue">
-      Next <FontAwesomeIcon :icon="continueIcon" />
+      Continue <FontAwesomeIcon :icon="continueIcon" />
     </button>
   </div>
 </template>
@@ -65,6 +66,7 @@ import fetchAvailability from "../apis/fetchAvailability";
 
 export default {
   props: {
+    isReady: Boolean,
     services: Object,
     onSelectChain: Function,
     onReturn: Function,
@@ -93,16 +95,14 @@ export default {
       unixDate: null,
     };
   },
-  mounted() {
-    this.onMoveDate(1);
-  },
+
   methods: {
     onBack() {
       this.onReturn();
     },
     onContinue() {
       if (!this.unixDate) {
-        this.msg = "Please select a date and time";
+        this.msg = "You haven't chosen a date";
         return;
       }
       if (!this.chain) {
@@ -147,7 +147,6 @@ export default {
       this.resetData();
       // if user select day in the past do nothing
       if (this.isInThePast(value)) {
-        this.msg = "Please select a valid date";
         return;
       }
 
@@ -210,6 +209,11 @@ export default {
     unixTimeToReminder,
     unixToReadable,
   },
+  watch: {
+    isReady(newVal) {
+      if (newVal && !this.date) this.onMoveDate(1);
+    },
+  },
 };
 </script>
 <style scoped>
@@ -221,13 +225,14 @@ export default {
 }
 
 #rightBtn {
-  padding: 10px;
-  font-size: 25px;
+  padding-inline: 15px;
+  font-size: 20px;
   border-top-right-radius: 30px;
   border-bottom-right-radius: 30px;
 }
+
 #leftBtn {
-  font-size: 23px;
+  font-size: 20px;
   border-top-left-radius: 30px;
   border-bottom-left-radius: 30px;
 }
@@ -269,9 +274,9 @@ input[type="date"] {
   gap: 10px;
   justify-content: center;
   flex-wrap: wrap;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  margin-top: 10px;
+  padding: 20px 0px;
+  margin: 10px 0px;
+
   background: var(--background-i2);
 }
 #msg {
