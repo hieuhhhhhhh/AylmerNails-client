@@ -100,9 +100,6 @@ function autoResize(index) {
 }
 </script>
 
-<script>
-export default { name: "FinalPreview" };
-</script>
 
 <style scoped>
 #duo {

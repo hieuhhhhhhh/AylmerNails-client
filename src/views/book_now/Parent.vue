@@ -24,6 +24,9 @@
         :onReturn="onReturn"
       />
     </div>
+    <div v-show="page == 4">
+      <BookingConfirmation :chain="chain" :date="date" />
+    </div>
   </div>
 </template>
 
@@ -32,9 +35,10 @@
 import { ref, watch } from "vue";
 import { onBeforeRouteLeave, useRoute, useRouter } from "vue-router";
 // comps
-import Services from "./comps/Services.vue";
-import SelectTime from "./comps/SelectTime.vue";
+import Services from "./comps/services/Services.vue";
+import SelectTime from "./comps/time_slots/SelectTime.vue";
 import FinalPreview from "./comps/final_preview/Parent.vue";
+import BookingConfirmation from "./comps/confirmation/BookingConfirmation.vue";
 import WelcomeModal from "./comps/welcome_modal/WelcomeModal.vue";
 
 export default {

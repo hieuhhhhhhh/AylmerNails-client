@@ -34,7 +34,7 @@
   </div>
 </template>
 <script>
-import fetchAOSs from "../apis/fetchAOSs";
+import fetchAOSs from "../../apis/fetchAOSs";
 
 export default {
   props: {
