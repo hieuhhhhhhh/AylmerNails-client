@@ -27,11 +27,11 @@ export default {
     const NCstore = useNotificationCount();
     const notiCount = computed(
       () =>
-        NCstore.newAppoCount +
-        NCstore.newCanceledAppoCount +
-        NCstore.newSavedCount +
-        NCstore.newUserCount +
-        NCstore.newBlacklistCount
+        NCstore.newAppoCount > 0 ||
+        NCstore.newCanceledAppoCount > 0 ||
+        NCstore.newSavedCount > 0 ||
+        NCstore.newUserCount > 0 ||
+        NCstore.newBlacklistCount > 0
     );
     return {
       notiCount,

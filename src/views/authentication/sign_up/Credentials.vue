@@ -24,6 +24,7 @@
         type="password"
         v-model="password"
         placeholder="New Password"
+        minlength="6"
         required
       />
     </div>
