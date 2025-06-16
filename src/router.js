@@ -6,6 +6,8 @@ import Draft from "./templates/Draft.vue";
 import Refresh from "./components/Refresh.vue";
 // authentication
 import SignUp from "./views/authentication/sign_up/SignUp.vue";
+import CreateAccount from "./views/authentication/create_account/CreateAccount.vue";
+
 import ForgotPassword from "./views/authentication/forgot_password/ForgotPassword.vue";
 import LogIn from "./views/authentication/LogIn.vue";
 // services
@@ -113,6 +115,11 @@ const routes = [
     path: "/signup",
     component: SignUp,
   },
+  {
+    path: "/create_account",
+    component: CreateAccount,
+  },
+
   {
     path: "/forgot_password",
     component: ForgotPassword,

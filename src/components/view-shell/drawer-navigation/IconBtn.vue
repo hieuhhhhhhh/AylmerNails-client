@@ -1,14 +1,18 @@
 <template>
   <div id="IconBtn">
     <div id="icon">
+      <div v-if="notiCount > 0" id="redDot" />
       <FontAwesomeIcon :icon="menuIcon" />
     </div>
   </div>
 </template>
 
 <script>
+import { computed } from "vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
+// pinia
+import { useNotificationCount } from "@/stores/myProfile";
 
 export default {
   components: {
@@ -17,6 +21,20 @@ export default {
   data() {
     return {
       menuIcon: faBars, // Assign the correct icon to a variable
+    };
+  },
+  setup() {
+    const NCstore = useNotificationCount();
+    const notiCount = computed(
+      () =>
+        NCstore.newAppoCount +
+        NCstore.newCanceledAppoCount +
+        NCstore.newSavedCount +
+        NCstore.newUserCount +
+        NCstore.newBlacklistCount
+    );
+    return {
+      notiCount,
     };
   },
 };
@@ -38,6 +56,7 @@ export default {
 }
 
 #icon {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -50,5 +69,15 @@ export default {
 }
 #icon:hover {
   background: var(--hover);
+}
+#redDot {
+  position: absolute;
+  background: red;
+  width: 8px;
+  height: 8px;
+  top: 14%;
+  right: 7%;
+  border-radius: 50%;
+  border: 2px solid var(--background-i2);
 }
 </style>
