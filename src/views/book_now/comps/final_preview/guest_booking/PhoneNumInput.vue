@@ -8,16 +8,8 @@
         required
       />
     </div>
-    <div>
-      <input
-        type="password"
-        v-model="password"
-        placeholder="New Password"
-        required
-      />
-    </div>
     <div>{{ msg }}</div>
-    <button>Renew Password</button>
+    <button>Send Verification Code</button>
   </form>
 </template>
 
@@ -33,7 +25,6 @@ const props = defineProps({
 
 // PAYLOAD
 const phoneNum = ref("");
-const password = ref("");
 
 // OUTPUT
 const msg = ref("");
@@ -49,7 +40,7 @@ async function onSubmit() {
   }
 
   // if succesful
-  props.onNext(codeId, phoneNum.value, password.value);
+  props.onNext(codeId, phoneNum.value);
 }
 </script>
 

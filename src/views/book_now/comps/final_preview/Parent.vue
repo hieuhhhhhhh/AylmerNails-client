@@ -33,7 +33,13 @@
       Submit <FontAwesomeIcon :icon="continueIcon" />
     </button>
   </div>
-  <GuestBooking v-if="isGuestBooking" />
+  <GuestBooking
+    :chain="props.chain"
+    :date="props.date"
+    :onNavigateNext="onNavigateNext"
+    :onClose="() => (isGuestBooking = false)"
+    v-if="isGuestBooking"
+  />
 </template>
 
 <script setup>
@@ -63,6 +69,7 @@ const props = defineProps({
   chain: Object,
   date: Number,
   onInputMessage: Function,
+  onNavigateNext: Function,
   onReturn: Function,
 });
 
@@ -92,7 +99,7 @@ async function onSubmit() {
     return;
   }
   const res = await clientAddAppo(props.chain, props.date);
-  console.log(res);
+  if (res) props.onNavigateNext();
 }
 
 function autoResize(index) {

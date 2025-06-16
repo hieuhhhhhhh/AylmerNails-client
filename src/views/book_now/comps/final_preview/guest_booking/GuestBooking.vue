@@ -1,10 +1,20 @@
 <template>
   <div id="parent">
     <div id="background" />
+
     <div id="window">
-      <div v-if="page === 1"><PhoneNumInput :onNext="onRequestCode" /></div>
-      <div v-if="page === 2">
-        <OTPverify :codeId="codeId" :phoneNum="phoneNum" :password="password" />
+      <button @click="props.onClose()" id="closeBtn" class="redBtn">X</button>
+      <div id="content">
+        <div v-if="page === 1"><PhoneNumInput :onNext="onRequestCode" /></div>
+        <div v-if="page === 2">
+          <OTPverify
+            :codeId="codeId"
+            :phoneNum="phoneNum"
+            :chain="props.chain"
+            :date="props.date"
+            :onNavigateNext="onNavigateNext"
+          />
+        </div>
       </div>
     </div>
   </div>
@@ -16,18 +26,23 @@ import { ref } from "vue";
 import PhoneNumInput from "./PhoneNumInput.vue";
 import OTPverify from "./OTPverify.vue";
 
+// PARAMS
+const props = defineProps({
+  chain: Object,
+  date: Number,
+  onClose: Function,
+  onNavigateNext: Function,
+});
 // RESOURCES
 const page = ref(1);
 // PAYLOAD
 const codeId = ref();
 const phoneNum = ref("");
-const password = ref("");
 
 // HANDLERS
-function onRequestCode(_codeId, _phoneNum, _password) {
+function onRequestCode(_codeId, _phoneNum) {
   codeId.value = _codeId;
   phoneNum.value = _phoneNum;
-  password.value = _password;
 
   // to next page
   page.value++;
@@ -66,5 +81,19 @@ export default {};
   max-height: 100%;
   background-color: var(--background-i2);
   overflow-y: auto;
+}
+#content {
+  padding: 10px 20px;
+  text-align: center;
+}
+#closeBtn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  aspect-ratio: 1;
+  height: 30px;
+  padding: 0;
+  border-radius: 0;
+  border: none;
 }
 </style>

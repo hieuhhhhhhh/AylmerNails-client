@@ -21,6 +21,7 @@
         :chain="chain"
         :date="date"
         :onInputMessage="onInputMessage"
+        :onNavigateNext="onNavigateNext"
         :onReturn="onReturn"
       />
     </div>

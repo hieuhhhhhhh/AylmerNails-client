@@ -10,28 +10,29 @@
 
 <script setup>
 import { ref } from "vue";
-import { useRouter } from "vue-router";
-import renewPassword from "../../../apis/guestAddAppo";
+// apis
+import guestAddAppo from "../../../apis/guestAddAppo";
 
-// params
+// PARAMS
 const props = defineProps({
   codeId: Number,
   phoneNum: String,
-  password: String,
+  chain: Object,
+  date: Number,
+  onNavigateNext: Function,
 });
 
-// payload
+// PAYLOAD
 const code = ref("");
 const msg = ref("");
-const router = useRouter();
 
 // APIS
 async function onSubmit() {
-  const message = await renewPassword(
+  const message = await guestAddAppo(
     props.codeId,
     code.value,
-    props.phoneNum,
-    props.password
+    props.chain,
+    props.date
   );
 
   //   if fail
@@ -42,6 +43,6 @@ async function onSubmit() {
   }
 
   // if succesful
-  router.push("/");
+  props.onNavigateNext();
 }
 </script>

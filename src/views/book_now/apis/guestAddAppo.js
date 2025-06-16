@@ -11,7 +11,7 @@ export default async function guestAddAppo(otpId, otp, chain, date) {
     const baseURL = process.env.VUE_APP_BASE_URL;
 
     // start requesting server
-    const res = await fetch(`${baseURL}/api/appointments/client_add_appo`, {
+    const res = await fetch(`${baseURL}/api/appointments/guest_add_appo`, {
       method: "POST",
       credentials: "include",
       headers: {
