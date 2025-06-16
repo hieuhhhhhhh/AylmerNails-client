@@ -11,7 +11,7 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import renewPassword from "../apis/renewPassword";
+import renewPassword from "../../../apis/guestAddAppo";
 
 // params
 const props = defineProps({

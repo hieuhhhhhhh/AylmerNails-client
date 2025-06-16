@@ -33,9 +33,11 @@
       Submit <FontAwesomeIcon :icon="continueIcon" />
     </button>
   </div>
+  <GuestBooking v-if="isGuestBooking" />
 </template>
 
 <script setup>
+import { computed, ref } from "vue";
 // icons
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import {
@@ -49,14 +51,12 @@ import { faUser } from "@fortawesome/free-regular-svg-icons";
 import unixToReadable from "@/lib/unixToReadable";
 import unixTimeToReminder from "@/lib/unixTimeToReminder";
 import secsToHours from "@/lib/secsToHours";
-
+// comps
+import GuestBooking from "./guest_booking/GuestBooking.vue";
 // apis
 import clientAddAppo from "../../apis/clientAddAppo";
-
 // pinia
 import { useMyProfile } from "@/stores/myProfile";
-const MPstore = useMyProfile();
-const token = computed(() => MPstore.token);
 
 // props
 const props = defineProps({
@@ -66,16 +66,19 @@ const props = defineProps({
   onReturn: Function,
 });
 
-// refs
-import { ref } from "vue";
-const textareas = ref([]);
-
 // icons
 const backIcon = faLeftLong;
 const continueIcon = faCheck;
 
-// HANDLERS
+// RESOURCES
+const textareas = ref([]);
+const MPstore = useMyProfile();
+const token = computed(() => MPstore.token);
 
+// STATUS
+const isGuestBooking = ref(false);
+
+// HANDLERS
 function onTypeMessage(index, event) {
   const value = event.target.value;
   if (!value.length) return;
@@ -84,11 +87,12 @@ function onTypeMessage(index, event) {
 }
 
 async function onSubmit() {
-  if (token) {
-    const res = await clientAddAppo(props.chain, props.date);
-    console.log(res);
+  if (!token.value) {
+    isGuestBooking.value = true;
     return;
   }
+  const res = await clientAddAppo(props.chain, props.date);
+  console.log(res);
 }
 
 function autoResize(index) {

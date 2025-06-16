@@ -24,7 +24,7 @@
 <script setup>
 import { ref } from "vue";
 // apis
-import requestForgotPW from "../apis/requestForgotPW";
+import requestOTP from "../../../apis/requestOTP";
 
 // PROPS
 const props = defineProps({
@@ -40,7 +40,7 @@ const msg = ref("");
 
 // APIS
 async function onSubmit() {
-  const { codeId, message } = await requestForgotPW(phoneNum.value);
+  const { codeId, message } = await requestOTP(phoneNum.value);
 
   //   if fail
   if (!codeId) {

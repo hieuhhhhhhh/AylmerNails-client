@@ -42,7 +42,7 @@ import { faLeftLong } from "@fortawesome/free-solid-svg-icons";
 // comps
 import Category from "./Category.vue";
 // lib
-import fetchActiveServices from "../apis/fetchActiveServices";
+import fetchActiveServices from "../../apis/fetchActiveServices";
 import SelectAOSOs from "./SelectAOSOs.vue";
 
 export default {

@@ -44,6 +44,13 @@ export const useNotificationCount = defineStore("NotificationCount", {
     setNewBlacklistCount(count) {
       this.newBlacklistCount = count;
     },
+    reset() {
+      this.newAppoCount = 0;
+      this.newCanceledAppoCount = 0;
+      this.newUserCount = 0;
+      this.newSavedCount = 0;
+      this.newBlacklistCount = 0;
+    },
   },
 });
 

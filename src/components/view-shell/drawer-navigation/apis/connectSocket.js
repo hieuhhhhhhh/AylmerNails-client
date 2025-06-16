@@ -29,7 +29,6 @@ export function connectSocket() {
     console.log("Socket connected with id:", socket.id);
   });
 
-  // Log if there's a connection error
   socket.on("connect_error", (err) => {
     console.error("Socket connection error:", err.message);
   });
@@ -121,4 +120,11 @@ export function fetchNewSavedCount() {
 export function fetchNewBlacklistCount() {
   if (!socket) return;
   socket.emit("get_new_blacklist_count", { token });
+}
+
+export function disconnectSocket() {
+  if (socket && socket.connected) {
+    socket.off();
+    socket.disconnect();
+  }
 }

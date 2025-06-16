@@ -45,8 +45,8 @@ import {
 
 import { faUser } from "@fortawesome/free-regular-svg-icons";
 // library
-import fetchServicePreview from "../apis/fetchServicePreview";
-import fetchServiceEmployees from "../apis/fetchSEs";
+import fetchServicePreview from "../../apis/fetchServicePreview";
+import fetchServiceEmployees from "../../apis/fetchSEs";
 
 export default {
   name: "Service-",

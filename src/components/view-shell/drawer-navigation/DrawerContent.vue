@@ -35,7 +35,7 @@
 import { watch, computed } from "vue";
 import getTodayUnixTime from "@/lib/getTodayUnixTime";
 // apis
-import { connectSocket } from "./apis/connectSocket";
+import { connectSocket, disconnectSocket } from "./apis/connectSocket";
 import logOut from "./apis/logOut";
 // pinia
 import { useMyProfile, useNotificationCount } from "@/stores/myProfile";
@@ -58,9 +58,13 @@ export default {
     const MPstore = useMyProfile();
     watch(
       () => MPstore.token,
-      () => {
-        // start connecting
-        connectSocket();
+      (newVal) => {
+        // disconnect last socket
+        disconnectSocket();
+        NCstore.reset();
+
+        // start new connection
+        if (newVal) connectSocket();
       }
     );
 

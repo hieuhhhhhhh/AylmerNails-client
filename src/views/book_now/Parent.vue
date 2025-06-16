@@ -48,6 +48,7 @@ export default {
     SelectTime,
     FinalPreview,
     WelcomeModal,
+    BookingConfirmation,
   },
   setup() {
     // lib

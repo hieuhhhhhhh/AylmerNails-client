@@ -1,6 +1,6 @@
 import notifyReqError from "@/stores/notifyReqError";
 
-export default async function clientAddAppo(chain, date) {
+export default async function guestAddAppo(otpId, otp, chain, date) {
   try {
     // count of presentation of every employee in the chain
     const newSlots = chainToNewSlots(chain);
@@ -18,6 +18,8 @@ export default async function clientAddAppo(chain, date) {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        otp_id: otpId,
+        otp,
         slots: newSlots,
         date: date,
       }),
@@ -32,7 +34,7 @@ export default async function clientAddAppo(chain, date) {
     } else {
       notifyReqError(json.message);
       console.log(
-        "Failed to add appointments as client, message: ",
+        "Failed to add appointments as guest, message: ",
         json.message
       );
     }
