@@ -7,6 +7,7 @@
     Warning: Schedule(s) have {{ scheduleCC }}
     <u>conflicting appointment(s)</u>
   </div>
+  <DeleteBtn v-if="deletable" :empId="emp_id" />
   <form @submit.prevent="onSubmit" v-if="isFetched">
     <div v-if="!isEditing">
       <table>
@@ -88,6 +89,7 @@
 import NA from "@/components/NotAvailable.vue";
 import Category from "./Category.vue";
 import EditEmpInfo from "./EditEmpInfo.vue";
+import DeleteBtn from "./delete_btn/DeleteBtn.vue";
 // icons
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
@@ -100,6 +102,7 @@ import parseUT from "@/lib/parseUT";
 import updateEmpInfo from "../apis/updateEmpInfo";
 import unixToReadable from "@/lib/unixToReadable";
 import parseDate from "@/lib/parseDate";
+import getTodayUnixTime from "@/lib/getTodayUnixTime";
 
 export default {
   components: {
@@ -107,6 +110,7 @@ export default {
     FontAwesomeIcon,
     Category,
     EditEmpInfo,
+    DeleteBtn,
   },
   data() {
     return {
@@ -122,6 +126,7 @@ export default {
       formattedDate: "",
       colorName: "",
       colorCode: null,
+      deletable: false,
       // outcome
       emp_id: null,
       categories: [],
@@ -153,6 +158,9 @@ export default {
       this.colorName = details.colorName;
       this.colorCode = details.colorCode;
       this.last_date = parseUT(details.last_date);
+      if (details.last_date) {
+        this.deletable = details.last_date < getTodayUnixTime();
+      }
       this.formattedDate = unixToReadable(details.last_date);
       this.intervals = details.key_intervals;
       this.intervalPercent = details.interval_percent;
