@@ -12,6 +12,11 @@
         <input type="password" v-model="password" />
       </label>
     </div>
+
+    <label>
+      <input id="check" type="checkbox" v-model="rememberMe" />
+      Remember me next time
+    </label>
     <div>{{ msg }}</div>
 
     <button>Log in</button>
@@ -31,10 +36,15 @@ const router = useRouter();
 const phoneNum = ref("");
 const password = ref("");
 const msg = ref("");
+const rememberMe = ref(false);
 
 // APIS
 async function onSubmit() {
-  const { message } = await logIn(phoneNum.value, password.value);
+  const { message } = await logIn(
+    phoneNum.value,
+    password.value,
+    rememberMe.value
+  );
   if (message) {
     msg.value = message;
     password.value = "";

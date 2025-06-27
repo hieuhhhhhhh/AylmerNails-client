@@ -1,7 +1,7 @@
 import { useMyProfile } from "@/stores/myProfile";
 import { parsePhoneNumberFromString } from "libphonenumber-js";
 
-export default async function logIn(phoneNum, password) {
+export default async function logIn(phoneNum, password, rememberMe) {
   try {
     // parse phone number to E.164
     phoneNum = parsePhoneNumberFromString(phoneNum, "CA").number; // E.164 format
@@ -20,6 +20,7 @@ export default async function logIn(phoneNum, password) {
       body: JSON.stringify({
         phone_num: phoneNum,
         password,
+        remember_me: rememberMe,
       }),
     });
 
@@ -39,8 +40,10 @@ export default async function logIn(phoneNum, password) {
       return true;
     } else {
       console.log("Failed to log in, message: ", json.message);
+      return { message: json.message };
     }
   } catch (e) {
     console.error("Unexpected Error: ", e);
+    return { message: e.message };
   }
 }

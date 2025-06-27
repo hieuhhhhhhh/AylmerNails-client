@@ -1,7 +1,7 @@
 import { useMyProfile } from "@/stores/myProfile";
 import { parsePhoneNumberFromString } from "libphonenumber-js";
 
-export default async function logIn(phoneNum, password) {
+export default async function logIn(phoneNum, password, rememberMe) {
   try {
     try {
       // parse phone number to E.164
@@ -24,6 +24,7 @@ export default async function logIn(phoneNum, password) {
       body: JSON.stringify({
         phone_num: phoneNum,
         password,
+        remember_me: rememberMe,
       }),
     });
 
