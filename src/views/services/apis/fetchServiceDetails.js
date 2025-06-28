@@ -45,6 +45,8 @@ function getServiceDetails(json) {
     duration,
     cate_id,
     cate_name,
+    price,
+    client_can_book,
   ] = service_info;
 
   // fetch durations
@@ -89,6 +91,8 @@ function getServiceDetails(json) {
     AOSs,
     durationCC,
     lastDateCC,
+    price,
+    client_can_book,
   };
 
   console.log("detaills: ", details);

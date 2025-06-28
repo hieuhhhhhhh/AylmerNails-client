@@ -14,6 +14,25 @@
           </td>
         </tr>
         <tr>
+          <th>Price:</th>
+          <td v-if="serviceInfo.price">$ {{ serviceInfo.price }}</td>
+        </tr>
+
+        <tr>
+          <th>
+            Available for <br />
+            online booking:
+          </th>
+          <td>
+            <input
+              id="check"
+              type="checkbox"
+              disabled
+              :checked="serviceInfo.client_can_book"
+            />
+          </td>
+        </tr>
+        <tr>
           <th>Starting From:</th>
           <td>
             <div v-if="isFetched">
@@ -126,5 +145,10 @@ td {
 #description {
   white-space: pre-wrap;
   font-size: 14px;
+}
+#check {
+  transform: scale(2);
+  margin-left: 7px;
+  margin-right: 10px;
 }
 </style>

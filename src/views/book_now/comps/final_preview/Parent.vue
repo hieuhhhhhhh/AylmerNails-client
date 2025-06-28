@@ -1,6 +1,6 @@
 <template>
   <div id="flexBox">
-    <div id="note">Step 4: Review your selection</div>
+    <div id="note">Step 4: Review your selections</div>
     <div id="date">
       {{ unixToReadable(date) }} ({{ unixTimeToReminder(date) }})
     </div>

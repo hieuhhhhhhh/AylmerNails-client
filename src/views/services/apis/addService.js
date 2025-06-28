@@ -8,7 +8,9 @@ export default async function addService(
   date,
   duration,
   AOSs,
-  employee_ids
+  employee_ids,
+  price,
+  clientCanBook
 ) {
   try {
     // parse AOSs
@@ -44,6 +46,8 @@ export default async function addService(
         duration,
         AOSs: newAOSs,
         employee_ids,
+        price,
+        client_can_book: clientCanBook,
       }),
     });
 

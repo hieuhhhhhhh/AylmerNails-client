@@ -32,7 +32,7 @@ export default async function updateServiceEmployees(serviceId, employeeIds) {
     const json = await res.json();
 
     notifyReqError(json.message);
-    console.log("Failed to update members, message: ", json.message);
+    console.log("Failed to update technicians, message: ", json.message);
   } catch (e) {
     console.error("Unexpected Error: ", e);
   }

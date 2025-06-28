@@ -45,6 +45,20 @@
           </td>
         </tr>
         <tr>
+          <th>Price $:</th>
+          <td id="flexBox">
+            <input type="number" step="0.01" v-model="price" :min="1" />
+          </td>
+        </tr>
+        <tr>
+          <th>
+            <label for="check"> Available for online booking </label>
+          </th>
+          <td>
+            <input id="check" type="checkbox" v-model="clientCanBook" />
+          </td>
+        </tr>
+        <tr>
           <th>Description:</th>
           <td id="flexBox">
             <textarea
@@ -56,7 +70,7 @@
           </td>
         </tr>
         <tr>
-          <th>Members:</th>
+          <th>Technicians:</th>
           <td>
             <div v-for="employee in employees" :key="employee.employee_id">
               <div v-if="employee.is_active">
@@ -122,6 +136,8 @@ export default {
       categoryId: "null",
       AOSs: [],
       checkedEmp: [],
+      price: null,
+      clientCanBook: true,
       // resources
       categories: [],
       employees: [],
@@ -166,7 +182,9 @@ export default {
         this.date,
         this.length * 60,
         this.AOSs,
-        this.checkedEmp
+        this.checkedEmp,
+        this.price,
+        this.clientCanBook
       );
 
       // navigate to that new service
@@ -215,7 +233,8 @@ td {
 
 #check {
   transform: scale(2);
-  margin: 10px;
+  margin-left: 7px;
+  margin-right: 10px;
 }
 #datePicker {
   font-size: 16px;

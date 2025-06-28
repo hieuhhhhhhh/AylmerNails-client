@@ -12,7 +12,7 @@
     </div>
 
     <button v-if="!isEditing" class="blueBtn" @click="openEditMode">
-      <FontAwesomeIcon :icon="editIcon" /> Edit Members
+      <FontAwesomeIcon :icon="editIcon" /> Edit Technicians
     </button>
     <div v-else id="duo">
       <button class="redBtn" @click.prevent="closeEditMode">

@@ -13,7 +13,7 @@
     :serviceId="service_id"
   />
 
-  <th>Members</th>
+  <th>Technicians</th>
   <EmployeeChecker :serviceId="service_id" />
   <br />
   <th>Duration Settings</th>
@@ -37,8 +37,9 @@
 </template>
 
 <script>
-// lib
+// apis
 import fetchServiceDetails from "./apis/fetchServiceDetails";
+// lib
 import unixToReadable from "@/lib/unixToReadable";
 // comps
 import NA from "@/components/NotAvailable.vue";
@@ -59,7 +60,6 @@ export default {
     return {
       // outcomes
       service_id: null,
-      details: {},
       AOSs: [],
       serviceInfo: {},
       duration: null,
@@ -83,31 +83,33 @@ export default {
   },
   async created() {
     this.service_id = Number(this.$route.params.id);
-    this.details = await fetchServiceDetails(this.service_id);
-    if (!this.details) return;
+    const details = await fetchServiceDetails(this.service_id);
+    if (!details) return;
 
     // fetch info
     this.serviceInfo = {
-      service_id: this.details.service_id,
-      name: this.details.name,
-      description: this.details.description,
-      first_date: this.details.first_date,
-      last_date: this.details.last_date,
-      cate_name: this.details.cate_name,
-      cate_id: this.details.cate_id,
+      service_id: details.service_id,
+      name: details.name,
+      description: details.description,
+      first_date: details.first_date,
+      last_date: details.last_date,
+      cate_name: details.cate_name,
+      cate_id: details.cate_id,
+      price: details.price,
+      client_can_book: details.client_can_book,
     };
 
     // fetch AOSs
-    this.AOSs = this.details.AOSs;
+    this.AOSs = details.AOSs;
     console.log("AOSs: ", this.AOSs);
 
     // fetch durations
-    this.duration = this.details.duration;
-    this.empDurations = this.details.empDurations;
+    this.duration = details.duration;
+    this.empDurations = details.empDurations;
 
     // fetch conflicts counts
-    this.durationCC = this.details.durationCC;
-    this.lastDateCC = this.details.lastDateCC;
+    this.durationCC = details.durationCC;
+    this.lastDateCC = details.lastDateCC;
 
     // set isFetched
     this.isFetched = true;
