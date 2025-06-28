@@ -3,9 +3,7 @@
     <div id="background" @click="onCancel" />
     <div id="window">
       <form @submit.prevent="onSubmit">
-        <button @click.prevent="onCancel" id="closeBtn" class="redBtn">
-          X
-        </button>
+        <button @click="onCancel" id="closeBtn" class="redBtn">X</button>
         <div id="content">
           <label>First Name</label>
           <input

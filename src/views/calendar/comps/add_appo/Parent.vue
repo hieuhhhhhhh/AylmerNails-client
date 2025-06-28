@@ -8,7 +8,7 @@
       <div class="flexBox">
         <div id="box">
           <div id="closeBox">
-            <button class="redBtn" @click.prevent="onCancelAdding">X</button>
+            <button class="redBtn" @click="onCancelAdding">X</button>
           </div>
           <div id="top">
             <div id="title">New Appointment</div>

@@ -1,5 +1,5 @@
 <template>
-  <button class="orangeBtn" @click.prevent="onStopPicking">
+  <button class="orangeBtn" @click="onStopPicking">
     <FontAwesomeIcon :icon="faLeftLong" /> Back
   </button>
   <form @submit.prevent="onSubmit">
@@ -22,7 +22,7 @@
         />
       </div>
       <div>
-        <button class="blueBtn" @click.prevent="onClear">Clear</button>
+        <button class="blueBtn" @click="onClear">Clear</button>
         <button class="greenBtn">Submit</button>
       </div>
     </div>

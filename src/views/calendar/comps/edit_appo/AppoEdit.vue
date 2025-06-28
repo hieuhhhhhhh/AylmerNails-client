@@ -13,10 +13,8 @@
               <div v-if="serviceName">{{ serviceName }} - {{ category }}</div>
             </div>
             <div>
-              <button v-if="serviceName" @click.prevent="onClearService">
-                X
-              </button>
-              <button @click.prevent="onOpenServicePicker">Select</button>
+              <button v-if="serviceName" @click="onClearService">X</button>
+              <button @click="onOpenServicePicker">Select</button>
             </div>
           </div>
           <div id="AOS" v-for="(AOS, index) in AOSOs" :key="index">
@@ -36,8 +34,8 @@
               </div>
             </div>
             <div>
-              <button v-if="phoneNum" @click.prevent="onClearContact">X</button>
-              <button @click.prevent="onSelectContact">Select</button>
+              <button v-if="phoneNum" @click="onClearContact">X</button>
+              <button @click="onSelectContact">Select</button>
             </div>
           </div>
         </td>
@@ -47,7 +45,7 @@
         <td>
           <div class="center">
             <div>
-              <button @click.prevent="onIncreaseDate(false)">-</button>
+              <button @click="onIncreaseDate(false)">-</button>
 
               <input
                 type="date"
@@ -55,7 +53,7 @@
                 @change="onInputDate"
                 required
               />
-              <button @click.prevent="onIncreaseDate(true)">+</button>
+              <button @click="onIncreaseDate(true)">+</button>
             </div>
             {{ getReminder }}
           </div>
@@ -67,7 +65,7 @@
         <td>
           <div class="center">
             <div>
-              <button @click.prevent="onIncreaseTime(false)">-</button>
+              <button @click="onIncreaseTime(false)">-</button>
 
               <input
                 type="time"
@@ -75,7 +73,7 @@
                 @change="onInputStart"
                 required
               />
-              <button @click.prevent="onIncreaseTime(true)">+</button>
+              <button @click="onIncreaseTime(true)">+</button>
             </div>
           </div>
         </td>
@@ -85,7 +83,7 @@
         <td>
           <div class="center">
             <div>
-              <button @click.prevent="onIncreaseDuration(false)">-</button>
+              <button @click="onIncreaseDuration(false)">-</button>
 
               <input
                 type="number"
@@ -100,7 +98,7 @@
                 :min="5"
                 step="1"
               />
-              <button @click.prevent="onIncreaseDuration(true)">+</button>
+              <button @click="onIncreaseDuration(true)">+</button>
             </div>
             to {{ secsToHours(start + duration) }}
           </div>
@@ -113,7 +111,7 @@
           <div class="duo">
             {{ empAlias }}
             <div>
-              <button @click.prevent="onOpenEmpPicker">Select</button>
+              <button @click="onOpenEmpPicker">Select</button>
             </div>
           </div>
           <div class="selected" v-if="selectedEmps?.length">

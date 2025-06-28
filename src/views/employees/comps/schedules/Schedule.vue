@@ -13,17 +13,13 @@
                   v-if="!isEditing"
                   class="blueBtn"
                   id="smallBtn"
-                  @click.prevent="openEdit"
+                  @click="openEdit"
                 >
                   <FontAwesomeIcon :icon="editIcon" /> Edit
                 </button>
 
                 <div v-else>
-                  <button
-                    class="redBtn"
-                    id="smallBtn"
-                    @click.prevent="closeEdit"
-                  >
+                  <button class="redBtn" id="smallBtn" @click="closeEdit">
                     <FontAwesomeIcon :icon="cancelIcon" /> Cancel
                   </button>
                   <button class="greenBtn" id="smallBtn">

@@ -15,7 +15,7 @@
       <FontAwesomeIcon :icon="editIcon" /> Edit Technicians
     </button>
     <div v-else id="duo">
-      <button class="redBtn" @click.prevent="closeEditMode">
+      <button class="redBtn" @click="closeEditMode">
         <FontAwesomeIcon :icon="cancelIcon" /> Cancel
       </button>
       <button class="greenBtn">

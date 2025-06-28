@@ -22,7 +22,7 @@
     :empDurations="empDurations"
     :onToogleEdit="onToogleEdit"
   />
-  <button v-if="!isEditing" class="blueBtn" @click.prevent="onToogleEdit">
+  <button v-if="!isEditing" class="blueBtn" @click="onToogleEdit">
     <FontAwesomeIcon :icon="editIcon" /> Edit Durations
   </button>
 </template>

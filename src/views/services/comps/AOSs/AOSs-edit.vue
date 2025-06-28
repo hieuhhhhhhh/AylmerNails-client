@@ -1,11 +1,7 @@
 <template>
   <div v-for="(AOS, parentIndex) in AOSs" :key="parentIndex">
     <div id="title">
-      <button
-        class="redBtn"
-        id="smallBtn"
-        @click.prevent="removeQuestion(parentIndex)"
-      >
+      <button class="redBtn" id="smallBtn" @click="removeQuestion(parentIndex)">
         <FontAwesomeIcon :icon="removeIcon" /></button
       >&nbsp; <b>Question {{ parentIndex + 1 }} </b>:
       <input
@@ -31,7 +27,7 @@
                 class="redBtn"
                 id="smallBtn"
                 v-if="index > 0"
-                @click.prevent="removeOption(parentIndex, index)"
+                @click="removeOption(parentIndex, index)"
               >
                 <FontAwesomeIcon :icon="removeIcon" /></button
               >&nbsp;
@@ -59,7 +55,7 @@
             <button
               class="orangeBtn"
               id="smallBtn"
-              @click.prevent="addOption(parentIndex)"
+              @click="addOption(parentIndex)"
             >
               <FontAwesomeIcon :icon="plusIcon" /> More Option
             </button>
@@ -77,7 +73,7 @@
     <br />
   </div>
   <div>
-    <button class="orangeBtn" @click.prevent="addQuestion">
+    <button class="orangeBtn" @click="addQuestion">
       <FontAwesomeIcon :icon="plusIcon" /> Start New Question
     </button>
   </div>

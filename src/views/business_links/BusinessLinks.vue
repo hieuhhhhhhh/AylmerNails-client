@@ -1,15 +1,10 @@
 <template>
   <form @submit.prevent="onSubmit">
     <div id="btns">
-      <button v-if="!isEditing" class="blueBtn" @click.prevent="toogleEdit">
+      <button v-if="!isEditing" class="blueBtn" @click="toogleEdit">
         Press to Edit
       </button>
-      <button
-        v-if="isEditing"
-        type="button"
-        @click.prevent="onCancel"
-        class="greenBtn"
-      >
+      <button v-if="isEditing" type="button" @click="onCancel" class="greenBtn">
         Cancel
       </button>
       <button v-if="isEditing" class="redBtn">Save</button>
