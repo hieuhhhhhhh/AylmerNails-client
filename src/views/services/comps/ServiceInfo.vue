@@ -68,10 +68,12 @@
     <EditServiceInfo
       :serviceId="serviceId"
       :onClose="closeEditFrom"
-      :iName="serviceInfo.name"
-      :iDescription="serviceInfo.description"
-      :iCategoryId="serviceInfo.cate_id"
-      :iDate="serviceInfo.last_date"
+      :_name="serviceInfo.name"
+      :_description="serviceInfo.description"
+      :_category="serviceInfo.cate_id"
+      :_date="serviceInfo.last_date"
+      :_price="serviceInfo.price"
+      :_clientCanBook="serviceInfo.client_can_book"
     />
   </div>
 </template>

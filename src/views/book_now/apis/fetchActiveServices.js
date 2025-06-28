@@ -41,7 +41,7 @@ function refactorServices(rawServices, rawCategories) {
   const categories = {};
   categories[null] = {
     cate_id: null,
-    cate_name: "Unclassified",
+    cate_name: "Others",
     services: [],
   };
 

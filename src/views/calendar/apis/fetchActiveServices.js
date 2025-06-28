@@ -40,7 +40,7 @@ function refactorServices(rawServices, rawCategories) {
   const categories = {};
   categories[null] = {
     cate_id: null,
-    cate_name: "Unclassified",
+    cate_name: "Others",
     services: [],
   };
 
@@ -63,7 +63,7 @@ function refactorServices(rawServices, rawCategories) {
     }
   });
 
-  // remove 'Unclassified' if no services in there
+  // remove category if no services in there
   if (!categories[null].services.length > 0) {
     delete categories[null];
   }

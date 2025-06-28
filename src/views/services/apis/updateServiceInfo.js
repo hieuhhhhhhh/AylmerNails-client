@@ -5,7 +5,9 @@ export default async function updateServiceInfo(
   name,
   description,
   categoryId,
-  lastDate
+  lastDate,
+  price,
+  clientCanBook
 ) {
   try {
     // get app path
@@ -24,6 +26,8 @@ export default async function updateServiceInfo(
         description: description,
         category_id: categoryId,
         last_date: lastDate,
+        price,
+        client_can_book: clientCanBook,
       }),
     });
 
