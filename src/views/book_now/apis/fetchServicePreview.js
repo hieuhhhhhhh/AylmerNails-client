@@ -1,4 +1,3 @@
-import getTodayUnixTime from "@/lib/getTodayUnixTime";
 import notifyReqError from "@/stores/notifyReqError";
 
 export default async function fetchServicePreview(serviceId) {
@@ -8,7 +7,7 @@ export default async function fetchServicePreview(serviceId) {
 
     // start requesting server
     const res = await fetch(
-      `${baseURL}/api/services/get_service_preview/${serviceId}/${getTodayUnixTime()}`,
+      `${baseURL}/api/services/get_service_preview/${serviceId}`,
       {
         method: "GET",
         credentials: "include",
@@ -26,8 +25,26 @@ export default async function fetchServicePreview(serviceId) {
       const raw = json.preview;
 
       // extract resources
-      const [, name, description, , cate_id, cate_name, length] = raw;
-      const preview = { name, description, cate_id, cate_name, length };
+      const [
+        ,
+        name,
+        description,
+        ,
+        cate_id,
+        cate_name,
+        length,
+        price,
+        client_can_book,
+      ] = raw;
+      const preview = {
+        name,
+        description,
+        cate_id,
+        cate_name,
+        length,
+        price,
+        client_can_book,
+      };
 
       // return formatted result
       return preview;

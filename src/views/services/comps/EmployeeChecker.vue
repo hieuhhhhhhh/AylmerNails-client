@@ -57,8 +57,9 @@ export default {
     openEditMode() {
       this.isEditing = true;
     },
-    closeEditMode() {
+    async closeEditMode() {
       this.isEditing = false;
+      await this.fetchData();
     },
     async onSubmit() {
       const res = await updateSEs(this.serviceId, this.checked);
@@ -66,14 +67,17 @@ export default {
         this.$router.push("/services/refresh");
       }
     },
+    async fetchData() {
+      this.employees = await fetchServiceEmployees(this.serviceId);
+      this.employees.forEach((employee) => {
+        if (employee.service_id) {
+          this.checked.push(employee.employee_id);
+        }
+      });
+    },
   },
   async created() {
-    this.employees = await fetchServiceEmployees(this.serviceId);
-    this.employees.forEach((employee) => {
-      if (employee.service_id) {
-        this.checked.push(employee.employee_id);
-      }
-    });
+    await this.fetchData();
   },
 };
 </script>

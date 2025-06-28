@@ -1,38 +1,42 @@
 <template>
-  <div class="warning" v-if="lastDateCC > 0" @click="toConflictPage">
-    Warning: Availability has {{ lastDateCC }}
-    <u>conflicting appointment(s)</u>
-  </div>
-  <div class="warning" v-if="durationCC > 0" @click="toDurationConflictPage">
-    Warning: Duration settings have {{ durationCC }}
-    <u>conflicting appointment(s)</u>
-  </div>
-  <ServiceInfo
-    :isFetched="isFetched"
-    :serviceInfo="serviceInfo"
-    :serviceId="service_id"
-  />
+  <div id="parent">
+    <div class="warning" v-if="lastDateCC > 0" @click="toConflictPage">
+      Warning: Availability has {{ lastDateCC }}
+      <u>conflicting appointment(s)</u>
+    </div>
+    <div class="warning" v-if="durationCC > 0" @click="toDurationConflictPage">
+      Warning: Duration settings have {{ durationCC }}
+      <u>conflicting appointment(s)</u>
+    </div>
+    <ServiceInfo
+      :isFetched="isFetched"
+      :serviceInfo="serviceInfo"
+      :serviceId="service_id"
+    />
+    <br />
 
-  <th>Technicians</th>
-  <EmployeeChecker :serviceId="service_id" />
-  <br />
-  <th>Duration Settings</th>
-  <DurationDemo
-    v-if="isFetched"
-    :serviceId="service_id"
-    :duration="duration"
-    :empDurations="empDurations"
-  />
+    <div class="section">Technicians</div>
+    <EmployeeChecker :serviceId="service_id" />
+    <br />
+    <div class="section">Duration Settings</div>
 
-  <br />
-  <br />
+    <DurationDemo
+      v-if="isFetched"
+      :serviceId="service_id"
+      :duration="duration"
+      :empDurations="empDurations"
+    />
 
-  <th>Question List</th>
-  <NA v-if="!AOSs.length && isFetched" />
-  <ServiceAOSs :AOSs="AOSs" />
-  <div id="note">
-    *question list can not be edited, recreate the service if you have to change
-    it
+    <br />
+    <br />
+    <div class="section">Question List</div>
+
+    <NA v-if="!AOSs.length && isFetched" />
+    <ServiceAOSs :AOSs="AOSs" />
+    <div id="note">
+      *question list can not be edited, recreate the service if you have to
+      change it
+    </div>
   </div>
 </template>
 
@@ -119,11 +123,11 @@ export default {
 
 
 <style scoped>
-th,
-td {
+.section {
   padding: 10px;
   border-top: 3px var(--xtrans-gray) solid;
-  font-size: 19px;
+  font-size: 18px;
+  font-weight: bold;
   display: flex;
   text-align: left;
 }
@@ -142,5 +146,9 @@ td {
   font-size: 16px;
   color: red;
   cursor: pointer;
+}
+#parent {
+  margin-inline: 10px;
+  font-size: 16px;
 }
 </style>

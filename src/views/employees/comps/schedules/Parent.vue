@@ -57,6 +57,7 @@ export default {
 <style scoped>
 #title {
   display: flex;
+  font-size: 18px;
   padding: 10px;
   text-align: left;
   font-weight: bold;

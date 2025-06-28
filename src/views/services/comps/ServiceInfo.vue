@@ -1,5 +1,5 @@
 <template>
-  <div id="ServiceInfo" v-if="!isEditing">
+  <div v-if="!isEditing">
     <table>
       <tbody>
         <tr>
@@ -126,7 +126,7 @@ export default {
 
 <style scoped>
 #ServiceInfo {
-  padding: 7px;
+  padding-bottom: 20px;
 }
 .highlight {
   font-size: 20px;
@@ -136,8 +136,10 @@ export default {
 
 th,
 td {
-  padding: 10px;
   text-align: left;
+}
+td {
+  padding: 10px;
 }
 
 #duo {

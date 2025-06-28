@@ -133,11 +133,10 @@ export default {
 <style scoped>
 table {
   text-align: left;
+  background-color: var(--background-i2);
 }
-th,
 td {
   padding: 10px;
-  text-align: left;
 }
 
 #note {

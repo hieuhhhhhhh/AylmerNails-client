@@ -189,8 +189,8 @@ export default {
       this.isEditing = true;
     },
     async closeEditForm() {
-      await this.fetchData();
       this.isEditing = false;
+      await this.fetchData();
     },
     formattedIntervals(intervals) {
       const interval1 = intervals[0];
@@ -240,10 +240,9 @@ export default {
 table {
   text-align: left;
 }
-th,
+
 td {
   padding: 10px;
-  text-align: left;
 }
 #duo {
   display: flex;

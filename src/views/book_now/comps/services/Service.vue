@@ -4,7 +4,9 @@
       <div id="flexBox">
         <span id="name">{{ name }}</span>
 
-        <span id="item"> <FontAwesomeIcon :icon="dollarIcon" /> 60+</span>
+        <span id="item" v-if="price">
+          <FontAwesomeIcon :icon="dollarIcon" /> {{ price }}+</span
+        >
         <span id="item"
           ><FontAwesomeIcon :icon="timeIcon" /> {{ length / 60 }}m+</span
         >
@@ -25,7 +27,9 @@
           >
         </div>
       </div>
-      <div id="note" v-else>No available technicians</div>
+      <div id="note" v-else>
+        No available technicians right now, please select another service
+      </div>
     </div>
     <div>
       <button class="redBtn" id="remove" @click="onRemove(service.serviceId)">
@@ -72,6 +76,7 @@ export default {
       name: "",
       description: "",
       length: "",
+      price: null,
     };
   },
   methods: {
@@ -96,6 +101,7 @@ export default {
     this.name = preview.name;
     this.description = preview.description;
     this.length = preview.length;
+    this.price = preview.price;
 
     // Assign employees
     this.SEs = employees;

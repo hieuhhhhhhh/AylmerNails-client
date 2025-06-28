@@ -176,8 +176,10 @@ textarea {
 }
 th,
 td {
-  padding: 10px;
   text-align: left;
+}
+td {
+  padding: 10px;
 }
 #flexBox {
   display: flex;
@@ -195,7 +197,6 @@ td {
 }
 #esi {
   background-color: var(--background-i2);
-  padding: 7px;
 }
 #check {
   transform: scale(2);

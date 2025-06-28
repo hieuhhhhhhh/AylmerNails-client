@@ -1,9 +1,13 @@
 <template>
-  <div id="warning" v-if="showWarning">Warning: No schedules have been set</div>
-  <EmployeeInfo />
-  <br />
+  <div id="parent">
+    <div id="warning" v-if="showWarning">
+      Warning: No schedules have been set
+    </div>
+    <EmployeeInfo />
+    <br />
 
-  <Schedule :showScheduleWarning="showScheduleWarning" />
+    <Schedule :showScheduleWarning="showScheduleWarning" />
+  </div>
 </template>
 <script>
 import { ref } from "vue";
@@ -37,5 +41,9 @@ export default {
 #warning {
   padding: 10px;
   color: red;
+}
+#parent {
+  margin-inline: 10px;
+  font-size: 16px;
 }
 </style>
