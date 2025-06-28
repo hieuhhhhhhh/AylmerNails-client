@@ -37,6 +37,7 @@
       </tr>
     </tbody>
   </table>
+  <button v-if="users.length === limit" @click="showMore">showMore</button>
 </template>
 <script>
 // lib
@@ -58,7 +59,7 @@ export default {
     const query = ref("");
     const users = ref([]);
     const lastTracked = ref(null);
-    const limit = ref(50);
+    const limit = ref(25);
     const today = getTodayUnixTime();
     // INPUT
     const toUser = (userId) => {
@@ -67,6 +68,11 @@ export default {
 
     const onSearchUsers = async () => {
       users.value = await searchUsers(query.value, limit.value);
+    };
+
+    const showMore = async () => {
+      limit.value += 25;
+      await onSearchUsers();
     };
 
     // LIFECYCLE
@@ -89,6 +95,7 @@ export default {
       formatPhone,
       toUser,
       onSearchUsers,
+      showMore,
     };
   },
 };

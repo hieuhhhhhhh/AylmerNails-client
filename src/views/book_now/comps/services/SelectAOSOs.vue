@@ -3,6 +3,7 @@
     <div id="background" @click="handleClose" />
     <div id="window">
       <button @click="handleClose" id="closeBtn" class="redBtn">X</button>
+      {{ serviceInfo }}
       <form @submit.prevent="onSubmit" id="content">
         <div
           v-for="(question, index) in questions"
@@ -34,6 +35,7 @@
   </div>
 </template>
 <script>
+// apis
 import fetchAOSs from "../../apis/fetchAOSs";
 
 export default {
@@ -46,6 +48,7 @@ export default {
     return {
       // resource
       questions: [],
+      serviceInfo: {},
       msg: "",
       // outcome
       answers: {},
@@ -79,7 +82,10 @@ export default {
     onInputAnswer() {},
   },
   async created() {
-    this.questions = await fetchAOSs(this.serviceId);
+    // fetch data
+    const { questions, serviceInfo } = await fetchAOSs(this.serviceId);
+    this.questions = questions;
+    this.serviceInfo = serviceInfo;
   },
 };
 </script>

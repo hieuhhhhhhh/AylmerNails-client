@@ -22,10 +22,11 @@ export default async function fetchAOSs(serviceId) {
     // read status and process response
     if (res.ok) {
       // read response
-      const raw = json.add_on_services;
+      const questions = rawToQuestions(json.add_on_services);
+      const serviceInfo = readServiceInfo(json.service_info);
 
       // return formatted result
-      return rawToQuestions(raw);
+      return { questions, serviceInfo };
     } else {
       notifyReqError(json.message);
       console.log("Failed to fetch add-on services, message: ", json.message);
@@ -64,4 +65,12 @@ function rawToQuestions(raw) {
 
   // return result
   return questions;
+}
+
+function readServiceInfo(raw) {
+  // unpack
+  const [name, description, duration, price, client_can_book] = raw;
+
+  // return object
+  return { name, description, duration, price, client_can_book };
 }

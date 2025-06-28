@@ -46,6 +46,7 @@
       </tr>
     </tbody>
   </table>
+  <button v-if="rows.length === limit" @click="showMore">Show more</button>
 </template>
 <script>
 // lib
@@ -73,7 +74,7 @@ export default {
     const query = ref("");
     const rows = ref([]);
     const lastTracked = ref(null);
-    const limit = ref(50);
+    const limit = ref(25);
     const today = getTodayUnixTime();
     // lib
     const router = useRouter();
@@ -88,6 +89,11 @@ export default {
       if (res) {
         router.push("/refresh");
       }
+    };
+
+    const showMore = async () => {
+      limit.value += 25;
+      await onSearch();
     };
 
     // LIFECYCLE
@@ -112,6 +118,7 @@ export default {
       unixToReadable,
       unixToHours,
       onUnban,
+      showMore,
     };
   },
 };

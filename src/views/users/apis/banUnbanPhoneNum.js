@@ -1,7 +1,16 @@
 import notifyReqError from "@/stores/notifyReqError";
+import { parsePhoneNumberFromString } from "libphonenumber-js";
 
 export default async function banUnbanPhoneNum(phoneNum, boolean) {
   try {
+    try {
+      // parse phone number to E.164
+      phoneNum = parsePhoneNumberFromString(phoneNum, "CA").number; // E.164 format
+      console.log("phoneNum: ", phoneNum);
+    } catch (e) {
+      throw new Error("Invalid Phone Number");
+    }
+
     // get app path
     const baseURL = process.env.VUE_APP_BASE_URL;
 

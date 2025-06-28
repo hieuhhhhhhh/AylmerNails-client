@@ -59,6 +59,7 @@
       </tr>
     </tbody>
   </table>
+  <button v-if="appos.length === limit" @click="showMore">Show More</button>
 </template>
 <script>
 // lib
@@ -82,7 +83,7 @@ export default {
     const query = ref("");
     const appos = ref([]);
     const lastTracked = ref(null);
-    const limit = ref(50);
+    const limit = ref(25);
     const today = getTodayUnixTime();
     // lib
     const router = useRouter();
@@ -94,6 +95,11 @@ export default {
 
     const toDate = (date) => {
       router.push(`/calendar/${date}`);
+    };
+
+    const showMore = async () => {
+      limit.value += 25;
+      await onSearchCanceled();
     };
 
     // LIFECYCLE
@@ -119,6 +125,7 @@ export default {
       formatPhone,
       onSearchCanceled,
       toDate,
+      showMore,
     };
   },
 };

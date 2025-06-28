@@ -48,6 +48,7 @@
       </tr>
     </tbody>
   </table>
+  <button v-if="appos.length === limit" @click="showMore">Show More</button>
 </template>
 <script>
 // lib
@@ -76,7 +77,7 @@ export default {
     const query = ref("");
     const appos = ref([]);
     const lastTracked = ref(null);
-    const limit = ref(50);
+    const limit = ref(25);
     // lib
     const router = useRouter();
 
@@ -94,6 +95,11 @@ export default {
 
     const toAppo = (date, appoId) => {
       router.push(`/calendar/${date}/${appoId}`);
+    };
+
+    const showMore = async () => {
+      limit.value += 25;
+      await onSearch();
     };
 
     // LIFECYCLE
@@ -119,6 +125,7 @@ export default {
       onSearch,
       toAppo,
       onUnsave,
+      showMore,
     };
   },
 };

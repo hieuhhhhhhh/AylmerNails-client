@@ -48,7 +48,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 import { faUser } from "@fortawesome/free-regular-svg-icons";
-// library
+// apis
 import fetchServicePreview from "../../apis/fetchServicePreview";
 import fetchServiceEmployees from "../../apis/fetchSEs";
 

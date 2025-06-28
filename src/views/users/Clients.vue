@@ -36,6 +36,7 @@
       </tr>
     </tbody>
   </table>
+  <button v-if="rows.length === limit" @click="showMore">showMore</button>
 </template>
 <script>
 // lib
@@ -59,13 +60,18 @@ export default {
     // resoures
     const query = ref("");
     const rows = ref([]);
-    const limit = ref(50);
+    const limit = ref(25);
     const today = getTodayUnixTime();
     // lib
 
     // INPUT
     const onSearch = async () => {
       rows.value = await searchContacts(query.value, limit.value);
+    };
+
+    const showMore = async () => {
+      limit.value += 25;
+      await onSearch();
     };
 
     // LIFECYCLE
@@ -81,6 +87,7 @@ export default {
       onSearch,
       unixTimeToReminder,
       unixToReadable,
+      showMore,
     };
   },
 };
