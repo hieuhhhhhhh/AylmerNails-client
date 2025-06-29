@@ -8,10 +8,15 @@
       :onEditName="onEditName"
       :onToogleDrawer="onToogleDrawer"
       :onChangePassword="onChangePassword"
+      :onLogOutAll="onLogOutAll"
     />
     <ChangePassword
       v-if="isChangingPW"
       :onCancel="() => onChangePassword(false)"
+    />
+    <LogOutEverywhere
+      v-if="isLoggingOutAll"
+      :onCancel="() => onLogOutAll(false)"
     />
   </div>
 </template>
@@ -25,6 +30,7 @@ import { ref } from "vue";
 // comps
 import Drawer from "./Drawer.vue";
 import ChangePassword from "./ChangePassword.vue";
+import LogOutEverywhere from "./LogOutEverywhere.vue";
 
 export default {
   name: "DrawerParent",
@@ -35,11 +41,13 @@ export default {
     Drawer,
     FontAwesomeIcon,
     ChangePassword,
+    LogOutEverywhere,
   },
   setup() {
     // status
     const isDrawerOpen = ref(false);
     const isChangingPW = ref(false);
+    const isLoggingOutAll = ref(false);
 
     // INPUT
     const onToogleDrawer = async () => {
@@ -50,12 +58,18 @@ export default {
       isChangingPW.value = value;
     };
 
+    const onLogOutAll = (value = true) => {
+      isLoggingOutAll.value = value;
+    };
+
     return {
       isDrawerOpen,
       onToogleDrawer,
       faCaretDown,
       isChangingPW,
       onChangePassword,
+      isLoggingOutAll,
+      onLogOutAll,
     };
   },
 };

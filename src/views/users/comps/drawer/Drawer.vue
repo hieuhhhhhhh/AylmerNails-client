@@ -9,7 +9,7 @@
       Ban this account
     </button>
     <button v-else :style="{ color: 'green' }" @click="onBanUnban">
-      Remove from blacklist
+      Unban this account
     </button>
   </div>
 </template>
