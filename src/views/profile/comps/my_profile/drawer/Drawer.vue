@@ -1,7 +1,7 @@
 <template>
   <div id="drawer" ref="drawer" @blur="onBlur" tabindex="0">
     <button @click="onEditName">Edit my name</button>
-    <button>Change my password</button>
+    <button @click="onChangePassword(true)">Change my password</button>
     <button>Log out everywhere</button>
   </div>
 </template>
@@ -15,6 +15,7 @@ export default {
   props: {
     onEditName: Function,
     onToogleDrawer: Function,
+    onChangePassword: Function,
   },
   setup(props) {
     const drawer = ref(null);
