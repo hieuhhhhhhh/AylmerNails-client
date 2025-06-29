@@ -36,7 +36,7 @@
       </tr>
     </tbody>
   </table>
-  <button v-if="rows.length === limit" @click="showMore">showMore</button>
+  <button v-if="rows?.length === limit" @click="showMore">showMore</button>
 </template>
 <script>
 // lib
@@ -88,6 +88,7 @@ export default {
       unixTimeToReminder,
       unixToReadable,
       showMore,
+      limit,
     };
   },
 };

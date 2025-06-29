@@ -53,6 +53,7 @@ button {
   width: 200px;
   text-align: left;
   margin: 0;
+  margin-left: -165px;
   padding: 7px;
 }
 </style>

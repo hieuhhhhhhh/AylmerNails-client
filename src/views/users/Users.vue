@@ -37,7 +37,7 @@
       </tr>
     </tbody>
   </table>
-  <button v-if="users.length === limit" @click="showMore">showMore</button>
+  <button v-if="users?.length === limit" @click="showMore">showMore</button>
 </template>
 <script>
 // lib
@@ -96,6 +96,7 @@ export default {
       toUser,
       onSearchUsers,
       showMore,
+      limit,
     };
   },
 };

@@ -5,7 +5,7 @@
     <div id="window">
       <button @click="onClose" id="closeBtn" class="redBtn">X</button>
       <div id="content">
-        <div id="title">Request Failure!</div>
+        <div id="title">Request Failure</div>
         {{ REstore.msg }}
       </div>
     </div>
@@ -32,7 +32,7 @@ export default {};
 
 <style scoped>
 #parent {
-  z-index: 15;
+  z-index: 100;
   position: fixed;
   top: 0;
   left: 0;
@@ -51,7 +51,6 @@ export default {};
 }
 #window {
   position: relative;
-  z-index: 20;
   width: 300px;
   min-height: 100px;
   max-width: 100%;
@@ -75,5 +74,7 @@ export default {};
 }
 #title {
   font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
 }
 </style>

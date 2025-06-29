@@ -40,6 +40,7 @@ export default async function fetchUsers(userId) {
         notes,
         contactName,
         bannedOn,
+        userId,
       };
 
       // unpack

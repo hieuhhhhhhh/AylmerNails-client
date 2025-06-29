@@ -2,9 +2,17 @@
   <div id="parent">
     <div id="background" @click="onCancel" />
     <div id="window">
+      <button @click="onCancel" id="closeBtn" class="redBtn">X</button>
+
       <div id="content">
         <form @submit.prevent="onSubmit">
-          <div>this is changeee</div>
+          <div id="title">Select {{ name }}'s new role</div>
+          <div>
+            <select v-model="role" required>
+              <option :value="'client'">Client</option>
+              <option :value="'admin'">Admin</option>
+            </select>
+          </div>
           <button>Confirm</button>
         </form>
       </div>
@@ -12,11 +20,28 @@
   </div>
 </template>
 <script setup>
+import { ref } from "vue";
 // apis
 import updateUserRole from "../../apis/updateUserRole";
+import { useRouter } from "vue-router";
+
+// RESOURCES
+const router = useRouter();
+
+// PARAMS
+const props = defineProps({
+  onCancel: Function,
+  name: String,
+  userId: Number,
+});
+// PAYLOAD
+const role = ref(null);
 
 async function onSubmit() {
-  await updateUserRole();
+  const res = await updateUserRole(props.userId, role.value);
+  if (res) {
+    router.push("/refresh");
+  }
 }
 </script>
 
@@ -24,14 +49,16 @@ async function onSubmit() {
 export default {};
 </script>
 
+
+
 <style scoped>
 #parent {
   z-index: 15;
   position: fixed;
   top: 0;
   left: 0;
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -55,7 +82,7 @@ export default {};
 }
 #content {
   padding: 20px;
-
+  font-size: 20px;
   margin-top: 15px;
 }
 #closeBtn {

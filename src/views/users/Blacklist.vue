@@ -46,7 +46,7 @@
       </tr>
     </tbody>
   </table>
-  <button v-if="rows.length === limit" @click="showMore">Show more</button>
+  <button v-if="rows?.length === limit" @click="showMore">Show more</button>
 </template>
 <script>
 // lib
@@ -119,6 +119,7 @@ export default {
       unixToHours,
       onUnban,
       showMore,
+      limit,
     };
   },
 };

@@ -59,7 +59,7 @@
       </tr>
     </tbody>
   </table>
-  <button v-if="appos.length === limit" @click="showMore">Show More</button>
+  <button v-if="appos?.length === limit" @click="showMore">Show More</button>
 </template>
 <script>
 // lib
@@ -126,6 +126,7 @@ export default {
       onSearchCanceled,
       toDate,
       showMore,
+      limit,
     };
   },
 };

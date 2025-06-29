@@ -6,7 +6,12 @@
           <div id="title">
             <div>{{ info.firstName }} {{ info.lastName }}</div>
             <div>
-              <Drawer :phoneNum="info.phoneNum" :bannedOn="info.bannedOn" />
+              <Drawer
+                :name="info.firstName"
+                :userId="info.userId"
+                :phoneNum="info.phoneNum"
+                :bannedOn="info.bannedOn"
+              />
             </div>
           </div>
         </th>
