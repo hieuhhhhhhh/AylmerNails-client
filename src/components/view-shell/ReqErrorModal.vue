@@ -51,10 +51,10 @@ export default {};
 }
 #window {
   position: relative;
-  width: 300px;
+  width: 280px;
   min-height: 100px;
-  max-width: 100%;
-  max-height: 100%;
+  max-width: 100vw;
+  max-height: 100vh;
   background-color: var(--background-i2);
   overflow-y: auto;
 }

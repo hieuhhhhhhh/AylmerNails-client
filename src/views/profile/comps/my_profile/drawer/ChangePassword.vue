@@ -4,30 +4,35 @@
     <div id="window">
       <button @click="props.onCancel" id="closeBtn" class="redBtn">X</button>
 
-      <div id="content">
-        <input
-          type="text"
-          v-model="password"
-          placeholder="Enter Current Password"
-          required
-        />
-        <br />
-        <input
-          type="text"
-          v-model="newPassword"
-          placeholder="Enter New Password"
-          required
-        />
-      </div>
-      <div class="flexBox">
-        <button class="blueBtn">Change Password</button>
-      </div>
+      <form @submit.prevent="onSubmit">
+        <div id="content">
+          <input
+            type="password"
+            v-model="password"
+            placeholder="Enter Current Password"
+            required
+          />
+          <br />
+          <input
+            type="password"
+            v-model="newPassword"
+            placeholder="Enter New Password"
+            required
+          />
+        </div>
+        <div class="flexBox">
+          <button class="blueBtn">Change Password</button>
+        </div>
+      </form>
     </div>
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue";
+// apis
+import changePassword from "../../../apis/changePassword";
+
 // PARAMS
 const props = defineProps({
   onCancel: Function,
@@ -36,6 +41,12 @@ const props = defineProps({
 // PAYLOAD
 const password = ref("");
 const newPassword = ref("");
+
+// INPUT
+async function onSubmit() {
+  const res = await changePassword(password.value, newPassword.value);
+  if (res) props.onCancel();
+}
 </script>
 
 <script>
