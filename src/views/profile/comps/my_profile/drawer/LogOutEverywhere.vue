@@ -14,9 +14,23 @@
   </div>
 </template>
 <script setup>
+import { useRouter } from "vue-router";
+// apis
+import logOutEverywhere from "../../../apis/logOutEverywhere";
+
+// PARAMS
 const props = defineProps({
   onCancel: Function,
 });
+
+// RESOURCES
+const router = useRouter();
+
+// INPUT
+async function onSubmit() {
+  await logOutEverywhere();
+  router.push("/");
+}
 </script>
 
 

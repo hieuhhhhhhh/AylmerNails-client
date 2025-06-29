@@ -2,9 +2,9 @@
   <div id="parent">
     <div id="background" @click="onCancel" />
     <div id="window">
-      <form @submit.prevent="onSubmit">
-        <button @click="onCancel" id="closeBtn" class="redBtn">X</button>
-        <div id="content">
+      <button @click="onCancel" id="closeBtn" class="redBtn">X</button>
+      <div id="content">
+        <form @submit.prevent="onSubmit">
           <label>First Name</label>
           <input
             type="text"
@@ -21,11 +21,11 @@
             placeholder="Enter Last Name"
             required
           />
-        </div>
-        <div class="flexBox">
-          <button class="blueBtn">Save</button>
-        </div>
-      </form>
+          <div class="flexBox">
+            <button class="blueBtn">Save</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </template>
