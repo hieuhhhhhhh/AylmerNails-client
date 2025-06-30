@@ -1,6 +1,8 @@
 <template>
   <div id="header">
-    <div id="title">Aylmer Nails & Spa</div>
+    <div id="title">
+      <router-link to="/">Aylmer Nails & Spa</router-link>
+    </div>
   </div>
 </template>
 <script>
@@ -36,5 +38,9 @@ export default {
     padding-top: 3px;
     padding-bottom: 3px;
   }
+}
+a {
+  text-decoration: none;
+  color: inherit;
 }
 </style>

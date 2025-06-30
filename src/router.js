@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-import Menu from "./views/Menu.vue";
+import Welcome from "./views/Welcome.vue";
 import NotFound from "./views/NotFound.vue";
 import Draft from "./templates/Draft.vue";
 import Refresh from "./components/Refresh.vue";
@@ -52,7 +52,7 @@ import Saved from "./views/activities/Saved.vue";
 const routes = [
   {
     path: "/",
-    component: Menu,
+    component: Welcome,
   },
   {
     path: "/refresh",
