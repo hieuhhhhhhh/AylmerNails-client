@@ -7,12 +7,14 @@
       </div>
     </div>
 
-    <img
-      :src="images[index]"
-      :class="styleClass"
-      @load="onImgLoad"
-      :style="imgstyle"
-    />
+    <div id="frame">
+      <img
+        :src="images[index]"
+        :style="imgPosition"
+        :class="styleClass"
+        @load="onImgLoad"
+      />
+    </div>
   </div>
 </template>
 
@@ -64,8 +66,8 @@ const styles = [
 
 // RESOURCES
 const index = ref(Math.floor(Math.random() * 11));
-// const index = ref(5);
-const imgstyle = ref("");
+// const index = ref(0);
+const imgPosition = ref(styles[index.value]);
 
 // STATUS
 const styleClass = ref("invisible");
@@ -79,7 +81,6 @@ function toBookNow() {
 
 function onImgLoad() {
   styleClass.value = "fade-loop";
-  imgstyle.value = styles[index.value];
 
   setTimeout(() => {
     styleClass.value = "invisible";
@@ -87,6 +88,7 @@ function onImgLoad() {
     if (index.value > 10) {
       index.value = 0;
     }
+    imgPosition.value = styles[index.value];
   }, 8000);
 }
 </script>
@@ -102,7 +104,7 @@ img {
   object-fit: cover;
   /* object-position: 100% 25%; */
   display: block;
-  filter: brightness(50%);
+  filter: brightness(70%);
   animation: fadeIn 1.5s ease-in-out forwards;
 }
 #content {
@@ -114,6 +116,9 @@ img {
   text-align: center;
   flex-direction: column;
   color: white;
+}
+#frame {
+  overflow: hidden;
 }
 #relative {
   position: relative;
@@ -133,7 +138,7 @@ button {
   border-radius: 20px;
   padding: 10px 30px;
   font-size: 20px;
-  background-color: rgba(250, 166, 31, 0.75);
+  background-color: rgba(250, 166, 31, 0.8);
 }
 @media (orientation: portrait) {
   #slogan {
@@ -146,7 +151,6 @@ button {
   animation: fadeInOut 8s ease-in-out forwards;
 }
 .invisible {
-  transition: opacity 0.5s ease-in-out;
   opacity: 0;
 }
 
@@ -154,14 +158,15 @@ button {
   0% {
     opacity: 0;
   }
-  20% {
+  10% {
     opacity: 1;
   }
-  80% {
+  90% {
     opacity: 1;
   }
   100% {
     opacity: 0;
+    transform: scale(1.15);
   }
 }
 </style>
