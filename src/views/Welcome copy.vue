@@ -30,7 +30,7 @@ import img10 from "@/assets/10.jpg";
 import img11 from "@/assets/11.jpg";
 
 import { useRouter } from "vue-router";
-import { ref } from "vue";
+import { onMounted, onUnmounted, ref } from "vue";
 
 // CONSTANTS
 const router = useRouter();
@@ -68,7 +68,7 @@ const index = ref(Math.floor(Math.random() * 11));
 const imgstyle = ref("");
 
 // STATUS
-const styleClass = ref("invisible");
+const styleClass = ref("");
 
 // INPUT
 function toBookNow() {
@@ -76,18 +76,24 @@ function toBookNow() {
 }
 
 // LIFECYCLE
-
-function onImgLoad() {
-  styleClass.value = "fade-loop";
-  imgstyle.value = styles[index.value];
-
-  setTimeout(() => {
+let intervalId = null;
+onMounted(() => {
+  intervalId = setInterval(() => {
     styleClass.value = "invisible";
     index.value++;
     if (index.value > 10) {
       index.value = 0;
     }
-  }, 8000);
+  }, 5000);
+});
+
+onUnmounted(() => {
+  clearInterval(intervalId);
+});
+
+function onImgLoad() {
+  imgstyle.value = styles[index.value];
+  styleClass.value = "fade-loop";
 }
 </script>
 
@@ -143,10 +149,9 @@ button {
 
 /* Looping fade animation */
 .fade-loop {
-  animation: fadeInOut 8s ease-in-out forwards;
+  animation: fadeInOut 5s ease-in-out forwards;
 }
 .invisible {
-  transition: opacity 0.5s ease-in-out;
   opacity: 0;
 }
 
@@ -154,13 +159,13 @@ button {
   0% {
     opacity: 0;
   }
-  20% {
+  15% {
     opacity: 1;
   }
   80% {
     opacity: 1;
   }
-  100% {
+  95% {
     opacity: 0;
   }
 }
