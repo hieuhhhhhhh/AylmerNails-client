@@ -1,8 +1,11 @@
 <template>
   <div id="DrawerContent">
-    <div><router-link to="/booknow/1">Book Now</router-link></div>
-    <div><router-link to="/profile">My Appointments</router-link></div>
-    <div>
+    <div v-if="isAdmin">
+      <router-link :to="`/calendar/${getTodayUnixTime()}`"
+        >Calendar</router-link
+      >
+    </div>
+    <div v-if="isAdmin">
       <router-link to="/activities/booking">
         <div v-if="newActCount > 0" id="noti">
           {{ newActCount }}
@@ -10,7 +13,7 @@
         Activities</router-link
       >
     </div>
-    <div>
+    <div v-if="isAdmin">
       <router-link to="/users/accounts">
         <div v-if="newUserCount > 0" id="noti">
           {{ newUserCount }}
@@ -18,17 +21,22 @@
         Users</router-link
       >
     </div>
-    <div><router-link to="/signup">Sign Up</router-link></div>
-    <div><router-link to="/create_account">Add User</router-link></div>
+    <div v-if="isOwner">
+      <router-link to="/create_account">Add User</router-link>
+    </div>
 
-    <div><router-link to="/login">Log In</router-link></div>
-    <div><router-link to="/" @click="logOut">Log Out</router-link></div>
-    <div><router-link to="/services">Services</router-link></div>
-    <div><router-link to="/employees">Employees</router-link></div>
-    <div>
-      <router-link :to="`/calendar/${getTodayUnixTime()}`"
-        >Calendar</router-link
-      >
+    <div v-if="isAdmin">
+      <router-link to="/employees">Employees</router-link>
+    </div>
+    <div v-if="isAdmin"><router-link to="/services">Services</router-link></div>
+    <div><router-link to="/booknow/1">Book Now</router-link></div>
+    <div v-if="!isClient"><router-link to="/login">Log In</router-link></div>
+    <div v-if="!isClient"><router-link to="/signup">Sign Up</router-link></div>
+    <div v-if="isClient">
+      <router-link to="/profile">My Appointments</router-link>
+    </div>
+    <div v-if="isClient">
+      <router-link to="/" @click="logOut">Log Out</router-link>
     </div>
   </div>
 </template>
@@ -56,8 +64,15 @@ export default {
       () => NCstore.newUserCount + NCstore.newBlacklistCount
     );
 
-    // DEPENDENCIES
     const MPstore = useMyProfile();
+    const clients = new Set(["client", "admin", "owner"]);
+    const admins = new Set(["admin", "owner"]);
+
+    const isClient = computed(() => clients.has(MPstore.role));
+    const isAdmin = computed(() => admins.has(MPstore.role));
+    const isOwner = computed(() => MPstore.role === "owner");
+
+    // DEPENDENCIES
     watch(
       () => MPstore.token,
       (newVal) => {
@@ -75,6 +90,9 @@ export default {
       newActCount,
       newUserCount,
       logOut,
+      isClient,
+      isAdmin,
+      isOwner,
     };
   },
 };
