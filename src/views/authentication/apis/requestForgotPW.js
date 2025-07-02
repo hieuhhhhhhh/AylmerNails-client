@@ -26,10 +26,11 @@ export default async function requestForgotPW(phoneNum) {
     // fetch json return message
     const json = await res.json();
     const codeId = json.code_id;
+    const waitTime = json.wait_time;
     const message = json.message;
 
     // return results
-    return { codeId, message };
+    return { codeId, message, waitTime };
   } catch (e) {
     console.error("Unexpected Error: ", e);
     return { message: "Unexpected Error" };

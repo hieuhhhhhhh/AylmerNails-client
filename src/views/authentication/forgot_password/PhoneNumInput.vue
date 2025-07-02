@@ -16,8 +16,8 @@
         required
       />
     </div>
-    <div>{{ msg }}</div>
-    <button>Renew Password</button>
+    <div id="msg">{{ msg }}</div>
+    <button class="greenBtn">Renew Password</button>
   </form>
 </template>
 
@@ -40,7 +40,7 @@ const msg = ref("");
 
 // APIS
 async function onSubmit() {
-  const { codeId, message } = await requestForgotPW(phoneNum.value);
+  const { codeId, message, waitTime } = await requestForgotPW(phoneNum.value);
 
   //   if fail
   if (!codeId) {
@@ -49,8 +49,32 @@ async function onSubmit() {
   }
 
   // if succesful
-  props.onNext(codeId, phoneNum.value, password.value);
+  props.onNext(codeId, phoneNum.value, password.value, waitTime);
 }
 </script>
 
 
+<style scoped>
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+button {
+  font-size: 20px;
+  padding-inline: 50px;
+  border-radius: 20px;
+  margin-bottom: 50px;
+}
+
+input {
+  padding: 6px 10px;
+  width: 280px;
+}
+
+#msg {
+  color: red;
+  font-size: 15px;
+}
+</style>
