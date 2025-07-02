@@ -8,6 +8,7 @@
         :password="password"
         :firstName="firstName"
         :lastName="lastName"
+        :waitTime="waitTime"
       />
     </div>
   </div>
@@ -27,15 +28,23 @@ const phoneNum = ref("");
 const password = ref("");
 const firstName = ref("");
 const lastName = ref("");
+const waitTime = ref(0);
 
 // HANDLERS
-function onRequestCode(_codeId, _phoneNum, _password, _firstName, _lastName) {
+function onRequestCode(
+  _codeId,
+  _phoneNum,
+  _password,
+  _firstName,
+  _lastName,
+  _waitTime
+) {
   codeId.value = _codeId;
   phoneNum.value = _phoneNum;
   password.value = _password;
   firstName.value = _firstName;
   lastName.value = _lastName;
-
+  waitTime.value = _waitTime;
   // to next page
   page.value++;
 }

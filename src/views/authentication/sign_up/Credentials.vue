@@ -26,7 +26,7 @@
         required
       />
     </div>
-    <div>{{ msg }}</div>
+    <div id="msg">{{ msg }}</div>
     <button class="greenBtn">Sign up</button>
     <div>
       <router-link to="/login">I already have an account</router-link>
@@ -55,7 +55,7 @@ const msg = ref("");
 
 // APIS
 async function onSubmit() {
-  const { codeId, message } = await requestSignUp(
+  const { codeId, message, waitTime } = await requestSignUp(
     phoneNum.value,
     firstName.value,
     lastName.value
@@ -73,7 +73,8 @@ async function onSubmit() {
     phoneNum.value,
     password.value,
     firstName.value,
-    lastName.value
+    lastName.value,
+    waitTime
   );
 }
 </script>
@@ -116,5 +117,9 @@ input[type="text"] {
   width: 123px;
   margin-inline: 5px;
   /* margin-bottom: 10px; */
+}
+#msg {
+  color: red;
+  font-size: 15px;
 }
 </style>

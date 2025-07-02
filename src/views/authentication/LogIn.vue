@@ -22,7 +22,7 @@
         <input id="check" type="checkbox" v-model="rememberMe" />
         Remember me next time
       </label>
-      <div>{{ msg }}</div>
+      <div id="msg">{{ msg }}</div>
 
       <button class="blueBtn">Log in</button>
       <div>
@@ -121,6 +121,10 @@ input[type="tel"] {
   width: 250px;
 }
 label {
+  font-size: 15px;
+}
+#msg {
+  color: red;
   font-size: 15px;
 }
 </style>
