@@ -7,8 +7,6 @@
         placeholder="First Name"
         required
       />
-    </div>
-    <div>
       <input type="text" v-model="lastName" placeholder="Last Name" required />
     </div>
     <div>
@@ -29,7 +27,10 @@
       />
     </div>
     <div>{{ msg }}</div>
-    <button>Sign up</button>
+    <button class="greenBtn">Sign up</button>
+    <div>
+      <router-link to="/login">I already have an account</router-link>
+    </div>
   </form>
 </template>
 
@@ -81,3 +82,39 @@ async function onSubmit() {
 <script>
 export default { name: "Credentials-" };
 </script>
+
+<style scoped>
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+a {
+  font-size: 15px;
+  text-decoration: none;
+  color: rgb(0, 153, 255);
+}
+
+a:hover,
+a:active {
+  text-decoration: underline;
+}
+button {
+  font-size: 20px;
+  padding-inline: 50px;
+  border-radius: 20px;
+  margin-bottom: 50px;
+}
+
+input {
+  padding: 6px 10px;
+  width: 280px;
+}
+
+input[type="text"] {
+  width: 123px;
+  margin-inline: 5px;
+  /* margin-bottom: 10px; */
+}
+</style>

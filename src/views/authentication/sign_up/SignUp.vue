@@ -1,13 +1,15 @@
 <template>
-  <div v-if="page === 1"><Credentials :onNext="onRequestCode" /></div>
-  <div v-if="page === 2">
-    <OTPverify
-      :codeId="codeId"
-      :phoneNum="phoneNum"
-      :password="password"
-      :firstName="firstName"
-      :lastName="lastName"
-    />
+  <div id="layout">
+    <div v-if="page === 1"><Credentials :onNext="onRequestCode" /></div>
+    <div v-if="page === 2">
+      <OTPverify
+        :codeId="codeId"
+        :phoneNum="phoneNum"
+        :password="password"
+        :firstName="firstName"
+        :lastName="lastName"
+      />
+    </div>
   </div>
 </template>
 
@@ -42,3 +44,18 @@ function onRequestCode(_codeId, _phoneNum, _password, _firstName, _lastName) {
 <script>
 export default {};
 </script>
+
+<style scoped>
+#layout {
+  background-color: var(--background-i1);
+  padding: 10px;
+  width: 900px;
+  max-width: 100vw;
+  margin-inline: auto;
+  flex-grow: 1;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+</style>
