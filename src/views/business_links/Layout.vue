@@ -1,6 +1,6 @@
 <template>
   <div id="layout">
-    <div id="title">Website Footer</div>
+    <div id="title">Edit Footer</div>
     <BusinessLinks />
   </div>
 </template>

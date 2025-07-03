@@ -13,7 +13,7 @@
               <option :value="'admin'">Admin</option>
             </select>
           </div>
-          <button>Confirm</button>
+          <button id="confirm" class="blueBtn">Confirm</button>
         </form>
       </div>
     </div>
@@ -84,6 +84,7 @@ export default {};
   padding: 20px;
   font-size: 20px;
   margin-top: 15px;
+  text-align: center;
 }
 #closeBtn {
   position: absolute;
@@ -93,5 +94,9 @@ export default {};
   height: 30px;
   padding: 0;
   border-radius: 0;
+}
+#confirm {
+  margin-top: 10px;
+  padding: 5px 15px;
 }
 </style>

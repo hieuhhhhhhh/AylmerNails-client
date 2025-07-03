@@ -7,7 +7,9 @@
       <div id="content">
         <form @submit.prevent="onSubmit">
           <div>Log out your account in all devices?</div>
-          <button>Yes</button>
+          <div id="flex">
+            <button id="yes" class="blueBtn">Yes</button>
+          </div>
         </form>
       </div>
     </div>
@@ -73,6 +75,7 @@ export default {};
   padding: 20px;
   font-size: 20px;
   margin-top: 15px;
+  text-align: center;
 }
 #closeBtn {
   position: absolute;
@@ -82,5 +85,14 @@ export default {};
   height: 30px;
   padding: 0;
   border-radius: 0;
+}
+
+#flex {
+  display: flex;
+  justify-content: center;
+}
+#yes {
+  margin-top: 10px;
+  padding: 5px 15px;
 }
 </style>
