@@ -2,8 +2,12 @@ import { parsePhoneNumberFromString } from "libphonenumber-js";
 
 export default async function addUser(phoneNum, password, firstName, lastName) {
   try {
-    // parse phone number to E.164
-    phoneNum = parsePhoneNumberFromString(phoneNum, "CA").number; // E.164 format
+    try {
+      // parse phone number to E.164
+      phoneNum = parsePhoneNumberFromString(phoneNum, "CA").number; // E.164 format
+    } catch (e) {
+      return { message: "Invalid phone number" };
+    }
 
     // get app path
     const baseURL = process.env.VUE_APP_BASE_URL;
