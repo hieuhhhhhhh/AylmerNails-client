@@ -52,7 +52,8 @@ function refactorServices(rawServices, rawCategories) {
 
   // re-group services based on their category_id
   rawServices.forEach((raw) => {
-    const [service_id, service_name, last_date, is_active, cate_id] = raw;
+    const [service_id, service_name, last_date, is_active, cate_id, price] =
+      raw;
 
     // add the service to the matching category_id
     if (is_active) {
@@ -60,6 +61,7 @@ function refactorServices(rawServices, rawCategories) {
         service_id,
         service_name,
         last_date,
+        price,
       });
     }
   });

@@ -3,44 +3,55 @@
     <div id="background" @click="handleClose" />
     <div id="window">
       <button @click="handleClose" id="closeBtn" class="redBtn">X</button>
-      <form @submit.prevent="onSubmit" id="content">
+      <div v-if="fetched">
         <div id="title">
           {{ serviceInfo.name }}
           <div id="description">
             {{ serviceInfo.description }}
           </div>
         </div>
-        <div
-          v-for="(question, index) in questions"
-          :key="index"
-          class="questionBox"
+        <form
+          v-if="serviceInfo.client_can_book"
+          @submit.prevent="onSubmit"
+          id="content"
         >
-          <span class="question"
-            >{{ index + 1 }}. {{ question.questionText }}</span
+          <div
+            v-for="(question, index) in questions"
+            :key="index"
+            class="questionBox"
           >
-          <div class="optionBox">
-            <div
-              v-for="(option, childIndex) in question.options"
-              :key="childIndex"
-              class="options"
+            <span class="question"
+              >{{ index + 1 }}. {{ question.questionText }}</span
             >
-              <label>
-                <input
-                  type="radio"
-                  :value="option.optionId"
-                  v-model="answers[question.questionId]"
-                  required
-                />
-                {{ option.optionText }} {{ formatOffset(option.optionOffset) }}
-              </label>
+            <div class="optionBox">
+              <div
+                v-for="(option, childIndex) in question.options"
+                :key="childIndex"
+                class="options"
+              >
+                <label>
+                  <input
+                    type="radio"
+                    :value="option.optionId"
+                    v-model="answers[question.questionId]"
+                    required
+                  />
+                  {{ option.optionText }}
+                  {{ formatOffset(option.optionOffset) }}
+                </label>
+              </div>
             </div>
           </div>
+          <div v-if="msg" id="msg">{{ msg }}</div>
+          <div id="btnBox">
+            <button id="confirm" class="blueBtn">Confirm</button>
+          </div>
+        </form>
+        <div v-else id="notAvail">
+          This service is not available for online booking, please contact us to
+          book
         </div>
-        <div v-if="msg" id="msg">{{ msg }}</div>
-        <div id="btnBox">
-          <button id="confirm" class="blueBtn">Confirm</button>
-        </div>
-      </form>
+      </div>
     </div>
   </div>
 </template>
@@ -62,6 +73,8 @@ export default {
       msg: "",
       // outcome
       answers: {},
+      // status
+      fetched: false,
     };
   },
   methods: {
@@ -96,6 +109,7 @@ export default {
     const { questions, serviceInfo } = await fetchAOSs(this.serviceId);
     this.questions = questions;
     this.serviceInfo = serviceInfo;
+    this.fetched = true;
   },
 };
 </script>
@@ -191,7 +205,7 @@ label:active {
 #title {
   text-align: center;
   font-size: 25px;
-  /* font-weight: bold; */
+  margin-top: 10px;
 }
 #description {
   font-size: 15px;
@@ -200,5 +214,11 @@ label:active {
 #confirm {
   padding: 5px 30px;
   border-radius: 20px;
+}
+#notAvail {
+  padding: 20px;
+  text-align: center;
+  font-size: 15px;
+  color: rgb(184, 121, 3);
 }
 </style>

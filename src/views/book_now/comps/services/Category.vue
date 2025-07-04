@@ -7,7 +7,10 @@
       :key="index"
       @click="onSelectService(service.service_id, service.service_name)"
     >
-      {{ service.service_name }}
+      <div>
+        {{ service.service_name }}
+      </div>
+      <div v-if="service.price">$ {{ service.price }} +</div>
     </div>
   </div>
 </template>
