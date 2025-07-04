@@ -1,5 +1,6 @@
 <template>
   <div id="layout">
+    <div id="title">Forgot password</div>
     <div v-if="page === 1"><PhoneNumInput :onNext="onRequestCode" /></div>
     <div v-if="page === 2">
       <OTPverify
@@ -54,5 +55,11 @@ export default {};
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+#title {
+  text-align: center;
+  margin: 10px;
+  font-size: 25px;
+  margin-bottom: 20px;
 }
 </style>

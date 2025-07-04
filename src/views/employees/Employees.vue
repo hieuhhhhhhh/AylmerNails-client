@@ -15,9 +15,11 @@
     </div>
   </div>
   <br />
-  <button class="blueBtn" id="plus" @click="navigateAddEmp()">
-    <FontAwesomeIcon :icon="plusIcon" /> Add Employee
-  </button>
+  <div id="flex">
+    <button class="blueBtn" id="plus" @click="navigateAddEmp()">
+      <FontAwesomeIcon :icon="plusIcon" /> Add Employee
+    </button>
+  </div>
 </template>
 
 <script>
@@ -100,5 +102,9 @@ export default {
   #service {
     padding: 13px;
   }
+}
+#flex {
+  display: flex;
+  justify-content: center;
 }
 </style>

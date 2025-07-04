@@ -1,28 +1,14 @@
 <template>
   <form @submit.prevent="onSubmit">
-    <table>
-      <colgroup>
-        <col style="width: auto" />
-        <col style="width: 80%" />
-      </colgroup>
-      <tbody>
-        <tr>
-          <th>Name:</th>
-          <td>
-            <div id="flexBox">
-              <input
-                type="text"
-                v-model="name"
-                required
-                @input="name = $event.target.value.toUpperCase()"
-              />
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <input
+      type="text"
+      v-model="name"
+      required
+      @input="name = $event.target.value.toUpperCase()"
+      placeholder="Category Name"
+    />
     <button class="greenBtn">
-      <FontAwesomeIcon :icon="saveIcon" /> <b>Confirm New Category</b>
+      <FontAwesomeIcon :icon="saveIcon" /> <b>Add Category</b>
     </button>
   </form>
 </template>
@@ -30,7 +16,7 @@
 <script>
 // comps
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 // lib
 import addCategory from "./apis/addCategory";
 
@@ -41,7 +27,7 @@ export default {
   data() {
     return {
       // icons
-      saveIcon: faCheck,
+      saveIcon: faPlus,
       // products
       name: "",
     };
@@ -59,15 +45,15 @@ export default {
 
 
 <style scoped>
-input {
-  width: 100%;
-}
-th,
-td {
-  padding: 10px;
-  text-align: left;
-}
-#flexBox {
+form {
   display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+input {
+  width: 300px;
+  padding: 6px 10px;
+  width: 250px;
 }
 </style>

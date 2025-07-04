@@ -25,12 +25,8 @@
       <div id="msg">{{ msg }}</div>
 
       <button class="blueBtn">Log in</button>
-      <div>
-        <router-link to="/forgot_password">Forgot Password</router-link>
-      </div>
-      <div>
-        <router-link to="/signup">Create new Account</router-link>
-      </div>
+      <router-link to="/forgot_password">Forgot Password</router-link>
+      <router-link to="/signup">Create new Account</router-link>
     </form>
   </div>
 </template>

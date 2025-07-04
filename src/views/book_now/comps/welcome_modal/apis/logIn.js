@@ -3,9 +3,13 @@ import { parsePhoneNumberFromString } from "libphonenumber-js";
 
 export default async function logIn(phoneNum, password, rememberMe) {
   try {
-    // parse phone number to E.164
-    phoneNum = parsePhoneNumberFromString(phoneNum, "CA").number; // E.164 format
-    console.log("phoneNum: ", phoneNum);
+    try {
+      // parse phone number to E.164
+      phoneNum = parsePhoneNumberFromString(phoneNum, "CA").number; // E.164 format
+      console.log("phoneNum: ", phoneNum);
+    } catch (e) {
+      return { message: "Invalid phone number" };
+    }
 
     // get app path
     const baseURL = process.env.VUE_APP_BASE_URL;
@@ -44,6 +48,6 @@ export default async function logIn(phoneNum, password, rememberMe) {
     }
   } catch (e) {
     console.error("Unexpected Error: ", e);
-    return { message: e.message };
+    return { message: "Unexpected Error" };
   }
 }

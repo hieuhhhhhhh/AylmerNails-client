@@ -1,7 +1,11 @@
 <template>
   <div v-for="(AOS, parentIndex) in AOSs" :key="parentIndex">
     <div id="title">
-      <button class="redBtn" id="smallBtn" @click="removeQuestion(parentIndex)">
+      <button
+        class="redBtn"
+        id="smallBtn"
+        @click.prevent="removeQuestion(parentIndex)"
+      >
         <FontAwesomeIcon :icon="removeIcon" /></button
       >&nbsp; <b>Question {{ parentIndex + 1 }} </b>:
       <input
@@ -27,7 +31,7 @@
                 class="redBtn"
                 id="smallBtn"
                 v-if="index > 0"
-                @click="removeOption(parentIndex, index)"
+                @click.prevent="removeOption(parentIndex, index)"
               >
                 <FontAwesomeIcon :icon="removeIcon" /></button
               >&nbsp;
@@ -55,26 +59,21 @@
             <button
               class="orangeBtn"
               id="smallBtn"
-              @click="addOption(parentIndex)"
+              @click.prevent="addOption(parentIndex)"
             >
-              <FontAwesomeIcon :icon="plusIcon" /> More Option
+              <FontAwesomeIcon :icon="plusIcon" /> Add Option
             </button>
           </td>
         </tr>
       </tbody>
     </table>
-    <div id="note">
-      *to indicate a decrement, input a negative value for "Duration Increase"
-    </div>
-    <div id="note">
-      *question list is immutable once created, recreate the service if you have
-      to change it
-    </div>
+    <div id="note">* <i>Duration Increase</i> can be negative</div>
+    <div id="note">* Questions & Answers can not be updated once created</div>
     <br />
   </div>
   <div>
-    <button class="orangeBtn" @click="addQuestion">
-      <FontAwesomeIcon :icon="plusIcon" /> Start New Question
+    <button class="orangeBtn" @click.prevent="addQuestion">
+      <FontAwesomeIcon :icon="plusIcon" /> Add Question
     </button>
   </div>
   <br />

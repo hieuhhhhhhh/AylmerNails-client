@@ -87,9 +87,12 @@
       />
     </div>
     <br />
-    <button class="greenBtn">
-      <FontAwesomeIcon :icon="saveIcon" /> <b>Confirm New Employee</b>
-    </button>
+
+    <div id="flex">
+      <button id="confirm" class="greenBtn">
+        <FontAwesomeIcon :icon="saveIcon" /> <b>Confirm New Employee</b>
+      </button>
+    </div>
   </form>
 </template>
 
@@ -194,5 +197,14 @@ td {
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
+}
+#confirm {
+  border-radius: 20px;
+  padding: 10px 20px;
+  margin: 20px 0px;
+}
+#flex {
+  display: flex;
+  justify-content: center;
 }
 </style>

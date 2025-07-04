@@ -4,11 +4,13 @@
     <div id="window">
       <button @click="onClose" id="closeBtn" class="redBtn">X</button>
       <div id="content">
-        <div>Welcome to Online Booking!</div>
+        <div id="title">Welcome to Online Booking!</div>
         <LogInForm :closeModal="onClose" />
-        <button>Forgot password</button>
-        <button>Create an account</button>
-        <button @click="onClose">Book without logging in</button>
+        <router-link to="/forgot_password">Forgot Password</router-link>
+        <router-link to="/signup">Create new Account</router-link>
+        <button id="book" class="greenBtn" @click="onClose">
+          Book without logging in
+        </button>
       </div>
     </div>
   </div>
@@ -64,17 +66,19 @@ export default {};
 #window {
   position: relative;
   z-index: 20;
-  width: 300px;
+  width: 350px;
   max-width: 100%;
   max-height: 100%;
   background-color: var(--background-i2);
   overflow-y: auto;
-  max-height: 80%;
 }
 #content {
-  padding: 20px;
-
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   margin-top: 15px;
+  gap: 10px;
 }
 #closeBtn {
   position: absolute;
@@ -84,5 +88,26 @@ export default {};
   height: 30px;
   padding: 0;
   border-radius: 0;
+}
+#title {
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+#book {
+  font-size: 15px;
+  padding: 10px 50px;
+  border-radius: 20px;
+  margin: 10px;
+}
+
+a {
+  font-size: 15px;
+  text-decoration: none;
+  color: rgb(0, 153, 255);
+}
+
+a:hover,
+a:active {
+  text-decoration: underline;
 }
 </style>

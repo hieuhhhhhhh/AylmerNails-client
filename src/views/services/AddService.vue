@@ -88,8 +88,8 @@
       </tbody>
     </table>
     <br />
-    <div id="addOn">
-      <b>Question List:</b>
+    <div id="addOn" type="button">
+      <b>Questions & Answers:</b>
       <AOSsEdit
         :AOSs="AOSs"
         :editAOS="editAOS"
@@ -99,7 +99,9 @@
         :removeQuestion="removeQuestion"
         :onInputQuestion="onInputQuestion"
       />
-      <button class="greenBtn">
+    </div>
+    <div id="flex">
+      <button id="confirm" class="greenBtn">
         <FontAwesomeIcon :icon="saveIcon" /> <b>Confirm New Service</b>
       </button>
     </div>
@@ -223,7 +225,7 @@ td {
 #addOn {
   padding: 10px;
   border-top: 3px var(--xtrans-gray) solid;
-  border-bottom: 3px var(--xtrans-gray) solid;
+  /* border-bottom: 3px var(--xtrans-gray) solid; */
 }
 
 #duo {
@@ -240,5 +242,14 @@ td {
   font-size: 16px;
   padding: 10px;
   border-radius: 5px;
+}
+#flex {
+  display: flex;
+  justify-content: center;
+}
+#confirm {
+  border-radius: 20px;
+  padding: 10px 20px;
+  margin: 20px 0px;
 }
 </style>
