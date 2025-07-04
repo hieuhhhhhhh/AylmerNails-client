@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="onSubmit">
-    <div>Please enter the one time code sent to {{ phoneNum }}</div>
+    <div>Please enter the one time code sent to {{ phoneNum }} by text</div>
     <div>
       <input type="text" v-model="code" placeholder="Verification Code" />
     </div>
@@ -29,6 +29,7 @@ const props = defineProps({
 });
 
 // payload
+const codeId = ref(props.codeId);
 const code = ref("");
 const msg = ref("");
 const router = useRouter();
@@ -37,7 +38,7 @@ const wait = ref(props.waitTime);
 // APIS
 async function onSubmit() {
   const message = await signUp(
-    props.codeId,
+    codeId.value,
     code.value,
     props.phoneNum,
     props.password,
@@ -57,18 +58,20 @@ async function onSubmit() {
 }
 
 async function onResend() {
-  const { codeId, message, waitTime } = await requestSignUp(
-    props.phoneNum,
-    props.firstName,
-    props.lastName
-  );
+  const {
+    codeId: _codeId,
+    message,
+    waitTime,
+  } = await requestSignUp(props.phoneNum, props.firstName, props.lastName);
+  console.log(_codeId);
 
   //   if fail
-  if (!codeId) {
+  if (!_codeId) {
     msg.value = message;
     return;
   }
 
+  codeId.value = _codeId;
   wait.value = waitTime;
 }
 

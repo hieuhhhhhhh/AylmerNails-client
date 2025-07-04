@@ -13,6 +13,7 @@
             :chain="props.chain"
             :date="props.date"
             :onNavigateNext="onNavigateNext"
+            :waitTime="waitTime"
           />
         </div>
       </div>
@@ -35,15 +36,16 @@ const props = defineProps({
 });
 // RESOURCES
 const page = ref(1);
+const waitTime = ref(0);
 // PAYLOAD
 const codeId = ref();
 const phoneNum = ref("");
 
 // HANDLERS
-function onRequestCode(_codeId, _phoneNum) {
+function onRequestCode(_codeId, _phoneNum, _waitTime) {
   codeId.value = _codeId;
   phoneNum.value = _phoneNum;
-
+  waitTime.value = _waitTime;
   // to next page
   page.value++;
 }
@@ -75,7 +77,7 @@ export default {};
 #window {
   position: relative;
   z-index: 20;
-  width: 300px;
+  width: 350px;
   min-height: 100px;
   max-width: 100%;
   max-height: 100%;

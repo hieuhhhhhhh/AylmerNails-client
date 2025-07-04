@@ -2,8 +2,12 @@ import { parsePhoneNumberFromString } from "libphonenumber-js";
 
 export default async function requestOTP(phoneNum) {
   try {
-    // parse phone number to E.164
-    phoneNum = parsePhoneNumberFromString(phoneNum, "CA").number; // E.164 format
+    try {
+      // parse phone number to E.164
+      phoneNum = parsePhoneNumberFromString(phoneNum, "CA").number; // E.164 format
+    } catch (e) {
+      return { message: "Invalid phone number" };
+    }
 
     // get app path
     const baseURL = process.env.VUE_APP_BASE_URL;
@@ -24,9 +28,10 @@ export default async function requestOTP(phoneNum) {
     const json = await res.json();
     const codeId = json.code_id;
     const message = json.message;
+    const waitTime = json.wait_time;
 
     // return results
-    return { codeId, message };
+    return { codeId, message, waitTime };
   } catch (e) {
     console.error("Unexpected Error: ", e);
     return { message: "Unexpected Error" };

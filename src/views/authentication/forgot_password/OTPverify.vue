@@ -5,7 +5,7 @@
     <div>
       <input type="text" v-model="code" placeholder="Verification Code" />
     </div>
-    <div>{{ msg }}</div>
+    <div id="msg">{{ msg }}</div>
     <button class="greenBtn">Verify</button>
     <a v-if="wait > 0" class="disabled"> Resend Code (Wait {{ wait }}s)</a>
     <a v-else @click="onResend"> Resend Code </a>
@@ -28,6 +28,7 @@ const props = defineProps({
 });
 
 // payload
+const codeId = ref(props.codeId);
 const code = ref("");
 const msg = ref("");
 const router = useRouter();
@@ -36,7 +37,7 @@ const wait = ref(props.waitTime);
 // APIS
 async function onSubmit() {
   const message = await renewPassword(
-    props.codeId,
+    codeId.value,
     code.value,
     props.phoneNum,
     props.password
@@ -54,15 +55,21 @@ async function onSubmit() {
 }
 
 async function onResend() {
-  const { codeId, message, waitTime } = await requestForgotPW(props.phoneNum);
+  const {
+    codeId: _codeId,
+    message,
+    waitTime,
+  } = await requestForgotPW(props.phoneNum);
+  console.log(_codeId);
 
   //   if fail
-  if (!codeId) {
+  if (!_codeId) {
     msg.value = message;
     return;
   }
 
   // if succesful
+  codeId.value = _codeId;
   wait.value = waitTime;
 }
 

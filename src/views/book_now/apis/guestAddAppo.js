@@ -1,5 +1,3 @@
-import notifyReqError from "@/stores/notifyReqError";
-
 export default async function guestAddAppo(otpId, otp, chain, date) {
   try {
     // count of presentation of every employee in the chain
@@ -29,15 +27,13 @@ export default async function guestAddAppo(otpId, otp, chain, date) {
     const json = await res.json();
 
     // read status and process response
-    if (res.ok) {
-      return true;
-    } else {
-      notifyReqError(json.message);
+    if (!res.ok) {
       console.log(
         "Failed to add appointments as guest, message: ",
         json.message
       );
     }
+    return { ok: res.ok, message: json.message };
   } catch (e) {
     console.error("Unexpected Error: ", e);
   }

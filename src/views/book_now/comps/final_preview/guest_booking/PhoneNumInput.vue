@@ -1,4 +1,7 @@
 <template>
+  <div id="title">
+    Please leave your phone number to confirm your appointment
+  </div>
   <form @submit.prevent="onSubmit">
     <div>
       <input
@@ -8,8 +11,8 @@
         required
       />
     </div>
-    <div>{{ msg }}</div>
-    <button>Send Verification Code</button>
+    <div id="msg">{{ msg }}</div>
+    <button class="blueBtn">Send Verification Code</button>
   </form>
 </template>
 
@@ -31,7 +34,7 @@ const msg = ref("");
 
 // APIS
 async function onSubmit() {
-  const { codeId, message } = await requestOTP(phoneNum.value);
+  const { codeId, message, waitTime } = await requestOTP(phoneNum.value);
 
   //   if fail
   if (!codeId) {
@@ -40,8 +43,35 @@ async function onSubmit() {
   }
 
   // if succesful
-  props.onNext(codeId, phoneNum.value);
+  props.onNext(codeId, phoneNum.value, waitTime);
 }
 </script>
 
 
+<style scoped>
+#title {
+  margin: 20px 0px;
+  font-size: 20px;
+}
+button {
+  padding: 8px 20px;
+  border-radius: 20px;
+}
+input[type="password"],
+input[type="tel"] {
+  padding: 6px 10px;
+  width: 250px;
+}
+form {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-direction: column;
+  padding: 10px;
+}
+
+#msg {
+  color: red;
+  font-size: 15px;
+}
+</style>
