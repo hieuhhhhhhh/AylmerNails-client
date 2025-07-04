@@ -1,14 +1,16 @@
 <template>
   <form @submit.prevent="onSubmit">
     <div v-for="employee in employees" :key="employee.employee_id">
-      <input
-        id="check"
-        type="checkbox"
-        :value="employee.employee_id"
-        :disabled="!isEditing"
-        v-model="checked"
-      />
-      <label>{{ employee.alias }}</label>
+      <label>
+        <input
+          id="check"
+          type="checkbox"
+          :value="employee.employee_id"
+          :disabled="!isEditing"
+          v-model="checked"
+        />
+        {{ employee.alias }}
+      </label>
     </div>
 
     <button v-if="!isEditing" class="blueBtn" @click="openEditMode">

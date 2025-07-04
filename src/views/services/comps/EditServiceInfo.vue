@@ -24,7 +24,7 @@
           </td>
         </tr>
         <tr>
-          <th>Price $:</th>
+          <th>Starting Price $:</th>
 
           <td id="flexBox">
             <input

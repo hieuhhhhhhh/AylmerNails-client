@@ -1,34 +1,25 @@
 <template>
   <div id="bar">
     <div id="card">
-      <div id="flexBox">
-        <span id="name">{{ name }}</span>
-
-        <span id="item" v-if="price">
-          <FontAwesomeIcon :icon="dollarIcon" /> {{ price }}+</span
-        >
-        <span id="item"
-          ><FontAwesomeIcon :icon="timeIcon" /> {{ length / 60 }}m+</span
-        >
-      </div>
+      <div id="name">{{ name }}</div>
       <div id="des">{{ description }}</div>
       <br />
-      <div id="technicians" v-if="SEs.length">
+      <div id="technicians" v-if="SEs.length && fetched">
         <div v-for="employee in SEs" :key="employee.employee_id">
-          <input
-            id="check"
-            type="checkbox"
-            :value="{ id: employee.employee_id, alias: employee.alias }"
-            v-model="checked"
-            @change="onCheckEmp"
-          />
-          <label
-            ><FontAwesomeIcon :icon="userIcon" /> {{ employee.alias }}</label
-          >
+          <label>
+            <input
+              id="check"
+              type="checkbox"
+              :value="{ id: employee.employee_id, alias: employee.alias }"
+              v-model="checked"
+              @change="onCheckEmp"
+            />
+            <FontAwesomeIcon :icon="userIcon" /> {{ employee.alias }}
+          </label>
         </div>
       </div>
       <div id="note" v-else>
-        No available technicians right now, please select another service
+        No available technicians right now, please deselect this service
       </div>
     </div>
     <div>
@@ -69,6 +60,8 @@ export default {
       dollarIcon: faDollarSign,
       removeIcon: faTrashCan,
       userIcon: faUser,
+      // status
+      fetched: false,
       // resources
       SEs: [],
       checked: [],
@@ -112,6 +105,9 @@ export default {
       alias: e.alias,
     }));
     this.onCheckEmp();
+
+    // update status
+    this.fetched = true;
   },
 };
 </script>
@@ -151,7 +147,7 @@ export default {
 }
 #name {
   font-size: 23px;
-  flex: 2;
+  padding-inline: 10px;
 }
 
 #flexBox {
@@ -166,5 +162,8 @@ export default {
   margin-top: 3px;
   padding-inline: 10px;
   color: gray;
+}
+label {
+  user-select: none;
 }
 </style>

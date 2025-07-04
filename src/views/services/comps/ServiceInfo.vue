@@ -14,7 +14,7 @@
           </td>
         </tr>
         <tr>
-          <th>Price:</th>
+          <th>Starting Price:</th>
           <td v-if="serviceInfo.price">$ {{ serviceInfo.price }}</td>
         </tr>
 

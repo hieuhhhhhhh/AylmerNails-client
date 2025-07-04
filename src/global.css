@@ -38,6 +38,9 @@ body {
   display: flex; /* This ensures flex behavior for child elements */
   flex-direction: column; /* Align content in a column */
 }
+label{
+  user-select: none;
+}
 
 
 

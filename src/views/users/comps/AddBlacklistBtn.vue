@@ -15,7 +15,7 @@
           Phone Number
           <input
             type="tel"
-            placeholder="North American number"
+            placeholder="Phone number"
             v-model="phoneNum"
             required
           />

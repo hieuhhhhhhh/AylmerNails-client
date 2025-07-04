@@ -45,7 +45,7 @@
           </td>
         </tr>
         <tr>
-          <th>Price $:</th>
+          <th>Starting Price $:</th>
           <td id="flexBox">
             <input type="number" step="0.01" v-model="price" :min="1" />
           </td>
