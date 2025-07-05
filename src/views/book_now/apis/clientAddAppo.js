@@ -74,8 +74,7 @@ function chainToNewSlots(chain) {
       const id = empIds[i];
 
       if (empCount[id] < max) {
-        const j = i - 1;
-        topEmpIds = empIds.slice(0, j);
+        topEmpIds = empIds.slice(0, i);
         break;
       }
     }

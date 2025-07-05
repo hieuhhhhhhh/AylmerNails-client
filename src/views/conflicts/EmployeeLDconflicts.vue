@@ -1,5 +1,5 @@
 <template>
-  <div id="title">Employee Availability Warnings</div>
+  <div id="title">Employee Availability Conflicts</div>
 
   <table>
     <colgroup>

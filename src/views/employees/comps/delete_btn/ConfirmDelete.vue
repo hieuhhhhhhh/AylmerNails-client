@@ -4,15 +4,18 @@
 
     <div id="window">
       <button @click="props.onClose()" id="closeBtn" class="redBtn">X</button>
-      <div id="content">Permanently delete this employee?</div>
-      <label>Type "yes" to confirm </label>
-      <input
-        ref="inputRef"
-        type="text"
-        v-model="text"
-        @input="onInput"
-        placeholder="yes"
-      />
+      <div id="content">
+        <div>Permanently delete this employee?</div>
+
+        <label>Type "yes" to confirm </label>
+        <input
+          ref="inputRef"
+          type="text"
+          v-model="text"
+          @input="onInput"
+          placeholder="yes"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -82,7 +85,9 @@ export default {};
 }
 #content {
   padding: 10px 20px;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 #closeBtn {
   position: absolute;

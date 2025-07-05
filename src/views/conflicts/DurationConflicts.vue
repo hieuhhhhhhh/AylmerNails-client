@@ -1,5 +1,5 @@
 <template>
-  <div id="title">Service Duration Warnings</div>
+  <div id="title">Service Duration Conflicts</div>
 
   <table>
     <colgroup>

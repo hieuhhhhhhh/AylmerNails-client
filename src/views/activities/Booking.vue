@@ -58,7 +58,16 @@
       </tr>
     </tbody>
   </table>
-  <button v-if="appos?.length === limit" @click="showMore">Show More</button>
+  <div class="flex">
+    <button
+      id="show"
+      class="blueBtn"
+      v-if="appos?.length === limit"
+      @click="showMore"
+    >
+      Show More
+    </button>
+  </div>
 </template>
 
 <script>
@@ -184,5 +193,14 @@ tr {
 }
 #search {
   margin-bottom: 10px;
+}
+#show {
+  padding: 10px 30px;
+  margin: 10px;
+  border-radius: 20px;
+}
+.flex {
+  display: flex;
+  justify-content: center;
 }
 </style>

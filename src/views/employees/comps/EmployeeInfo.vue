@@ -1,4 +1,5 @@
 <template>
+  <DeleteBtn v-if="deletable" :empId="emp_id" />
   <div class="warning" v-if="lastDateCC > 0" @click="toConflictPage">
     Warning: Availability has {{ lastDateCC }}
     <u>conflicting appointment(s)</u>
@@ -7,7 +8,6 @@
     Warning: Schedule(s) have {{ scheduleCC }}
     <u>conflicting appointment(s)</u>
   </div>
-  <DeleteBtn v-if="deletable" :empId="emp_id" />
   <form @submit.prevent="onSubmit" v-if="isFetched">
     <div v-if="!isEditing">
       <table>

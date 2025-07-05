@@ -1,6 +1,6 @@
 <template>
-  <div id="flexBox">
-    <button id="delete" class="btn" @click="onDeleteClicked">
+  <div class="flex">
+    <button id="delete" class="redBtn" @click="onDeleteClicked">
       <FontAwesomeIcon :icon="faTrash" />
       Delete Employee
     </button>
@@ -34,3 +34,14 @@ function onDeleteClicked() {
 </script>
 
 
+<style scoped>
+.flex {
+  display: flex;
+  justify-content: center;
+}
+#delete {
+  padding: 10px 40px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+}
+</style>

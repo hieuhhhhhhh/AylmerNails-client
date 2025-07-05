@@ -46,7 +46,16 @@
       </tr>
     </tbody>
   </table>
-  <button v-if="rows?.length === limit" @click="showMore">Show more</button>
+  <div class="flex">
+    <button
+      id="show"
+      class="blueBtn"
+      v-if="rows?.length === limit"
+      @click="showMore"
+    >
+      Show more
+    </button>
+  </div>
 </template>
 <script>
 // lib
@@ -178,6 +187,15 @@ button {
   background: var(--trans-blue);
   color: white;
   border-radius: 2px;
+}
+#show {
+  padding: 10px 30px;
+  margin: 10px;
+  border-radius: 20px;
+}
+.flex {
+  display: flex;
+  justify-content: center;
 }
 </style>
 
