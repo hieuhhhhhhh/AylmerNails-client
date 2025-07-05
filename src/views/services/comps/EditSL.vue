@@ -11,7 +11,7 @@
     />
 
     <div id="duo">
-      <button class="redBtn" @click="cancelEditing">
+      <button class="redBtn" @click.prevent="cancelEditing">
         <FontAwesomeIcon :icon="cancelIcon" /> Cancel
       </button>
       <button class="greenBtn" type="submit">

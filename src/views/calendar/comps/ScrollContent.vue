@@ -35,10 +35,9 @@
             }"
             @click.stop="onSelectAppo(appo.id)"
           >
-            {{ formatTime(appo.start) }}
-            <br />
+            <div class="time">{{ formatTime(appo.start) }}</div>
             {{ appo.contactName }}
-            <div id="serviceName">
+            <div class="bold">
               {{ appo.serviceName }}
             </div>
           </div>
@@ -208,7 +207,6 @@ export default {
   border-radius: 4px;
   overflow: hidden;
   font-size: 12px;
-  font-family: Arial;
 }
 #appo:active {
   border: 2px solid black;
@@ -217,7 +215,7 @@ export default {
   position: relative;
   z-index: 0;
 }
-#serviceName {
+.bold {
   font-weight: bold;
   font-size: 10px;
 }

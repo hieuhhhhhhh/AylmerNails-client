@@ -77,7 +77,7 @@
     </table>
 
     <div id="duo">
-      <button class="redBtn" type="button" @click="onClose">
+      <button class="redBtn" @click.prevent="onClose">
         <FontAwesomeIcon :icon="cancelIcon" /> Cancel
       </button>
       <button class="greenBtn">

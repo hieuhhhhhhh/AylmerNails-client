@@ -2,7 +2,7 @@
   <div id="parent" v-if="isOpen && isLoggedOut">
     <div id="background" />
     <div id="window">
-      <button @click="onClose" id="closeBtn" class="redBtn">X</button>
+      <button @click.prevent="onClose" id="closeBtn" class="redBtn">X</button>
       <div id="content">
         <div id="title">Welcome to Online Booking!</div>
         <LogInForm :closeModal="onClose" />

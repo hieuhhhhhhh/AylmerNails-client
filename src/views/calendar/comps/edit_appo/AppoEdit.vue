@@ -10,7 +10,7 @@
         <td>
           <div class="center">
             <div>
-              <button @click="onIncreaseDate(false)">-</button>
+              <button @click.prevent="onIncreaseDate(false)">-</button>
 
               <input
                 type="date"
@@ -18,7 +18,7 @@
                 @change="onInputDate"
                 required
               />
-              <button @click="onIncreaseDate(true)">+</button>
+              <button @click.prevent="onIncreaseDate(true)">+</button>
             </div>
             {{ getReminder }}
           </div>
@@ -30,7 +30,7 @@
         <td>
           <div class="center">
             <div>
-              <button @click="onIncreaseTime(false)">-</button>
+              <button @click.prevent="onIncreaseTime(false)">-</button>
 
               <input
                 type="time"
@@ -38,7 +38,7 @@
                 @change="onInputStart"
                 required
               />
-              <button @click="onIncreaseTime(true)">+</button>
+              <button @click.prevent="onIncreaseTime(true)">+</button>
             </div>
           </div>
         </td>
@@ -86,7 +86,7 @@
         <td>
           <div class="center">
             <div>
-              <button @click="onIncreaseDuration(false)">-</button>
+              <button @click.prevent="onIncreaseDuration(false)">-</button>
 
               <input
                 type="number"
@@ -101,7 +101,7 @@
                 :min="5"
                 step="1"
               />
-              <button @click="onIncreaseDuration(true)">+</button>
+              <button @click.prevent="onIncreaseDuration(true)">+</button>
             </div>
             to {{ secsToHours(start + duration) }}
           </div>
@@ -114,7 +114,7 @@
           <div class="duo">
             {{ empAlias }}
             <div>
-              <button @click="onOpenEmpPicker">Select</button>
+              <button @click.prevent="onOpenEmpPicker">Select</button>
             </div>
           </div>
           <div class="selected" v-if="selectedEmps?.length">

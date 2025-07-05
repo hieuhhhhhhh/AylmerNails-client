@@ -23,14 +23,14 @@
         <td>
           <div class="center">
             <div>
-              <button @click="onIncreaseTime(false)">-</button>
+              <button @click.prevent="onIncreaseTime(false)">-</button>
               <input
                 type="time"
                 :value="parseUnixHours(start)"
                 @change="onInputStart"
                 required
               />
-              <button @click="onIncreaseTime(true)">+</button>
+              <button @click.prevent="onIncreaseTime(true)">+</button>
             </div>
           </div>
         </td>
@@ -75,7 +75,7 @@
         <td>
           <div class="center">
             <div>
-              <button @click="onIncreaseDuration(false)">-</button>
+              <button @click.prevent="onIncreaseDuration(false)">-</button>
 
               <input
                 type="number"
@@ -90,7 +90,7 @@
                 :min="5"
                 step="1"
               />
-              <button @click="onIncreaseDuration(true)">+</button>
+              <button @click.prevent="onIncreaseDuration(true)">+</button>
             </div>
             <div>
               {{ getEndTime }}
@@ -106,7 +106,7 @@
             <div>
               {{ empAlias }}
             </div>
-            <button @click="onOpenEmpPicker">Select</button>
+            <button @click.prevent="onOpenEmpPicker">Select</button>
           </div>
         </td>
       </tr>

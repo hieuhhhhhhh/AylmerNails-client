@@ -2,7 +2,7 @@
   <div id="parent">
     <div id="background" @click="onCancel" />
     <div id="window">
-      <button @click="onCancel" id="closeBtn" class="redBtn">X</button>
+      <button @click.prevent="onCancel" id="closeBtn" class="redBtn">X</button>
       <div id="content">
         <AppoInfo :appo="appo" />
         <ConfirmDelete v-if="isCancelingAppo" :appoId="appo.appoId" />

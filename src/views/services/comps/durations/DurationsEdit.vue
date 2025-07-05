@@ -58,7 +58,7 @@
       </tbody>
     </table>
     <div id="duo">
-      <button class="redBtn" @click="onToogleEdit">Cancel</button>
+      <button class="redBtn" @click.prevent="onToogleEdit">Cancel</button>
       <button class="greenBtn" type="submit">Save</button>
     </div>
   </form>

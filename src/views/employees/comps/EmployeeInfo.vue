@@ -70,11 +70,11 @@
     </div>
     <br />
 
-    <button v-if="!isEditing" class="blueBtn" @click="openEditForm">
+    <button v-if="!isEditing" class="blueBtn" @click.prevent="openEditForm">
       <FontAwesomeIcon :icon="editIcon" /> Edit Employee Details
     </button>
     <div v-else id="duo">
-      <button class="redBtn" @click="closeEditForm">
+      <button class="redBtn" @click.prevent="closeEditForm">
         <FontAwesomeIcon :icon="cancelIcon" /> Cancel
       </button>
       <button class="greenBtn">

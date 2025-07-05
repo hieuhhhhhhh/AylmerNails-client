@@ -288,7 +288,7 @@ export default {
   border: 3px outset;
   overflow-x: auto;
   overflow-y: hidden;
-
+  font-family: Arial;
   background-color: rgb(215, 215, 215);
   color: black;
 }
