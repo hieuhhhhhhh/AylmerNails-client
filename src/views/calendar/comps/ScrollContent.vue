@@ -207,6 +207,8 @@ export default {
   box-sizing: border-box;
   border-radius: 4px;
   overflow: hidden;
+  font-size: 12px;
+  font-family: Arial;
 }
 #appo:active {
   border: 2px solid black;
@@ -217,6 +219,7 @@ export default {
 }
 #serviceName {
   font-weight: bold;
+  font-size: 10px;
 }
 #transform {
   transform-origin: top left;

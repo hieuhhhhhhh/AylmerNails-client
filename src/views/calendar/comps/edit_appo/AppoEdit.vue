@@ -6,41 +6,6 @@
     </colgroup>
     <tbody>
       <tr>
-        <th>Service</th>
-        <td>
-          <div class="duo">
-            <div>
-              <div v-if="serviceName">{{ serviceName }} - {{ category }}</div>
-            </div>
-            <div>
-              <button v-if="serviceName" @click="onClearService">X</button>
-              <button @click="onOpenServicePicker">Select</button>
-            </div>
-          </div>
-          <div id="AOS" v-for="(AOS, index) in AOSOs" :key="index">
-            {{ AOS.question }} ~ {{ AOS.answer }}
-            {{ formatOffset(AOS.offset) }}
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <th>Client</th>
-        <td>
-          <div class="duo">
-            <div>
-              {{ formatPhone(phoneNum) }}
-              <div>
-                {{ contactName }}
-              </div>
-            </div>
-            <div>
-              <button v-if="phoneNum" @click="onClearContact">X</button>
-              <button @click="onSelectContact">Select</button>
-            </div>
-          </div>
-        </td>
-      </tr>
-      <tr>
         <th>Date</th>
         <td>
           <div class="center">
@@ -78,6 +43,44 @@
           </div>
         </td>
       </tr>
+
+      <tr>
+        <th>Client</th>
+        <td>
+          <div class="duo">
+            <div>
+              {{ formatPhone(phoneNum) }}
+              <div>
+                {{ contactName }}
+              </div>
+            </div>
+            <div>
+              <button v-if="phoneNum" @click="onClearContact">X</button>
+              <button @click="onSelectContact">Select</button>
+            </div>
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <th>Service</th>
+        <td>
+          <div class="duo">
+            <div>
+              <div v-if="serviceName">{{ serviceName }} - {{ category }}</div>
+            </div>
+            <div>
+              <button v-if="serviceName" @click="onClearService">X</button>
+              <button @click="onOpenServicePicker">Select</button>
+            </div>
+          </div>
+          <div id="AOS" v-for="(AOS, index) in AOSOs" :key="index">
+            {{ AOS.question }} ~ {{ AOS.answer }}
+            {{ formatOffset(AOS.offset) }}
+          </div>
+        </td>
+      </tr>
+
       <tr>
         <th>Duration (mins)</th>
         <td>

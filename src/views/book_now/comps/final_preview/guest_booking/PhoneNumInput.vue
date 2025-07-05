@@ -1,7 +1,5 @@
 <template>
-  <div id="title">
-    Please leave your phone number to confirm your appointment
-  </div>
+  <div id="title">Please leave your phone number to confirm appointment</div>
   <form @submit.prevent="onSubmit">
     <div>
       <input

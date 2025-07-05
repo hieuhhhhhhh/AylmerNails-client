@@ -33,7 +33,9 @@
           </div>
         </td>
         <td>
-          <div>{{ appo.contactName }}</div>
+          <div v-if="appo.contactName != 'null null'">
+            {{ appo.contactName }}
+          </div>
           {{ formatPhone(appo.phoneNum) }}
         </td>
         <td>

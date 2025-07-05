@@ -7,18 +7,10 @@
 
     <tbody>
       <tr>
-        <th>Service</th>
-        <td>
-          <div class="duo" v-if="details.serviceName">
-            <div>{{ details.serviceName }} - {{ details.cateName }}</div>
-            <button class="infoBtn" @click="toService">i</button>
-          </div>
-          <div id="AOS" v-for="(AOS, index) in details.AOSOsText" :key="index">
-            {{ AOS.question }} ~ {{ AOS.answer }}
-            {{ formatOffset(AOS.offset) }}
-          </div>
-        </td>
+        <th>Date Time</th>
+        <td>{{ getTime }}<br />{{ getDate }} {{ getReminder }}</td>
       </tr>
+
       <tr>
         <th>Client</th>
         <td>
@@ -39,8 +31,17 @@
       </tr>
 
       <tr>
-        <th>Date Time</th>
-        <td>{{ getTime }}<br />{{ getDate }} {{ getReminder }}</td>
+        <th>Service</th>
+        <td>
+          <div class="duo" v-if="details.serviceName">
+            <div>{{ details.serviceName }} - {{ details.cateName }}</div>
+            <button class="infoBtn" @click="toService">i</button>
+          </div>
+          <div id="AOS" v-for="(AOS, index) in details.AOSOsText" :key="index">
+            {{ AOS.question }} ~ {{ AOS.answer }}
+            {{ formatOffset(AOS.offset) }}
+          </div>
+        </td>
       </tr>
       <tr>
         <th>Duration</th>

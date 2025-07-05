@@ -45,7 +45,7 @@
 
     <br />
     <div id="duo">
-      <button class="redBtn" @click="closeInput">
+      <button class="redBtn" @click.prevent="closeInput">
         <FontAwesomeIcon :icon="cancelIcon" /> Cancel
       </button>
       <button class="greenBtn">
