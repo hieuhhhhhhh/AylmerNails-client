@@ -122,11 +122,11 @@ export default {
       isFetched: false,
       isEditing: false,
       resetCheckers: 0,
+      deletable: false,
       // resources
       formattedDate: "",
       colorName: "",
       colorCode: null,
-      deletable: false,
       // outcome
       emp_id: null,
       categories: [],

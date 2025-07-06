@@ -1,5 +1,7 @@
 <template>
   <div id="parent">
+    <DeleteBtn v-if="deletable" :serviceId="service_id" />
+
     <div class="warning" v-if="lastDateCC > 0" @click="toConflictPage">
       Warning: Availability has {{ lastDateCC }}
       <u>conflicting appointment(s)</u>
@@ -45,12 +47,14 @@
 import fetchServiceDetails from "./apis/fetchServiceDetails";
 // lib
 import unixToReadable from "@/lib/unixToReadable";
+import getTodayUnixTime from "@/lib/getTodayUnixTime";
 // comps
 import NA from "@/components/NotAvailable.vue";
 import ServiceInfo from "./comps/ServiceInfo.vue";
 import ServiceAOSs from "./comps/AOSs/AOSs-demo.vue";
 import EmployeeChecker from "./comps/EmployeeChecker.vue";
 import DurationDemo from "./comps/durations/DurationsDemo.vue";
+import DeleteBtn from "./comps/delete_btn/DeleteBtn.vue";
 
 export default {
   components: {
@@ -59,9 +63,12 @@ export default {
     ServiceAOSs,
     EmployeeChecker,
     DurationDemo,
+    DeleteBtn,
   },
   data() {
     return {
+      // status
+      deletable: false,
       // outcomes
       service_id: null,
       AOSs: [],
@@ -102,6 +109,10 @@ export default {
       price: details.price,
       client_can_book: details.client_can_book,
     };
+
+    if (details.last_date) {
+      this.deletable = details.last_date < getTodayUnixTime();
+    }
 
     // fetch AOSs
     this.AOSs = details.AOSs;

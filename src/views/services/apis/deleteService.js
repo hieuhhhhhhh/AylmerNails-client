@@ -1,19 +1,19 @@
 import notifyReqError from "@/stores/notifyReqError";
 
-export default async function deleteEmployee(empId) {
+export default async function deleteService(serviceId) {
   try {
     // get app path
     const baseURL = process.env.VUE_APP_BASE_URL;
 
     // start requesting server
-    const res = await fetch(`${baseURL}/api/employees/delete_employee`, {
+    const res = await fetch(`${baseURL}/api/services/delete_service`, {
       method: "POST",
       credentials: "include",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        emp_id: empId,
+        service_id: serviceId,
       }),
     });
 
@@ -25,7 +25,7 @@ export default async function deleteEmployee(empId) {
     } else {
       const json = await res.json();
       notifyReqError(json.message);
-      console.log("Failed to delete employee, message: ", json.message);
+      console.log("Failed to delete service, message: ", json.message);
     }
   } catch (e) {
     console.error("Unexpected Error: ", e);
