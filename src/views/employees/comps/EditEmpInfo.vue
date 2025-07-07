@@ -51,7 +51,10 @@
 
       <tr>
         <td colspan="2">
-          <div id="note">*Ideal Lengths are not editable</div>
+          <div id="note">
+            *Ideal Lengths are not editable, recreate employee if you need to
+            change it
+          </div>
         </td>
       </tr>
 

@@ -43,9 +43,9 @@ export default async function fetchAvailability(date, services) {
       console.log("serviceSlots: ", serviceSlots);
 
       const chains = getChains(serviceSlots, services);
-      console.log("chains: ", chains);
 
       const validChains = removeShortChains(chains, DELAs_requests.length);
+      console.log("chains: ", validChains);
       return validChains;
     } else {
       notifyReqError(json.message);
