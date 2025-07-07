@@ -22,7 +22,7 @@
               </div>
             </div>
             <div>
-              <button class="infoBtn" v-if="details.userId" @click="toUser">
+              <button class="infoBtn" v-if="details.userId" @click="toUser()">
                 i
               </button>
             </div>
@@ -65,7 +65,22 @@
 
       <tr>
         <th>Booker</th>
-        <td></td>
+        <td>
+          <div class="duo">
+            <div>
+              {{ details.bookerName }}
+            </div>
+            <div>
+              <button
+                class="infoBtn"
+                v-if="details.bookerId"
+                @click="toUser(details.bookerId)"
+              >
+                i
+              </button>
+            </div>
+          </div>
+        </td>
       </tr>
 
       <tr v-if="details.message">
@@ -162,8 +177,8 @@ export default {
       router.push(`/employees/details/${props.details.empId}`);
     };
 
-    const toUser = () => {
-      router.push(`/users/${props.details.userId}`);
+    const toUser = (userId = props.details.userId) => {
+      router.push(`/users/${userId}`);
     };
 
     const onInputNote = () => {

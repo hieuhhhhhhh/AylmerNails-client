@@ -25,6 +25,7 @@ const props = defineProps({
   phoneNum: String,
   chain: Object,
   date: Number,
+  name: String,
   onNavigateNext: Function,
   waitTime: Number,
 });
@@ -43,7 +44,8 @@ async function onSubmit() {
     codeId.value,
     code.value,
     props.chain,
-    props.date
+    props.date,
+    props.name
   );
 
   //   if fail

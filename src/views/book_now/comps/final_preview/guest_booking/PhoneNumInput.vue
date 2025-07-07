@@ -9,6 +9,9 @@
         required
       />
     </div>
+    <div>
+      <input type="text" v-model="name" placeholder="Name" required />
+    </div>
     <div id="msg">{{ msg }}</div>
     <button class="blueBtn">Send Verification Code</button>
   </form>
@@ -26,6 +29,7 @@ const props = defineProps({
 
 // PAYLOAD
 const phoneNum = ref("");
+const name = ref("");
 
 // OUTPUT
 const msg = ref("");
@@ -41,7 +45,7 @@ async function onSubmit() {
   }
 
   // if succesful
-  props.onNext(codeId, phoneNum.value, waitTime);
+  props.onNext(codeId, phoneNum.value, name.value, waitTime);
 }
 </script>
 
@@ -55,8 +59,7 @@ button {
   padding: 8px 20px;
   border-radius: 20px;
 }
-input[type="password"],
-input[type="tel"] {
+input {
   padding: 6px 10px;
   width: 250px;
 }

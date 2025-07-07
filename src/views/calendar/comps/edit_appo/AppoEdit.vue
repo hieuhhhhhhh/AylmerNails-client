@@ -123,10 +123,7 @@
           </div>
         </td>
       </tr>
-      <tr>
-        <th>Booker</th>
-        <td></td>
-      </tr>
+
       <tr v-if="message">
         <th>Message</th>
         <td>

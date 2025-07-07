@@ -1,4 +1,4 @@
-export default async function guestAddAppo(otpId, otp, chain, date) {
+export default async function guestAddAppo(otpId, otp, chain, date, name) {
   try {
     // count of presentation of every employee in the chain
     const newSlots = chainToNewSlots(chain);
@@ -19,7 +19,8 @@ export default async function guestAddAppo(otpId, otp, chain, date) {
         otp_id: otpId,
         otp,
         slots: newSlots,
-        date: date,
+        date,
+        name,
       }),
     });
 

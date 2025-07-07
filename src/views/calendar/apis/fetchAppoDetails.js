@@ -53,9 +53,11 @@ function parseApiRes(json) {
     cateName,
     phoneNumId,
     phoneNum,
-    contactName,
     userId,
+    contactName,
     savedOn,
+    bookerId,
+    bookerName,
   ] = json.appo_details;
 
   // append info
@@ -75,9 +77,11 @@ function parseApiRes(json) {
     cateName,
     phoneNumId,
     phoneNum,
-    contactName,
     userId,
+    contactName,
     savedOn,
+    bookerId,
+    bookerName,
     AOSOsText: [],
     selectedEmps: [],
   };

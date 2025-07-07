@@ -12,6 +12,7 @@
             :phoneNum="phoneNum"
             :chain="props.chain"
             :date="props.date"
+            :name="name"
             :onNavigateNext="onNavigateNext"
             :waitTime="waitTime"
           />
@@ -40,12 +41,14 @@ const waitTime = ref(0);
 // PAYLOAD
 const codeId = ref();
 const phoneNum = ref("");
+const name = ref("");
 
 // HANDLERS
-function onRequestCode(_codeId, _phoneNum, _waitTime) {
+function onRequestCode(_codeId, _phoneNum, _name, _waitTime) {
   codeId.value = _codeId;
   phoneNum.value = _phoneNum;
   waitTime.value = _waitTime;
+  name.value = _name;
   // to next page
   page.value++;
 }

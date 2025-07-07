@@ -14,7 +14,7 @@
     <tbody>
       <tr>
         <th class="newCol"></th>
-        <th>Booked by</th>
+        <th>Client</th>
         <th>Booked on</th>
         <th>Service</th>
         <th>Employee</th>
