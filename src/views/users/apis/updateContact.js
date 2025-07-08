@@ -1,7 +1,17 @@
 import notifyReqError from "@/stores/notifyReqError";
+import { parsePhoneNumberFromString } from "libphonenumber-js";
 
 export default async function updateContact(phoneNum, name) {
   try {
+    try {
+      // parse phone number to E.164
+      phoneNum = parsePhoneNumberFromString(phoneNum, "CA").number; // E.164 format
+      console.log("phoneNum: ", phoneNum);
+    } catch (e) {
+      notifyReqError("Invalid Phone Number");
+      return;
+    }
+
     // get app path
     const baseURL = process.env.VUE_APP_BASE_URL;
 
