@@ -33,10 +33,13 @@
           </div>
         </td>
         <td>
-          <div v-if="appo.contactName != 'null null'">
+          {{ formatPhone(appo.phoneNum) }}
+          <div v-if="appo.contactName">
             {{ appo.contactName }}
           </div>
-          {{ formatPhone(appo.phoneNum) }}
+          <div v-if="appo.profileName && appo.profileName != appo.contactName">
+            ({{ appo.profileName }})
+          </div>
         </td>
         <td>
           {{ unixTimeToReminder(appo.bookedTime) }}

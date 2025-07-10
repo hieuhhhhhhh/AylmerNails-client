@@ -37,8 +37,11 @@
         </td>
         <td :style="{ color: appo.color }">{{ appo.empAlias }}</td>
         <td>
+          <div>{{ formatPhone(appo.phoneNum) }}</div>
           {{ appo.contactName }}
-          <div>{{ formatPhone(appo.phoneNumber) }}</div>
+          <div v-if="appo.profileName && appo.profileName != appo.contactName">
+            ({{ appo.profileName }})
+          </div>
         </td>
         <td>
           {{ unixToReadable(appo.date) }}

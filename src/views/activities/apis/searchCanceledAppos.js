@@ -15,7 +15,7 @@ export default async function searchCanceledAppos(query, limit) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          query: query.replace(/\s+/g, ""),
+          query: query.trim(),
           limit,
         }),
       }
@@ -31,12 +31,19 @@ export default async function searchCanceledAppos(query, limit) {
       // unpack
       const tables = json.appos;
       for (let row of tables) {
-        const [cancelId, userId, details, time, firstName, lastName, phoneNum] =
-          row;
+        const [
+          cancelId,
+          userId,
+          details,
+          time,
+          contactName,
+          profileName,
+          phoneNum,
+        ] = row;
 
         const appo = JSON.parse(details);
         appo.cancelId = cancelId;
-        appo.canceler = { userId, firstName, lastName, phoneNum };
+        appo.canceler = { userId, contactName, profileName, phoneNum };
         appo.cancelTime = time;
 
         appos.push(appo);

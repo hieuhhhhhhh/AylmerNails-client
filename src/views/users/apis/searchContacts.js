@@ -1,23 +1,22 @@
 import notifyReqError from "@/stores/notifyReqError";
 
-export default async function searchContacts(query) {
+export default async function searchContacts(query, limit) {
   try {
     // get app path
     const baseURL = process.env.VUE_APP_BASE_URL;
-    const endpoint = query ? `/${query}` : "";
 
     // start requesting server
-    const res = await fetch(
-      `${baseURL}/api/appointments/search_contacts${endpoint}`,
-      {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-
+    const res = await fetch(`${baseURL}/api/appointments/search_contacts`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        query: query.trim(),
+        limit,
+      }),
+    });
     // fetch json
     const json = await res.json();
 

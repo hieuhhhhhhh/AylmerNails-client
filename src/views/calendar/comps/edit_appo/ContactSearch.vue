@@ -57,7 +57,7 @@ export default {
 
     // APIS
     const onSearch = async () => {
-      contacts.value = await searchContacts(query.value);
+      contacts.value = await searchContacts(query.value, 25);
     };
 
     // INPUT

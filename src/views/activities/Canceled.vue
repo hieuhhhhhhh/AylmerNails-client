@@ -30,8 +30,12 @@
           </div>
         </td>
         <td>
-          <div>{{ appo.canceler.firstName }} {{ appo.canceler.lastName }}</div>
           {{ formatPhone(appo.canceler.phoneNum) }}
+          <div>{{ appo.canceler.contactName }}</div>
+
+          <div v-if="appo.canceler.profileName != appo.canceler.contactName">
+            ({{ appo.canceler.profileName }})
+          </div>
         </td>
         <td>
           {{ unixTimeToReminder(appo.cancelTime) }}
@@ -46,8 +50,8 @@
         </td>
         <td :style="{ color: appo.color }">{{ appo.empAlias }}</td>
         <td>
-          {{ appo.contactName }}
           <div>{{ formatPhone(appo.phoneNumber) }}</div>
+          {{ appo.contactName }}
         </td>
         <td>
           {{ unixTimeToReminder(appo.date) }}
