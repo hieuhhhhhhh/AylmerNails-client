@@ -2,7 +2,9 @@
   <div id="parent">
     <div id="background" @click="props.onCancel" />
     <div id="window">
-      <button @click="props.onCancel" id="closeBtn" class="redBtn">X</button>
+      <button @click="props.onCancel" id="closeBtn" class="redBtn">
+        <FontAwesomeIcon :icon="faXmark" />
+      </button>
 
       <div id="content">
         <form @submit.prevent="onSubmit">
@@ -17,6 +19,9 @@
 </template>
 <script setup>
 import { useRouter } from "vue-router";
+// icon
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 // apis
 import logOutEverywhere from "../../../apis/logOutEverywhere";
 
@@ -85,6 +90,7 @@ export default {};
   height: 30px;
   padding: 0;
   border-radius: 0;
+  font-size: 20px;
 }
 
 #flex {

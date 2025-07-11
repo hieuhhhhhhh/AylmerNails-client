@@ -2,7 +2,9 @@
   <div id="parent">
     <div id="background" @click="onCloseAppo" />
     <div id="window" :style="{ backgroundColor: details.color }">
-      <button @click="onCloseAppo" id="closeBtn" class="redBtn">X</button>
+      <button @click="onCloseAppo" id="closeBtn" class="redBtn">
+        <FontAwesomeIcon :icon="faXmark" />
+      </button>
       <div id="content">
         <AppoInfo :details="details" />
         <DeleteBtn
@@ -16,6 +18,10 @@
 </template>
 
 <script>
+// icon
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+
 // lib
 import { onMounted, ref, watch } from "vue";
 import fetchAppoDetails from "../../apis/fetchAppoDetails";
@@ -28,6 +34,7 @@ export default {
   components: {
     AppoInfo,
     DeleteBtn,
+    FontAwesomeIcon,
   },
   props: {
     appoId: Number,
@@ -57,7 +64,7 @@ export default {
       }
     );
 
-    return { details };
+    return { details, faXmark };
   },
 };
 </script>
@@ -105,6 +112,7 @@ export default {
   padding: 0;
   border-radius: 0;
   border: none;
+  font-size: 20px;
 }
 table {
   text-align: left;

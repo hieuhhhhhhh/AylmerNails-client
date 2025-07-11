@@ -2,7 +2,9 @@
   <div id="parent">
     <div id="background" @click="handleClose" />
     <div id="window">
-      <button @click="handleClose" id="closeBtn" class="redBtn">X</button>
+      <button @click="handleClose" id="closeBtn" class="redBtn">
+        <FontAwesomeIcon :icon="faXmark" />
+      </button>
       <div v-if="fetched">
         <div id="title">
           {{ serviceInfo.name }}
@@ -56,6 +58,9 @@
   </div>
 </template>
 <script>
+// icon
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 // apis
 import fetchAOSs from "../../apis/fetchAOSs";
 
@@ -68,6 +73,7 @@ export default {
   data() {
     return {
       // resource
+      faXmark,
       questions: [],
       serviceInfo: {},
       msg: "",
@@ -76,6 +82,9 @@ export default {
       // status
       fetched: false,
     };
+  },
+  components: {
+    FontAwesomeIcon,
   },
   methods: {
     onSubmit() {
@@ -157,6 +166,7 @@ export default {
   padding: 0;
   border: none;
   border-radius: 0px;
+  font-size: 20px;
 }
 #btnBox {
   display: flex;

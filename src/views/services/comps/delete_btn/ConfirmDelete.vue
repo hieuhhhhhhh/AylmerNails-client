@@ -3,7 +3,10 @@
     <div id="background" @click="props.onClose()" />
 
     <div id="window">
-      <button @click="props.onClose()" id="closeBtn" class="redBtn">X</button>
+      <button @click="props.onClose()" id="closeBtn" class="redBtn">
+        <FontAwesomeIcon :icon="faXmark" />
+      </button>
+
       <div id="content">
         <div>Permanently delete this service?</div>
 
@@ -23,6 +26,9 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
+// icon
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 // APIS
 import deleteService from "../../apis/deleteService";
 
@@ -98,5 +104,6 @@ export default {};
   padding: 0;
   border-radius: 0;
   border: none;
+  font-size: 20px;
 }
 </style>

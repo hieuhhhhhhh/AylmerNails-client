@@ -7,7 +7,9 @@
   <div id="parent" v-if="isUnsaving">
     <div id="background" @click="onCloseModal" />
     <div id="window">
-      <button @click="onCloseModal" id="closeBtn" class="redBtn">X</button>
+      <button @click="onCloseModal" id="closeBtn" class="redBtn">
+        <FontAwesomeIcon :icon="faXmark" />
+      </button>
       <div id="content">Unsave All Appointments?</div>
       <div id="flexBox">
         <button class="redBtn" @click="onUnsave">Yes</button>
@@ -23,6 +25,7 @@ import { useRouter } from "vue-router";
 import unsaveAllAppos from "../apis/unsaveAllAppos";
 // icon
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faBookmark } from "@fortawesome/free-regular-svg-icons";
 import { ref } from "vue";
 
@@ -93,6 +96,7 @@ async function onUnsave() {
   padding: 0;
   border-radius: 0;
   border: none;
+  font-size: 20px;
 }
 #unsave {
   font-size: 13px;

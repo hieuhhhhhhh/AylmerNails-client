@@ -3,7 +3,9 @@
     <div id="background" />
 
     <div id="window">
-      <button @click="props.onClose()" id="closeBtn" class="redBtn">X</button>
+      <button @click="props.onClose()" id="closeBtn" class="redBtn">
+        <FontAwesomeIcon :icon="faXmark" />
+      </button>
       <div id="content">
         <div v-if="page === 1"><PhoneNumInput :onNext="onRequestCode" /></div>
         <div v-if="page === 2">
@@ -24,6 +26,9 @@
 
 <script setup>
 import { ref } from "vue";
+// icons
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 // comps
 import PhoneNumInput from "./PhoneNumInput.vue";
 import OTPverify from "./OTPverify.vue";
@@ -92,6 +97,7 @@ export default {};
   text-align: center;
 }
 #closeBtn {
+  font-size: 20px;
   position: absolute;
   top: 0;
   right: 0;

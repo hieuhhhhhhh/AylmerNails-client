@@ -2,7 +2,10 @@
   <div id="parent">
     <div id="background" @click="onCancel" />
     <div id="window">
-      <button @click.prevent="onCancel" id="closeBtn" class="redBtn">X</button>
+      <button @click.prevent="onCancel" id="closeBtn" class="redBtn">
+        <FontAwesomeIcon :icon="faXmark" />
+      </button>
+
       <div id="content">
         <AppoInfo :appo="appo" />
         <ConfirmDelete v-if="isCancelingAppo" :appoId="appo.appoId" />
@@ -26,6 +29,9 @@
 </template>
 
 <script>
+// icon
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 // lib
 import { ref, computed } from "vue";
 import { useRouter } from "vue-router";
@@ -40,6 +46,7 @@ export default {
   components: {
     AppoInfo,
     ConfirmDelete,
+    FontAwesomeIcon,
   },
   props: {
     appo: Object,
@@ -69,6 +76,7 @@ export default {
       isRoleValid,
       isCancelingAppo,
       onCancelAppo,
+      faXmark,
     };
   },
 };
@@ -117,6 +125,7 @@ export default {
   padding: 0;
   border-radius: 0;
   border: none;
+  font-size: 20px;
 }
 #duo {
   display: flex;

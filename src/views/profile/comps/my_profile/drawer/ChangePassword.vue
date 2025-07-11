@@ -2,7 +2,9 @@
   <div id="parent">
     <div id="background" @click="onCancel" />
     <div id="window">
-      <button @click="props.onCancel" id="closeBtn" class="redBtn">X</button>
+      <button @click="props.onCancel" id="closeBtn" class="redBtn">
+        <FontAwesomeIcon :icon="faXmark" />
+      </button>
 
       <form @submit.prevent="onSubmit">
         <div id="content">
@@ -30,6 +32,9 @@
 
 <script setup>
 import { ref } from "vue";
+// icon
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 // apis
 import changePassword from "../../../apis/changePassword";
 
@@ -95,6 +100,7 @@ export default {};
   height: 30px;
   padding: 0;
   border-radius: 0;
+  font-size: 20px;
 }
 input {
   width: 100%;

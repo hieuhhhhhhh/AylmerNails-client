@@ -2,7 +2,10 @@
   <div id="parent" v-if="isOpen && isLoggedOut">
     <div id="background" />
     <div id="window">
-      <button @click.prevent="onClose" id="closeBtn" class="redBtn">X</button>
+      <button @click.prevent="onClose" id="closeBtn" class="redBtn">
+        <FontAwesomeIcon :icon="faXmark" />
+      </button>
+
       <div id="content">
         <div id="title">Welcome to Online Booking!</div>
         <LogInForm :closeModal="onClose" />
@@ -17,6 +20,10 @@
 </template>
 
 <script setup>
+// icon
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+
 import { computed, ref } from "vue";
 // pinia
 import { useMyProfile } from "@/stores/myProfile";
@@ -88,6 +95,7 @@ export default {};
   height: 30px;
   padding: 0;
   border-radius: 0;
+  font-size: 20px;
 }
 #title {
   margin-bottom: 10px;

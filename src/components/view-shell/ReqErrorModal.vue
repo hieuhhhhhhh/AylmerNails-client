@@ -3,7 +3,9 @@
     <div id="background" />
 
     <div id="window">
-      <button @click="onClose" id="closeBtn" class="redBtn">X</button>
+      <button @click="onClose" id="closeBtn" class="redBtn">
+        <FontAwesomeIcon :icon="faXmark" />
+      </button>
       <div id="content">
         <div id="title">Request Failure</div>
         {{ REstore.msg }}
@@ -13,6 +15,9 @@
 </template>
 
 <script setup>
+// icons
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 // pinia
 import { useRequestError } from "@/stores/myProfile";
 

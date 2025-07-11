@@ -7,8 +7,21 @@
 import { useMyProfile } from "@/stores/myProfile";
 
 export default {
+  data() {
+    return {
+      interval: null,
+    };
+  },
   async created() {
     await this.requestContinueSession();
+
+    // re-login every 20 minutes
+    this.interval = setInterval(() => {
+      this.requestContinueSession();
+    }, 20 * 60 * 1000);
+  },
+  beforeUnmount() {
+    if (this.interval) clearInterval(this.interval);
   },
   methods: {
     async requestContinueSession() {

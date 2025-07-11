@@ -2,7 +2,10 @@
   <div id="parent">
     <div id="background" @click="onCancel" />
     <div id="window">
-      <button @click="onCancel" id="closeBtn" class="redBtn">X</button>
+      <button @click="onCancel" id="closeBtn" class="redBtn">
+        <FontAwesomeIcon :icon="faXmark" />
+      </button>
+
       <div id="content">
         <form @submit.prevent="onSubmit">
           <label>First Name</label>
@@ -31,6 +34,9 @@
 </template>
 
 <script>
+// icon
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 // lib
 import { onMounted, ref } from "vue";
 import updateMyProfile from "../../apis/updateProfile";
@@ -40,6 +46,9 @@ export default {
     userInfo: Object,
     onCancel: Function,
     onFinish: Function,
+  },
+  components: {
+    FontAwesomeIcon,
   },
   setup(props) {
     // payload
@@ -64,6 +73,7 @@ export default {
       firstName,
       lastName,
       onSubmit,
+      faXmark,
     };
   },
 };
@@ -111,6 +121,7 @@ export default {
   height: 30px;
   padding: 0;
   border-radius: 0;
+  font-size: 20px;
 }
 input {
   width: 100%;
