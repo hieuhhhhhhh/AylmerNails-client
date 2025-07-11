@@ -1,4 +1,5 @@
 import notifyReqError from "@/stores/notifyReqError";
+import secsToHours from "@/lib/secsToHours";
 
 export default async function updateAppo(
   appoId,
@@ -48,10 +49,18 @@ export default async function updateAppo(
     if (res.ok) {
       return json.appo_id;
     } else {
-      notifyReqError(json.message);
-      console.log("Failed to update appointment, message: ", json.message);
-      console.log(json.start);
-      console.log(json.end);
+      let message = "An error occurred";
+      if (json.error_type == 1) {
+        message = `Overlapping appointment ${secsToHours(
+          json.start
+        )} to ${secsToHours(json.end)}`;
+      } else if (json.error_type == 2) {
+        message = `Schedule is from ${secsToHours(json.start)} to ${secsToHours(
+          json.end
+        )}`;
+      }
+      notifyReqError(message);
+      console.log("Failed to add appointment, message: ", json.message);
     }
   } catch (e) {
     console.error("Unexpected Error: ", e);

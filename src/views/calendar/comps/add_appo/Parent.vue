@@ -83,7 +83,6 @@
 import { ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import fetchAppoLength from "../../apis/fetchAppoLength";
-import addAppo from "../../apis/addAppo";
 // comps
 import AddForm from "./AddForm.vue";
 import EmployeePicker from "../edit_appo/EmployeePicker.vue";
@@ -92,6 +91,8 @@ import ContactPicker from "../edit_appo/ContactPicker.vue";
 // icon
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
+// apis
+import addAppo from "../../apis/addAppo";
 
 export default {
   name: "EditAppo",

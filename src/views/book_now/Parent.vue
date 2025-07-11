@@ -25,15 +25,19 @@
         :onReturn="onReturn"
       />
     </div>
-    <div v-show="page == 4">
-      <BookingConfirmation :chain="chain" :date="date" />
+    <div v-if="page == 4">
+      <BookingConfirmation
+        :chain="chain"
+        :date="date"
+        :onClearForm="onClearForm"
+      />
     </div>
   </div>
 </template>
 
 <script>
 // lib
-import { ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { onBeforeRouteLeave, useRoute, useRouter } from "vue-router";
 // comps
 import Services from "./comps/services/Services.vue";
@@ -62,6 +66,11 @@ export default {
     const page3trigger = ref(0);
     const chain = ref({});
     const date = ref(null);
+    const formIsEmpty = computed(
+      () =>
+        Object.keys(chain.value).length < 1 &&
+        Object.keys(services.value).length < 1
+    );
 
     // Methods
 
@@ -81,7 +90,7 @@ export default {
     };
 
     const onReturn = () => {
-      router.back();
+      if (!formIsEmpty.value) router.back();
     };
 
     const onSelectChain = (selectedChain, selectedDate) => {
@@ -96,18 +105,29 @@ export default {
       chain.value.slots[index].message = value;
     };
 
+    const onClearForm = () => {
+      console.log("clearing form");
+
+      chain.value = {};
+      services.value = {};
+      date.value = null;
+    };
+
     // DEPENDENCIES
 
     watch(
       () => route.params.page,
       (value) => {
+        console.log("navigating: ", value);
+        console.log("formIsEmpty", formIsEmpty.value);
         if (page.value == value) {
           return;
         }
 
-        if (value != 0 && value != 1 && Object.keys(chain).length === 0) {
+        if (value !== 1 && value !== 0 && formIsEmpty.value) {
           page.value = 1;
           updateURL();
+          router.push("/refresh");
           return;
         }
 
@@ -151,6 +171,7 @@ export default {
       onReturn,
       onSelectChain,
       onInputMessage,
+      onClearForm,
     };
   },
 };
