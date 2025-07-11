@@ -35,6 +35,36 @@
           </div>
         </td>
       </tr>
+
+      <tr>
+        <th>Duration (mins)</th>
+        <td>
+          <div class="center">
+            <div>
+              <button @click.prevent="onIncreaseDuration(false)">-</button>
+
+              <input
+                type="number"
+                :value="duration / 60"
+                @input="onInputDuration"
+                @focus="
+                  (event) => {
+                    event.target.select();
+                  }
+                "
+                required
+                :min="5"
+                step="1"
+              />
+              <button @click.prevent="onIncreaseDuration(true)">+</button>
+            </div>
+            <div>
+              {{ getEndTime }}
+            </div>
+          </div>
+        </td>
+      </tr>
+
       <tr>
         <th>Client</th>
         <td>
@@ -66,34 +96,6 @@
             <div>
               <button v-if="serviceName" @click="onClearService">X</button>
               <button @click="onOpenServicePicker">Select</button>
-            </div>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <th>Duration (mins)</th>
-        <td>
-          <div class="center">
-            <div>
-              <button @click.prevent="onIncreaseDuration(false)">-</button>
-
-              <input
-                type="number"
-                :value="duration / 60"
-                @input="onInputDuration"
-                @focus="
-                  (event) => {
-                    event.target.select();
-                  }
-                "
-                required
-                :min="5"
-                step="1"
-              />
-              <button @click.prevent="onIncreaseDuration(true)">+</button>
-            </div>
-            <div>
-              {{ getEndTime }}
             </div>
           </div>
         </td>

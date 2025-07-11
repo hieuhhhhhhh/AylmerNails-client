@@ -45,6 +45,33 @@
       </tr>
 
       <tr>
+        <th>Duration (mins)</th>
+        <td>
+          <div class="center">
+            <div>
+              <button @click.prevent="onIncreaseDuration(false)">-</button>
+
+              <input
+                type="number"
+                :value="duration / 60"
+                @input="onInputDuration"
+                @focus="
+                  (event) => {
+                    event.target.select();
+                  }
+                "
+                required
+                :min="5"
+                step="1"
+              />
+              <button @click.prevent="onIncreaseDuration(true)">+</button>
+            </div>
+            to {{ secsToHours(start + duration) }}
+          </div>
+        </td>
+      </tr>
+
+      <tr>
         <th>Client</th>
         <td>
           <div class="duo">
@@ -77,33 +104,6 @@
           <div id="AOS" v-for="(AOS, index) in AOSOs" :key="index">
             {{ AOS.question }} ~ {{ AOS.answer }}
             {{ formatOffset(AOS.offset) }}
-          </div>
-        </td>
-      </tr>
-
-      <tr>
-        <th>Duration (mins)</th>
-        <td>
-          <div class="center">
-            <div>
-              <button @click.prevent="onIncreaseDuration(false)">-</button>
-
-              <input
-                type="number"
-                :value="duration / 60"
-                @input="onInputDuration"
-                @focus="
-                  (event) => {
-                    event.target.select();
-                  }
-                "
-                required
-                :min="5"
-                step="1"
-              />
-              <button @click.prevent="onIncreaseDuration(true)">+</button>
-            </div>
-            to {{ secsToHours(start + duration) }}
           </div>
         </td>
       </tr>
