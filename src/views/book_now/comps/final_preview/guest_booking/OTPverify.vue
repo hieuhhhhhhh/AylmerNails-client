@@ -26,7 +26,7 @@ const props = defineProps({
   chain: Object,
   date: Number,
   name: String,
-  onNavigateNext: Function,
+  onSubmit: Function,
   waitTime: Number,
 });
 
@@ -40,7 +40,7 @@ const msg = ref("");
 
 // APIS
 async function onSubmit() {
-  const { ok, message } = await guestAddAppo(
+  const { ok, message, customer } = await guestAddAppo(
     codeId.value,
     code.value,
     props.chain,
@@ -56,7 +56,7 @@ async function onSubmit() {
   }
 
   // if succesful
-  props.onNavigateNext();
+  props.onSubmit(customer.name, customer.phoneNum);
 }
 
 async function onResend() {

@@ -34,7 +34,11 @@ export default async function guestAddAppo(otpId, otp, chain, date, name) {
         json.message
       );
     }
-    return { ok: res.ok, message: json.message };
+    return {
+      ok: res.ok,
+      message: json.message,
+      customer: { name: json.client_name, phoneNum: json.phone_num },
+    };
   } catch (e) {
     console.error("Unexpected Error: ", e);
   }

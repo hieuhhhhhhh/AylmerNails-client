@@ -21,7 +21,7 @@
         :chain="chain"
         :date="date"
         :onInputMessage="onInputMessage"
-        :onNavigateNext="onNavigateNext"
+        :onSubmit="onSubmit"
         :onReturn="onReturn"
       />
     </div>
@@ -30,6 +30,7 @@
         :chain="chain"
         :date="date"
         :onClearForm="onClearForm"
+        :customer="customer"
       />
     </div>
   </div>
@@ -59,13 +60,15 @@ export default {
     // lib
     const router = useRouter();
     const route = useRoute();
-    // Reactive state
+    // RESOURCES
     const services = ref({});
     const page = ref(1);
     const page2trigger = ref(0);
     const page3trigger = ref(0);
     const chain = ref({});
     const date = ref(null);
+    const customer = ref({});
+
     const formIsEmpty = computed(
       () =>
         Object.keys(chain.value).length < 1 &&
@@ -111,6 +114,11 @@ export default {
       chain.value = {};
       services.value = {};
       date.value = null;
+    };
+
+    const onSubmit = (name, phoneNum) => {
+      customer.value = { name, phoneNum };
+      onNavigateNext();
     };
 
     // DEPENDENCIES
@@ -165,12 +173,14 @@ export default {
       page3trigger,
       chain,
       date,
+      customer,
       getServices,
       onNavigateNext,
       resetPage2,
       onReturn,
       onSelectChain,
       onInputMessage,
+      onSubmit,
       onClearForm,
     };
   },

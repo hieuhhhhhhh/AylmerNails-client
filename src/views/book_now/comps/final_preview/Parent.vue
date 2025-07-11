@@ -36,7 +36,7 @@
   <GuestBooking
     :chain="props.chain"
     :date="props.date"
-    :onNavigateNext="onNavigateNext"
+    :onSubmit="onSubmit"
     :onClose="() => (isGuestBooking = false)"
     v-if="isGuestBooking"
   />
@@ -69,7 +69,7 @@ const props = defineProps({
   chain: Object,
   date: Number,
   onInputMessage: Function,
-  onNavigateNext: Function,
+  onSubmit: Function,
   onReturn: Function,
 });
 
@@ -99,7 +99,7 @@ async function onSubmit() {
     return;
   }
   const res = await clientAddAppo(props.chain, props.date);
-  if (res) props.onNavigateNext();
+  if (res) props.onSubmit(res.customer.name, res.customer.phoneNum);
 }
 
 function autoResize(index) {

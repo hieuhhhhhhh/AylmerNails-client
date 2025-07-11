@@ -28,7 +28,9 @@ export default async function clientAddAppo(chain, date) {
 
     // read status and process response
     if (res.ok) {
-      return true;
+      const customer = { name: json.client_name, phoneNum: json.phone_num };
+      console.log("customer", customer);
+      return { customer };
     } else {
       notifyReqError(json.message);
       console.log(

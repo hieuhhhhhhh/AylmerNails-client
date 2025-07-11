@@ -13,7 +13,7 @@
             :chain="props.chain"
             :date="props.date"
             :name="name"
-            :onNavigateNext="onNavigateNext"
+            :onSubmit="onSubmit"
             :waitTime="waitTime"
           />
         </div>
@@ -33,7 +33,7 @@ const props = defineProps({
   chain: Object,
   date: Number,
   onClose: Function,
-  onNavigateNext: Function,
+  onSubmit: Function,
 });
 // RESOURCES
 const page = ref(1);
