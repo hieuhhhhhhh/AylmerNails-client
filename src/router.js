@@ -1,220 +1,168 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-import Welcome from "./views/Welcome.vue";
-import NotFound from "./views/NotFound.vue";
-import Draft from "./templates/Draft.vue";
-import Refresh from "./components/Refresh.vue";
-// authentication
-import SignUp from "./views/authentication/sign_up/SignUp.vue";
-import CreateAccount from "./views/authentication/create_account/CreateAccount.vue";
-
-import ForgotPassword from "./views/authentication/forgot_password/ForgotPassword.vue";
-import LogIn from "./views/authentication/LogIn.vue";
-// services
-import ServicesLayout from "./views/services/Layout.vue";
-import Services from "./views/services/Services.vue";
-import AddService from "./views/services/AddService.vue";
-import AddCategory from "./views/services/AddCategory.vue";
-import ServiceDetails from "./views/services/ServiceDetails.vue";
-// employees
-import EmployeesLayout from "./views/employees/Layout.vue";
-import Employees from "./views/employees/Employees.vue";
-import AddEmployee from "./views/employees/AddEmployee.vue";
-import EmployeeDetails from "./views/employees/EmployeeDetails.vue";
-// book now
-import BookNow from "./views/book_now/Parent.vue";
-// calendar
-import Calendar from "./views/calendar/Calendar.vue";
-// conflicts
-import ConflictsLayout from "./views/conflicts/Layout.vue";
-import ServiceLDconflicts from "./views/conflicts/ServiceLDconflicts.vue";
-import DurationConflicts from "./views/conflicts/DurationConflicts.vue";
-import EmployeeLDconflicts from "./views/conflicts/EmployeeLDconflicts.vue";
-import ScheduleConflicts from "./views/conflicts/ScheduleConflicts.vue";
-
-// profile
-import Profile from "./views/profile/Layout.vue";
-// business links
-import BusinessLinks from "./views/business_links/Layout.vue";
-// users
-import UsersLayout from "./views/users/Layout.vue";
-import Users from "./views/users/Users.vue";
-import User from "./views/users/User.vue";
-import Blacklist from "./views/users/Blacklist.vue";
-import Clients from "./views/users/Clients.vue";
-
-// activities
-import Activities from "./views/activities/Layout.vue";
-import Booking from "./views/activities/Booking.vue";
-import Canceled from "./views/activities/Canceled.vue";
-import Saved from "./views/activities/Saved.vue";
-
 const routes = [
   {
     path: "/",
-    component: Welcome,
+    component: () => import("./views/Welcome.vue"),
   },
   {
     path: "/refresh",
-    component: Refresh,
+    component: () => import("./components/Refresh.vue"),
   },
   {
     path: "/activities",
-    component: Activities,
+    component: () => import("./views/activities/Layout.vue"),
     children: [
       {
         path: "booking",
-        component: Booking,
+        component: () => import("./views/activities/Booking.vue"),
       },
       {
         path: "canceled",
-        component: Canceled,
+        component: () => import("./views/activities/Canceled.vue"),
       },
       {
         path: "saved",
-        component: Saved,
+        component: () => import("./views/activities/Saved.vue"),
       },
     ],
   },
-
   {
     path: "/booknow/:page?",
-    component: BookNow,
+    component: () => import("./views/book_now/Parent.vue"),
   },
   {
     path: "/profile",
-    component: Profile,
+    component: () => import("./views/profile/Layout.vue"),
   },
   {
     path: "/users",
-    component: UsersLayout,
+    component: () => import("./views/users/Layout.vue"),
     children: [
       {
         path: "accounts",
-        component: Users,
+        component: () => import("./views/users/Users.vue"),
       },
       {
         path: ":userId",
-        component: User,
+        component: () => import("./views/users/User.vue"),
       },
       {
         path: "clients",
-        component: Clients,
+        component: () => import("./views/users/Clients.vue"),
       },
       {
         path: "blacklist",
-        component: Blacklist,
+        component: () => import("./views/users/Blacklist.vue"),
       },
     ],
   },
   {
     path: "/business_links",
-    component: BusinessLinks,
+    component: () => import("./views/business_links/Layout.vue"),
   },
   {
     path: "/signup",
-    component: SignUp,
+    component: () => import("./views/authentication/sign_up/SignUp.vue"),
   },
   {
     path: "/create_account",
-    component: CreateAccount,
+    component: () =>
+      import("./views/authentication/create_account/CreateAccount.vue"),
   },
-
   {
     path: "/forgot_password",
-    component: ForgotPassword,
+    component: () =>
+      import("./views/authentication/forgot_password/ForgotPassword.vue"),
   },
   {
     path: "/login",
-    component: LogIn,
+    component: () => import("./views/authentication/LogIn.vue"),
   },
   {
     path: "/draft",
-    component: Draft,
+    component: () => import("./templates/Draft.vue"),
   },
   {
     path: "/services",
-    component: ServicesLayout,
+    component: () => import("./views/services/Layout.vue"),
     redirect: "/services/all",
     children: [
       {
         path: "all",
-        component: Services,
+        component: () => import("./views/services/Services.vue"),
       },
       {
         path: "refresh",
-        component: Refresh,
+        component: () => import("./components/Refresh.vue"),
       },
       {
         path: "add_service/:cate_id?",
-        component: AddService,
+        component: () => import("./views/services/AddService.vue"),
       },
       {
         path: "add_category",
-        component: AddCategory,
+        component: () => import("./views/services/AddCategory.vue"),
       },
       {
         path: "details/:id",
-        component: ServiceDetails,
+        component: () => import("./views/services/ServiceDetails.vue"),
       },
     ],
   },
   {
     path: "/employees",
-    component: EmployeesLayout,
+    component: () => import("./views/employees/Layout.vue"),
     redirect: "/employees/all",
     children: [
       {
         path: "all",
-        component: Employees,
+        component: () => import("./views/employees/Employees.vue"),
       },
       {
         path: "refresh",
-        component: Refresh,
+        component: () => import("./components/Refresh.vue"),
       },
       {
         path: "add_employee",
-        component: AddEmployee,
+        component: () => import("./views/employees/AddEmployee.vue"),
       },
       {
         path: "details/:id",
-        component: EmployeeDetails,
+        component: () => import("./views/employees/EmployeeDetails.vue"),
       },
     ],
   },
-
   {
     path: "/calendar/:unixDate/:appoId?",
-    component: Calendar,
+    component: () => import("./views/calendar/Calendar.vue"),
     children: [{ path: "selecting" }],
   },
-
   {
     path: "/conflicts",
-    component: ConflictsLayout,
+    component: () => import("./views/conflicts/Layout.vue"),
     children: [
       {
         path: "service_ld/:serviceId",
-        component: ServiceLDconflicts,
+        component: () => import("./views/conflicts/ServiceLDconflicts.vue"),
       },
       {
         path: "service_duration/:serviceId",
-        component: DurationConflicts,
+        component: () => import("./views/conflicts/DurationConflicts.vue"),
       },
       {
         path: "employee_ld/:empId",
-        component: EmployeeLDconflicts,
+        component: () => import("./views/conflicts/EmployeeLDconflicts.vue"),
       },
       {
         path: "schedule/:empId",
-        component: ScheduleConflicts,
+        component: () => import("./views/conflicts/ScheduleConflicts.vue"),
       },
     ],
   },
-  // wildcard route for 404 - not found
   {
-    path: "/:pathMatch(.*)*", // This matches any undefined route
-    component: NotFound,
+    path: "/:pathMatch(.*)*",
+    component: () => import("./views/NotFound.vue"),
   },
 ];
 
