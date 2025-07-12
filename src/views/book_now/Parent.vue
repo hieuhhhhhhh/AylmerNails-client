@@ -1,5 +1,6 @@
 <template>
   <div id="layout">
+    <WelcomeModal />
     <div v-show="page == 1 || page == 0">
       <Services
         :getServices="getServices"
@@ -9,23 +10,42 @@
     </div>
     <div v-show="page == 2" :key="page2trigger">
       <SelectTime
+        :isReady="page == 2"
         :services="services"
         :onSelectChain="onSelectChain"
         :onReturn="onReturn"
       />
     </div>
     <div v-show="page == 3" :key="page3trigger">
-      <FinalPreview :chain="chain" :date="date" :onReturn="onReturn" />
+      <FinalPreview
+        :chain="chain"
+        :date="date"
+        :onInputMessage="onInputMessage"
+        :onSubmit="onSubmit"
+        :onReturn="onReturn"
+      />
+    </div>
+    <div v-if="page == 4">
+      <BookingConfirmation
+        :chain="chain"
+        :date="date"
+        :onClearForm="onClearForm"
+        :customer="customer"
+      />
     </div>
   </div>
 </template>
 
 <script>
-import { ref, watch } from "vue";
-import Services from "./comps/Services.vue";
-import SelectTime from "./comps/SelectTime.vue";
-import FinalPreview from "./comps/FinalPreview.vue";
+// lib
+import { computed, ref, watch } from "vue";
 import { onBeforeRouteLeave, useRoute, useRouter } from "vue-router";
+// comps
+import Services from "./comps/services/Services.vue";
+import SelectTime from "./comps/time_slots/SelectTime.vue";
+import FinalPreview from "./comps/final_preview/Parent.vue";
+import BookingConfirmation from "./comps/confirmation/BookingConfirmation.vue";
+import WelcomeModal from "./comps/welcome_modal/WelcomeModal.vue";
 
 export default {
   name: "BookNowParent",
@@ -33,18 +53,27 @@ export default {
     Services,
     SelectTime,
     FinalPreview,
+    WelcomeModal,
+    BookingConfirmation,
   },
   setup() {
     // lib
     const router = useRouter();
     const route = useRoute();
-    // Reactive state
+    // RESOURCES
     const services = ref({});
     const page = ref(1);
     const page2trigger = ref(0);
     const page3trigger = ref(0);
     const chain = ref({});
     const date = ref(null);
+    const customer = ref({});
+
+    const formIsEmpty = computed(
+      () =>
+        Object.keys(chain.value).length < 1 &&
+        Object.keys(services.value).length < 1
+    );
 
     // Methods
 
@@ -64,7 +93,7 @@ export default {
     };
 
     const onReturn = () => {
-      router.back();
+      if (!formIsEmpty.value) router.back();
     };
 
     const onSelectChain = (selectedChain, selectedDate) => {
@@ -75,18 +104,38 @@ export default {
       onNavigateNext();
     };
 
+    const onInputMessage = (index, value) => {
+      chain.value.slots[index].message = value;
+    };
+
+    const onClearForm = () => {
+      console.log("clearing form");
+
+      chain.value = {};
+      services.value = {};
+      date.value = null;
+    };
+
+    const onSubmit = (name, phoneNum) => {
+      customer.value = { name, phoneNum };
+      onNavigateNext();
+    };
+
     // DEPENDENCIES
 
     watch(
       () => route.params.page,
       (value) => {
+        console.log("navigating: ", value);
+        console.log("formIsEmpty", formIsEmpty.value);
         if (page.value == value) {
           return;
         }
 
-        if (value != 0 && value != 1 && Object.keys(chain).length === 0) {
+        if (value !== 1 && value !== 0 && formIsEmpty.value) {
           page.value = 1;
           updateURL();
+          router.push("/refresh");
           return;
         }
 
@@ -124,11 +173,15 @@ export default {
       page3trigger,
       chain,
       date,
+      customer,
       getServices,
       onNavigateNext,
       resetPage2,
       onReturn,
       onSelectChain,
+      onInputMessage,
+      onSubmit,
+      onClearForm,
     };
   },
 };

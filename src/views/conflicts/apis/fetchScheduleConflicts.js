@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function fetchScheduleConflicts(empId) {
   try {
     // get app path
@@ -60,6 +62,7 @@ export default async function fetchScheduleConflicts(empId) {
 
       return conflicts;
     } else {
+      notifyReqError(json.message);
       console.log(
         "Failed to fetch schedule conflicts, message: ",
         json.message

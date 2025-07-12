@@ -22,6 +22,7 @@ export default async function fetchBlacklistLastTracked() {
 
       return lastTracked;
     } else {
+      // notifyReqError(json.message);
       console.log(
         "Failed to get last tracked on blacklist, message: ",
         json.message

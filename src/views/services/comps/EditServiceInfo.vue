@@ -9,13 +9,7 @@
         <tr>
           <th>Name:</th>
           <td id="flexBox">
-            <input
-              id="textInput"
-              type="text"
-              :value="name"
-              @input="setName"
-              required
-            />
+            <input class="info" type="text" v-model="name" required />
           </td>
         </tr>
         <tr>
@@ -25,15 +19,43 @@
               id="description"
               type="text"
               rows="3"
-              :value="description"
-              @input="setDescription"
+              v-model="description"
             />
           </td>
         </tr>
         <tr>
+          <th>Starting Price $:</th>
+
+          <td id="flexBox">
+            <input
+              class="info"
+              type="number"
+              step="0.01"
+              v-model="price"
+              :min="1"
+            />
+          </td>
+        </tr>
+
+        <tr>
+          <th>
+            Available for <br />
+            online booking:
+          </th>
+          <td>
+            <input
+              id="check"
+              type="checkbox"
+              :checked="clientCanBook"
+              v-model="clientCanBook"
+            />
+          </td>
+        </tr>
+
+        <tr>
           <th>Available Until:</th>
           <td>
-            <input id="date" type="date" :value="date" @change="setDate" />
+            <input id="date" type="date" v-model="date" />
           </td>
         </tr>
         <tr>
@@ -47,7 +69,7 @@
               >
                 {{ cate.name }}
               </option>
-              <option :value="'null'">*empty</option>
+              <option :value="'null'">none</option>
             </select>
           </td>
         </tr>
@@ -80,10 +102,12 @@ export default {
   props: {
     onClose: Function,
     serviceId: Number,
-    iName: String,
-    iDescription: String,
-    iCategoryId: Number,
-    iDate: Number,
+    _name: String,
+    _description: String,
+    _category: Number,
+    _date: Number,
+    _price: String,
+    _clientCanBook: Number,
   },
   components: {
     FontAwesomeIcon,
@@ -100,21 +124,14 @@ export default {
       description: "",
       date: null,
       categoryId: null,
+      price: null,
+      clientCanBook: true,
 
       // resources
       categories: [],
     };
   },
   methods: {
-    setName(event) {
-      this.name = event.target.value;
-    },
-    setDescription(event) {
-      this.description = event.target.value;
-    },
-    setDate(event) {
-      this.date = event.target.value;
-    },
     setCategory(event) {
       this.categoryId = event.target.value;
     },
@@ -128,7 +145,9 @@ export default {
         this.name,
         this.description,
         this.categoryId,
-        parseDate(this.date)
+        parseDate(this.date),
+        this.price,
+        this.clientCanBook
       );
 
       if (res) {
@@ -138,30 +157,29 @@ export default {
   },
   async created() {
     this.categories = await fetchCategories();
-    this.name = this.iName;
-    this.description = this.iDescription;
-    if (this.iCategoryId) {
-      this.categoryId = this.iCategoryId;
-    } else {
-      this.categoryId = "null";
-    }
+    this.name = this._name;
+    this.description = this._description;
+    this.price = this._price;
+    this.clientCanBook = this._clientCanBook;
 
-    if (this.iDate) {
-      this.date = parseUT(this.iDate);
-    }
+    this.categoryId = this._category ?? "null";
+
+    this.date = this._date ? parseUT(this._date) : null;
   },
 };
 </script>
 
 <style scoped>
-#textInput,
+.info,
 textarea {
   width: 100%;
 }
 th,
 td {
-  padding: 10px;
   text-align: left;
+}
+td {
+  padding: 10px;
 }
 #flexBox {
   display: flex;
@@ -179,6 +197,10 @@ td {
 }
 #esi {
   background-color: var(--background-i2);
-  padding: 7px;
+}
+#check {
+  transform: scale(2);
+  margin-left: 7px;
+  margin-right: 10px;
 }
 </style>

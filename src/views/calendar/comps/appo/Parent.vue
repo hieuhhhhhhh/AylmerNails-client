@@ -2,7 +2,9 @@
   <div id="parent">
     <div id="background" @click="onCloseAppo" />
     <div id="window" :style="{ backgroundColor: details.color }">
-      <button @click="onCloseAppo" id="closeBtn" class="redBtn">X</button>
+      <button @click="onCloseAppo" id="closeBtn" class="redBtn">
+        <FontAwesomeIcon :icon="faXmark" />
+      </button>
       <div id="content">
         <AppoInfo :details="details" />
         <DeleteBtn
@@ -16,6 +18,10 @@
 </template>
 
 <script>
+// icon
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+
 // lib
 import { onMounted, ref, watch } from "vue";
 import fetchAppoDetails from "../../apis/fetchAppoDetails";
@@ -28,6 +34,7 @@ export default {
   components: {
     AppoInfo,
     DeleteBtn,
+    FontAwesomeIcon,
   },
   props: {
     appoId: Number,
@@ -41,7 +48,9 @@ export default {
     // apis
     const fetchDetails = async () => {
       details.value = await fetchAppoDetails(props.appoId);
-      console.log("details.value", details.value);
+      if (!details.value) {
+        props.onCloseAppo();
+      }
     };
 
     // lifecycle
@@ -55,7 +64,7 @@ export default {
       }
     );
 
-    return { details };
+    return { details, faXmark };
   },
 };
 </script>
@@ -88,9 +97,9 @@ export default {
   max-height: 100%;
   background-color: var(--background-i2);
   overflow-y: auto;
-  max-height: 80%;
 }
 #content {
+  font-size: 10px;
   padding: 20px;
   margin-top: 15px;
 }
@@ -103,6 +112,7 @@ export default {
   padding: 0;
   border-radius: 0;
   border: none;
+  font-size: 20px;
 }
 table {
   text-align: left;

@@ -14,7 +14,7 @@
     <tbody>
       <tr>
         <th class="newCol"></th>
-        <th>Booked by</th>
+        <th>Client</th>
         <th>Booked on</th>
         <th>Service</th>
         <th>Employee</th>
@@ -33,8 +33,13 @@
           </div>
         </td>
         <td>
-          <div>{{ appo.contactName }}</div>
           {{ formatPhone(appo.phoneNum) }}
+          <div v-if="appo.contactName">
+            {{ appo.contactName }}
+          </div>
+          <div v-if="appo.profileName && appo.profileName != appo.contactName">
+            ({{ appo.profileName }})
+          </div>
         </td>
         <td>
           {{ unixTimeToReminder(appo.bookedTime) }}
@@ -56,6 +61,16 @@
       </tr>
     </tbody>
   </table>
+  <div class="flex">
+    <button
+      id="show"
+      class="blueBtn"
+      v-if="appos?.length === limit"
+      @click="showMore"
+    >
+      Show More
+    </button>
+  </div>
 </template>
 
 <script>
@@ -79,7 +94,7 @@ export default {
     // resources
     const query = ref("");
     const appos = ref([]);
-    const limit = ref(50);
+    const limit = ref(25);
     const lastTracked = ref(null);
     const today = getTodayUnixTime();
     // lib
@@ -93,6 +108,11 @@ export default {
     const toAppoDetails = (date, appoId) => {
       console.log("date, appoId", date, appoId);
       router.push(`/calendar/${date}/${appoId}`);
+    };
+
+    const showMore = async () => {
+      limit.value += 25;
+      await onSearchBookings();
     };
 
     // LIFECYCLE
@@ -119,6 +139,8 @@ export default {
       formatPhone,
       toAppoDetails,
       onSearchBookings,
+      showMore,
+      limit,
     };
   },
 };
@@ -174,5 +196,14 @@ tr {
 }
 #search {
   margin-bottom: 10px;
+}
+#show {
+  padding: 10px 30px;
+  margin: 10px;
+  border-radius: 20px;
+}
+.flex {
+  display: flex;
+  justify-content: center;
 }
 </style>

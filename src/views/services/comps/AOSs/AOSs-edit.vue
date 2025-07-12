@@ -61,24 +61,19 @@
               id="smallBtn"
               @click.prevent="addOption(parentIndex)"
             >
-              <FontAwesomeIcon :icon="plusIcon" /> More Option
+              <FontAwesomeIcon :icon="plusIcon" /> Add Option
             </button>
           </td>
         </tr>
       </tbody>
     </table>
-    <div id="note">
-      *to indicate a decrement, input a negative value for "Duration Increase"
-    </div>
-    <div id="note">
-      *question list is immutable once created, recreate the service if you have
-      to change it
-    </div>
+    <div id="note">* <i>Duration Increase</i> can be negative</div>
+    <div id="note">* Questions & Answers can not be updated once created</div>
     <br />
   </div>
   <div>
     <button class="orangeBtn" @click.prevent="addQuestion">
-      <FontAwesomeIcon :icon="plusIcon" /> Start New Question
+      <FontAwesomeIcon :icon="plusIcon" /> Add Question
     </button>
   </div>
   <br />

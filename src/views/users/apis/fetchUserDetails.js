@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function fetchUsers(userId) {
   try {
     // get app path
@@ -38,6 +40,7 @@ export default async function fetchUsers(userId) {
         notes,
         contactName,
         bannedOn,
+        userId,
       };
 
       // unpack
@@ -76,6 +79,7 @@ export default async function fetchUsers(userId) {
 
       return { info, appos };
     } else {
+      notifyReqError(json.message);
       console.log("Failed to fetch users, message: ", json.message);
     }
   } catch (e) {

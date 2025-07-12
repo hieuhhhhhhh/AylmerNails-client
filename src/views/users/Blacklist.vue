@@ -46,6 +46,16 @@
       </tr>
     </tbody>
   </table>
+  <div class="flex">
+    <button
+      id="show"
+      class="blueBtn"
+      v-if="rows?.length === limit"
+      @click="showMore"
+    >
+      Show more
+    </button>
+  </div>
 </template>
 <script>
 // lib
@@ -73,7 +83,7 @@ export default {
     const query = ref("");
     const rows = ref([]);
     const lastTracked = ref(null);
-    const limit = ref(50);
+    const limit = ref(25);
     const today = getTodayUnixTime();
     // lib
     const router = useRouter();
@@ -88,6 +98,11 @@ export default {
       if (res) {
         router.push("/refresh");
       }
+    };
+
+    const showMore = async () => {
+      limit.value += 25;
+      await onSearch();
     };
 
     // LIFECYCLE
@@ -112,6 +127,8 @@ export default {
       unixToReadable,
       unixToHours,
       onUnban,
+      showMore,
+      limit,
     };
   },
 };
@@ -170,6 +187,15 @@ button {
   background: var(--trans-blue);
   color: white;
   border-radius: 2px;
+}
+#show {
+  padding: 10px 30px;
+  margin: 10px;
+  border-radius: 20px;
+}
+.flex {
+  display: flex;
+  justify-content: center;
 }
 </style>
 

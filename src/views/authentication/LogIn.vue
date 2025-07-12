@@ -1,59 +1,126 @@
-// a log in page allow user to input phone num and password with a submit button
-
 <template>
-  <div id="app">
-    <h1>Welcome to Log In!</h1>
+  <div id="layout">
     <form @submit.prevent="onSubmit">
-      <!-- prompt user phone number -->
-      <PhoneNumInput
-        :phone="phone"
-        :setPhone="
-          (input) => {
-            this.phone = input;
-          }
-        "
-      />
+      <div>
+        <input
+          type="tel"
+          v-model="phoneNum"
+          placeholder="Phone Number"
+          required
+        />
+      </div>
+      <div>
+        <input
+          type="password"
+          v-model="password"
+          placeholder="Password"
+          required
+        />
+      </div>
 
-      <!-- prompt user password -->
-      <PasswordInput
-        :password="password"
-        :setPassword="
-          (input) => {
-            this.password = input;
-          }
-        "
-      />
+      <label>
+        <input id="check" type="checkbox" v-model="rememberMe" />
+        Remember me next time
+      </label>
+      <div id="msg">{{ msg }}</div>
 
-      <!-- take phone num an password and call api -->
-      <LoginSubmitter
-        ref="LoginSubmitter"
-        :phone="phone"
-        :password="password"
-      />
-
-      <button type="submit">Log In</button>
+      <button class="blueBtn">Log in</button>
+      <router-link to="/forgot_password">Forgot Password</router-link>
+      <router-link to="/signup">Create new Account</router-link>
     </form>
   </div>
 </template>
 
-<script>
-import LoginSubmitter from "./apis/LoginSubmitter.vue";
-import PhoneNumInput from "./comps/PhoneNumInput.vue";
-import PasswordInput from "./comps/PasswordInput.vue";
+<script setup>
+import { ref } from "vue";
+// apis
+import logIn from "./apis/logIn";
+import { useRouter } from "vue-router";
 
-export default {
-  components: { LoginSubmitter, PhoneNumInput, PasswordInput },
-  data() {
-    return {
-      phone: "",
-      password: "",
-    };
-  },
-  methods: {
-    onSubmit() {
-      // Call printToConsole method of LoginSubmitter component via ref
-      this.$refs.LoginSubmitter.submitCredentials();
-    },
-  },
-};
+// RESOURCES
+const router = useRouter();
+// PAYLOAD
+const phoneNum = ref("");
+const password = ref("");
+const msg = ref("");
+const rememberMe = ref(false);
+
+// APIS
+async function onSubmit() {
+  const { message } = await logIn(
+    phoneNum.value,
+    password.value,
+    rememberMe.value
+  );
+  if (message) {
+    msg.value = message;
+    password.value = "";
+    return;
+  }
+
+  // if succesful
+  router.push("/");
+}
 </script>
+
+
+
+<script>
+export default {};
+</script>
+
+<style scoped>
+#layout {
+  background-color: var(--background-i1);
+  padding: 10px;
+  width: 900px;
+  max-width: 100vw;
+  margin-inline: auto;
+  flex-grow: 1;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+a {
+  font-size: 15px;
+  text-decoration: none;
+  color: rgb(0, 153, 255);
+}
+
+a:hover,
+a:active {
+  text-decoration: underline;
+}
+button {
+  font-size: 20px;
+  padding-inline: 50px;
+  border-radius: 20px;
+  margin-bottom: 50px;
+}
+
+input[type="checkbox"] {
+  transform: scale(1.5);
+  margin: 10px;
+  margin-inline: 3px;
+}
+
+input[type="password"],
+input[type="tel"] {
+  padding: 6px 10px;
+  width: 250px;
+}
+label {
+  font-size: 15px;
+}
+#msg {
+  color: red;
+  font-size: 15px;
+}
+</style>

@@ -1,6 +1,6 @@
 <template>
   <div id="main">
-    <div id="title">Are you sure to remove this appointment?</div>
+    <div id="title">Permanently remove this appointment?</div>
     <label>Type "yes" to confirm</label>
     <input
       ref="inputRef"
@@ -16,7 +16,7 @@
 // lib
 import { ref, onMounted } from "vue";
 import removeAppo from "../../apis/removeAppo";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 
 export default {
   props: {
@@ -25,6 +25,7 @@ export default {
   setup(props) {
     // lib
     const router = useRouter();
+    const route = useRoute();
     // resources
     const text = ref("");
     const inputRef = ref(null);
@@ -33,7 +34,10 @@ export default {
       if (text.value.trim().toLowerCase() === "yes") {
         const res = await removeAppo(props.appoId);
         if (res) {
-          router.push("/activities/canceled");
+          await router.push(
+            route.path.split("/").slice(0, -1).join("/") || "/"
+          );
+          router.push("/refresh");
         }
       }
     };
@@ -61,11 +65,11 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-size: 15px;
+  font-size: 13px;
 }
 #title {
   text-align: center;
-  font-size: 20px;
-  margin-bottom: 20px;
+  font-size: 18px;
+  margin-bottom: 5px;
 }
 </style>

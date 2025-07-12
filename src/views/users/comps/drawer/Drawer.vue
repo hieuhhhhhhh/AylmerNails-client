@@ -1,15 +1,15 @@
 <template>
   <div id="drawer" ref="drawer" @blur="onBlur" tabindex="0">
-    <button>Update user's role</button>
+    <button @click="onChangeRole">Change user's role</button>
     <button
       v-if="bannedOn == null"
       :style="{ color: 'red' }"
       @click="onBanUnban"
     >
-      Move to blacklist
+      Ban this account
     </button>
     <button v-else :style="{ color: 'green' }" @click="onBanUnban">
-      Remove from blacklist
+      Unban this account
     </button>
   </div>
 </template>
@@ -26,7 +26,9 @@ export default {
     onToogleDrawer: Function,
     phoneNum: String,
     bannedOn: Number,
+    onChangeRole: Function,
   },
+
   setup(props) {
     const router = useRouter();
     const drawer = ref(null);
@@ -68,13 +70,13 @@ export default {
 <style scoped>
 #drawer {
   position: absolute;
-
   font-size: initial;
 }
 button {
   width: 200px;
   text-align: left;
   margin: 0;
+  margin-left: -165px;
   padding: 7px;
 }
 </style>

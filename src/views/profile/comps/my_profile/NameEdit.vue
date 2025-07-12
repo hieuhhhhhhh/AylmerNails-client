@@ -2,11 +2,12 @@
   <div id="parent">
     <div id="background" @click="onCancel" />
     <div id="window">
-      <form @submit.prevent="onSubmit">
-        <button @click.prevent="onCancel" id="closeBtn" class="redBtn">
-          X
-        </button>
-        <div id="content">
+      <button @click="onCancel" id="closeBtn" class="redBtn">
+        <FontAwesomeIcon :icon="faXmark" />
+      </button>
+
+      <div id="content">
+        <form @submit.prevent="onSubmit">
           <label>First Name</label>
           <input
             type="text"
@@ -23,16 +24,19 @@
             placeholder="Enter Last Name"
             required
           />
-        </div>
-        <div class="flexBox">
-          <button class="blueBtn">Save</button>
-        </div>
-      </form>
+          <div class="flexBox">
+            <button class="blueBtn">Save</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+// icon
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 // lib
 import { onMounted, ref } from "vue";
 import updateMyProfile from "../../apis/updateProfile";
@@ -42,6 +46,9 @@ export default {
     userInfo: Object,
     onCancel: Function,
     onFinish: Function,
+  },
+  components: {
+    FontAwesomeIcon,
   },
   setup(props) {
     // payload
@@ -66,6 +73,7 @@ export default {
       firstName,
       lastName,
       onSubmit,
+      faXmark,
     };
   },
 };
@@ -77,8 +85,8 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  height: 100%;
-  width: 100%;
+  height: 100vh;
+  width: 100vw;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -113,6 +121,7 @@ export default {
   height: 30px;
   padding: 0;
   border-radius: 0;
+  font-size: 20px;
 }
 input {
   width: 100%;

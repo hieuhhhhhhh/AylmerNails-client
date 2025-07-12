@@ -35,10 +35,9 @@
             }"
             @click.stop="onSelectAppo(appo.id)"
           >
-            {{ formatTime(appo.start) }}
-            <br />
+            <div class="time">{{ formatTime(appo.start) }}</div>
             {{ appo.contactName }}
-            <div id="serviceName">
+            <div class="bold">
               {{ appo.serviceName }}
             </div>
           </div>
@@ -147,7 +146,9 @@ export default {
     const fetchData = async () => {
       isFetched.value = false;
       const dayInfo = await fetchDailyAppos(props.unixDate);
+
       console.log("dayInfo", dayInfo);
+      if (!dayInfo) return;
       employees.value = dayInfo.employees;
       dayStart.value = dayInfo.dayStart;
       dayEnd.value = dayInfo.dayEnd;
@@ -205,6 +206,7 @@ export default {
   box-sizing: border-box;
   border-radius: 4px;
   overflow: hidden;
+  font-size: 12px;
 }
 #appo:active {
   border: 2px solid black;
@@ -213,8 +215,9 @@ export default {
   position: relative;
   z-index: 0;
 }
-#serviceName {
+.bold {
   font-weight: bold;
+  font-size: 10px;
 }
 #transform {
   transform-origin: top left;

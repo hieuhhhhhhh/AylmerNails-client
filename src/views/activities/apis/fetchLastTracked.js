@@ -22,6 +22,7 @@ export default async function fetchLastTracked() {
 
       return lastTracked;
     } else {
+      // notifyReqError(json.message);
       console.log(
         "Failed to last tracked on bookings, message: ",
         json.message

@@ -1,4 +1,5 @@
 import parseDate from "@/lib/parseDate";
+import notifyReqError from "@/stores/notifyReqError";
 
 export default async function addService(
   name,
@@ -7,7 +8,9 @@ export default async function addService(
   date,
   duration,
   AOSs,
-  employee_ids
+  employee_ids,
+  price,
+  clientCanBook
 ) {
   try {
     // parse AOSs
@@ -43,6 +46,8 @@ export default async function addService(
         duration,
         AOSs: newAOSs,
         employee_ids,
+        price,
+        client_can_book: clientCanBook,
       }),
     });
 
@@ -53,6 +58,7 @@ export default async function addService(
     if (res.ok) {
       return json.added_service_id;
     } else {
+      notifyReqError(json.message);
       console.log("Failed to add service, message: ", json.message);
     }
   } catch (e) {

@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function updateProfile(firstName, lastName) {
   try {
     // get app path
@@ -22,6 +24,7 @@ export default async function updateProfile(firstName, lastName) {
     } else {
       // fetch json
       const json = await res.json();
+      notifyReqError(json.message);
       console.log("Failed to update my profile, message: ", json.message);
     }
   } catch (e) {

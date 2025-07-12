@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function fetchEmployeeLdConflicts(empId) {
   try {
     // get app path
@@ -58,6 +60,7 @@ export default async function fetchEmployeeLdConflicts(empId) {
 
       return conflicts;
     } else {
+      notifyReqError(json.message);
       console.log(
         "Failed to fetch employee's last date conflicts, message: ",
         json.message

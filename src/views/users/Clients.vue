@@ -36,6 +36,16 @@
       </tr>
     </tbody>
   </table>
+  <div class="flex">
+    <button
+      id="show"
+      class="blueBtn"
+      v-if="rows?.length === limit"
+      @click="showMore"
+    >
+      showMore
+    </button>
+  </div>
 </template>
 <script>
 // lib
@@ -59,13 +69,18 @@ export default {
     // resoures
     const query = ref("");
     const rows = ref([]);
-    const limit = ref(50);
+    const limit = ref(25);
     const today = getTodayUnixTime();
     // lib
 
     // INPUT
     const onSearch = async () => {
       rows.value = await searchContacts(query.value, limit.value);
+    };
+
+    const showMore = async () => {
+      limit.value += 25;
+      await onSearch();
     };
 
     // LIFECYCLE
@@ -81,6 +96,8 @@ export default {
       onSearch,
       unixTimeToReminder,
       unixToReadable,
+      showMore,
+      limit,
     };
   },
 };
@@ -116,6 +133,15 @@ tr {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
+}
+#show {
+  padding: 10px 30px;
+  margin: 10px;
+  border-radius: 20px;
+}
+.flex {
+  display: flex;
+  justify-content: center;
 }
 </style>
 

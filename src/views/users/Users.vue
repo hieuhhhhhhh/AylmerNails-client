@@ -37,6 +37,16 @@
       </tr>
     </tbody>
   </table>
+  <div class="flex">
+    <button
+      id="show"
+      class="blueBtn"
+      v-if="users?.length === limit"
+      @click="showMore"
+    >
+      showMore
+    </button>
+  </div>
 </template>
 <script>
 // lib
@@ -58,7 +68,7 @@ export default {
     const query = ref("");
     const users = ref([]);
     const lastTracked = ref(null);
-    const limit = ref(50);
+    const limit = ref(25);
     const today = getTodayUnixTime();
     // INPUT
     const toUser = (userId) => {
@@ -67,6 +77,11 @@ export default {
 
     const onSearchUsers = async () => {
       users.value = await searchUsers(query.value, limit.value);
+    };
+
+    const showMore = async () => {
+      limit.value += 25;
+      await onSearchUsers();
     };
 
     // LIFECYCLE
@@ -89,6 +104,8 @@ export default {
       formatPhone,
       toUser,
       onSearchUsers,
+      showMore,
+      limit,
     };
   },
 };
@@ -146,5 +163,14 @@ tr {
   background: var(--trans-blue);
   color: white;
   border-radius: 2px;
+}
+#show {
+  padding: 10px 30px;
+  margin: 10px;
+  border-radius: 20px;
+}
+.flex {
+  display: flex;
+  justify-content: center;
 }
 </style>

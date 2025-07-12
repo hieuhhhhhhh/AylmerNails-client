@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function fetchServiceLdConflicts(serviceId) {
   try {
     // get app path
@@ -57,6 +59,7 @@ export default async function fetchServiceLdConflicts(serviceId) {
 
       return conflicts;
     } else {
+      notifyReqError(json.message);
       console.log(
         "Failed to fetch service's last date conflicts, message: ",
         json.message

@@ -1,5 +1,5 @@
 <template>
-  <div id="parent">
+  <div id="relative">
     <button @click="onToogleDrawer">
       <FontAwesomeIcon :icon="faCaretDown" />
     </button>
@@ -8,8 +8,15 @@
       :onToogleDrawer="onToogleDrawer"
       :phoneNum="phoneNum"
       :bannedOn="bannedOn"
+      :onChangeRole="onChangeRole"
     />
   </div>
+  <ChangeUserRole
+    v-if="isChangingRole"
+    :name="name"
+    :userId="userId"
+    :onCancel="() => onChangeRole(false)"
+  />
 </template>
 
 <script>
@@ -20,6 +27,7 @@ import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { ref } from "vue";
 // comps
 import Drawer from "./Drawer.vue";
+import ChangeUserRole from "./ChangeUserRole.vue";
 
 export default {
   name: "DrawerParent",
@@ -27,31 +35,41 @@ export default {
     onEditName: Function,
     phoneNum: String,
     bannedOn: Number,
+    name: String,
+    userId: Number,
   },
   components: {
     Drawer,
     FontAwesomeIcon,
+    ChangeUserRole,
   },
   setup() {
     // status
     const isDrawerOpen = ref(false);
+    const isChangingRole = ref(false);
 
     // INPUT
     const onToogleDrawer = async () => {
       isDrawerOpen.value = !isDrawerOpen.value;
     };
 
+    const onChangeRole = (value = true) => {
+      isChangingRole.value = value;
+    };
+
     return {
       isDrawerOpen,
       onToogleDrawer,
       faCaretDown,
+      isChangingRole,
+      onChangeRole,
     };
   },
 };
 </script>
 
 <style scoped>
-#parent {
+#relative {
   position: relative;
 }
 button {

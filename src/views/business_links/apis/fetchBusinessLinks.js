@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function fetchBusinessLinks() {
   try {
     // get app path
@@ -25,6 +27,7 @@ export default async function fetchBusinessLinks() {
         email: JSON.parse(email),
       };
     } else {
+      notifyReqError(json.message);
       console.log("Failed to fetch business links, message: ", json.message);
     }
   } catch (e) {

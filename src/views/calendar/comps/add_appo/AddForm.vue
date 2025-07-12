@@ -6,59 +6,11 @@
     </colgroup>
     <tbody>
       <tr>
-        <th>Service</th>
-        <td>
-          <div class="duo">
-            <div>
-              {{ serviceName }} {{ getCate() }}
-              <div id="AOS" v-for="(AOS, index) in AOSOs" :key="index">
-                {{ AOS.question }} ~ {{ AOS.answer }}
-                {{ formatOffset(AOS.offset) }}
-              </div>
-            </div>
-            <div>
-              <button v-if="serviceName" @click.prevent="onClearService">
-                X
-              </button>
-              <button @click.prevent="onOpenServicePicker">Select</button>
-            </div>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <th>Client</th>
-        <td>
-          <div class="duo">
-            <div>
-              {{ formatPhone(phoneNum) }}
-              <div>
-                {{ clientName }}
-              </div>
-            </div>
-            <div>
-              <button v-if="phoneNum" @click.prevent="onClearContact">X</button>
-              <button @click.prevent="onSelectContact">Select</button>
-            </div>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <th>Employee</th>
-        <td>
-          <div class="duo">
-            <div>
-              {{ empAlias }}
-            </div>
-            <button @click.prevent="onOpenEmpPicker">Select</button>
-          </div>
-        </td>
-      </tr>
-      <tr>
         <th>Date</th>
         <td>
           <div class="center">
             <div>
-              {{ getReminder() }}
+              {{ getReminder }}
             </div>
             <div>
               <input type="date" :value="parseUT(date)" disabled />
@@ -83,6 +35,7 @@
           </div>
         </td>
       </tr>
+
       <tr>
         <th>Duration (mins)</th>
         <td>
@@ -106,36 +59,65 @@
               <button @click.prevent="onIncreaseDuration(true)">+</button>
             </div>
             <div>
-              {{ getEndTime() }}
+              {{ getEndTime }}
             </div>
           </div>
         </td>
       </tr>
 
       <tr>
-        <th>Note</th>
+        <th>Client</th>
         <td>
-          <textarea
-            type="text"
-            rows="3"
-            placeholder="write a note... (not visible to client)"
-            :value="note"
-            ref="TAref"
-            @input="onInputNote"
-          />
+          <div class="duo">
+            <div>
+              {{ formatPhone(phoneNum) }}
+              <div>
+                {{ clientName }}
+              </div>
+            </div>
+            <div>
+              <button v-if="phoneNum" @click="onClearContact">X</button>
+              <button @click="onSelectContact">Select</button>
+            </div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <th>Service</th>
+        <td>
+          <div class="duo">
+            <div>
+              {{ serviceName }} {{ getCate }}
+              <div id="AOS" v-for="(AOS, index) in AOSOs" :key="index">
+                {{ AOS.question }} ~ {{ AOS.answer }}
+                {{ formatOffset(AOS.offset) }}
+              </div>
+            </div>
+            <div>
+              <button v-if="serviceName" @click="onClearService">X</button>
+              <button @click="onOpenServicePicker">Select</button>
+            </div>
+          </div>
         </td>
       </tr>
 
       <tr>
-        <th>Booker</th>
-        <td></td>
+        <th>Employee</th>
+        <td>
+          <div class="duo">
+            <div>
+              {{ empAlias }}
+            </div>
+            <button @click.prevent="onOpenEmpPicker">Select</button>
+          </div>
+        </td>
       </tr>
     </tbody>
   </table>
 </template>
 <script>
 // lib
-import { ref, onMounted, nextTick } from "vue";
+import { ref, onMounted, nextTick, computed } from "vue";
 import parseUT from "@/lib/parseUT";
 import parseTime from "@/lib/parseTime";
 import parseUnixHours from "@/lib/parseUnixHours";
@@ -193,7 +175,7 @@ export default {
       props.setDuration(props.duration + change);
     };
 
-    // FORMAT
+    // GETTERS
     const formatOffset = (seconds) => {
       if (seconds === 0) return;
 
@@ -202,23 +184,25 @@ export default {
 
       return `(${sign}${mins} mins)`;
     };
-    const getReminder = () => {
+
+    const getReminder = computed(() => {
       if (!props.date) return;
       const unixDate = props.date + 12 * 60 * 60;
       const text = unixTimeToReminder(unixDate);
-      if (text) {
-        return `${text}`;
-      }
-    };
-    const getCate = () => {
+      return `${text}`;
+    });
+
+    const getCate = computed(() => {
       const cate = props.category;
       if (cate) return `(${cate})`;
-    };
-    const getEndTime = () => {
+      return "";
+    });
+
+    const getEndTime = computed(() => {
       if (!props.start || !props.duration) return;
       const end = props.start + props.duration;
       return `to ${secsToHours(end)}`;
-    };
+    });
 
     // STYLES
     const TAref = ref(null);

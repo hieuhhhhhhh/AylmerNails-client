@@ -3,15 +3,17 @@
     <div id="title">{{ category.cate_name }}</div>
     <div v-for="(service, index) in category.services" :key="index">
       <div>
-        <input
-          id="check"
-          type="checkbox"
-          :value="service.service_id"
-          :checked="service.employee_id && !uncheckedAll"
-          @change="updateChecked"
-          :disabled="!isEditing"
-        />
-        <label>{{ service.service_name }}</label>
+        <label>
+          <input
+            id="check"
+            type="checkbox"
+            :value="service.service_id"
+            :checked="service.employee_id && !uncheckedAll"
+            @change="updateChecked"
+            :disabled="!isEditing"
+          />
+          {{ service.service_name }}
+        </label>
       </div>
     </div>
   </div>

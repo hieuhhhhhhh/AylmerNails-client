@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function updateEmpInfo(
   employeeId,
   alias,
@@ -35,6 +37,7 @@ export default async function updateEmpInfo(
       return true;
     }
 
+    notifyReqError(json.message);
     console.log(
       "Failed to update employee information, message: ",
       json.message

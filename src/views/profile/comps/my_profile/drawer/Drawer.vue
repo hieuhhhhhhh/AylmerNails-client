@@ -1,8 +1,8 @@
 <template>
   <div id="drawer" ref="drawer" @blur="onBlur" tabindex="0">
     <button @click="onEditName">Edit my name</button>
-    <button>Change my password</button>
-    <button>Log out everywhere</button>
+    <button @click="onChangePassword">Change my password</button>
+    <button @click="onLogOutAll">Log out everywhere</button>
   </div>
 </template>
 
@@ -15,6 +15,8 @@ export default {
   props: {
     onEditName: Function,
     onToogleDrawer: Function,
+    onChangePassword: Function,
+    onLogOutAll: Function,
   },
   setup(props) {
     const drawer = ref(null);
@@ -53,6 +55,7 @@ button {
   width: 200px;
   text-align: left;
   margin: 0;
+  margin-left: -165px;
   padding: 7px;
 }
 </style>

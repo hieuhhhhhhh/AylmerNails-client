@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function fetchMyProfile() {
   try {
     // get app path
@@ -64,6 +66,7 @@ export default async function fetchMyProfile() {
       // return 2 results
       return { userInfo, appos };
     } else {
+      notifyReqError(json.message);
       console.log("Failed to fetch my profile, message: ", json.message);
     }
   } catch (e) {

@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function saveUnsaveAppo(appoId, boolean) {
   try {
     // get app path
@@ -19,6 +21,7 @@ export default async function saveUnsaveAppo(appoId, boolean) {
     } else {
       // fetch json
       const json = await res.json();
+      notifyReqError(json.message);
 
       console.log("Failed to save/unsave appointment, message: ", json.message);
     }

@@ -13,7 +13,7 @@
 
 <script setup>
 // lib
-import { computed, defineProps } from "vue";
+import { computed } from "vue";
 import secsToLength from "../../helpers/secsToLength";
 
 const props = defineProps({

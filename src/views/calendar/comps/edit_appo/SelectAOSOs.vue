@@ -2,43 +2,66 @@
   <div id="parent">
     <div id="background" @click="handleClose" />
     <div id="window">
-      <button @click="handleClose" id="closeBtn" class="redBtn">X</button>
-      <form @submit.prevent="onSubmit" id="content">
-        <div
-          v-for="(question, index) in questions"
-          :key="index"
-          id="questionBox"
-        >
-          <span id="question"
-            >{{ index + 1 }}. {{ question.questionText }}</span
-          >
-          <div
-            v-for="(option, childIndex) in question.options"
-            :key="childIndex"
-          >
-            <label>
-              <input
-                type="radio"
-                :value="{
-                  answerId: option.optionId,
-                  answer: option.optionText,
-                  offset: option.optionOffset,
-                  question: question.questionText,
-                }"
-                v-model="answers[question.questionId]"
-                required
-              />
-              {{ option.optionText }} {{ formatOffset(option.optionOffset) }}
-            </label>
+      <button @click="handleClose" id="closeBtn" class="redBtn">
+        <FontAwesomeIcon :icon="faXmark" />
+      </button>
+      <div v-if="fetched">
+        <div id="title">
+          {{ serviceInfo.name }}
+          <div id="description">
+            {{ serviceInfo.description }}
           </div>
         </div>
-        <div v-if="msg" id="msg">{{ msg }}</div>
-        <div id="btnBox"><button class="blueBtn">Submit</button></div>
-      </form>
+        <form
+          v-if="serviceInfo.client_can_book"
+          @submit.prevent="onSubmit"
+          id="content"
+        >
+          <div
+            v-for="(question, index) in questions"
+            :key="index"
+            class="questionBox"
+          >
+            <span class="question"
+              >{{ index + 1 }}. {{ question.questionText }}</span
+            >
+            <div class="optionBox">
+              <div
+                v-for="(option, childIndex) in question.options"
+                :key="childIndex"
+                class="options"
+              >
+                <label>
+                  <input
+                    type="radio"
+                    :value="option.optionId"
+                    v-model="answers[question.questionId]"
+                    required
+                  />
+                  {{ option.optionText }}
+                  {{ formatOffset(option.optionOffset) }}
+                </label>
+              </div>
+            </div>
+          </div>
+          <div v-if="msg" id="msg">{{ msg }}</div>
+          <div id="btnBox">
+            <button id="confirm" class="blueBtn">Confirm</button>
+          </div>
+        </form>
+        <div v-else id="notAvail">
+          This service is not available for online booking, please contact us to
+          book
+        </div>
+      </div>
     </div>
   </div>
 </template>
 <script>
+// icon
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
+// apis
 import fetchAOSs from "../../apis/fetchAOSs";
 
 export default {
@@ -50,34 +73,31 @@ export default {
   data() {
     return {
       // resource
+      faXmark,
       questions: [],
+      serviceInfo: {},
       msg: "",
       // outcome
       answers: {},
+      // status
+      fetched: false,
     };
+  },
+  components: {
+    FontAwesomeIcon,
   },
   methods: {
     onSubmit() {
       const AOSOs = [];
-      const AOSOsText = [];
-
       for (let key in this.answers) {
-        const questionId = Number(key);
-        const { answerId, answer, question, offset } = this.answers[key];
-
-        AOSOs.push(questionId);
-        AOSOs.push(answerId);
-
-        const text = { question, answer, offset };
-        AOSOsText.push(text);
+        AOSOs.push(Number(key));
+        AOSOs.push(this.answers[key]);
       }
-
       if (AOSOs.length / 2 !== this.questions.length) {
-        this.msg = "Please provide answer to all questions";
+        this.msg = "Please provide answers to all questions";
         return;
       }
-
-      this.onInputAOSOs(AOSOs, AOSOsText);
+      this.onInputAOSOs(AOSOs);
       this.onClose();
     },
     handleClose() {
@@ -91,10 +111,14 @@ export default {
 
       return `(${sign}${absMinutes} mins)`;
     },
+    onInputAnswer() {},
   },
   async created() {
-    this.questions = await fetchAOSs(this.serviceId);
-    console.log("questions", this.questions);
+    // fetch data
+    const { questions, serviceInfo } = await fetchAOSs(this.serviceId);
+    this.questions = questions;
+    this.serviceInfo = serviceInfo;
+    this.fetched = true;
   },
 };
 </script>
@@ -122,14 +146,16 @@ export default {
   position: relative;
   z-index: 20;
   width: 500px;
-  max-width: 100%;
-  background-color: var(--background-i2);
+  max-width: 90%;
+  background-color: var(--background-i1);
   overflow-y: auto;
   max-height: 80%;
 }
 #content {
-  padding: 20px;
-  margin-top: 10px;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
 }
 #closeBtn {
   position: absolute;
@@ -138,6 +164,9 @@ export default {
   aspect-ratio: 1;
   height: 30px;
   padding: 0;
+  border: none;
+  border-radius: 0px;
+  font-size: 20px;
 }
 #btnBox {
   display: flex;
@@ -145,16 +174,61 @@ export default {
 }
 #msg {
   text-align: center;
+  font-size: 14px;
   color: red;
 }
+.question {
+  font-size: 16px;
+}
+.questionBox {
+  margin-bottom: 20px;
+}
+.optionBox {
+  display: flex;
+  justify-content: space-around;
+  gap: 5px;
+}
+
 input[type="radio"] {
-  transform: scale(1.5);
-  margin: 7px;
+  position: relative;
+  top: -1px;
+  margin-left: -5px;
+  margin-right: 5px;
+  cursor: pointer;
 }
-#question {
-  font-size: 20px;
+
+label {
+  font-size: 14px;
+  background: var(--background-i2);
+  box-shadow: 0 0 5px var(--shadow-color);
+  border-radius: 3px;
+  margin: 5px;
+  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
 }
-#questionBox {
-  margin-bottom: 15px;
+label:active {
+  background: var(--active);
+}
+#title {
+  text-align: center;
+  font-size: 25px;
+  margin-top: 10px;
+}
+#description {
+  font-size: 15px;
+  color: gray;
+}
+#confirm {
+  padding: 5px 30px;
+  border-radius: 20px;
+}
+#notAvail {
+  padding: 20px;
+  text-align: center;
+  font-size: 15px;
+  color: rgb(184, 121, 3);
 }
 </style>

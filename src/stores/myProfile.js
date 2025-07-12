@@ -4,15 +4,18 @@ export const useMyProfile = defineStore("myProfile", {
   state: () => ({
     token: null,
     role: null,
+    isFetched: false,
   }),
   actions: {
     setMyProfile({ token, role }) {
       this.token = token;
       this.role = role;
+      this.isFetched = true;
     },
     clearMyProfile() {
       this.token = null;
       this.role = null;
+      this.isFetched = true;
     },
   },
 });
@@ -41,6 +44,13 @@ export const useNotificationCount = defineStore("NotificationCount", {
     setNewBlacklistCount(count) {
       this.newBlacklistCount = count;
     },
+    reset() {
+      this.newAppoCount = 0;
+      this.newCanceledAppoCount = 0;
+      this.newUserCount = 0;
+      this.newSavedCount = 0;
+      this.newBlacklistCount = 0;
+    },
   },
 });
 
@@ -51,6 +61,20 @@ export const useFooterReact = defineStore("footerReact", {
   actions: {
     triggerReact() {
       this.react_key++;
+    },
+  },
+});
+
+export const useRequestError = defineStore("requestError", {
+  state: () => ({
+    msg: "",
+  }),
+  actions: {
+    setMessage(value) {
+      this.msg = value;
+    },
+    reset() {
+      this.msg = "";
     },
   },
 });

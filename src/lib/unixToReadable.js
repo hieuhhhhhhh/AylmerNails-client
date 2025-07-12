@@ -2,6 +2,8 @@ import { DateTime } from "luxon";
 import getTimezone from "./getTimeZone";
 
 export default function unixToReadable(unixTimestamp) {
+  console.log("calling");
+
   if (!unixTimestamp) {
     return;
   }

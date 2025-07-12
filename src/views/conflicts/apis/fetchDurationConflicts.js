@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function fetchDurationConflicts(serviceId) {
   try {
     // get app path
@@ -56,6 +58,7 @@ export default async function fetchDurationConflicts(serviceId) {
 
       return conflicts;
     } else {
+      notifyReqError(json.message);
       console.log(
         "Failed to fetch duration conflicts, message: ",
         json.message

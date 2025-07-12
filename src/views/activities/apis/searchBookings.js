@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function searchBookings(query, limit) {
   try {
     // get app path
@@ -37,8 +39,8 @@ export default async function searchBookings(query, limit) {
           category,
           phoneNumId,
           phoneNum,
-          firstName,
-          lastName,
+          contactName,
+          profileName,
           date,
           start,
           end,
@@ -55,7 +57,8 @@ export default async function searchBookings(query, limit) {
           category,
           phoneNumId,
           phoneNum,
-          contactName: `${firstName} ${lastName}`,
+          contactName,
+          profileName,
           date,
           start,
           end,
@@ -66,6 +69,7 @@ export default async function searchBookings(query, limit) {
       //  return results
       return appos;
     } else {
+      notifyReqError(json.message);
       console.log("Failed to search booking history, message: ", json.message);
     }
   } catch (e) {

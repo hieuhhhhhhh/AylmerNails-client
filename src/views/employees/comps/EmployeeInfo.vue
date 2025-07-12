@@ -1,4 +1,5 @@
 <template>
+  <DeleteBtn v-if="deletable" :empId="emp_id" />
   <div class="warning" v-if="lastDateCC > 0" @click="toConflictPage">
     Warning: Availability has {{ lastDateCC }}
     <u>conflicting appointment(s)</u>
@@ -88,6 +89,7 @@
 import NA from "@/components/NotAvailable.vue";
 import Category from "./Category.vue";
 import EditEmpInfo from "./EditEmpInfo.vue";
+import DeleteBtn from "./delete_btn/DeleteBtn.vue";
 // icons
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
@@ -100,6 +102,7 @@ import parseUT from "@/lib/parseUT";
 import updateEmpInfo from "../apis/updateEmpInfo";
 import unixToReadable from "@/lib/unixToReadable";
 import parseDate from "@/lib/parseDate";
+import getTodayUnixTime from "@/lib/getTodayUnixTime";
 
 export default {
   components: {
@@ -107,6 +110,7 @@ export default {
     FontAwesomeIcon,
     Category,
     EditEmpInfo,
+    DeleteBtn,
   },
   data() {
     return {
@@ -118,6 +122,7 @@ export default {
       isFetched: false,
       isEditing: false,
       resetCheckers: 0,
+      deletable: false,
       // resources
       formattedDate: "",
       colorName: "",
@@ -143,6 +148,7 @@ export default {
         fetchEmpDetails(this.emp_id),
         fetchEmployeeServices(this.emp_id),
       ]);
+      if (!details) return;
       this.categories = categories;
       this.ESs = ES_ids;
 
@@ -152,6 +158,9 @@ export default {
       this.colorName = details.colorName;
       this.colorCode = details.colorCode;
       this.last_date = parseUT(details.last_date);
+      if (details.last_date) {
+        this.deletable = details.last_date < getTodayUnixTime();
+      }
       this.formattedDate = unixToReadable(details.last_date);
       this.intervals = details.key_intervals;
       this.intervalPercent = details.interval_percent;
@@ -180,8 +189,8 @@ export default {
       this.isEditing = true;
     },
     async closeEditForm() {
-      await this.fetchData();
       this.isEditing = false;
+      await this.fetchData();
     },
     formattedIntervals(intervals) {
       const interval1 = intervals[0];
@@ -231,10 +240,9 @@ export default {
 table {
   text-align: left;
 }
-th,
+
 td {
   padding: 10px;
-  text-align: left;
 }
 #duo {
   display: flex;

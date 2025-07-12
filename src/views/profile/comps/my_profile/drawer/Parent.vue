@@ -1,5 +1,5 @@
 <template>
-  <div id="parent">
+  <div id="relative">
     <button @click="onToogleDrawer">
       <FontAwesomeIcon :icon="faCaretDown" />
     </button>
@@ -7,6 +7,16 @@
       v-if="isDrawerOpen"
       :onEditName="onEditName"
       :onToogleDrawer="onToogleDrawer"
+      :onChangePassword="onChangePassword"
+      :onLogOutAll="onLogOutAll"
+    />
+    <ChangePassword
+      v-if="isChangingPW"
+      :onCancel="() => onChangePassword(false)"
+    />
+    <LogOutEverywhere
+      v-if="isLoggingOutAll"
+      :onCancel="() => onLogOutAll(false)"
     />
   </div>
 </template>
@@ -19,6 +29,8 @@ import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import { ref } from "vue";
 // comps
 import Drawer from "./Drawer.vue";
+import ChangePassword from "./ChangePassword.vue";
+import LogOutEverywhere from "./LogOutEverywhere.vue";
 
 export default {
   name: "DrawerParent",
@@ -28,27 +40,43 @@ export default {
   components: {
     Drawer,
     FontAwesomeIcon,
+    ChangePassword,
+    LogOutEverywhere,
   },
   setup() {
     // status
     const isDrawerOpen = ref(false);
+    const isChangingPW = ref(false);
+    const isLoggingOutAll = ref(false);
 
     // INPUT
     const onToogleDrawer = async () => {
       isDrawerOpen.value = !isDrawerOpen.value;
     };
 
+    const onChangePassword = (value = true) => {
+      isChangingPW.value = value;
+    };
+
+    const onLogOutAll = (value = true) => {
+      isLoggingOutAll.value = value;
+    };
+
     return {
       isDrawerOpen,
       onToogleDrawer,
       faCaretDown,
+      isChangingPW,
+      onChangePassword,
+      isLoggingOutAll,
+      onLogOutAll,
     };
   },
 };
 </script>
 
 <style scoped>
-#parent {
+#relative {
   position: relative;
 }
 button {

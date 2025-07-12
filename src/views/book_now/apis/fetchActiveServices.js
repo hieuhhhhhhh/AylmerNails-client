@@ -1,4 +1,5 @@
 import getTodayUnixTime from "@/lib/getTodayUnixTime";
+import notifyReqError from "@/stores/notifyReqError";
 
 export default async function fetchActiveServices() {
   try {
@@ -26,6 +27,7 @@ export default async function fetchActiveServices() {
 
       return categories;
     } else {
+      notifyReqError(json.message);
       console.log("Failed to fetch employee list, message: ", json.message);
     }
   } catch (e) {
@@ -39,7 +41,7 @@ function refactorServices(rawServices, rawCategories) {
   const categories = {};
   categories[null] = {
     cate_id: null,
-    cate_name: "Unclassified",
+    cate_name: "Others",
     services: [],
   };
 
@@ -50,7 +52,8 @@ function refactorServices(rawServices, rawCategories) {
 
   // re-group services based on their category_id
   rawServices.forEach((raw) => {
-    const [service_id, service_name, last_date, is_active, cate_id] = raw;
+    const [service_id, service_name, last_date, is_active, cate_id, price] =
+      raw;
 
     // add the service to the matching category_id
     if (is_active) {
@@ -58,6 +61,7 @@ function refactorServices(rawServices, rawCategories) {
         service_id,
         service_name,
         last_date,
+        price,
       });
     }
   });

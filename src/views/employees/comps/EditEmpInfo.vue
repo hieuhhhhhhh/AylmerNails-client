@@ -51,7 +51,10 @@
 
       <tr>
         <td colspan="2">
-          <div id="note">*Ideal Lengths are not editable</div>
+          <div id="note">
+            *Ideal Lengths are not editable, recreate employee if you need to
+            change it
+          </div>
         </td>
       </tr>
 
@@ -133,11 +136,10 @@ export default {
 <style scoped>
 table {
   text-align: left;
+  background-color: var(--background-i2);
 }
-th,
 td {
   padding: 10px;
-  text-align: left;
 }
 
 #note {

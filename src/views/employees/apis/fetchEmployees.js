@@ -1,4 +1,5 @@
 import getTodayUnixTime from "@/lib/getTodayUnixTime";
+import notifyReqError from "@/stores/notifyReqError";
 
 export default async function fetchEmployees() {
   try {
@@ -37,6 +38,7 @@ export default async function fetchEmployees() {
       console.log("emp: ", employees);
       return employees;
     } else {
+      notifyReqError(json.message);
       console.log("Failed to fetch employee list, message: ", json.message);
     }
   } catch (e) {

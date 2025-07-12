@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function addCategory(name) {
   try {
     // get app path
@@ -22,6 +24,7 @@ export default async function addCategory(name) {
     if (res.ok) {
       return json.added_category_id;
     } else {
+      notifyReqError(json.message);
       console.log("Failed to add category, message: ", json.message);
     }
   } catch (e) {

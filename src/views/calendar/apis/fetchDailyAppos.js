@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function fetchDailyAppos(date) {
   try {
     // get app path
@@ -22,6 +24,7 @@ export default async function fetchDailyAppos(date) {
     if (res.ok) {
       return parseApiRes(json);
     } else {
+      notifyReqError(json.message);
       console.log(
         "Failed to fetch daily appointments, message: ",
         json.message
@@ -61,38 +64,21 @@ function parseApiRes(json) {
   // read data about appointments
   for (let appo of appos) {
     // unpack
-    const [
-      id,
-      empId,
-      serviceId,
-      phoneNumId,
-      AOSOs,
-      date,
-      ,
-      start,
-      end,
-      serviceName,
-      phoneNum,
-      contactName,
-    ] = appo;
+    const [id, start, end, empId, serviceName, phoneNum, contactName] = appo;
 
     // create new appointment
     const newAppo = {
       id,
-      empId,
-      serviceId,
-      phoneNumId,
-      phoneNum,
-      contactName,
-      AOSOs,
-      date,
       start,
       end,
+      empId,
       serviceName,
+      phoneNum,
+      contactName,
     };
 
     // append new appointment to employee
-    newEmployees[empId].appos.push(newAppo);
+    newEmployees[empId]?.appos.push(newAppo);
   }
   console.log("appos", appos);
 

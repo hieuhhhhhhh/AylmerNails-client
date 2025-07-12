@@ -1,5 +1,5 @@
 <template>
-  <div id="ServiceInfo" v-if="!isEditing">
+  <div v-if="!isEditing">
     <table>
       <tbody>
         <tr>
@@ -11,6 +11,25 @@
           <td>
             <div id="description">{{ serviceInfo.description }}</div>
             <NA v-if="!serviceInfo.description && isFetched" />
+          </td>
+        </tr>
+        <tr>
+          <th>Starting Price:</th>
+          <td v-if="serviceInfo.price">$ {{ serviceInfo.price }}</td>
+        </tr>
+
+        <tr>
+          <th>
+            Available for <br />
+            online booking:
+          </th>
+          <td>
+            <input
+              id="check"
+              type="checkbox"
+              disabled
+              :checked="serviceInfo.client_can_book"
+            />
           </td>
         </tr>
         <tr>
@@ -49,10 +68,12 @@
     <EditServiceInfo
       :serviceId="serviceId"
       :onClose="closeEditFrom"
-      :iName="serviceInfo.name"
-      :iDescription="serviceInfo.description"
-      :iCategoryId="serviceInfo.cate_id"
-      :iDate="serviceInfo.last_date"
+      :_name="serviceInfo.name"
+      :_description="serviceInfo.description"
+      :_category="serviceInfo.cate_id"
+      :_date="serviceInfo.last_date"
+      :_price="serviceInfo.price"
+      :_clientCanBook="serviceInfo.client_can_book"
     />
   </div>
 </template>
@@ -105,7 +126,7 @@ export default {
 
 <style scoped>
 #ServiceInfo {
-  padding: 7px;
+  padding-bottom: 20px;
 }
 .highlight {
   font-size: 20px;
@@ -115,8 +136,10 @@ export default {
 
 th,
 td {
-  padding: 10px;
   text-align: left;
+}
+td {
+  padding: 10px;
 }
 
 #duo {
@@ -126,5 +149,10 @@ td {
 #description {
   white-space: pre-wrap;
   font-size: 14px;
+}
+#check {
+  transform: scale(2);
+  margin-left: 7px;
+  margin-right: 10px;
 }
 </style>

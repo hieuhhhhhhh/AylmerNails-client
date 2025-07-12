@@ -1,51 +1,60 @@
 <template>
-  <div class="warning" v-if="lastDateCC > 0" @click="toConflictPage">
-    Warning: Availability has {{ lastDateCC }}
-    <u>conflicting appointment(s)</u>
-  </div>
-  <div class="warning" v-if="durationCC > 0" @click="toDurationConflictPage">
-    Warning: Duration settings have {{ durationCC }}
-    <u>conflicting appointment(s)</u>
-  </div>
-  <ServiceInfo
-    :isFetched="isFetched"
-    :serviceInfo="serviceInfo"
-    :serviceId="service_id"
-  />
+  <div id="parent">
+    <DeleteBtn v-if="deletable" :serviceId="service_id" />
 
-  <th>Members</th>
-  <EmployeeChecker :serviceId="service_id" />
-  <br />
-  <th>Duration Settings</th>
-  <DurationDemo
-    v-if="isFetched"
-    :serviceId="service_id"
-    :duration="duration"
-    :empDurations="empDurations"
-  />
+    <div class="warning" v-if="lastDateCC > 0" @click="toConflictPage">
+      Warning: Availability has {{ lastDateCC }}
+      <u>conflicting appointment(s)</u>
+    </div>
+    <div class="warning" v-if="durationCC > 0" @click="toDurationConflictPage">
+      Warning: Duration settings have {{ durationCC }}
+      <u>conflicting appointment(s)</u>
+    </div>
+    <ServiceInfo
+      :isFetched="isFetched"
+      :serviceInfo="serviceInfo"
+      :serviceId="service_id"
+    />
+    <br />
 
-  <br />
-  <br />
+    <div class="section">Technicians</div>
+    <EmployeeChecker :serviceId="service_id" />
+    <br />
+    <div class="section">Duration Settings</div>
 
-  <th>Question List</th>
-  <NA v-if="!AOSs.length && isFetched" />
-  <ServiceAOSs :AOSs="AOSs" />
-  <div id="note">
-    *question list can not be edited, recreate the service if you have to change
-    it
+    <DurationDemo
+      v-if="isFetched"
+      :serviceId="service_id"
+      :duration="duration"
+      :empDurations="empDurations"
+    />
+
+    <br />
+    <br />
+    <div class="section">Question List</div>
+
+    <NA v-if="!AOSs.length && isFetched" />
+    <ServiceAOSs :AOSs="AOSs" />
+    <div id="note">
+      *question list can not be edited, recreate the service if you have to
+      change it
+    </div>
   </div>
 </template>
 
 <script>
-// lib
+// apis
 import fetchServiceDetails from "./apis/fetchServiceDetails";
+// lib
 import unixToReadable from "@/lib/unixToReadable";
+import getTodayUnixTime from "@/lib/getTodayUnixTime";
 // comps
 import NA from "@/components/NotAvailable.vue";
 import ServiceInfo from "./comps/ServiceInfo.vue";
 import ServiceAOSs from "./comps/AOSs/AOSs-demo.vue";
 import EmployeeChecker from "./comps/EmployeeChecker.vue";
 import DurationDemo from "./comps/durations/DurationsDemo.vue";
+import DeleteBtn from "./comps/delete_btn/DeleteBtn.vue";
 
 export default {
   components: {
@@ -54,12 +63,14 @@ export default {
     ServiceAOSs,
     EmployeeChecker,
     DurationDemo,
+    DeleteBtn,
   },
   data() {
     return {
+      // status
+      deletable: false,
       // outcomes
       service_id: null,
-      details: {},
       AOSs: [],
       serviceInfo: {},
       duration: null,
@@ -83,30 +94,37 @@ export default {
   },
   async created() {
     this.service_id = Number(this.$route.params.id);
-    this.details = await fetchServiceDetails(this.service_id);
+    const details = await fetchServiceDetails(this.service_id);
+    if (!details) return;
 
     // fetch info
     this.serviceInfo = {
-      service_id: this.details.service_id,
-      name: this.details.name,
-      description: this.details.description,
-      first_date: this.details.first_date,
-      last_date: this.details.last_date,
-      cate_name: this.details.cate_name,
-      cate_id: this.details.cate_id,
+      service_id: details.service_id,
+      name: details.name,
+      description: details.description,
+      first_date: details.first_date,
+      last_date: details.last_date,
+      cate_name: details.cate_name,
+      cate_id: details.cate_id,
+      price: details.price,
+      client_can_book: details.client_can_book,
     };
 
+    if (details.last_date) {
+      this.deletable = details.last_date < getTodayUnixTime();
+    }
+
     // fetch AOSs
-    this.AOSs = this.details.AOSs;
+    this.AOSs = details.AOSs;
     console.log("AOSs: ", this.AOSs);
 
     // fetch durations
-    this.duration = this.details.duration;
-    this.empDurations = this.details.empDurations;
+    this.duration = details.duration;
+    this.empDurations = details.empDurations;
 
     // fetch conflicts counts
-    this.durationCC = this.details.durationCC;
-    this.lastDateCC = this.details.lastDateCC;
+    this.durationCC = details.durationCC;
+    this.lastDateCC = details.lastDateCC;
 
     // set isFetched
     this.isFetched = true;
@@ -116,11 +134,11 @@ export default {
 
 
 <style scoped>
-th,
-td {
+.section {
   padding: 10px;
   border-top: 3px var(--xtrans-gray) solid;
-  font-size: 19px;
+  font-size: 18px;
+  font-weight: bold;
   display: flex;
   text-align: left;
 }
@@ -139,5 +157,9 @@ td {
   font-size: 16px;
   color: red;
   cursor: pointer;
+}
+#parent {
+  margin-inline: 10px;
+  font-size: 16px;
 }
 </style>

@@ -6,54 +6,6 @@
     </colgroup>
     <tbody>
       <tr>
-        <th>Service</th>
-        <td>
-          <div class="duo">
-            <div>
-              <div v-if="serviceName">{{ serviceName }} - {{ category }}</div>
-            </div>
-            <div>
-              <button v-if="serviceName" @click.prevent="onClearService">
-                X
-              </button>
-              <button @click.prevent="onOpenServicePicker">Select</button>
-            </div>
-          </div>
-          <div id="AOS" v-for="(AOS, index) in AOSOs" :key="index">
-            {{ AOS.question }} ~ {{ AOS.answer }}
-            {{ formatOffset(AOS.offset) }}
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <th>Client</th>
-        <td>
-          <div class="duo">
-            <div>
-              {{ formatPhone(phoneNum) }}
-              <div>
-                {{ contactName }}
-              </div>
-            </div>
-            <div>
-              <button v-if="phoneNum" @click.prevent="onClearContact">X</button>
-              <button @click.prevent="onSelectContact">Select</button>
-            </div>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <th>Employee</th>
-        <td>
-          <div class="duo">
-            {{ empAlias }}
-            <div>
-              <button @click.prevent="onOpenEmpPicker">Select</button>
-            </div>
-          </div>
-        </td>
-      </tr>
-      <tr>
         <th>Date</th>
         <td>
           <div class="center">
@@ -68,7 +20,7 @@
               />
               <button @click.prevent="onIncreaseDate(true)">+</button>
             </div>
-            {{ getReminder() }}
+            {{ getReminder }}
           </div>
         </td>
       </tr>
@@ -91,6 +43,7 @@
           </div>
         </td>
       </tr>
+
       <tr>
         <th>Duration (mins)</th>
         <td>
@@ -119,29 +72,70 @@
       </tr>
 
       <tr>
-        <th>Note</th>
+        <th>Client</th>
         <td>
-          <textarea
-            type="text"
-            rows="3"
-            placeholder="write a note... (not visible to client)"
-            :value="note"
-            ref="TAref"
-            @input="onInputNote"
-          />
+          <div class="duo">
+            <div>
+              {{ formatPhone(phoneNum) }}
+              <div>
+                {{ contactName }}
+              </div>
+            </div>
+            <div>
+              <button v-if="phoneNum" @click="onClearContact">X</button>
+              <button @click="onSelectContact">Select</button>
+            </div>
+          </div>
         </td>
       </tr>
 
       <tr>
-        <th>Booker</th>
-        <td></td>
+        <th>Service</th>
+        <td>
+          <div class="duo">
+            <div>
+              <div v-if="serviceName">{{ serviceName }} - {{ category }}</div>
+            </div>
+            <div>
+              <button v-if="serviceName" @click="onClearService">X</button>
+              <button @click="onOpenServicePicker">Select</button>
+            </div>
+          </div>
+          <div id="AOS" v-for="(AOS, index) in AOSOs" :key="index">
+            {{ AOS.question }} ~ {{ AOS.answer }}
+            {{ formatOffset(AOS.offset) }}
+          </div>
+        </td>
+      </tr>
+
+      <tr>
+        <th>Employee</th>
+        <td>
+          <div class="duo">
+            {{ empAlias }}
+            <div>
+              <button @click.prevent="onOpenEmpPicker">Select</button>
+            </div>
+          </div>
+          <div class="selected" v-if="selectedEmps?.length">
+            (client selected:
+            {{ selectedEmps?.map((emp) => emp.empAlias).join(", ") }})
+          </div>
+        </td>
+      </tr>
+
+      <tr v-if="message">
+        <th>Message</th>
+        <td>
+          <textarea id="message" :value="message" rows="3" disabled />
+        </td>
       </tr>
     </tbody>
   </table>
 </template>
 <script>
 // lib
-import { ref, onMounted, nextTick } from "vue";
+import { ref, onMounted, nextTick, computed } from "vue";
 import parseDate from "@/lib/parseDate";
 import parseUT from "@/lib/parseUT";
 import parseTime from "@/lib/parseTime";
@@ -158,9 +152,11 @@ export default {
     category: String,
     AOSOs: Array,
     empAlias: String,
+    selectedEmps: Array,
     date: Number,
     start: Number,
     duration: Number,
+    message: String,
     note: String,
     setDate: Function,
     setStart: Function,
@@ -220,13 +216,11 @@ export default {
 
       return `(${sign}${mins} mins)`;
     };
-    const getReminder = () => {
+    const getReminder = computed(() => {
       const unixDate = props.date + 12 * 60 * 60;
       const text = unixTimeToReminder(unixDate);
-      if (text) {
-        return `${text}`;
-      }
-    };
+      return `${text}`;
+    });
 
     // STYLES
     const TAref = ref(null);
@@ -310,6 +304,7 @@ button {
 }
 .duo {
   display: flex;
+  align-items: center;
   justify-content: space-between;
 }
 .center {
@@ -318,4 +313,13 @@ button {
   flex-direction: column;
   align-items: center;
 }
+#message {
+  font-size: 10px;
+}
+textarea {
+  width: 100%;
+  box-sizing: border-box;
+}
 </style>
+
+

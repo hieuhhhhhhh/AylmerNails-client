@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function updateServiceEmployees(serviceId, employeeIds) {
   try {
     console.log(employeeIds);
@@ -29,7 +31,8 @@ export default async function updateServiceEmployees(serviceId, employeeIds) {
     // fetch json
     const json = await res.json();
 
-    console.log("Failed to update members, message: ", json.message);
+    notifyReqError(json.message);
+    console.log("Failed to update technicians, message: ", json.message);
   } catch (e) {
     console.error("Unexpected Error: ", e);
   }

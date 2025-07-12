@@ -1,7 +1,7 @@
 export default async function fetchAppoLength(serviceId, empId, AOSOs) {
   try {
     // return if serviceId is not defined
-    if (!serviceId) return;
+    if (!serviceId || !empId) return;
 
     // get app path
     const baseURL = process.env.VUE_APP_BASE_URL;
@@ -27,6 +27,7 @@ export default async function fetchAppoLength(serviceId, empId, AOSOs) {
     if (res.ok) {
       return json.length;
     } else {
+      // notifyReqError(json.message);
       console.log(
         "Failed to fetch appointment length, message: ",
         json.message

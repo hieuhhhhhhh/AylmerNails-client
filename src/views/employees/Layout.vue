@@ -3,7 +3,7 @@
     <Menu
       :options="[
         {
-          text: 'Employees',
+          text: 'All',
           path: '/employees/all',
         },
         {

@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function fetchColors() {
   try {
     // get app path
@@ -30,6 +32,7 @@ export default async function fetchColors() {
 
       return newColors;
     } else {
+      notifyReqError(json.message);
       console.log("Failed to fetch color list, message: ", json.message);
     }
   } catch (e) {

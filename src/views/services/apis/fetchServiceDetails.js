@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function fetchServiceDetails(service_id) {
   try {
     // get app path
@@ -23,6 +25,7 @@ export default async function fetchServiceDetails(service_id) {
       // refactor data and return result
       return getServiceDetails(json);
     } else {
+      notifyReqError(json.message);
       console.log("Failed to fetch employee list, message: ", json.message);
     }
   } catch (e) {
@@ -42,6 +45,8 @@ function getServiceDetails(json) {
     duration,
     cate_id,
     cate_name,
+    price,
+    client_can_book,
   ] = service_info;
 
   // fetch durations
@@ -86,6 +91,8 @@ function getServiceDetails(json) {
     AOSs,
     durationCC,
     lastDateCC,
+    price,
+    client_can_book,
   };
 
   console.log("detaills: ", details);

@@ -1,15 +1,13 @@
 import { io } from "socket.io-client";
 import { useMyProfile, useNotificationCount } from "@/stores/myProfile";
 
-const validRoles = ["developer", "admin"];
+const validRoles = ["owner", "admin"];
 
 let socket;
 let role;
 let token;
 
 export function connectSocket() {
-  console.log("connecting socket");
-
   // pinia store
   const MPstore = useMyProfile();
   const NCstore = useNotificationCount();
@@ -22,8 +20,18 @@ export function connectSocket() {
   if (!validRoles.includes(role)) return;
 
   // start connecting
+  console.log("start connecting");
   const baseURL = process.env.VUE_APP_BASE_URL;
   socket = io(baseURL);
+
+  // Log when the socket connects successfully
+  socket.on("connect", () => {
+    console.log("Socket connected with id:", socket.id);
+  });
+
+  socket.on("connect_error", (err) => {
+    console.error("Socket connection error:", err.message);
+  });
 
   // NEW BOOKING
   socket.on("new_appo_count", (data) => {
@@ -112,4 +120,11 @@ export function fetchNewSavedCount() {
 export function fetchNewBlacklistCount() {
   if (!socket) return;
   socket.emit("get_new_blacklist_count", { token });
+}
+
+export function disconnectSocket() {
+  if (socket && socket.connected) {
+    socket.off();
+    socket.disconnect();
+  }
 }

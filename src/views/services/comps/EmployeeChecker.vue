@@ -1,18 +1,20 @@
 <template>
   <form @submit.prevent="onSubmit">
     <div v-for="employee in employees" :key="employee.employee_id">
-      <input
-        id="check"
-        type="checkbox"
-        :value="employee.employee_id"
-        :disabled="!isEditing"
-        v-model="checked"
-      />
-      <label>{{ employee.alias }}</label>
+      <label>
+        <input
+          id="check"
+          type="checkbox"
+          :value="employee.employee_id"
+          :disabled="!isEditing"
+          v-model="checked"
+        />
+        {{ employee.alias }}
+      </label>
     </div>
 
     <button v-if="!isEditing" class="blueBtn" @click="openEditMode">
-      <FontAwesomeIcon :icon="editIcon" /> Edit Members
+      <FontAwesomeIcon :icon="editIcon" /> Edit Technicians
     </button>
     <div v-else id="duo">
       <button class="redBtn" @click.prevent="closeEditMode">
@@ -57,8 +59,9 @@ export default {
     openEditMode() {
       this.isEditing = true;
     },
-    closeEditMode() {
+    async closeEditMode() {
       this.isEditing = false;
+      await this.fetchData();
     },
     async onSubmit() {
       const res = await updateSEs(this.serviceId, this.checked);
@@ -66,14 +69,17 @@ export default {
         this.$router.push("/services/refresh");
       }
     },
+    async fetchData() {
+      this.employees = await fetchServiceEmployees(this.serviceId);
+      this.employees.forEach((employee) => {
+        if (employee.service_id) {
+          this.checked.push(employee.employee_id);
+        }
+      });
+    },
   },
   async created() {
-    this.employees = await fetchServiceEmployees(this.serviceId);
-    this.employees.forEach((employee) => {
-      if (employee.service_id) {
-        this.checked.push(employee.employee_id);
-      }
-    });
+    await this.fetchData();
   },
 };
 </script>

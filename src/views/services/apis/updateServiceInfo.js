@@ -1,9 +1,13 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function updateServiceInfo(
   serviceId,
   name,
   description,
   categoryId,
-  lastDate
+  lastDate,
+  price,
+  clientCanBook
 ) {
   try {
     // get app path
@@ -22,6 +26,8 @@ export default async function updateServiceInfo(
         description: description,
         category_id: categoryId,
         last_date: lastDate,
+        price,
+        client_can_book: clientCanBook,
       }),
     });
 
@@ -33,6 +39,7 @@ export default async function updateServiceInfo(
       return true;
     }
 
+    notifyReqError(json.message);
     console.log(
       "Failed to update service information, message: ",
       json.message

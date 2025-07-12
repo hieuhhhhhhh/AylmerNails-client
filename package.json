@@ -15,6 +15,7 @@
     "@fortawesome/vue-fontawesome": "^3.0.8",
     "@vuepic/vue-datepicker": "^11.0.1",
     "core-js": "^3.8.3",
+    "libphonenumber-js": "^1.12.8",
     "luxon": "^3.5.0",
     "pinia": "^3.0.1",
     "socket.io-client": "^4.8.1",
@@ -42,7 +43,10 @@
     "parserOptions": {
       "parser": "@babel/eslint-parser"
     },
-    "rules": {}
+    "rules": {},
+    "globals": {
+      "defineProps": "readonly"
+    }
   },
   "browserslist": [
     "> 1%",

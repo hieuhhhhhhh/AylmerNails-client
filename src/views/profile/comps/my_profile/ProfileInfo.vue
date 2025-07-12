@@ -25,7 +25,7 @@
           {{ unixToReadable(userInfo.birth) }}
         </td>
       </tr>
-      <tr>
+      <tr v-if="userInfo.role !== 'client'">
         <th>Role:</th>
         <td>
           {{ userInfo.role }}

@@ -1,5 +1,6 @@
 import getTodayUnixTime from "@/lib/getTodayUnixTime";
 import parseUnixHours from "@/lib/parseUnixHours";
+import notifyReqError from "@/stores/notifyReqError";
 
 export default async function fetchSchedules(empId) {
   try {
@@ -27,6 +28,7 @@ export default async function fetchSchedules(empId) {
       const raw = json.schedules;
       return refactorSchedules(raw);
     } else {
+      notifyReqError(json.message);
       console.log("Failed to fetch employee list, message: ", json.message);
     }
   } catch (e) {

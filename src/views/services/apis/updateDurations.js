@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function updateDurations(serviceId, rows) {
   try {
     // payload holders
@@ -38,6 +40,7 @@ export default async function updateDurations(serviceId, rows) {
       return true;
     }
 
+    notifyReqError(json.message);
     console.log("Failed to update durations, message: ", json.message);
   } catch (e) {
     console.error("Unexpected Error: ", e);

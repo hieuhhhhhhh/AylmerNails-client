@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function submitNewServiceLength(
   serviceId,
   date,
@@ -39,6 +41,7 @@ export default async function submitNewServiceLength(
       // return result
       return json.added_service_length_id;
     } else {
+      notifyReqError(json.message);
       console.log("Failed to submit new duration, message: ", json.message);
     }
   } catch (e) {

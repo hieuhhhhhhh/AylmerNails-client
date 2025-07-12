@@ -25,6 +25,7 @@ export default async function fetchSavedLastTracked() {
 
       return lastTracked;
     } else {
+      // notifyReqError(json.message);
       console.log(
         "Failed to last tracked on saved appointments, message: ",
         json.message

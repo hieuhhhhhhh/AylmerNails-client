@@ -30,8 +30,12 @@
           </div>
         </td>
         <td>
-          <div>{{ appo.canceler.firstName }} {{ appo.canceler.lastName }}</div>
           {{ formatPhone(appo.canceler.phoneNum) }}
+          <div>{{ appo.canceler.contactName }}</div>
+
+          <div v-if="appo.canceler.profileName != appo.canceler.contactName">
+            ({{ appo.canceler.profileName }})
+          </div>
         </td>
         <td>
           {{ unixTimeToReminder(appo.cancelTime) }}
@@ -46,8 +50,8 @@
         </td>
         <td :style="{ color: appo.color }">{{ appo.empAlias }}</td>
         <td>
-          {{ appo.contactName }}
           <div>{{ formatPhone(appo.phoneNumber) }}</div>
+          {{ appo.contactName }}
         </td>
         <td>
           {{ unixTimeToReminder(appo.date) }}
@@ -59,6 +63,16 @@
       </tr>
     </tbody>
   </table>
+  <div class="flex">
+    <button
+      id="show"
+      class="blueBtn"
+      v-if="appos?.length === limit"
+      @click="showMore"
+    >
+      Show More
+    </button>
+  </div>
 </template>
 <script>
 // lib
@@ -82,7 +96,7 @@ export default {
     const query = ref("");
     const appos = ref([]);
     const lastTracked = ref(null);
-    const limit = ref(50);
+    const limit = ref(25);
     const today = getTodayUnixTime();
     // lib
     const router = useRouter();
@@ -94,6 +108,11 @@ export default {
 
     const toDate = (date) => {
       router.push(`/calendar/${date}`);
+    };
+
+    const showMore = async () => {
+      limit.value += 25;
+      await onSearchCanceled();
     };
 
     // LIFECYCLE
@@ -119,6 +138,8 @@ export default {
       formatPhone,
       onSearchCanceled,
       toDate,
+      showMore,
+      limit,
     };
   },
 };
@@ -174,5 +195,14 @@ tr {
   background: var(--trans-blue);
   color: white;
   border-radius: 2px;
+}
+#show {
+  padding: 10px 30px;
+  margin: 10px;
+  border-radius: 20px;
+}
+.flex {
+  display: flex;
+  justify-content: center;
 }
 </style>

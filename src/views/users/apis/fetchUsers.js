@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function fetchUsers(limit) {
   try {
     // get app path
@@ -52,6 +54,7 @@ export default async function fetchUsers(limit) {
       //  return results
       return { users, lastTracked };
     } else {
+      notifyReqError(json.message);
       console.log("Failed to fetch users, message: ", json.message);
     }
   } catch (e) {

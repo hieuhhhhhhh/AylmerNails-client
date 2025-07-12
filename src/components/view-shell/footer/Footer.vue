@@ -32,7 +32,7 @@ export default {
     const MPstore = useMyProfile();
     const FRstore = useFooterReact();
     const role = computed(() => MPstore.role);
-    const validRoles = ["admin", "developer"];
+    const validRoles = ["admin", "owner"];
     const isRoleValid = computed(() => validRoles.includes(role.value));
     // resources
     const details = ref(null);
@@ -85,11 +85,12 @@ export default {
 }
 #editCont {
   display: flex;
-  /* width: 100%; */
+  width: 100%;
   justify-content: flex-end;
+  margin-top: 0px;
 }
 #edit {
-  font-size: 12px;
+  font-size: 10px;
   padding: 4px;
   background: var(--background-i2);
   color: var(--foreground);

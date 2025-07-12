@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function fetchAppoDetails(appoId) {
   try {
     // get app path
@@ -22,6 +24,7 @@ export default async function fetchAppoDetails(appoId) {
     if (res.ok) {
       return parseApiRes(json);
     } else {
+      notifyReqError(json.message);
       console.log("Failed to fetch appo details, message: ", json.message);
     }
   } catch (e) {
@@ -33,7 +36,7 @@ function parseApiRes(json) {
   // res holder
   let details = {};
 
-  // unpack
+  // unpack appo info
   const [
     id,
     empId,
@@ -42,6 +45,7 @@ function parseApiRes(json) {
     date,
     start,
     end,
+    message,
     note,
     color,
     empAlias,
@@ -49,12 +53,14 @@ function parseApiRes(json) {
     cateName,
     phoneNumId,
     phoneNum,
-    contactName,
     userId,
+    contactName,
     savedOn,
+    bookerId,
+    bookerName,
   ] = json.appo_details;
 
-  // append results
+  // append info
   details = {
     id,
     empId,
@@ -63,6 +69,7 @@ function parseApiRes(json) {
     date,
     start,
     end,
+    message,
     note,
     color,
     empAlias,
@@ -70,11 +77,24 @@ function parseApiRes(json) {
     cateName,
     phoneNumId,
     phoneNum,
-    contactName,
     userId,
+    contactName,
     savedOn,
+    bookerId,
+    bookerName,
     AOSOsText: [],
+    selectedEmps: [],
   };
+
+  // read selected employees
+  const table = json.appo_emps;
+  for (let row of table) {
+    const [empId, empAlias] = row;
+
+    // append next employee
+    const employee = { empId, empAlias };
+    details.selectedEmps.push(employee);
+  }
 
   // read AOSOs
   const AOSOsText = json.AOSOs;

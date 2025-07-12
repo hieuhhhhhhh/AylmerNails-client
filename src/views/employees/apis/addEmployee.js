@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function addEmployee(
   alias,
   key_intervals,
@@ -35,6 +37,7 @@ export default async function addEmployee(
     if (res.ok) {
       return json.added_employee_id;
     } else {
+      notifyReqError(json.message);
       console.log("Failed to add employee, message: ", json.message);
     }
   } catch (e) {

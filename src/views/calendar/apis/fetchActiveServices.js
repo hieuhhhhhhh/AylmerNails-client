@@ -1,3 +1,5 @@
+import notifyReqError from "@/stores/notifyReqError";
+
 export default async function fetchActiveServices(unixDate) {
   try {
     // get app path
@@ -24,6 +26,7 @@ export default async function fetchActiveServices(unixDate) {
 
       return categories;
     } else {
+      notifyReqError(json.message);
       console.log("Failed to fetch employee list, message: ", json.message);
     }
   } catch (e) {
@@ -37,7 +40,7 @@ function refactorServices(rawServices, rawCategories) {
   const categories = {};
   categories[null] = {
     cate_id: null,
-    cate_name: "Unclassified",
+    cate_name: "Others",
     services: [],
   };
 
@@ -60,7 +63,7 @@ function refactorServices(rawServices, rawCategories) {
     }
   });
 
-  // remove 'Unclassified' if no services in there
+  // remove category if no services in there
   if (!categories[null].services.length > 0) {
     delete categories[null];
   }

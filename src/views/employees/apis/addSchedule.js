@@ -1,4 +1,5 @@
 import parseTime from "@/lib/parseTime";
+import notifyReqError from "@/stores/notifyReqError";
 export default async function addSchedule(empId, date, openings, closings) {
   try {
     // parse times in openings and closings
@@ -30,6 +31,7 @@ export default async function addSchedule(empId, date, openings, closings) {
     if (res.ok) {
       return json.added_schedule_id;
     } else {
+      notifyReqError(json.message);
       console.log("Failed to add schedule, message: ", json.message);
     }
   } catch (e) {

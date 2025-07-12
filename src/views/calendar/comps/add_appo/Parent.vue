@@ -38,8 +38,20 @@
               :onClearService="onClearService"
             />
           </div>
+          <div id="note">
+            <textarea
+              ref="noteRef"
+              v-model="note"
+              type="text"
+              rows="3"
+              placeholder="Note (not visible to client)"
+            />
+          </div>
           <div class="flexBox">
-            <button class="greenBtn">Create</button>
+            <button id="save">
+              <FontAwesomeIcon :icon="faCheck" />
+              Finish
+            </button>
           </div>
         </div>
       </div>
@@ -71,16 +83,21 @@
 import { ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import fetchAppoLength from "../../apis/fetchAppoLength";
-import addAppo from "../../apis/addAppo";
 // comps
 import AddForm from "./AddForm.vue";
 import EmployeePicker from "../edit_appo/EmployeePicker.vue";
 import ServicePicker from "../edit_appo/ServicePicker.vue";
 import ContactPicker from "../edit_appo/ContactPicker.vue";
+// icon
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
+// apis
+import addAppo from "../../apis/addAppo";
 
 export default {
   name: "EditAppo",
   components: {
+    FontAwesomeIcon,
     AddForm,
     EmployeePicker,
     ServicePicker,
@@ -118,6 +135,7 @@ export default {
     const start = ref(null);
     const duration = ref(null);
     const note = ref("");
+    const noteRef = ref(null);
 
     // SETTERS
     const resetEmp = () => {
@@ -229,6 +247,13 @@ export default {
       setService(null, "", "", [], []);
     };
 
+    const autoResize = () => {
+      if (noteRef.value) {
+        noteRef.value.style.height = "auto";
+        noteRef.value.style.height = `${noteRef.value.scrollHeight + 2}px`; // Set to scrollHeight
+      }
+    };
+
     // APIS
     const fetchDuration = async () => {
       if (!serviceId.value) return;
@@ -240,6 +265,7 @@ export default {
       );
     };
     const onSubmit = async () => {
+      console.log("note", note.value);
       const newId = await addAppo(
         phoneNum.value,
         clientName.value,
@@ -278,7 +304,12 @@ export default {
       updateEZstates();
     });
 
+    watch(note, () => {
+      autoResize();
+    });
+
     return {
+      faCheck,
       isPickingEmp,
       isPickingService,
       isPickingContact,
@@ -299,6 +330,7 @@ export default {
       start,
       duration,
       note,
+      noteRef,
       color,
       onSubmit,
       onOpenEmpPicker,
@@ -351,5 +383,20 @@ export default {
   max-width: 100%;
   box-shadow: 0 0 10px var(--shadow-color);
   margin: 10px;
+}
+#save {
+  padding: 5px;
+  padding-inline: 15px;
+  /* font-weight: bold; */
+  font-size: 15px;
+}
+textarea {
+  width: 95%;
+  box-sizing: border-box;
+}
+#note {
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
 }
 </style>

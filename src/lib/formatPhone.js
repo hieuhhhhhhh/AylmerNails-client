@@ -1,4 +1,6 @@
 export default function formatPhone(rawPhone) {
+  if (rawPhone.slice(0, 2) !== "+1") return rawPhone;
+  console.log("calling");
   if (!rawPhone) return;
   let formatted = "";
 
