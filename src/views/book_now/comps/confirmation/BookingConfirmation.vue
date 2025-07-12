@@ -26,8 +26,8 @@
       </div>
     </div>
     <div>
-      If you have any questions or need to reschedule, please don’t hesitate to
-      contact us!
+      If you have any questions or need to reschedule, don’t hesitate to contact
+      us!
     </div>
   </div>
 </template>

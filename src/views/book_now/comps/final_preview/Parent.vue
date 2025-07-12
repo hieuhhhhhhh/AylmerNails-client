@@ -36,7 +36,7 @@
   <GuestBooking
     :chain="props.chain"
     :date="props.date"
-    :onSubmit="onSubmit"
+    :onSubmit="props.onSubmit"
     :onClose="() => (isGuestBooking = false)"
     v-if="isGuestBooking"
   />
