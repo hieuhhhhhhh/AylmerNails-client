@@ -1,6 +1,7 @@
 <template>
   <div id="category">
     <div id="title">{{ category.cate_name }}</div>
+    <div><button @click="onMoveUp(category.cate_id)">move up</button></div>
     <div
       id="service"
       :class="{ faded: !service.is_active }"
@@ -32,8 +33,10 @@
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { faPlus, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 // lib
-import removeCategory from "../apis/removeCategory";
 import unixToReadable from "@/lib/unixToReadable";
+// apis
+import removeCategory from "../apis/removeCategory";
+import moveCateUp from "../apis/moveCateUp";
 
 export default {
   name: "Category-",
@@ -61,6 +64,12 @@ export default {
     },
     formatDate(unixTime) {
       return unixToReadable(unixTime);
+    },
+    async onMoveUp(cateId) {
+      const res = await moveCateUp(cateId);
+      if (res) {
+        this.$router.push("/services/refresh");
+      }
     },
   },
 };
