@@ -1,7 +1,14 @@
 <template>
   <div id="category">
-    <div id="title">{{ category.cate_name }}</div>
-    <div><button @click="onMoveUp(category.cate_id)">move up</button></div>
+    <div id="top">
+      <div class="moveUp" @click="onMoveUp(category.cate_id)">
+        <FontAwesomeIcon :icon="faCaretUp" />
+      </div>
+      <div id="title">
+        {{ category.cate_name }}
+      </div>
+    </div>
+
     <div
       id="service"
       :class="{ faded: !service.is_active }"
@@ -31,7 +38,11 @@
 <script>
 // icon
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faPlus, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPlus,
+  faTrashCan,
+  faCaretUp,
+} from "@fortawesome/free-solid-svg-icons";
 // lib
 import unixToReadable from "@/lib/unixToReadable";
 // apis
@@ -44,7 +55,7 @@ export default {
     FontAwesomeIcon,
   },
   data() {
-    return { plusIcon: faPlus, removeIcon: faTrashCan };
+    return { plusIcon: faPlus, removeIcon: faTrashCan, faCaretUp };
   },
   props: {
     category: Object,
@@ -97,6 +108,9 @@ export default {
   box-sizing: border-box;
   height: fit-content;
 }
+#top {
+  position: relative;
+}
 #title {
   padding: 10px;
   text-align: center;
@@ -124,6 +138,21 @@ export default {
 .faded {
   color: gray;
   font-size: 14px;
+}
+.moveUp {
+  position: absolute;
+  right: 0;
+  font-size: 30px;
+  padding-top: 2px;
+  padding-inline: 10px;
+  cursor: pointer;
+}
+
+.moveUp:hover {
+  background: var(--hover);
+}
+.moveUp:active {
+  background: var(--active);
 }
 /* phone view */
 @media (orientation: portrait) {
