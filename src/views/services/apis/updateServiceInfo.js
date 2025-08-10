@@ -26,7 +26,7 @@ export default async function updateServiceInfo(
         description: description,
         category_id: categoryId,
         last_date: lastDate,
-        price,
+        price: parseFloat(price.toFixed(2)),
         client_can_book: clientCanBook,
       }),
     });

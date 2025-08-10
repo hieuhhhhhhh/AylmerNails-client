@@ -46,7 +46,7 @@ export default async function addService(
         duration,
         AOSs: newAOSs,
         employee_ids,
-        price,
+        price: parseFloat(price.toFixed(2)),
         client_can_book: clientCanBook,
       }),
     });
