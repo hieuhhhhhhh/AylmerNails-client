@@ -45,8 +45,8 @@ function refactorServices(rawServices, rawCategories) {
   };
 
   rawCategories.forEach((raw) => {
-    const [cate_id, cate_name] = raw;
-    categories[cate_id] = { cate_id, cate_name, services: [] };
+    const [cate_id, cate_name, sort_order] = raw;
+    categories[cate_id] = { cate_id, cate_name, sort_order, services: [] };
   });
 
   // re-group services based on their category_id
@@ -70,7 +70,7 @@ function refactorServices(rawServices, rawCategories) {
 
   // sort the map based on the length of prop 'services'
   const sorted = Object.values(categories).sort(
-    (a, b) => b.services.length - a.services.length
+    (a, b) => a.sort_order - b.sort_order
   );
 
   // return result

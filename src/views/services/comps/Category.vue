@@ -1,6 +1,14 @@
 <template>
   <div id="category">
-    <div id="title">{{ category.cate_name }}</div>
+    <div id="top">
+      <div class="moveUp" @click="onMoveUp(category.cate_id)">
+        <FontAwesomeIcon :icon="faCaretUp" />
+      </div>
+      <div id="title">
+        {{ category.cate_name }}
+      </div>
+    </div>
+
     <div
       id="service"
       :class="{ faded: !service.is_active }"
@@ -30,10 +38,16 @@
 <script>
 // icon
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { faPlus, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPlus,
+  faTrashCan,
+  faCaretUp,
+} from "@fortawesome/free-solid-svg-icons";
 // lib
-import removeCategory from "../apis/removeCategory";
 import unixToReadable from "@/lib/unixToReadable";
+// apis
+import removeCategory from "../apis/removeCategory";
+import moveCateUp from "../apis/moveCateUp";
 
 export default {
   name: "Category-",
@@ -41,7 +55,7 @@ export default {
     FontAwesomeIcon,
   },
   data() {
-    return { plusIcon: faPlus, removeIcon: faTrashCan };
+    return { plusIcon: faPlus, removeIcon: faTrashCan, faCaretUp };
   },
   props: {
     category: Object,
@@ -61,6 +75,12 @@ export default {
     },
     formatDate(unixTime) {
       return unixToReadable(unixTime);
+    },
+    async onMoveUp(cateId) {
+      const res = await moveCateUp(cateId);
+      if (res) {
+        this.$router.push("/services/refresh");
+      }
     },
   },
 };
@@ -87,6 +107,9 @@ export default {
   background-color: var(--background-i2);
   box-sizing: border-box;
   height: fit-content;
+}
+#top {
+  position: relative;
 }
 #title {
   padding: 10px;
@@ -115,6 +138,21 @@ export default {
 .faded {
   color: gray;
   font-size: 14px;
+}
+.moveUp {
+  position: absolute;
+  right: 0;
+  font-size: 30px;
+  padding-top: 2px;
+  padding-inline: 10px;
+  cursor: pointer;
+}
+
+.moveUp:hover {
+  background: var(--hover);
+}
+.moveUp:active {
+  background: var(--active);
 }
 /* phone view */
 @media (orientation: portrait) {

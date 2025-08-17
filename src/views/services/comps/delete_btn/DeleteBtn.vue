@@ -2,7 +2,7 @@
   <div class="flex">
     <button id="delete" class="redBtn" @click="onDeleteClicked">
       <FontAwesomeIcon :icon="faTrash" />
-      Delete Employee
+      Delete Service
     </button>
   </div>
   <ConfirmDelete

@@ -30,7 +30,7 @@
             <input
               class="info"
               type="number"
-              step="0.01"
+              step="any"
               v-model="price"
               :min="1"
             />
